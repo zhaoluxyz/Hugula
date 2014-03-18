@@ -2,6 +2,8 @@
 luanet.load_assembly("ICSharpCode.SharpZipLib")
 ------------------Unity3D--------------
 UnityEngine=luanet.UnityEngine
+Time = UnityEngine.Time
+Random = UnityEngine.Random
 Object=UnityEngine.Object
 Debug=UnityEngine.Debug
 Input=UnityEngine.Input

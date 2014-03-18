@@ -55,7 +55,7 @@ function LuaObject:AddComponent(componentName)
 	end
 
 	table.insert(self.components[componentName],com)
-	com:Start()
+	if com.Start then com:Start() end
 	return com
 end
 

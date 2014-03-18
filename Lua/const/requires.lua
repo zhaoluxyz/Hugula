@@ -33,6 +33,8 @@ local requires ={
 	"components/MakeUbtuse",
 	"components/MakeUnStoppable",
 	"components/Mouth",
+	"components/Movement",
+	"components/MoveStraight",
 
 	"prefabs/TestPrefab",
 
@@ -40,5 +42,6 @@ local requires ={
 }
 
 for i,f in ipairs(requires) do
+	print("require "..f)
 	require(f)
 end

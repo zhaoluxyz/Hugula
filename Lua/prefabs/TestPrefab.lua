@@ -2,8 +2,9 @@
 local function TestPrefab()
 	local luaObject = TestLuaObject("Cube",60)
 
-	local com = luaObject:AddComponent("TestComponent")
-	com.value = 1
+	local com = luaObject:AddComponent("MoveStraight")
+	com.speed = 1
+	com:start()
 
 	return luaObject
 end
