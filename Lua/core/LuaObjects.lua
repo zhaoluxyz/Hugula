@@ -1,4 +1,20 @@
 ---------------------------send to mono functions
+local function Awake()
+	for i,obj in ipairs(LuaObjects.objects) do
+		if obj.Awake then
+			obj:Awake()
+		end
+	end
+end
+
+local function Start()
+	for i,obj in ipairs(LuaObjects.objects) do
+		if obj.Start then
+			obj:Start()
+		end
+	end
+end
+
 local function Update()
 	for i,obj in ipairs(LuaObjects.objects) do
 		if obj.Update then
@@ -29,6 +45,8 @@ local luaObjectMan = Class( function(self)
 	self.objects = {}
 
 	local objectManMono = self.gameObject:AddComponent("LuaObjectMan")
+	objectManMono.AwakeFn = Awake
+	objectManMono.StartFn = Start
 	objectManMono.UpdateFn = Update
 	objectManMono.LateUpdateFn = LateUpdate
 	objectManMono.FixedUpdateFn = FixedUpdate

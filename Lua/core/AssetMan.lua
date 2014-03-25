@@ -73,6 +73,10 @@ function assetMan:GetAsset(assetName)
 	end
 end
 
+function assetMan:GetAssetSource(assetName)
+	return self.assetsBase[assetName]
+end
+
 function assetMan:ResetAsset(asset)
 	asset.active = false
 	asset.transform.parent = self.assetRoot.transform

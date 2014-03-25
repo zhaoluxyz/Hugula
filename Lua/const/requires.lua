@@ -19,6 +19,8 @@ local requires ={
 	"core/DelayDo",
 
 	"luaObjects/TestLuaObject",
+	"luaObjects/HugulaGra",
+	"luaObjects/FoodGra",
 
 	"components/TestComponent",
 	"components/Collider",
@@ -35,8 +37,11 @@ local requires ={
 	"components/Mouth",
 	"components/Movement",
 	"components/MoveStraight",
+	"components/Rigidbody",
 
 	"prefabs/TestPrefab",
+	"prefabs/Hugula",
+	"prefabs/Food",
 
 	"game/Level",
 }

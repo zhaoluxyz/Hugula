@@ -8,6 +8,7 @@ Object=UnityEngine.Object
 Debug=UnityEngine.Debug
 Input=UnityEngine.Input
 GameObject=UnityEngine.GameObject
+Camera = UnityEngine.Camera
 PrimitiveType=UnityEngine.PrimitiveType
 Rect=UnityEngine.Rect
 Component=UnityEngine.Component

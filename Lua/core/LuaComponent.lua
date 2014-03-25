@@ -18,9 +18,17 @@ function LuaComponent:DispatchEvent(eventName,value)
 	Event:DispatchEvent(eventName, value, self)
 end
 -----------------------------------surport callbacks
+--function LuaComponent:Awake()end
 --function LuaComponent:Start()end
 --function LuaComponent:OnDestroy()end
---function LuaComponent:OnEnable()end (called by LuaObject:SetActive)
---function LuaComponent:OnDisable()end (called by LuaObject:SetActive)
+
+--function LuaComponent:Update()end
+--function LuaComponent:LateUpdate()end
+--function LuaComponent:FixedUpdate()end
+
+--function LuaComponent:OnEnable()end (callback by LuaObject:SetActive)
+--function LuaComponent:OnDisable()end (callback by LuaObject:SetActive)
+--function LuaComponent:OnAdd()end (callback by LuaObject:AddComponent)
+--function LuaComponent:OnClone()end (callback by LuaObject:Clone)
 -----------------------------------
 

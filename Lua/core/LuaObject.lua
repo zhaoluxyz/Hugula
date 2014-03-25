@@ -17,6 +17,14 @@ LuaObject = Class( function(self, assetName)
 end)
 
 ---------------------------------public
+function LuaObject:SetGameObject(gameObject)
+	GameObject.Destroy(self.gameObject)
+
+	self.gameObject = gameObject
+	self.gameObject.name = self.name
+    self.transform = self.gameObject.transform
+end
+
 function LuaObject:SetActive(bool)
 	self.gameObject.active = bool
 
@@ -34,7 +42,7 @@ function LuaObject:Clone()
 	for name,coms in pairs(components) do
 		for i,com in ipairs(coms) do
 			com.luaObject = obj
-			com:Start()
+			if com.OnClone then com:OnClone() end
 		end
 	end
 
@@ -55,7 +63,7 @@ function LuaObject:AddComponent(componentName)
 	end
 
 	table.insert(self.components[componentName],com)
-	if com.Start then com:Start() end
+	if com.OnAdd then com:OnAdd() end
 	return com
 end
 
@@ -93,14 +101,14 @@ function LuaObject:RemoveComponent(componentName)
 	end
 end
 
-function LuaObject:Destroy()
+function LuaObject:Destroy(whatEver)
 	for key,comList in pairs(self.components) do
 		for i,com in ipairs(comList) do
 			if com.OnDestroy then com:OnDestroy() end
 		end
 	end
 
-	if self.name == EMPTY_LUAOBJECT then
+	if self.name == EMPTY_LUAOBJECT or whatEver then
 		GameObject.Destroy(self.gameObject)
 	else
 		AssetMan:ResetAsset(self.gameObject)
@@ -110,6 +118,26 @@ function LuaObject:Destroy()
 end
 
 ---------------------------------
+function LuaObject:Awake()
+	if self.gameObject.active then
+		for key,comList in pairs(self.components) do
+			for i,com in ipairs(comList) do
+				if com.Awake then com:Awake() end
+			end
+		end
+	end
+end
+
+function LuaObject:Start()
+	if self.gameObject.active then
+		for key,comList in pairs(self.components) do
+			for i,com in ipairs(comList) do
+				if com.Start then com:Start() end
+			end
+		end
+	end
+end
+
 function LuaObject:Update()
 	if self.gameObject.active then
 		for key,comList in pairs(self.components) do

@@ -1,20 +1,9 @@
 print("----------------------lua main----------------------")
 
 local function onAssetLoaded(event)
-	local uCount = 4
-	local vCount = 0
-
-	for v = 0,vCount do
-		for u=0,uCount do
-			local p = Prefabs:New("TestPrefab")
-
-			local com = p:GetComponent("MoveStraight")
-			com.speed = Random.Range(0.7,2)
-			local pos = Vector3((u-0.5*uCount)*1.3,(v-0.5*vCount)*1.5+20,0)
-			p.transform.localPosition = pos
-		end
-	end
+	local food = Prefabs:New("Food",3)
+	
 end
 
 Event:AddEvent(Event.ASSET_LOADED_EVENT,onAssetLoaded)
-AssetMan:Load("Cube")
+AssetMan:Load("foods")

@@ -5,6 +5,8 @@ Level = Class( function(self, id)
 
 	self.isPause = false
 
+
+	
 end)
 
 -----------------------------------------------

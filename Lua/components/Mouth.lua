@@ -11,17 +11,55 @@ LuaComponents:Add("Mouth",Mouth)
 
 Event.MOUTH_OPEN = "mouthOpen"
 ------------------------------------------------------
+function Mouth:Start()
+	self.hugula = self.luaObject
+end
 
 function Mouth:eat(food)
 	self.isEatting = true
-	self:DispatchEvent(Event.MOUTH_OPEN,food)
+	self:DispatchEvent(Event.MOUTH_OPEN)
+
+	self.hugula:play(HUGULA_ANIMATIONS.EAT)
+
+	local function ateSuprise()
+		if food.makeMad then
+			self:mad()
+		else
+			self:foodAte()
+		end
+	end
 	
-	local function foodEatted()
+	local function onAte()
 		food:beEatted(self)
-		self.isEatting = false
+
+		if food.isSuprise then
+			self.hugula:play(HUGULA_ANIMATIONS.SUPRISE)
+
+			DelayDo:Add(ateSuprise,1.5)
+		else
+			self:foodAte()
+		end
 	end
 
-	DelayDo:Add(foodEatted,food.chewTime)
+	DelayDo:Add(onAte,food.chewTime)
 end
 
+function Mouth:mad()
+	self.hugula:play(HUGULA_ANIMATIONS.MAD)
+
+end
+
+function Mouth:foodAte()
+	self.hugula:play(HUGULA_ANIMATIONS.IDLE)
+	self.isEatting = false
+end
+
+function Mouth:hiccup()
+	self.hugula:play(HUGULA_ANIMATIONS.HICCUP)
+	self.isEatting = true
+
+	self:DispatchEvent(Event.MOUTH_OPEN)
+
+	DelayDo:Add(self.foodAte,1,self)
+end
 

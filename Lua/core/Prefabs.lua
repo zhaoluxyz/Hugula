@@ -7,7 +7,7 @@ function prefabMan:Add(key,prefab)
 	self.prefabs[key] = prefab
 end
 
-function prefabMan:New(key)
-	return self.prefabs[key]()
+function prefabMan:New(key,value)
+	return self.prefabs[key](value)
 end
 -------------------------------------------
