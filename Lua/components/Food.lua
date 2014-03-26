@@ -22,7 +22,7 @@ function Food:beEatted(mouth)
 end
 
 function Food:FixedUpdate()
-	if self.gameObject.transform.position.y<-2 then
+	if self.gameObject.transform.position.y<-5 then
 		self.luaObject:Destroy()
 	end
 end

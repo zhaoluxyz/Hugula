@@ -17,10 +17,11 @@ function FoodGra:Destroy()
 	end
 	self.components = {}
 
-	self.gameObject.active = false
-	ResetTM(self.gameObject)
-
-	self.gameObject = nil
+	if self.gameObject then
+		self.gameObject.active = false
+		ResetTM(self.gameObject)
+		self.gameObject = nil
+	end
 
 	LuaObjects:Remove(self)
 end
