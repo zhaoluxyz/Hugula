@@ -6,10 +6,15 @@ local function NormalFood()
 	local foodCom = food:AddComponent("Food")
 	local rigidbody = food:AddComponent("Rigidbody")
 	
-	local forceX = Random.Range(-100,100)
-	local forceY = Random.Range(120,200)
-	local forceZ = Random.Range(-100,100)
-	
+	local forceX = Random.Range(-20,20)
+	local forceY = Random.Range(30,50)
+	local forceZ = Random.Range(-20,20)
+
+	local posX = Random.Range(-1,1)
+	local posY = Random.Range(2.5,3.5)
+	local posZ = Random.Range(-1,1)
+
+	food.transform.position = Vector3(posX,posY,posZ)
 	rigidbody:addForce(Vector3(forceX,forceY,forceZ))
 
 	return food
