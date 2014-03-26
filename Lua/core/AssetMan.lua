@@ -21,6 +21,8 @@ end
 
 local function onAssetLoaded(www,key)
 	if not AssetMan.assetsBase[key] then
+		CUtils.refreshShader(www)
+
 		AssetMan.assets[key] = {}
 		AssetMan.assetsBase[key] = Object.Instantiate(www.assetBundle.mainAsset)
 		AssetMan.assetsBase[key].name = key
@@ -83,3 +85,9 @@ function assetMan:ResetAsset(asset)
 	ResetTM(asset)
 end
 
+function assetMan:AddAsset(assetName,asset)
+	if not self.assetsBase[assetName] then
+		self.assetsBase[assetName] = asset
+		self.assets[assetName] = {}
+	end
+end

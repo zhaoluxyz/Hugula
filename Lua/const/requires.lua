@@ -41,9 +41,10 @@ local requires ={
 
 	"prefabs/TestPrefab",
 	"prefabs/Hugula",
-	"prefabs/Food",
+	"prefabs/NormalFood",
 
 	"game/Level",
+	"game/Foods",
 }
 
 for i,f in ipairs(requires) do

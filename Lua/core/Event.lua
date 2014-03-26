@@ -29,9 +29,19 @@ end
 function eventMan:DispatchEvent(eventName, value, receiver)
 	if self.events[eventName] then
 		for i,event in ipairs(self.events[eventName]) do
-			if receiver and event.receiver==receiver or not receiver then
-				event.data = value
-				event.callBack(event)
+			event.data = value
+
+			if receiver and event.receiver==receiver then
+				print("event 1")
+				event.callBack(receiver,event)
+			elseif not receiver then
+				if event.receiver then
+					print("event 2")
+					event.callBack(event.receiver,event)
+				else
+					print("event 3")
+					event.callBack(event)
+				end
 			end
 		end
 	end

@@ -42,6 +42,7 @@ end
 local luaObjectMan = Class( function(self)
 	self.gameObject = GameObject()
 	self.gameObject.name = "LuaObjects"
+	self.gameObject:AddComponent("UIPanel")
 	self.objects = {}
 
 	local objectManMono = self.gameObject:AddComponent("LuaObjectMan")

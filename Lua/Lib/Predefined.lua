@@ -9,6 +9,7 @@ Debug=UnityEngine.Debug
 Input=UnityEngine.Input
 GameObject=UnityEngine.GameObject
 Camera = UnityEngine.Camera
+Physics = UnityEngine.Physics
 PrimitiveType=UnityEngine.PrimitiveType
 Rect=UnityEngine.Rect
 Component=UnityEngine.Component
@@ -40,7 +41,7 @@ import("AudioSourceEX")
 Shaders=ToolsBegin.shaderDic 
 ToolsBegin = ToolsBegin.instance
 
-
+Physics.IgnoreLayerCollision(8,8)
 
 
 

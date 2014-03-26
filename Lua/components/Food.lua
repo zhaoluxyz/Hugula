@@ -5,8 +5,25 @@ local Food = Class(LuaComponent, function(self)
 end)
 LuaComponents:Add("Food",Food)
 --------------------------------------------------
-Event.FOOD_EATED = "foodEated"
+Event.FOOD_ATE = "foodAte"
 --------------------------------------------------
-function Food:beEatted(mouth)
-	self:DispatchEvent(Event.FOOD_EATED, mouth)
+function Food:OnAdd()
+	Foods:add(self)
 end
+
+function Food:OnDestroy()
+	Foods:remove(self)
+end
+
+function Food:beEatted(mouth)
+	self:DispatchEvent(Event.FOOD_ATE, mouth)
+
+	self.luaObject:Destroy()
+end
+
+function Food:FixedUpdate()
+	if self.luaObject.gameObject.transform.position.y<-2 then
+		self.luaObject:Destroy()
+	end
+end
+

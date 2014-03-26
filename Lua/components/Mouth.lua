@@ -2,7 +2,7 @@ local Mouth = Class(LuaComponent, function(self)
 	LuaComponent._ctor(self)
 	self.name = "Mouth"
 
-	self.isEatting = false
+	self.isBusy = false
 	self.tongueLen = TUNING.HUGULA_TONGUE_DEFAULT
 	self.longTongueTime = TUNING.HUGULA_TONGUE_LONG_TIME
 end)
@@ -15,11 +15,39 @@ function Mouth:Start()
 	self.hugula = self.luaObject
 end
 
+function Mouth:FixedUpdate()
+	if not self.isBusy then
+		for i,food in ipairs(Foods.objects) do 
+			local posA = self.luaObject.gameObject.transform.position
+			local posB = food.luaObject.gameObject.transform.position
+
+			local distance = Vector3.Distance(posA,posB)
+
+			if distance<self.tongueLen then
+				self:eat(food)
+				break
+			end
+		end	
+	end
+end
+
 function Mouth:eat(food)
-	self.isEatting = true
+	local function stopFood()
+		local rigidbody = food.luaObject:GetComponent("Rigidbody")
+		if rigidbody then
+			rigidbody:sleep()
+		end
+
+		
+	end
+
+	DelayDo:Add(stopFood,0.4)
+	
+
+	self.isBusy = true
 	self:DispatchEvent(Event.MOUTH_OPEN)
 
-	self.hugula:play(HUGULA_ANIMATIONS.EAT)
+	self.luaObject:play(HUGULA_ANIMATIONS.EAT)
 
 	local function ateSuprise()
 		if food.makeMad then
@@ -33,7 +61,7 @@ function Mouth:eat(food)
 		food:beEatted(self)
 
 		if food.isSuprise then
-			self.hugula:play(HUGULA_ANIMATIONS.SUPRISE)
+			self.luaObject:play(HUGULA_ANIMATIONS.SUPRISE)
 
 			DelayDo:Add(ateSuprise,1.5)
 		else
@@ -45,18 +73,17 @@ function Mouth:eat(food)
 end
 
 function Mouth:mad()
-	self.hugula:play(HUGULA_ANIMATIONS.MAD)
-
+	self.luaObject:play(HUGULA_ANIMATIONS.MAD)
 end
 
 function Mouth:foodAte()
-	self.hugula:play(HUGULA_ANIMATIONS.IDLE)
-	self.isEatting = false
+	self.luaObject:play(HUGULA_ANIMATIONS.IDLE)
+	self.isBusy = false
 end
 
 function Mouth:hiccup()
-	self.hugula:play(HUGULA_ANIMATIONS.HICCUP)
-	self.isEatting = true
+	self.luaObject:play(HUGULA_ANIMATIONS.HICCUP)
+	self.isBusy = true
 
 	self:DispatchEvent(Event.MOUTH_OPEN)
 

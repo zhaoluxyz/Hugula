@@ -2,24 +2,46 @@
 Level = Class( function(self, id)
     self.id = id 
 	self.setting = LevelSetting[id]
-
-	self.isPause = false
-
-
-	
 end)
 
 -----------------------------------------------
-function Level:preload()
+local function onAssetLoaded(self,event)
+	if event.data.name == "foods" then
+		
+		Foods = FoodMan()
+		AssetMan:Load("hugula")
 
+	elseif event.data.name == "hugula" then
+		Event:RevomeEvent(Event.ASSET_LOADED_EVENT,onAssetLoaded,self)
+
+		local hugula = Prefabs:New("Hugula")
+
+		self:start()
+	end
 end
 
-function Level:build()
-	print("BuildLevel "..self.id)
+function Level:init()
+	Event:AddEvent(Event.ASSET_LOADED_EVENT,onAssetLoaded,self)
+
+	if not Foods then
+		AssetMan:Load("foods")
+	else
+		AssetMan:Load("hugula")
+	end
 end
 
 function Level:start()
 	print("StartLevel "..self.id)
+
+	local function newNormalFood()
+		local food = Prefabs:New("NormalFood")
+	end
+
+	local timeSpace = self.setting.time/self.setting.normalFoods
+	for i = 1,self.setting.normalFoods do
+		local delay = i*timeSpace+Random.Range(-0.5,0.5)
+		DelayDo:Add(newNormalFood,delay)
+	end
 end
 
 function Level:pause()

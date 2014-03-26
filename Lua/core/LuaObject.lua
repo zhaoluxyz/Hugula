@@ -105,8 +105,11 @@ function LuaObject:Destroy(whatEver)
 	for key,comList in pairs(self.components) do
 		for i,com in ipairs(comList) do
 			if com.OnDestroy then com:OnDestroy() end
+			com = nil
 		end
 	end
+
+	self.components = {}
 
 	if self.name == EMPTY_LUAOBJECT or whatEver then
 		GameObject.Destroy(self.gameObject)

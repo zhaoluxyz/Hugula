@@ -1,7 +1,8 @@
 LevelSetting = {
 
 	[1] = {
-		
+		normalFoods = 100,
+		time = 60,
 
 	},
 

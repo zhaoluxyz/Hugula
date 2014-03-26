@@ -1,28 +1,29 @@
 FoodGra = Class(LuaObject, function(self,id)
     LuaObject._ctor(self) 
 
-    self.id = id
+    self.name = "food_"..string.fitNum(id)
 
-    local foodHolder = AssetMan:GetAssetSource("foods")
-    foodHolder.active = true
-
-    local foodBase = foodHolder.transform:FindChild("food").gameObject
-    foodBase.active = false
-
-    local food = Object.Instantiate(foodBase) 
-    food.active = true
-    food.transform.parent = foodHolder.transform
-
-    local sprite = food.transform:FindChild("Sprite")
-    local name = "food_"..string.fitNum(id)
-    sprite:GetComponent("UISprite").spriteName = name
-
-    local lookAtMono = sprite:GetComponent("LookAt")
-
-    self:SetGameObject(food)
-    self.gameObject.name = name
-   
+    local gameObject = AssetMan:GetAsset(self.name)
+    gameObject.transform.parent = Foods.gameObject.transform
+    self:SetGameObject(gameObject)
 end)
+
+function FoodGra:Destroy()
+	for key,comList in pairs(self.components) do
+		for i,com in ipairs(comList) do
+			if com.OnDestroy then com:OnDestroy() end
+			com = nil
+		end
+	end
+	self.components = {}
+
+	self.gameObject.active = false
+	ResetTM(self.gameObject)
+
+	self.gameObject = nil
+
+	LuaObjects:Remove(self)
+end
 
 
 
