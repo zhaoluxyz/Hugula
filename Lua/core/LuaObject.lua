@@ -104,7 +104,8 @@ end
 function LuaObject:Destroy(whatEver)
 	for key,comList in pairs(self.components) do
 		for i,com in ipairs(comList) do
-			if com.OnDestroy then com:OnDestroy() end
+			self:RemoveComponent(com.name)
+			--if com.OnDestroy then com:OnDestroy() end
 			com = nil
 		end
 	end

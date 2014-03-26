@@ -34,13 +34,9 @@ end
 function Mouth:eat(food)
 	local rigidbody = food.luaObject:GetComponent("Rigidbody")
 
-	-- local function hideFood()
-	-- 	if rigidbody then
-	-- 		rigidbody:sleep()
-	-- 	end
-
-	-- 	food.luaObject:SetActive(false)
-	-- end
+	local function delFood()
+		food.luaObject:Destroy()
+	end
 
 	local function stopFood()
 		if rigidbody then
