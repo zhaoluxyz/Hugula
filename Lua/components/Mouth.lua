@@ -18,8 +18,8 @@ end
 function Mouth:FixedUpdate()
 	if not self.isBusy then
 		for i,food in ipairs(Foods.objects) do 
-			local posA = self.luaObject.gameObject.transform.position
-			local posB = food.luaObject.gameObject.transform.position
+			local posA = self.gameObject.transform.position
+			local posB = food.gameObject.transform.position
 
 			local distance = Vector3.Distance(posA,posB)
 
@@ -32,15 +32,24 @@ function Mouth:FixedUpdate()
 end
 
 function Mouth:eat(food)
+	local rigidbody = food.luaObject:GetComponent("Rigidbody")
+
+	-- local function hideFood()
+	-- 	if rigidbody then
+	-- 		rigidbody:sleep()
+	-- 	end
+
+	-- 	food.luaObject:SetActive(false)
+	-- end
+
 	local function stopFood()
-		local rigidbody = food.luaObject:GetComponent("Rigidbody")
 		if rigidbody then
 			rigidbody:sleep()
 		end
-
-		
+		Tweener.addTweener(food.gameObject,"MoveTo",{position=self.gameObject.transform.position,time=0.2,easetyp="linear"})
 	end
 
+	--Tweener.addTweener(self.gameObject,"LookUpdate",{looktarget=food.gameObject.transform,time=0.4})
 	DelayDo:Add(stopFood,0.4)
 	
 

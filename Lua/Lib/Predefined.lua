@@ -32,6 +32,7 @@ SystemInfo=UnityEngine.SystemInfo --SystemInfo.deviceUniqueIdentifier
 -------------------.Net ---------------------
 Hashtable=luanet.import_type("System.Collections.Hashtable")
 GC=luanet.import_type("System.GC")
+Tweener = luanet.import_type("LuaTweener")
 --------------------custom-------------------
 import("CUtils")
 import("CViewHelper")

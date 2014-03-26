@@ -39,6 +39,7 @@ function assetMan:Load(assetName)
 	local asset = AssetList[assetName]
 	if asset then
 		getAssetURL(asset)
+		print("assetURL: "..asset.url)
 		self.loader:load(asset.url,onAssetLoaded,assetName)
 	else
 		error("! AssetList has no keyValue: "..assetName)

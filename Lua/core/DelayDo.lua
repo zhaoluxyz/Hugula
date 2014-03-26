@@ -7,7 +7,7 @@ DelayDo.callbacks = {}
 --------------------------------------------------------------------
 
 function DelayDo:Add(callback,delayTime,callbackVal,dontPause)
-	local data = {time=os.clock(), delay=delayTime, callback=callback, callbackVal=callbackVal, dontPause=dontPause, plusTime=0}
+	local data = {time=Time.time, delay=delayTime, callback=callback, callbackVal=callbackVal, dontPause=dontPause, plusTime=0}
 	table.insert(self.callbacks,data)
 end
 
@@ -20,12 +20,12 @@ function DelayDo:Remove(callback)
 end
 
 function DelayDo:Pause()
-	self.isPause = os.clock()
+	self.isPause = Time.time
 	self.time = self.time + (self.isPause - self.time)
 end
 
 function DelayDo:Resume()
-	local plusTime = os.clock() - self.isPause
+	local plusTime = Time.time - self.isPause
 
 	for i,data in ipairs(self.callbacks) do
 		data.plusTime = data.plusTime+plusTime
@@ -36,7 +36,7 @@ end
 
 function DelayDo:Update()
 	if #self.callbacks>0 then
-		local cTime = os.clock()
+		local cTime = Time.time
 		for i,data in ipairs(self.callbacks) do
 			if not self.isPause or data.dontPause then
 				if cTime-data.time>(data.delay+data.plusTime) then

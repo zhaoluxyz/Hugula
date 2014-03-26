@@ -1,8 +1,4 @@
--- local GameObject=UnityEngine.GameObject
--- local Vector3=UnityEngine.Vector3
--- local Quaternion=UnityEngine.Quaternion
--- local Random=UnityEngine.Random
-local ArrayList=luanet.import_type("System.Collections.ArrayList")
+
 local LMultipleLoader=luanet.import_type("LMultipleLoader")
 local ArrayList=luanet.import_type("System.Collections.ArrayList")
 

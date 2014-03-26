@@ -17,12 +17,12 @@ function Rigidbody:sleep()
 end
 
 function Rigidbody:wakeUp()
-	self.rigidMono:WakeUp()
+		self.rigidMono:WakeUp()
 end
 
 function Rigidbody:addForce(vector3)
-	self:wakeUp()
-	self.rigidMono:AddForce(vector3)
+		self:wakeUp()
+		self.rigidMono:AddForce(vector3)
 end
 
 function Rigidbody:OnDestroy()
