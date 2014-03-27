@@ -8,6 +8,18 @@ FoodGra = Class(LuaObject, function(self,id)
     self:SetGameObject(gameObject)
 end)
 
+function FoodGra:gotoMouth(mouth,delay,time)
+	local function hideFood()
+		self:RemoveComponent("Rigidbody")
+	end
+
+	local function startMove()
+		Tweener.addTweener(self.gameObject,"MoveTo",{position=mouth.gameObject.transform.position,time=time,easetype="linear",OnComplete=hideFood})
+	end
+
+	DelayDo:Add(startMove,delay)
+end
+
 function FoodGra:Destroy()
 	for key,comList in pairs(self.components) do
 		for i,com in ipairs(comList) do

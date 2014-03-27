@@ -11,6 +11,10 @@ function HugulaGra:play(animationName)
 	animation:Play(animationName)
 end
 
+function HugulaGra:lookToTarget(transform,time)
+	Tweener.addTweener(self.gameObject,"LookTo",{looktarget=transform,axis="xyz",time=time})
+end
+
 function HugulaGra:stop()
 	animation:Stop()
 end

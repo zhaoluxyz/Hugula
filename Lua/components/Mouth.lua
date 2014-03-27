@@ -32,16 +32,8 @@ function Mouth:FixedUpdate()
 end
 
 function Mouth:eat(food)
-	local function hideFood()
-		food.luaObject:RemoveComponent("Rigidbody")
-	end
-
-	local function stopFood()
-		Tweener.addTweener(food.gameObject,"MoveTo",{position=self.gameObject.transform.position,time=0.1,easetype="linear",OnComplete=hideFood})
-	end
-
-	Tweener.addTweener(self.gameObject,"LookTo",{looktarget=food.gameObject.transform,axis="xyz",time=0.5})
-	DelayDo:Add(stopFood,0.3)
+	self.luaObject:lookToTarget(food.gameObject.transform,0.5)
+	food.luaObject:gotoMouth(self,0.3,0.1)
 
 	self.isBusy = true
 	self:DispatchEvent(Event.MOUTH_OPEN)
