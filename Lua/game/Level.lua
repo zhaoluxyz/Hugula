@@ -2,6 +2,7 @@
 Level = Class( function(self, id)
     self.id = id 
 	self.setting = LevelSetting[id]
+	self.presentNormalFood = self.setting.normalFoods
 end)
 
 -----------------------------------------------
@@ -31,17 +32,19 @@ function Level:init()
 end
 
 function Level:start()
-	print("StartLevel "..self.id)
-
 	local function newNormalFood()
 		local food = Prefabs:New("NormalFood")
+		self.presentNormalFood = self.presentNormalFood-1
+
+		local timeSpace = self.setting.time/self.setting.normalFoods
+		if self.presentNormalFood>0 then
+			DelayDo:Add(self.start,timeSpace+Random.Range(-0.5,0.5),self)
+		else
+			self:finish()
+		end
 	end
 
-	local timeSpace = self.setting.time/self.setting.normalFoods
-	for i = 1,self.setting.normalFoods do
-		local delay = i*timeSpace+Random.Range(-0.5,0.5)
-		DelayDo:Add(newNormalFood,delay)
-	end
+	newNormalFood()
 end
 
 function Level:pause()
@@ -50,6 +53,10 @@ end
 
 function Level:resume()
 	print("ResumeLevel "..self.id)
+end
+
+function Level:finish()
+	print("FinishLevel "..self.id)
 end
 
 
