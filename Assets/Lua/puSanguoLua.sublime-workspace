@@ -1,0 +1,623 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"lua",
+				"luaObj"
+			],
+			[
+				"comp",
+				"addComponent"
+			],
+			[
+				"fu",
+				"fullUrl"
+			],
+			[
+				"blo",
+				"bolck"
+			],
+			[
+				"req",
+				"require"
+			],
+			[
+				"com",
+				"component"
+			],
+			[
+				"lo",
+				"local	local x = 1"
+			],
+			[
+				"as",
+				"asset"
+			],
+			[
+				"loadc",
+				"loadCurr"
+			],
+			[
+				"get",
+				"getResource"
+			],
+			[
+				"ass",
+				"asserts"
+			],
+			[
+				"s",
+				"self"
+			],
+			[
+				"k",
+				"key"
+			],
+			[
+				"mo",
+				"moduleLoader"
+			],
+			[
+				"File",
+				"FileHelper"
+			],
+			[
+				"l",
+				"local	local x = 1"
+			],
+			[
+				"fun",
+				"function	function"
+			],
+			[
+				"e",
+				"echo"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.lua",
+			"settings":
+			{
+				"buffer_size": 3068,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "begin.lua",
+			"settings":
+			{
+				"buffer_size": 1190,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "game/luaObject.lua",
+			"settings":
+			{
+				"buffer_size": 2324,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "loader/loader.lua",
+			"settings":
+			{
+				"buffer_size": 3572,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "components/assetLoader.lua",
+			"settings":
+			{
+				"buffer_size": 2227,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "components/onAssets.lua",
+			"settings":
+			{
+				"buffer_size": 254,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "game/asset.lua",
+			"settings":
+			{
+				"buffer_size": 877,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "components/assets.lua",
+			"settings":
+			{
+				"buffer_size": 571,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/components/assets 1.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/unity3d.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/game/gameObject.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/loader/loader.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/components/assets.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/game/assets.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/game/asset.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/loader/moduleLoader.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/loader/moduleLoader 1.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/lib/timer.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/lib/json.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/loader/module.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/components/assetLoader.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/game/graphic.lua",
+		"/F/demo/hive/trunk/hive/system.lua",
+		"/F/demo/hive/trunk/hive/socket.lua",
+		"/F/demo/hive/trunk/cell.lua",
+		"/F/demo/hive/trunk/hive.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/main.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/game/begin.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/begin.lua",
+		"/F/MyProject/unity3d/PuSanguo/tools/netProtocal/parseProtocal.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/StreamingAssets/Ver.t",
+		"/F/MyProject/unity3d/HugulaLuoSvn/trunk/Client/Assets/StreamingAssets/Ver.t",
+		"/F/MyProject/enveePet/petNew/Assets/Asset/Scripts/Data/CommonData.cs",
+		"/F/MyProject/enveePet/pet/Assets/StreamingAssets/LuaRoot/sprite/hero.lua",
+		"/F/MyProject/enveePet/pet/Assets/StreamingAssets/LuaRoot/logic/scene_mgr.lua",
+		"/F/MyProject/enveePet/pet/Assets/StreamingAssets/LuaRoot/main.lua",
+		"/F/MyProject/enveePet/pet/Assets/StreamingAssets/LuaRoot/logic/input_control.lua",
+		"/F/MyProject/DreamQuest/CardRelease/u3d/Assets/Lua/Awake.lua",
+		"/F/MyProject/jihuang_Lua/behaviours/avoidlight.lua",
+		"/F/MyProject/jihuang_Lua/screens/bigpopupdialog.lua",
+		"/F/MyProject/jihuang_Lua/achievements.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/StreamingAssets/config.tz.meta",
+		"/F/MyProject/unity3d/PuSanguo/Assets/StreamingAssets/pwb/58l-5QfQug7iUDQn7x46yA.pwb",
+		"/F/MyProject/unity3d/PuSanguo/Assets/Lua/Awake.lua",
+		"/F/MyProject/DreamQuest/CardRelease/u3d/Assets/Plugins/KeraLua/Lua.cs",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameStateManager.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/LuaObject.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/Test.lua",
+		"/F/demo/Nlua/NLua/trunk/Samples/CLRPackage.lua",
+		"/F/demo/Nlua/NLua/trunk/Samples/lua.lua",
+		"/F/MyProject/unity3d/Hugula/Assets/Plugin/NGUI/ReadMe - 3.5.1.txt",
+		"/F/demo/Nlua/KeraLua/trunk/src/KeraLua/NativeMethods.cs",
+		"/F/demo/Nlua/KeraLua/trunk/src/KeraLua/Lua.cs",
+		"/F/demo/Nlua/NLua/trunk/Core/NLua/LuaLib/LuaLib.cs",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameStateBase.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/RegisterAllLuaObject.lua",
+		"/F/MyProject/DreamQuest/CardRelease/u3d/Assets/Plugins/KeraLua1/Lua.cs",
+		"/F/MyProject/unity3d/PuSanguo/Assets/UnityLuaInterfaceTest/Scripts/LuaScripts/TableTest.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/UnityLuaInterfaceTest/Scripts/LuaScripts/PassUnityObjectToLua.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/UnityLuaInterfaceTest/Scripts/LuaScripts/Fib.lua",
+		"/F/MyProject/unity3d/PuSanguo/Assets/UnityLuaInterfaceTest/Scripts/LuaScripts/CallUnityFunctionFromLua.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameStateLoading.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/dataSync/buildupdatefilelist.sh",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data2/buildData.sh",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/buildData.sh",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameMainState.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/Formation.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameTextEdit.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/LuaUtils.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/Minheap.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/Main.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameObjectLoading.lua",
+		"/C/Users/rik/Desktop/buildData.sh",
+		"/F/demo/Nlua/Lua/trunk/Makefile",
+		"/F/demo/Nlua/Lua/trunk/src/luaconf.h.in",
+		"/F/demo/Nlua/KeraLua/trunk/src/WP8/NativeMethods.cs",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/data1/GameUtils.lua",
+		"/C/Users/rik/Desktop/Test.lua",
+		"/F/MyProject/cppswf/MiniGame/trunk/data/buildALLData.sh",
+		"/F/MyProject/cppswf/MiniGame/trunk/tools/CustomPakArchive/pakfiles.py",
+		"/C/Users/rik/Desktop/Test.tff",
+		"/C/Users/rik/Desktop/（需要反编译，如果编译成功请找我）.lua"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"unpack",
+			"loader",
+			"json",
+			"assetLoader",
+			"asserts",
+			"assetLoader",
+			"addAssetsComponent",
+			"resdic",
+			"print",
+			"(int)value",
+			"(float)value",
+			"require Prefab",
+			"Prefab.lua",
+			"function prefab",
+			"Prefab()",
+			"Prefab(",
+			"Prefab",
+			"luaCall",
+			"luacall",
+			"loadfile",
+			"dofile",
+			"GetFlashObjectSuperTableName",
+			"m_renderFx",
+			"RegisterLuaObject"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Loader",
+			"int.Parse(value.ToString())",
+			"float.Parse(value.ToString())"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3068,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								400,
+								406
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "begin.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1190,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								921,
+								929
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 486.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "game/luaObject.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2324,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								206,
+								209
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "loader/loader.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3572,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								392,
+								392
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "components/assetLoader.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2227,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								304,
+								308
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "components/onAssets.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 254,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								233,
+								233
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "game/asset.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 877,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								348,
+								348
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "components/assets.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 571,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								323,
+								327
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "puSanguoLua.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 257.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
