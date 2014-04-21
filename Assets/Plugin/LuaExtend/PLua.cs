@@ -10,7 +10,7 @@ using NLua;
 using Lua = NLua.Lua;
 #else
 using LuaInterface;
-using Lua = LuaInterface.Lua;
+using Lua = LuaInterface.LuaState;
 #endif
 
 public class PLua :MonoBehaviour {
@@ -34,7 +34,11 @@ public class PLua :MonoBehaviour {
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+#if Nlua
         lua = new Lua();
+#else
+        lua = new LuaState();
+#endif
         _instance = this;
         LoadScript();
     }

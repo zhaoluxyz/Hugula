@@ -1,8 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using NLua;
 using System;
+#if Nlua
+using NLua;
+using Lua = NLua.Lua;
+#else
+using LuaInterface;
+using Lua = LuaInterface.LuaState;
+#endif
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/UIPanel Camack Table ")]

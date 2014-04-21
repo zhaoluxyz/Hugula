@@ -12,11 +12,18 @@ public class ExportResources{
 	public static string outConfigPath=Application.streamingAssetsPath+"/config.tz";
 	//public const string zipPassword="hugula@pl@";
 	public static string outAndroidZipt4f=Application.streamingAssetsPath+"/data.zip";
-	
-#if UNITY_EDITOR_OSX
-	public static string luacPath=Application.dataPath+"/../tools/luaTools/luac";
+#if Nlua 
+    #if UNITY_EDITOR_OSX
+	    public static string luacPath=Application.dataPath+"/../tools/luaTools/luac";
+    #else
+        public static string luacPath = Application.dataPath + "/../tools/luaTools/win/luac.exe";
+    #endif
 #else
-    public static string luacPath = Application.dataPath + "/../tools/luaTools/win/luac.exe";
+    #if UNITY_EDITOR_OSX
+	    public static string luacPath=Application.dataPath+"/../tools/luaTools/luajit";
+#else
+        public static string luacPath = Application.dataPath + "/../tools/luaTools/win/luajit.exe";
+    #endif
 #endif
 	#endregion
 
@@ -50,8 +57,11 @@ public class ExportResources{
             crypName = filePath.Replace(path,"").Replace(".lua","."+Common.LUA_LC_SUFFIX).Replace("\\","/");
 			outfilePath=Application.dataPath+OutLuaPath+crypName;
             checkLuaChildDirectory(outfilePath);
-           // arg = "-b " + filePath + " " + outfilePath; //for jit
-            arg="-o "+outfilePath+" "+filePath;
+#if Nlua 
+             arg="-o "+outfilePath+" "+filePath;
+#else
+            arg = "-b " + filePath + " " + outfilePath; //for jit
+#endif
             Debug.Log(arg);
             sb.Append(fileName);
             sb.Append("=");
