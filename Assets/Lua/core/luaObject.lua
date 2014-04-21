@@ -92,7 +92,7 @@ function LuaObject:addComponent(arg)
  function LuaObject:sendMessage(method,...)
     local cmps=self.components
     for k,v in pairs(cmps) do
-       if v[method]  then  v[method](v,table.unpack({...})) end
+       if v[method]  then  v[method](v,unpack({...})) end
     end
  end
 

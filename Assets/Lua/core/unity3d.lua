@@ -6,6 +6,8 @@ Request=luanet.import_type("LRequest")
 CUtils=luanet.import_type("CUtils")
 LuaHelper=luanet.import_type("LuaHelper")
 
+if unpack==nil then unpack=table.unpack end
+
 --json like [{a,1,2},{b,c,d,dw}]
 function jsonTolua(json)
 	local b=string.gsub(json,"%[","{")
