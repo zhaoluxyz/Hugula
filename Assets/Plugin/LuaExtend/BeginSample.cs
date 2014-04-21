@@ -36,7 +36,7 @@ public class BeginSample : MonoBehaviour {
 	
 	void AndroidInit()
 	{
-		if(CUtils.currPersistentExist==false)// nothing 
+        if(CUtils.currPersistentExist==false)// nothing 
 		{
 			string fileName=Application.streamingAssetsPath+"/data.zip";//  --System.IO.Path.ChangeExtension(Application.streamingAssetsPath,".zip");
 			CRequest req=new CRequest(fileName);	

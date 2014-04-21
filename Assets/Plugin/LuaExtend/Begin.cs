@@ -37,8 +37,14 @@ public class Begin : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+    #if UNITY_ANDROID || UNITY_IOS || UNITY_WP8
 		StartCoroutine(PlayVideoCoroutine());
+    #else
+        LoadFrist();
+    #endif
 	}
+
+#if UNITY_ANDROID || UNITY_IOS || UNITY_WP8
 	/// <summary>
 	/// 播放视频
 	/// </summary>
@@ -50,7 +56,8 @@ public class Begin : MonoBehaviour {
         multipleLoader = LMultipleLoader.instance;
         LoadFrist();
 	}
-	/// <summary>
+#endif
+    /// <summary>
 	/// 加载第一幕
 	/// </summary>
 	private void LoadFrist()

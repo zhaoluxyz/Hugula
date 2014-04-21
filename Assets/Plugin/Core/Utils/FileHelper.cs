@@ -66,6 +66,7 @@ public partial class FileHelper  {
 					
 				if (fileName != String.Empty) 
 				{
+                    Debug.Log(outPath + "/" + theEntry.Name);
 					using (FileStream streamWriter = File.Create(outPath+"/"+theEntry.Name)) 
 					{
 						int size = 2048;
