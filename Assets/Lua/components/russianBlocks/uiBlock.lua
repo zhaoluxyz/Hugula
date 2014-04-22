@@ -60,7 +60,8 @@ function UIBlock:setScore(score)
 end
 
 function UIBlock:onUpdate(time)
-	if RunTime==RuntimePlatform.WindowsEditor or RunTime==RuntimePlatform.OSXEditor then
+	if RunTime==RuntimePlatform.WindowsEditor or RunTime==RuntimePlatform.OSXEditor or 
+		RunTime == RuntimePlatform.WindowsPlayer or RunTime == RuntimePlatform.OSXPlayer  then
 		local dt = time-lastInputTime
 		if (lastInputTime==0) then lastInputTime=time-0.03 end
 		if dt>0.15 and Input.anyKey then

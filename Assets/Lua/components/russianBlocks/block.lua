@@ -282,7 +282,8 @@ function Block:onUpdate(time)
 		local dt = time-lastInputTime
 		if (lastInputTime==0) then lastInputTime=time-0.03 end
 		local dtframe = time-lastTime
-	if RunTime==RuntimePlatform.WindowsEditor or RunTime==RuntimePlatform.OSXEditor then
+	if RunTime==RuntimePlatform.WindowsEditor or RunTime==RuntimePlatform.OSXEditor or 
+		RunTime == RuntimePlatform.WindowsPlayer or RunTime == RuntimePlatform.OSXPlayer then
 	  	if dt>0.15 and Input.GetKey(KeyCode.LeftArrow)==true and blockManager:check(userObj,userObj.x-1,userObj.y) then
 			pos.x = pos.x-blockManager.tile
 			userObj.x=userObj.x-1
