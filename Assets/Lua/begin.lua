@@ -29,6 +29,7 @@ local function update()
 	end
 end
 
+
 pLua.updateFn=update
 
-print(pLua.updateFn)
+-- print(pLua.updateFn)
