@@ -48,13 +48,16 @@ public class PLua :MonoBehaviour {
         net = LNet.instance;
         SetLuaMain();
        object[] re= lua.DoString(luaMain);
-
-       if (re!=null && re.Length > 0)
-           updateFn = re[0] as LuaFunction;
-       if (re != null && re.Length > 1)
-           lateUpdateFn = re[1] as LuaFunction;
-       if (re != null && re.Length > 2)
-           fixedUpdateFn = re[2] as LuaFunction;
+       if (re != null && re.Length > 0)
+       {
+           LuaTable tb = re[0] as LuaTable;
+           if (tb != null)
+           {
+               updateFn = tb[1] as LuaFunction;
+               fixedUpdateFn = tb[2] as LuaFunction;
+               lateUpdateFn = tb[3] as LuaFunction;
+           }
+       }
 
     }
 

@@ -7,8 +7,14 @@ using System.IO;
 public class BeginSample : MonoBehaviour {
 	
 	public bool editorDebug=false;
+    public bool openUpdate = true;
+    public bool openFixedUpdate = true;
+    public bool openLateUpdate = true;
+    public string enterLua = "main";
+
     private static BeginSample _instance;
     public const string VERSION_FILE_NAME = "Ver.t";
+
     public static BeginSample instance
     {
         get
@@ -89,6 +95,10 @@ public class BeginSample : MonoBehaviour {
 		{
             PLua p=gameObject.AddComponent<PLua>();
             p.isDebug = editorDebug;
+            p.enterLua = this.enterLua;
+            p.openUpdate = this.openUpdate;
+            p.openFixedUpdate = this.openFixedUpdate;
+            p.openLateUpdate = this.openLateUpdate;
 		}
 	}
 	
