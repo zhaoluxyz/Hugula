@@ -82,8 +82,8 @@ public class ExportResources{
 		f.CreateZip(outConfigPath,path,false,"^.*(.csv)$");
 		Debug.Log(" export config done: "+outConfigPath+" !");
 	}
-	
-	[MenuItem("Pu Game/zip android one key ")]
+
+    [MenuItem("Pu Game/export android one key ")]
 	public static void exporAndroid()
 	{
 		exportLua();
@@ -97,8 +97,8 @@ public class ExportResources{
 
         Directory.Delete(Application.streamingAssetsPath + "/" + Common.LUACFOLDER, true);
 	}
-	
-	[MenuItem("Pu Game/zip iphone wp8 one key ")]
+
+    [MenuItem("Pu Game/export other one key ")]
 	public static void exportIphone()
 	{
 		exportLua();
