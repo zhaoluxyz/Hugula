@@ -326,11 +326,11 @@ function Block:onUpdate(time)
 							print("direction"..tostring(direction))
 							if direction>160 or direction<-160 and blockManager:check(userObj,userObj.x-1,userObj.y) then  --left
 								pos.x = pos.x+blockManager.tile
-								userObj.x=userObj.x+1
+								userObj.x=userObj.x-1
 						    	blocks.localPosition = pos
 							elseif direction >-20 and direction <20 and  blockManager:check(userObj,userObj.x+1,userObj.y) then --right
 								pos.x = pos.x-blockManager.tile
-								userObj.x=userObj.x-1
+								userObj.x=userObj.x+1
 								blocks.localPosition = pos
 							elseif direction >70 and direction <110 then --down
 								  fallSpeed = blockManager.blockDropSpeed
