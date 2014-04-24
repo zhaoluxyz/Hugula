@@ -41,7 +41,8 @@ public class BeginSample : MonoBehaviour {
 	#region platform init
 	
 	void AndroidInit()
-	{
+    {
+        Debug.Log(string.Format(" path = {0}, exist ={1} ", CUtils.GetFileFullPath(VERSION_FILE_NAME), CUtils.currPersistentExist));
         if(CUtils.currPersistentExist==false)// nothing 
 		{
 			string fileName=Application.streamingAssetsPath+"/data.zip";//  --System.IO.Path.ChangeExtension(Application.streamingAssetsPath,".zip");
@@ -89,7 +90,8 @@ public class BeginSample : MonoBehaviour {
 	}
 	
 	void LuaBegin()
-	{
+    {
+        Debug.Log("LuaBegin");
 		PLua luab=this.gameObject.GetComponent<PLua>();
 		if(luab==null)
 		{

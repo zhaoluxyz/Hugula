@@ -138,10 +138,11 @@ public class PLua :MonoBehaviour {
 
     public void RegisterFunc()
     {
-        //lua.RegisterFunction("delay", this, this.GetType().GetMethod("Delay"));
+        lua.RegisterFunction("delay", this, this.GetType().GetMethod("Delay"));
+        lua.RegisterFunction("stopDelay", this, this.GetType().GetMethod("StopDelay"));
     }
 
-    public static void Delay(LuaFunction luafun, float time,object[] args)
+    public static void Delay(LuaFunction luafun, float time,object args=null)
     {
         _instance.StartCoroutine(DelayDo(luafun, args, time));
     }
@@ -151,7 +152,7 @@ public class PLua :MonoBehaviour {
         _instance.StopCoroutine(methodName);
     }
 
-    private static IEnumerator DelayDo(LuaFunction luafun, object[] arg, float time)
+    private static IEnumerator DelayDo(LuaFunction luafun, object arg, float time)
     {
         yield return new WaitForSeconds(time);
         luafun.Call(arg);
