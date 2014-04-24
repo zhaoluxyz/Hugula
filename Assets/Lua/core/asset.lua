@@ -1,8 +1,9 @@
 local CUtils=CUtils
-SINGLE=1 MULITPLE=2
+--SINGLE=1 MULITPLE=2
 
-Asset = class( function(self, type, url,names)
-    self.type = type
+Asset = class(function(self,url,names)
+    -- self.type = type
+    print(url)
     self.url = url --CUtils.GetAssetFullPath(url)
     self.fullUrl=CUtils.GetAssetFullPath(url)
     self.key = CUtils.GetKeyURLFileName(url)
@@ -15,9 +16,25 @@ Asset = class( function(self, type, url,names)
     self.root = nil
 end)
 
+function Asset:show(...)
+	if self.items then
+		for k,v in pairs(self.items) do
+			v:SetActive(true)	
+		end
+	end
+end
+
+function Asset:hide(...)
+	if self.items then
+		for k,v in pairs(self.items) do
+			v:SetActive(false)	
+		end
+	end
+end
+
 --
 function Asset:copyTo(asse)
-	asse.type=self.type
+	--asse.type=self.type
 	asse.key = self.key
 	asse.url = self.url
 	asse.fullUrl = self.fullUrl

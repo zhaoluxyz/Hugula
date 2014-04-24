@@ -35,6 +35,7 @@ LuaObject=class(function(self,name)
 	self.components={}
 	self.updatecomponents = {}
     self.active=true
+    print("LuaObject constorctor .. is "..self.name)
 end)
 
 function LuaObject:addComponent(arg)
@@ -91,9 +92,14 @@ function LuaObject:addComponent(arg)
 
  function LuaObject:sendMessage(method,...)
     local cmps=self.components
+    local fn
     for k,v in pairs(cmps) do
-       if v[method]  then  v[method](v,unpack({...})) end
+        fn=v[method]
+       if fn then  fn(v,unpack({...})) end
     end
+
+    fn = self[method]
+    if fn then fn(self,{...}) end
  end
 
 function LuaObject:__tostring()

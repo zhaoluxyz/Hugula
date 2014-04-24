@@ -5,18 +5,26 @@ local pLua=PLua.instance
 local UPDATECOMPONENTS=UPDATECOMPONENTS
 local LuaObject=LuaObject
 local SINGLE=SINGLE local MULITPLE=MULITPLE
-local assets=
-{
-	--Asset(SINGLE,"Hello.u3d"),
-	Asset(MULITPLE,"BlockRoot.u3d")
-}
 
-local bolck = LuaObject("bolck")
--- bolck:addComponent("input")
-bolck:addComponent("russianBlocks.block")
-bolck:addComponent("russianBlocks.blockManager")
-bolck:addComponent("assetLoader"):load(assets)
-bolck:addComponent("russianBlocks.uiBlock")
+require("state.itemObject")
+
+local LuaItemManager = LuaItemManager
+LuaItemManager:registerItemObject("hello","state/hello")
+
+local hello = LuaItemManager:getItemObject("hello")
+hello:load()
+-- local assets=
+-- {
+-- 	--Asset("Hello.u3d"),
+-- 	Asset("BlockRoot.u3d")
+-- }
+
+-- local bolck = LuaObject("bolck")
+-- -- bolck:addComponent("input")
+-- bolck:addComponent("russianBlocks.block")
+-- bolck:addComponent("russianBlocks.blockManager")
+-- bolck:addComponent("assetLoader"):load(assets)
+-- bolck:addComponent("russianBlocks.uiBlock")
 
 
 local function update()

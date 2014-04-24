@@ -32,7 +32,7 @@ function tojson(tbl,indent)
 	 for k, v in pairs(tbl) do
 	    if type(v) == "table" then
 	    	havetable=true
-	    	if(indent==0) then
+	    	if(indenct==0) then
 	    		str=str..sp.."\r\n	"..tostring(k)..":"..tojson(v,indent+1)
 	    	else
 	    		str=str..sp.."\r\n"..tab..tostring(k)..":"..tojson(v,indent+1)

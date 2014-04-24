@@ -18,6 +18,7 @@ function AssetLoader:onAssetLoaded(key,asset)
 	self.asserts[key]=asset.items
 	self.asserts[key.."_root"]=asset.root
 	loadCurr=loadCurr+1
+	self.luaObj:sendMessage("onAssetLoad",key,asset)
 	if loadCurr >= loadCount then
 		self.luaObj:sendMessage("onAssetsLoad",self.asserts)
 	end
@@ -35,7 +36,7 @@ function AssetLoader:loadAssets(asserts)
 		root.name=main.name
 		local ass = req.head
 
-		local baseAsset=Asset(ass.type,ass.url)
+		local baseAsset=Asset(ass.url)
 		baseAsset.root=root
 		local eachFn =function(i,obj)
 			baseAsset.items[obj.name]=obj
@@ -74,17 +75,25 @@ function AssetLoader:clear()
 	self.name=nil
 end
 
-function AssetLoader:onLoaded(root)
-	LuaHelper.Foreach(root,eachFn)
-	GAMEOBJECT_ATLAS[self.name]=self
-	luaObj:sendMessage("asserts","onLoaded",root,self)
-end
+-- function AssetLoader:onLoaded(root)
+-- 	LuaHelper.Foreach(root,eachFn)
+-- 	GAMEOBJECT_ATLAS[self.name]=self
+-- 	luaObj:sendMessage("onAssetLoaded",root)
+-- end
 
 function AssetLoader:load(asts)
 	loadCount = #asts
 	loadCurr = 0
 	self.asserts = {}
 	self:loadAssets(asts)
+end
+
+function clearAssets()
+	for k,v in pairs(GAMEOBJECT_ATLAS) do
+		print(k.." is Destroy ")
+		if v then LuaHelper.Destroy(v.root) end
+	end
+	GAMEOBJECT_ATLAS={}
 end
 
 return AssetLoader

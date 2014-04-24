@@ -54,8 +54,8 @@ local function loadByTable(tb,cache)
 		else table.insert(arrList,req)--arrList:Add(req)
 		end
 	end
-	print("load by table")
-	printTable(tb)
+	--print("load by table")
+	--printTable(tb)
 	Loader.multipleLoader:loadReq(arrList)
 end
 
@@ -105,7 +105,7 @@ end
 
 function Loader:getResource(...)
 	local a,b,c,d=...
-	print("Loader:getResource type=" ..type(a))
+	--print("Loader:getResource type=" ..type(a))
 	--url,onComplete
 	if type(a)=="string" then 
 		loadByUrl(a,b,c,d)
@@ -118,7 +118,7 @@ function Loader:getResource(...)
 	elseif type(a) == "table" then
 		loadByTable(a,b)
 	end
-	print("getResource  ed...."..tostring(a))
+	--print("getResource  ed...."..tostring(a))
 end
 
 local function disposeWWW( www )
