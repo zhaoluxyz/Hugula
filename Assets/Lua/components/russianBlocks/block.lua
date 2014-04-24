@@ -28,7 +28,7 @@ local lastInputTime = 1 --上次点击时间
 local nextGridPosY=0 --下个格子坐标
 local nowBlock = false
 --for touch
-local touchClickThreshold = 0.02
+local touchClickThreshold = 0.03
 local startPos,directionChosen,direction
 local beginTime,clickDt=0,0
 
