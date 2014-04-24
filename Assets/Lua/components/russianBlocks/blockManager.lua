@@ -25,6 +25,9 @@ end)
 
 
 ----------------------------class--------------------------
+function BlockManager:map()
+	return map
+end
 function BlockManager:start()
 	self.tile = 30
 	self.blockDropSpeed = 1000
@@ -197,6 +200,11 @@ function BlockManager:check(data,posx,posy)
 	 	my=math.floor(posy+y-1)
 	 	row=map[my]
 	 	datarow=data[y]
+	 	if y==1 then
+	 		-- print(string.format("check map.y=%s ,data.y=%s",my,y))
+	 	end
+	 	-- print("posy = "..tostring(my).." "..tojson(row))
+	 	-- print(" y = "..tostring(y).. "  = "..tojson(datarow))
 	 	for x=1,size do
 	 		mx=math.floor(posx+x-1)
 	 		if row == nil then-- 列超出界限

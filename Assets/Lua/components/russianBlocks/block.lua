@@ -94,20 +94,30 @@ local function fall(blockRefs,dtframe)
 
 		local moves = fallSpeed*Time.deltaTime
 		local p = blocks.localPosition
+
+		--print("fall y = "..tostring(p.y) )
 		p.y = p.y-moves
-		if p.y<=nextGridPosY then 
+		--print("move y = "..tostring(pos.y) )
+
+		if p.y<=nextGridPosY then --到达临界点
 			p.y = nextGridPosY
 			userObject.y=userObject.y+1
-			-- print(string.format(" first Y =%s",userObject.y))
-			nextGridPosY = startPointY-userObject.y*blockManager.tile
-			if blockManager:check(userObject,userObject.x,userObject.y+1)==false then
+			local y=userObject.y+1
+			print(string.format(" firstx=%s ,y=%s next y = %s",userObject.x,userObject.y,y))
+			if blockManager:check(userObject,userObject.x,y)==true then --能下移动
+				nextGridPosY = startPointY-userObject.y*blockManager.tile
+				-- blocks.localPosition = p
+				-- return true
+			else
 				blocks.localPosition = p
-				-- print(string.format(" Y =%s could not done!",userObject.y))
+				print(tojson(userObject))
+				print(tojson(blockManager:map()))
+				 print(string.format(" Y =%s x=%scould not done!",userObject.y,userObject.x))
 				return false
 			end
 		end
 		blocks.localPosition = p
-	return true
+		return true
 end
 
 local function rotate(blockRefs)
@@ -252,44 +262,25 @@ function Block:onAssetsLoad(items)
 	--startPoint.localScale=s
 end
 
--- function Block:onTouch(float)
--- 	--local time = 
--- 	local dt = Time.time  -lastInputTime
--- 	print("Block:onTouch"..tostring(dt))
--- 	--lastInputTime=Time.time  +Time.deltaTime
--- 	if dt>0.15 then
--- 		lastInputTime=Time.time 
--- 		print(" Angle :"..tostring(float))
--- 		pos = blocks.localPosition
--- 		local userObj=refs.userObject
--- 		if float>150 and float<210 and blockManager:check(userObj,userObj.x-1,userObj.y) then  --left
--- 			pos.x = pos.x+blockManager.tile
--- 			userObj.x=userObj.x+1
--- 	    	blocks.localPosition = pos
--- 		elseif float >-20 and float <20 and  blockManager:check(userObj,userObj.x+1,userObj.y) then --right
--- 			pos.x = pos.x-blockManager.tile
--- 			userObj.x=userObj.x-1
--- 			blocks.localPosition = pos
-
--- 		end
--- 	end
-
--- end
-
 function Block:onUpdate(time)
-		pos = blocks.localPosition
+	  	pos = blocks.localPosition
+
 		local userObj=refs.userObject
 		local dt = time-lastInputTime
 		if (lastInputTime==0) then lastInputTime=time-0.03 end
 		local dtframe = time-lastTime
 	if RunTime==RuntimePlatform.WindowsEditor or RunTime==RuntimePlatform.OSXEditor or 
 		RunTime == RuntimePlatform.WindowsPlayer or RunTime == RuntimePlatform.OSXPlayer then
-	  	if dt>0.15 and Input.GetKey(KeyCode.LeftArrow)==true and blockManager:check(userObj,userObj.x-1,userObj.y) then
+
+	  	if dt>0.15 and Input.GetKey(KeyCode.LeftArrow)==true and blockManager:check(userObj,userObj.x-1,userObj.y+1) then --left
 			pos.x = pos.x-blockManager.tile
 			userObj.x=userObj.x-1
 			lastInputTime=time
 			blocks.localPosition = pos
-	    elseif  dt>0.15 and Input.GetKey(KeyCode.RightArrow)==true and  blockManager:check(userObj,userObj.x+1,userObj.y) then
+			--print("l..........l...left y = "..tostring(pos.y) )
+			-- print(tojson(userObj))
+			-- print(tojson(blockManager:map()))
+	    elseif  dt>0.15 and Input.GetKey(KeyCode.RightArrow)==true and  blockManager:check(userObj,userObj.x+1,userObj.y+1) then
 	    	--local size = blockManager.width --#userObj-1
 			pos.x = pos.x+blockManager.tile
 			userObj.x=userObj.x+1
@@ -317,23 +308,20 @@ function Block:onUpdate(time)
 				elseif	touch.phase == TouchPhase.Ended then
 						clickDt=time - beginTime
 						if clickDt>touchClickThreshold then --and startPos==touch.position then
-						-- 	--self.luaObj:sendMessage("onClick")
-						-- 	rotate(refs)
-						-- else
-							-- print(startPos)
-							-- print(touch.position) --Math.Atan2(v2.y - v1.y, v2.x - v1.x) / Math.PI * 180
 							direction = math.atan2(startPos.y-touch.position.y,startPos.x-touch.position.x)/ math.pi * 180 
 							print("direction"..tostring(direction))
-							if direction>160 or direction<-160 and blockManager:check(userObj,userObj.x-1,userObj.y) then  --left
-								pos.x = pos.x+blockManager.tile
-								userObj.x=userObj.x-1
-						    	blocks.localPosition = pos
-							elseif direction >-20 and direction <20 and  blockManager:check(userObj,userObj.x+1,userObj.y) then --right
-								pos.x = pos.x-blockManager.tile
+							if direction>160 or direction<-160 and blockManager:check(userObj,userObj.x+1,userObj.y+1) then  --right
 								userObj.x=userObj.x+1
+								pos.x = pos.x+blockManager.tile
+						    	blocks.localPosition = pos
+						    	print(string.format("right userObj.x =%s pos =%s",userObj.x,pos))
+							elseif direction >-20 and direction <20 and  blockManager:check(userObj,userObj.x-1,userObj.y+1) then --left
+								userObj.x=userObj.x-1
+								pos.x = pos.x-blockManager.tile
 								blocks.localPosition = pos
+								print(string.format("left userObj.x =%s pos =%s",userObj.x,pos))
 							elseif direction >70 and direction <110 then --down
-								  fallSpeed = blockManager.blockDropSpeed
+								fallSpeed = blockManager.blockDropSpeed
 							elseif direction > -110 and direction< -70 then --up
 								rotate(refs)
 							end
@@ -350,7 +338,7 @@ function Block:onUpdate(time)
 		nowBlock =false
     end
 
-    if fall(refs,dtframe)==false then
+   	 if fall(refs,dtframe)==false then
 		nowBlock=true
     end
 

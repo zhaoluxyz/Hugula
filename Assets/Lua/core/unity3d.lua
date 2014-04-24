@@ -120,6 +120,6 @@ function lugGC()
   print(" gc end ="..tostring(c).." ")
 end
 
-function print(msg)
-  Debug.Log(" NLua : "..tostring(msg))
-end
+-- function print(msg)
+--   Debug.Log(" NLua : "..tostring(msg))
+-- end
