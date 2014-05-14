@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if Nlua
+using NLua;
+using Lua = NLua.Lua;
+#else
+using LuaInterface;
+using Lua = LuaInterface.LuaState;
+#endif
 
-public class CStaticEvent :MonoBehaviour {
+public class NGUIEvent :MonoBehaviour {
 
 	void Awake()
 	{
@@ -17,33 +24,33 @@ public class CStaticEvent :MonoBehaviour {
 	void OnPress(bool press)
 	{
 		GameObject sender=UICamera.hoveredObject;
-		CStaticEvent.instance.onPressHandle(sender,press);
+		instance.onPressHandle(sender,press);
 	}
 	
 	void OnClick()
 	{
 		GameObject sender=UICamera.hoveredObject;
-		CStaticEvent.instance.onClickHandle(sender,this);
+		instance.onClickHandle(sender,this);
 	}
-	
-	void  OnDrag (Vector2 delta)
-	{
-		GameObject sender=UICamera.hoveredObject;
-		CStaticEvent.instance.onDragHandle(sender,this);
-	}
+
+    void OnDrag(Vector2 delta)
+    {
+        GameObject sender = UICamera.hoveredObject;
+        instance.onDragHandle(sender, this);
+    }
 	
 	void OnDrop (GameObject drag)
 	{
 		GameObject sender=UICamera.hoveredObject;
-		CStaticEvent.instance.onDropHandle(sender,this);
+		instance.onDropHandle(sender,this);
 	}
 	
 	
-	void OnSelect (bool selected)
-	{
-		GameObject sender=UICamera.hoveredObject;
-		CStaticEvent.instance.onSelectHandle(sender,this);
-	}
+    //void OnSelect (bool selected)
+    //{
+    //    GameObject sender=UICamera.hoveredObject;
+    //    instance.onSelectHandle(sender,this);
+    //}
 	
 //	void OnKey (KeyCode key)
 //	{//Debug.Log("On key Down:"+key);
@@ -66,41 +73,41 @@ public class CStaticEvent :MonoBehaviour {
 	#region public 
 	public void onPressHandle(GameObject sender,object arg)
 	{
-		if(OnPressHandle!=null)
+        if (onPressFn != null)
 		{
-			OnPressHandle(sender,arg);
+            onPressFn.Call(sender, arg);
 		}
 	}
 
 	public void onClickHandle(GameObject sender, object arg)
 	{
-		if(OnClickHandle!=null)
+		if(onClickFn!=null)
 		{
-			OnClickHandle(sender,arg);
+            onClickFn.Call(sender, arg);
 		}
 	}
 	
 	public void onDragHandle(GameObject sender,object arg)
 	{
-		if(OnDragHandle!=null)
+		if(onDragFn!=null)
 		{
-			OnDragHandle(sender,arg);
+            onDragFn.Call(sender, arg);
 		}
 	}
 	
 	public void onDropHandle(GameObject sender,object arg)
 	{
-		if(OnDropHandle!=null)
+		if(onDropFn!=null)
 		{
-			OnDropHandle(sender,arg);
+            onDropFn.Call(sender, arg);
 		}
 	}
 	
 	public void onSelectHandle(GameObject sender,object arg)
 	{
-		if(OnSelectHandle!=null)
+		if(onSelectFn!=null)
 		{
-			OnSelectHandle(sender,arg);
+            onSelectFn.Call(sender, arg);
 		}
 	}
 	
@@ -114,25 +121,25 @@ public class CStaticEvent :MonoBehaviour {
 
 	#endregion
 
-	public event ViewOnEventHandle OnPressHandle;
-	
-	public event ViewOnEventHandle OnClickHandle;	
+	public LuaFunction onPressFn;
 
-	public event ViewOnEventHandle OnDragHandle;
-	
-	public event ViewOnEventHandle OnDropHandle;
-	
-	public event ViewOnEventHandle OnSelectHandle;
+    public LuaFunction onClickFn;
 
-	private static CStaticEvent _instance;
+    public LuaFunction onDragFn;
 
-	public static CStaticEvent instance
+    public LuaFunction onDropFn;
+
+    public LuaFunction onSelectFn;
+
+    private static NGUIEvent _instance;
+
+    public static NGUIEvent instance
 	{
 		get{
 			if(_instance==null)
 			{
-				GameObject obj=new GameObject("CStaticEvent");
-				_instance=obj.AddComponent<CStaticEvent>();
+                GameObject obj = new GameObject("NGUIEvent");
+                _instance = obj.AddComponent<NGUIEvent>();
 				//_instance=new CStaticEvent();
 			}
 			return _instance;
@@ -140,6 +147,4 @@ public class CStaticEvent :MonoBehaviour {
 	}
 
 }
-
-public delegate void ViewOnEventHandle(GameObject sender,object arg);
 
