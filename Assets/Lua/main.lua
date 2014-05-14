@@ -10,7 +10,7 @@ local update_id="";
 local FRIST_VIEW = "Frist.u3d";
 local VIDEO_NAME = "Loading.mp4";
 local VERSION_FILE_NAME = "Ver.t";
-local ResVersion = 0;
+local ResVersion = 0
 local CUtils=CUtils
 local RuntimePlatform=UnityEngine.RuntimePlatform
 local Application=UnityEngine.Application
@@ -35,7 +35,6 @@ end
 local function onUpdateItemComp(req)
 	local bytes=req.data.bytes
 	if(bytes~=nil) then
-		print("onUpdateItemComp")
 		FileHelper.UnZipFile(bytes,Application.persistentDataPath);
 	end
 end
@@ -49,7 +48,6 @@ local function onAllUpdateResComp(loader)
 end
 
 local function seveVersion()
-	print("seveVersion")
 	FileHelper.PersistentUTF8File(update_id,VERSION_FILE_NAME)	
 end
 
@@ -58,7 +56,6 @@ local function  onUpdateResComp(req)
 	if(www) then
 		local txt=www.text;
         local res = json:decode(txt)
-        print(res)
 		if res["error"] then
 			enterGame()
 		elseif res["update_url"] then
@@ -79,25 +76,23 @@ end
 
 local function checkRes()
 
-		print("checkRes")
-
 	if(Application.platform==RuntimePlatform.OSXEditor) then
 		enterGame()
 	elseif(Application.platform==RuntimePlatform.WindowsEditor) then
 		enterGame()
 	else
-		local url=string.format(resourceURL,tostring(ResVersion),Application.platform,"0.2.0");
-		local req=Request(url)
-		print("checkRes : "..url)
-		req.onCompleteFn=onUpdateResComp
+		enterGame()
+		-- local url=string.format(resourceURL,tostring(ResVersion),Application.platform,"0.2.0");
+		-- local req=Request(url)
+		-- req.onCompleteFn=onUpdateResComp
 
-		local function onErr( req )
-			print("url "..req.url .." can't open")
-			enterGame()
-		end
-
-		req.onEndFn=onErr
-	    Loader:getResource(req,false)
+		-- local function onErr( req )
+		-- 	print("checkRes on erro")
+		-- 	enterGame()
+		-- end
+		-- print("begin checkRes "..url)
+		-- req.onEndFn=onErr
+	 --    Loader:getResource(req,false)
 	end
 end
 
@@ -110,22 +105,22 @@ local function checkVerion()
 	local req=Request(verPath)
 	req.onCompleteFn=onURLComp
 	req.onEndFn=onURLErComp
-  	print("request create "..tostring(req))
-  	print(Loader)
+  	--print("request create "..tostring(req))
+  	--print(Loader)
     Loader:getResource(req,false)
-    print("checkVerion . Loader:getResource called  "..verPath)
+    --print("checkVerion . Loader:getResource called  "..verPath)
 end
 
 local function loadFrist()
 
 	local function onLoadComp(r)
-		Application.targetFrameRate=45;
+		Application.targetFrameRate=30;
 		local www=r.data
 		print(r.url.." loaded ")
-		print(www)
+		--print(www)
         fristView = LuaHelper.Instantiate(www.assetBundle.mainAsset)
         progressBarTxt = LuaHelper.GetComponentInChildren(fristView,"UILabel")
-        progressBarTxt.text="loading ..."
+        progressBarTxt.text="loading new ..."
         www.assetBundle:Unload(false)
         www:Dispose()
         checkVerion()

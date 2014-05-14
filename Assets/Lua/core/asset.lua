@@ -1,9 +1,9 @@
 local CUtils=CUtils
---SINGLE=1 MULITPLE=2
-
-Asset = class(function(self,url,names)
-    -- self.type = type
-    print(url)
+local SINGLE,SHARE = SINGLE,SHARE 
+local LuaHelper=LuaHelper
+local GAMEOBJECT_ATLAS = GAMEOBJECT_ATLAS
+Asset = class(function(self,type,url,names)
+    self.type = type
     self.url = url --CUtils.GetAssetFullPath(url)
     self.fullUrl=CUtils.GetAssetFullPath(url)
     self.key = CUtils.GetKeyURLFileName(url)
@@ -16,8 +16,23 @@ Asset = class(function(self,url,names)
     self.root = nil
 end)
 
+function Asset:clear()
+	if self.type == SINGLE then
+		if self.root then LuaHelper.Destory(self.root) end
+		self.root = nil
+		GAMEOBJECT_ATLAS[self.key]=nil
+	elseif self.items then
+		for k,v in pairs(self.items) do
+			LuaHelper.Destory(v)
+		end
+		self.items=nil
+	end
+end
+
 function Asset:show(...)
-	if self.items then
+	if self.type == SINGLE then
+		if self.root then self.root:SetActive(true) end
+	elseif self.items then
 		for k,v in pairs(self.items) do
 			v:SetActive(true)	
 		end
@@ -25,7 +40,9 @@ function Asset:show(...)
 end
 
 function Asset:hide(...)
-	if self.items then
+	if self.type == SINGLE then
+		if self.root then self.root:SetActive(false) end
+	elseif  self.items then
 		for k,v in pairs(self.items) do
 			v:SetActive(false)	
 		end
@@ -34,7 +51,7 @@ end
 
 --
 function Asset:copyTo(asse)
-	--asse.type=self.type
+	if asse.type == nil then asse.type = self.type end
 	asse.key = self.key
 	asse.url = self.url
 	asse.fullUrl = self.fullUrl

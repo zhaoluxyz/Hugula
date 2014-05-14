@@ -1,6 +1,7 @@
 local Input=UnityEngine.Input
 local Vector3=UnityEngine.Vector3
 local KeyCode=UnityEngine.KeyCode
+local Quaternion = UnityEngine.Quaternion
 local LuaHelper=LuaHelper
 local minRowNumber=1
 local block7={ --center for rota offset
@@ -10,10 +11,13 @@ local block7={ --center for rota offset
 {{1,0,0},{1,1,0},{0,1,0},center={1,1},top={-1,1}},
 {{0,0,1},{0,1,1},{0,1,0},center={1,1},top={-1,1}},
 {{0,1,0},{1,1,1},{0,0,0},center={1,1},top={-1,1}},
-{{0,1,0,0},{0,1,0,0},{0,1,0,0},{0,1,0,0},center={1.5,1.5},top={-1,1}}
+{{0,1,0,0},{0,1,0,0},{0,1,0,0},{0,1,0,0},center={1.5,1.5},top={-1,1}},
 }
 
+local uiBlock
+
 local map = {}
+local debugMap = {}
 local BlockManager = class(function(self,luaObj )
 	self.luaObj = luaObj
 	self.enable = false
@@ -28,32 +32,50 @@ end)
 function BlockManager:map()
 	return map
 end
+
+function BlockManager:debugMap()
+	return debugMap
+end
+
 function BlockManager:start()
 	self.tile = 30
-	self.blockDropSpeed = 1000
-	self.speed= 50
+	self.blockDropSpeed = 0.01
+	self.speed= 1
+	map={}
+	debugMap ={}
 	minRowNumber = self.height
 	for y=1,self.height+2 do
 		for x=1,self.width do
 			if(map[y]==nil) then map[y] = {} end
 			if y <= self.height then map[y][x]=false
 			else map[y][x]=true end
+
+			--for debug
+			if(debugMap[y]==nil) then debugMap[y] = {} end
+			if y <= self.height then debugMap[y][x]=false 
+			else debugMap[y][x]=true end
 		end
 	end
 	self.score = 0
+
+	uiBlock = self.luaObj.components.uiBlock
+	if uiBlock then uiBlock.enable=true end
 end
 
 function BlockManager:gameOver()
 	self.luaObj.components.block.enable = false
 	print("gameOver ")
-	local uiBlock = self.luaObj.components.uiBlock
+	uiBlock = self.luaObj.components.uiBlock
 	uiBlock:setState(3)
 	uiBlock:setScore(self.score)
-	self:start()
+	uiBlock.enable=false
+	--self:start()
+	if self.luaObj.parent~=nil then self.luaObj.parent:sendMessage("gameOver",self)end
 end
 
 function BlockManager:gameStart()
-	-- body
+	self:start()
+	if uiBlock then uiBlock.enable=true end
 end
 
 function BlockManager:getBlocksData()
@@ -103,43 +125,43 @@ function BlockManager:checkDelete(data)
 	if minRowNumber >= data.y then minRowNumber = data.y end
 
 	--move map data
-	if delRowCount ==0 then return end
-	self.score=self.score+delRowCount*10
-	local moveDown,p,sourRow,mapy,findy,findcopy= 0,nil,nil,nil,1,false
-	for y=sizeY,data.y,-1 do
-		findcopy = false
-		-- if(delrow[tostring(y)]) then print(delrow[tostring(y)]) end
-		if y<=self.height then
+	-- if delRowCount ==0 then return end
+	-- self.score=self.score+delRowCount*10
+	-- local moveDown,p,sourRow,mapy,findy,findcopy= 0,nil,nil,nil,1,false
+	-- for y=sizeY,data.y,-1 do
+	-- 	findcopy = false
+	-- 	-- if(delrow[tostring(y)]) then print(delrow[tostring(y)]) end
+	-- 	if y<=self.height then
 
-			if y == delrow[tostring(y)] then  --if deleted
-				for findy=y-1,data.y,-1 do
-					if findy ~=delrow[tostring(findy)] then
-						-- print("move "..tostring(findy).." to "..tostring(y))
-						findcopy = true
-						break
-					end
-				end
+	-- 		if y == delrow[tostring(y)] then  --if deleted
+	-- 			for findy=y-1,data.y,-1 do
+	-- 				if findy ~=delrow[tostring(findy)] then
+	-- 					-- print("move "..tostring(findy).." to "..tostring(y))
+	-- 					findcopy = true
+	-- 					break
+	-- 				end
+	-- 			end
 
-				if findcopy then
-					row = map[y]
-					rowlen=#row
-					sourRow = map[findy]
-					for i=1,rowlen do
-						item =row[i]
-						sourRow[i]=item
-						if type(item) == "userdata" then
-							p=item.transform.localPosition
-							p.y=p.y-moveDown*self.tile
-							item.transform.localPosition = p
-						end
-						row[i]=false
-					end
-				end
-			end
-		end
-	end
+	-- 			if findcopy then
+	-- 				row = map[y]
+	-- 				rowlen=#row
+	-- 				sourRow = map[findy]
+	-- 				for i=1,rowlen do
+	-- 					item =row[i]
+	-- 					sourRow[i]=item
+	-- 					if type(item) == "userdata" then
+	-- 						p=item.transform.localPosition
+	-- 						p.y=p.y-moveDown*self.tile
+	-- 						item.transform.localPosition = p
+	-- 					end
+	-- 					row[i]=false
+	-- 				end
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 
-	-- print("map1 = \n"..tojson(map))
+	--print("map1 = \n"..tojson(map))
 
 	-- local maplen=self.height
 	-- for y=data.y,minRowNumber,-1 do
@@ -163,21 +185,23 @@ function BlockManager:checkDelete(data)
 	-- 	print("map3 = \n"..tojson(map))
 end
 
+local rx = 1
 -- block can rota
 function BlockManager:fill(data,blockDic)
 	 local size = #data
 	 local mx,my,key = 1,1,""
 	 local row,datarow = nil,nil
 	 for y=1,size do
-	 	my=math.floor(data.y+y-1)
+	 	my=data.y+y-1
 	 	row=map[my]
 	 	datarow=data[y]
 	 	for x=1,size do
-	 		mx=math.floor(data.x+x-1)
+	 		mx=data.x+x-1
 	 		if row and datarow[x]==1 then-- 列超出界限
 	 			key = "block_"..tostring(y).."_"..tostring(x) --string.format("block_%s_%s",y,x)
 	 			local item  = blockDic[key]
 	 			row[mx] = item
+	 			debugMap[my][mx].transform.localRotation=Quaternion.Euler(90,0,90*rx)
 	 			if item ==nil then 
 	 				print(tojson(blockDic))
 	 				print(key.."is not exist !")
@@ -189,6 +213,7 @@ function BlockManager:fill(data,blockDic)
 	 		end
 	 	end
 	 end
+	 rx=rx+1
 end
 
 --check if move
@@ -196,6 +221,7 @@ function BlockManager:check(data,posx,posy)
 	 local size = #data
 	 local mx,my = 1,1
 	 local row,datarow
+	 -- printTable(data)
 	 for y=1,size do
 	 	my=math.floor(posy+y-1)
 	 	row=map[my]

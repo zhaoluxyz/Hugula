@@ -1,31 +1,14 @@
-require("core.luaObject")
-require("core.asset")
+require("registerItemObjects")
+require("registerState")
+require("uiInput")
 local os=os
 local pLua=PLua.instance
 local UPDATECOMPONENTS=UPDATECOMPONENTS
 local LuaObject=LuaObject
-local SINGLE=SINGLE local MULITPLE=MULITPLE
+local StateManager=StateManager
 
-require("state.itemObject")
 
-local LuaItemManager = LuaItemManager
-LuaItemManager:registerItemObject("hello","state/hello")
-
-local hello = LuaItemManager:getItemObject("hello")
-hello:load()
--- local assets=
--- {
--- 	--Asset("Hello.u3d"),
--- 	Asset("BlockRoot.u3d")
--- }
-
--- local bolck = LuaObject("bolck")
--- -- bolck:addComponent("input")
--- bolck:addComponent("russianBlocks.block")
--- bolck:addComponent("russianBlocks.blockManager")
--- bolck:addComponent("assetLoader"):load(assets)
--- bolck:addComponent("russianBlocks.uiBlock")
-
+StateManager:setCurrentState(StateManager.main)
 
 local function update()
 	local len = #UPDATECOMPONENTS
@@ -37,7 +20,4 @@ local function update()
 	end
 end
 
-
 pLua.updateFn=update
-
--- print(pLua.updateFn)

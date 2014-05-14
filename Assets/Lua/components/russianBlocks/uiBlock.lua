@@ -38,9 +38,11 @@ function UIBlock:getState()
 end
 
 function UIBlock:onAssetsLoad(items)
+
+	print(" UIBlock .. onAssetsLoad...")
 	local asserts = self.luaObj.components.assetLoader.asserts
-	startPanel = asserts.BlockRoot.StartPanel
-	endPanel = asserts.BlockRoot.EndPanel
+	startPanel = asserts.BlockRoot.items.StartPanel
+	endPanel = asserts.BlockRoot.items.EndPanel
 	startPanel:SetActive(true)
 	state = 1
 	block = self.luaObj.components.block
@@ -65,7 +67,7 @@ function UIBlock:onUpdate(time)
 		local dt = time-lastInputTime
 		if (lastInputTime==0) then lastInputTime=time-0.03 end
 		if dt>0.15 and Input.anyKey then
-			self:onClick()
+			self:onTapClick()
 			lastInputTime = time
 		end
 	else
@@ -79,7 +81,7 @@ function UIBlock:onUpdate(time)
 				elseif	touch.phase == TouchPhase.Ended then
 					clickDt=time - beginTime
 					if clickDt>touchClickThreshold then
-						self:onClick(touch.position)
+						self:onTapClick(touch.position)
 					end
 				end
 			end
@@ -87,8 +89,8 @@ function UIBlock:onUpdate(time)
 	end
 end
 
-function UIBlock:onClick(pos)
-		print("you are onclick "..tostring(pos))
+function UIBlock:onTapClick(pos)
+		print("you are onclick "..tostring(state))
 		if state==1   then state =2 
 		elseif state == 3   then 
 			self.luaObj.components.block:endGame()

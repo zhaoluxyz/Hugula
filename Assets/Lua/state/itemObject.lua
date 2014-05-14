@@ -4,6 +4,7 @@ local LuaItemManager = LuaItemManager
 LuaItemManager.ItemObject=class(LuaObject,function(self,name) --implement luaobject
     LuaObject._ctor(self, name)
     self.assetLoader = self:addComponent("assetLoader")
+    self.isLoad=false
 end)
 
 local ItemObject = LuaItemManager.ItemObject
@@ -33,6 +34,7 @@ end
 
 function ItemObject:show( ... )
    local assets = self.assets
+   assert(assets~=nil)
    for k,v in ipairs(assets) do
         v:show()
     end
@@ -40,17 +42,18 @@ end
 
 function ItemObject:hide( ... )
    local assets = self.assets
+   assert(assets~=nil)
    for k,v in ipairs(assets) do
         v:hide()
     end
 end
 
-function ItemObject:load( ... )
-    self.assetLoader:load(self.assets)
-end
-
 function ItemObject:onFocus( ... )
-    self:show()
+    if self.asserts == nil then    
+        self.assetLoader:load(self.assets)    
+    else
+        self:show()
+    end
 end
 
 function ItemObject:onBlur( ... )

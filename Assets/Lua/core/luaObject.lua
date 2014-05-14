@@ -35,6 +35,7 @@ LuaObject=class(function(self,name)
 	self.components={}
 	self.updatecomponents = {}
     self.active=true
+    self.parent=nil
     print("LuaObject constorctor .. is "..self.name)
 end)
 
@@ -75,14 +76,18 @@ function LuaObject:addComponent(arg)
 
  function LuaObject:setActive(bl)
     self.active=bl
-    -- local assets = self.component.assets
-    -- if assets then
-    --     if bl==true then assets:show()
-    --     else  assets:hide()
-    --     end
-    -- end
  end
 
+function LuaObject:dispose()
+
+   -- for k,v in pairs(self.components) do
+       -- fn=v[method]
+       --if fn then  fn(v,unpack({...})) end
+    --end
+    self.components=nil
+    self.updatecomponents = nil
+    self.active=false
+end
  -- function LuaObject:sendMessage(compName,method,...)
  --    local cmp=self.components[compName]
  --    if cmp then
