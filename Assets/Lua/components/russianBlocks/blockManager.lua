@@ -125,64 +125,68 @@ function BlockManager:checkDelete(data)
 	if minRowNumber >= data.y then minRowNumber = data.y end
 
 	--move map data
-	-- if delRowCount ==0 then return end
-	-- self.score=self.score+delRowCount*10
-	-- local moveDown,p,sourRow,mapy,findy,findcopy= 0,nil,nil,nil,1,false
-	-- for y=sizeY,data.y,-1 do
-	-- 	findcopy = false
-	-- 	-- if(delrow[tostring(y)]) then print(delrow[tostring(y)]) end
-	-- 	if y<=self.height then
+	--if delRowCount == 0 then return end
+	self.score=self.score+delRowCount*10
+	self.luaObj.components.block:setScore(self.score/10,10,self.score)
 
-	-- 		if y == delrow[tostring(y)] then  --if deleted
-	-- 			for findy=y-1,data.y,-1 do
-	-- 				if findy ~=delrow[tostring(findy)] then
-	-- 					-- print("move "..tostring(findy).." to "..tostring(y))
-	-- 					findcopy = true
-	-- 					break
-	-- 				end
-	-- 			end
+	local downCount,currRow,moveToRow,rowlen,item=0,nil,nil,0,nil
+	for y=sizeY,data.y,-1 do
+		if y<=self.height then
+			if y == delrow[tostring(y)] then downCount=downCount+1 --如果等于删除行向下移动一行
+			elseif downCount>=1 then
+				print(string.format("move y%s to %s =",y,y+downCount))
+				currRow=map[y]
+				moveToRow=map[y+downCount]
+				rowlen=#currRow
+				for i=1,rowlen do
+					item =currRow[i]
+					moveToRow[i]=item
+					if type(item) == "userdata" then
+						p=item.transform.localPosition
+						p.y=p.y-downCount*self.tile
+						item.transform.localPosition = p
+						local key = "map_"..tostring(y+downCount).."_"..tostring(i)
+						item.name = key
+					end
+					currRow[i]=false
+				end
+			end
+		end
+	end
 
-	-- 			if findcopy then
-	-- 				row = map[y]
-	-- 				rowlen=#row
-	-- 				sourRow = map[findy]
-	-- 				for i=1,rowlen do
-	-- 					item =row[i]
-	-- 					sourRow[i]=item
-	-- 					if type(item) == "userdata" then
-	-- 						p=item.transform.localPosition
-	-- 						p.y=p.y-moveDown*self.tile
-	-- 						item.transform.localPosition = p
-	-- 					end
-	-- 					row[i]=false
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 	end
-	-- end
+	if downCount>0 then
+		for y=data.y-1,downCount-1,-1 do
+			if y<=self.height and y>=1 then
+				currRow=map[y]
+				moveToRow=map[y+downCount]
+				rowlen=#currRow
+				for i=1,rowlen do
+					item =currRow[i]
+					moveToRow[i]=item
+					if type(item) == "userdata" then
+						p=item.transform.localPosition
+						p.y=p.y-downCount*self.tile
+						item.transform.localPosition = p
+						local key = "map_"..tostring(y+downCount).."_"..tostring(i)
+						item.name = key
+					end
+					currRow[i]=false
+				end
+			end
+		end			
+	end
 
-	--print("map1 = \n"..tojson(map))
+	--for debug
+	for y=sizeY,minRowNumber,-1 do
+		for x=1,self.width do
+			if type(map[y][x])=="userdata" or map[y][x]==true  then
+		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(90,0,90)
+		 	else
+		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(0,0,90)
+			end
+		end
+	end
 
-	-- local maplen=self.height
-	-- for y=data.y,minRowNumber,-1 do
-	-- 	row = map[y]
-	-- 	rowlen=#row
-	-- 	mapy = y+delRowCount
-	-- 	sourRow = map[mapy]
-	-- 	print(string.format("all  row = %s ,sourRow = %s",y,y+delRowCount))
-	-- 	for i=1,rowlen do
-	-- 		item =row[i]
-	-- 		sourRow[i]=item
-	-- 		if type(item) == "userdata" then
-	-- 			p=item.transform.localPosition
-	-- 			p.y=p.y-delRowCount*self.tile
-	-- 			item.transform.localPosition = p
-	-- 		end
-	-- 		row[i]=false
-	-- 	end
-	-- end
-
-	-- 	print("map3 = \n"..tojson(map))
 end
 
 local rx = 1
@@ -201,7 +205,7 @@ function BlockManager:fill(data,blockDic)
 	 			key = "block_"..tostring(y).."_"..tostring(x) --string.format("block_%s_%s",y,x)
 	 			local item  = blockDic[key]
 	 			row[mx] = item
-	 			debugMap[my][mx].transform.localRotation=Quaternion.Euler(90,0,90*rx)
+	 			--debugMap[my][mx].transform.localRotation=Quaternion.Euler(90,0,90*rx)
 	 			if item ==nil then 
 	 				print(tojson(blockDic))
 	 				print(key.."is not exist !")

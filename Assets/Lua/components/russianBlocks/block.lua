@@ -38,6 +38,11 @@ local inputCenter = nil
 local DebugRoot = nil
 local DebugItem = nil
 
+local scorelabel = nil --提示UI
+local cutDownLabel = nil --倒计时
+local scroteTipstr="难度: %s \n\n 层数:%s/%s \n\n 积分:%s"
+local mode = "简单"
+
 local Block = class(function(self,luaObj )
 	self.luaObj=luaObj
 	self.enable=false
@@ -59,6 +64,7 @@ local function getBlock()
 	currB = nextB
 	return currB
 end
+
 --刷新方块数据 和位置
 local function refreshBlock(data,blockRefs,pos)
 	local row=#data 
@@ -98,6 +104,31 @@ local function refreshBlock(data,blockRefs,pos)
 	end
 end
 
+local function refreshDebug()
+	local map = blockManager:debugMap()
+	local size = #map
+	local mx,my,key = 1,1,""
+	local row,datarow = nil,nil
+	local len = nil
+	for y,v in ipairs(map) do
+		for x,v1 in ipairs(v) do
+			local dug =v1
+			if type(v1)~="userDate" then
+				dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
+	 			map[y][x]=dug
+	 			dug.name=""..y.."_"..x
+	 			dug:SetActive(true)
+	 			dug.transform.localPosition=Vector3(x*blockManager.tile,-y*blockManager.tile,100)
+ 			end
+	 		if v1==true then
+	 			dug.transform.localRotation=Quaternion.Euler(0,90,0)
+	 		else
+	 			dug.transform.localRotation=Quaternion.Euler(0,0,0)
+	 		end
+		end
+	end
+end
+
 local function refreshPos(blockRefs)	
 	local userObject=blockRefs.userObject
 	local p = blocks.localPosition
@@ -107,58 +138,14 @@ local function refreshPos(blockRefs)
 end
 
 local function fall(blockRefs)
-
 	local userObject=blockRefs.userObject
-	--local p = blocks.localPosition
 	local y=userObject.y+1
 	if blockManager:check(userObject,userObject.x,y)==true then --能下移动
-		--p.y = startPointY-userObject.y*blockManager.tile
-		--blocks.localPosition = p
 		userObject.y= userObject.y+1--math.abs(i)+2 --userObject.y+1 --
 		return true
 	else
-		--blocks.localPosition = p
-			-- print("end = "..tojson(userObject))
-			--print(tojson(blockManager:map()))
-			-- print(string.format(" Y =%s x=%s could not done!",userObject.y,userObject.x))
 		return false
 	end
-
-	--old
-
-	-- if nextGridPosY <= -10000 then
-	-- 	return false
-	-- end
-	-- local userObject=blockRefs.userObject
-	-- local moves = fallSpeed --*Time.deltaTime
-	-- local p = blocks.localPosition
-	-- p.y = p.y-moves
-	-- print(string.format("Pos.Y = %s ,nextGridPosY=%s",p.y,nextGridPosY))
-
-	--print("move y = "..tostring(pos.y) )
-	-- if p.y <= nextGridPosY then --到达临界点
-	-- 	p.y = nextGridPosY
-		-- local i,f=math.modf((p.y-startPointY)/blockManager.tile)
-		-- print(string.format(" my.x = %s my.y = %s ",userObject.x,userObject.y))
-		-- local y=userObject.y+1
-		-- local y=userObject.y+1
-		--print(string.format(" firstx=%s ,y=%s next y = %s",userObject.x,userObject.y,y))
-		-- if blockManager:check(userObject,userObject.x,y)==true then --能下移动
-		-- 	nextGridPosY = startPointY-userObject.y*blockManager.tile
-		-- 	userObject.y= userObject.y+1--math.abs(i)+2 --userObject.y+1 --
-		-- 	blocks.localPosition = p
-		-- else
-			-- nextGridPosY = -10000
-			-- blocks.localPosition = p
-			-- print("end = "..tojson(userObject))
-			--print(tojson(blockManager:map()))
-			-- print(string.format(" Y =%s x=%s could not done!",userObject.y,userObject.x))
-	-- 		return false
-	-- 	end
-	-- end
-
-	-- blocks.localPosition = p
-	-- return true
 end
 
 local function rotate(blockRefs)
@@ -231,6 +218,7 @@ local function creatNewBolck()
 end
 
 local function getDir(position)
+	-- print(string.format("center %s,%s position%s,%s",center.x,center.y,position.x,position.y))
 	direction = math.atan2(center.y-position.y,center.x-position.x)/ math.pi * 180 
 	if direction>145 or direction<-145 then --right
 		return 1
@@ -242,45 +230,6 @@ local function getDir(position)
 		return 0
 	end
 	return -1
-end
-
-local function refreshDebug()
-	local map = blockManager:debugMap()
-	local size = #map
-	local mx,my,key = 1,1,""
-	local row,datarow = nil,nil
-	local len = nil
-	for y,v in ipairs(map) do
-		for x,v1 in ipairs(v) do
-			local dug =v1
-			if type(v1)~="userDate" then
-				dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
-	 			map[y][x]=dug
-	 			dug.name=""..y.."_"..x
-	 			dug:SetActive(true)
-	 			dug.transform.localPosition=Vector3(x*15,-y*15,0)
- 			end
-	 		if v1==true then
-	 			dug.transform.localRotation=Quaternion.Euler(0,90,0)
-	 		else
-	 			dug.transform.localRotation=Quaternion.Euler(0,0,0)
-	 		end
-		end
-	end
-	-- for y=1,size do
-	--  	row=map[y]
-	--  	for x=1,size do
-	--  		local dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
- -- 			row[x]=dug
- -- 			dug.name=""..y.."_"..x
- -- 			dug:SetActive(true)
- -- 			dug.transform.localPosition=Vector3(x*15,y*15,0)
-	--  		if row and row[x]==true then
-	--  			dug.transform.localRotation=Quaternion.Euler(0,0,90)
-	--  		end
-	--  	end
-	-- end
-
 end
 
 -------------------------------public ------------------------------------
@@ -298,11 +247,7 @@ function Block:begin()
 	inputCenter:SetActive(true)
 
 	refreshDebug()
-
-	-- left.transform.localPosition = Vector3(-w/2,0,20)
-	-- right.transform.localPosition = Vector3(w/2,0,20)
-	-- local s = bottom.transform.localScale
-	-- bottom.transform.localPosition = Vector3(0,startPoint.localPosition.y-h-s.y/2,0)
+	self:setScore(0,10,0)
 end
 
 function Block:endGame()
@@ -321,6 +266,10 @@ function Block:endGame()
 	LuaHelper.ForeachChild(blockBoxTrans,onItem)
 	LuaHelper.ForeachChild(DebugRoot,onItem)
 	blocks.localPosition =Vector3(10000,10000,10000)
+end
+
+function Block:setScore(xiaochun,mubiao,jifen)
+	scorelabel.text =  string.format(scroteTipstr,mode,xiaochun,mubiao,jifen)
 end
 
 function Block:onAssetsLoad(items)
@@ -342,6 +291,11 @@ function Block:onAssetsLoad(items)
 	preBlocks:SetActive(false)
 	blocks.localPosition =Vector3(10000,10000,10000)
 
+	scorelabel = LuaHelper.GetComponent(asserts.BlockRoot.items.ScoreLabel,"UILabel")
+	cutDownLabel = LuaHelper.GetComponent(asserts.BlockRoot.items.TipsLabel,"UILabel")
+	cutDownLabel.text = ""
+	scorelabel.text = ""
+	self:setScore(0,10,0)
 	--for debug
 	DebugRoot = asserts.BlockRoot.items.Debug
 	DebugItem = asserts.BlockRoot.items.DebugBlock
@@ -376,56 +330,45 @@ function Block:onUpdate(time)
 	local dt = time-lastInputTime
 
 	startPos = nil
-	if Input.GetMouseButtonDown(0) then
-		startPos = Input.mousePosition
-		-- print("on mouse down ")
-	elseif Input.touchCount > 0  then
+	if Input.touchCount > 0  then
 		local touch = Input.GetTouch(0)
-		-- print("on touch down "..touch.phase)
-		if touch and touch.phase ==TouchPhase.Began then
+		if touch and (touch.phase == TouchPhase.Began or touch.phase ==nil ) then
 			startPos = touch.position
-			-- print("on touch down ")
+			-- print(startPos)
+			-- print(dt)
 		end
+	elseif Input.GetMouseButtonDown(0) then
+		startPos = Input.mousePosition
+		-- print("mouse position")
+		-- print(startPos)
 	end
 
-	if startPos and dt>0.25 then
-		-- print(startPos)
+	if startPos~=nil and dt>=0.15 then
 		local dir = getDir(startPos)
-		--print(blockManager:check(userObj,userObj.x-1,userObj.y))
+		-- print(dir)
 		if dir==3 and  blockManager:check(userObj,userObj.x-1,userObj.y) then --left
 			userObj.x=userObj.x-1
-			--pos.x = pos.x-blockManager.tile
-			--blocks.localPosition = pos
 			lastInputTime = time
 			refreshPos(refs)
-			-- self.enable=false
-			--print(string.format(".....move lef x = %s lastx=%s y = %s \n user=%s",userObj.x,x,userObj.y,tojson(userObj)))
-			-- print(tojson(blockManager:map()))
+			print("left ...."..userObj.x)
 		elseif dir==1 and blockManager:check(userObj,userObj.x+1,userObj.y) then  --right
 			userObj.x=userObj.x+1
 			refreshPos(refs)
-			--pos.x = pos.x+blockManager.tile
-	    	--blocks.localPosition = pos --right
 	    	lastInputTime = time
 	    elseif dir == 2 then --down
 	    	fallSpeed = blockManager.blockDropSpeed
 	    	lastInputTime = time
 	    elseif dir == 0 then --up
 			rotate(refs)
+			refreshPos(refs)
 			lastInputTime = time
 		end	
-		--refs.monos[4].text= tostring(refs.userObject.x).."X"..tostring(refs.userObject.y)
-
-		-- refs.userObject=userObj
 	end 
  
 
 	if lastFrameT==0 then lastFrameT = time end
 	local dtspeed = time- lastFrameT
     if dtspeed >= fallSpeed then
-    	-- print("down !")
-    	-- print(dtspeed)
-    	--refs.monos[4].text= tostring(refs.userObject.x).."X"..tostring(refs.userObject.y)
     	local canFall=fall(refs)
     	if canFall==false and beginDelay == true then beginDelay=false nowBlock=true 
     	elseif canFall==true and beginDelay == true then beginDelay=false
@@ -436,15 +379,12 @@ function Block:onUpdate(time)
     end
 
     if nowBlock then
+    	refreshPos(refs)
     	cloneBlock(refs)
 		creatNewBolck()
 		nowBlock =false
 		beginDelay =false
     end
-  --  	if fall(refs,time)==false and wairtframe<= stopf then
-		-- wairtframe = wairtframe+1
-		-- if wairtframe==stopf then nowBlock=true end
-  --   end
 end
 
 function Block:__tostring()
