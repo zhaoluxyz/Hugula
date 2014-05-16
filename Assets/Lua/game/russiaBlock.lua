@@ -14,17 +14,29 @@ local function ceraterussiaBlock( ... )
 	bolck:addComponent("russianBlocks.blockManager")
 	bolck:addComponent("assetLoader"):load(assets)
 	bolck:addComponent("russianBlocks.uiBlock")
-	russia.bolck=bolck
-	print("ceraterussiaBlock ed")
 	return bolck
 end
 
 function russia:onClick(obj,arg)
-	--print("you are click "..obj.name )
+	print("you are click "..obj.name )
 	--print(obj)
 	local cmd =obj.name 
+	print(self.bolck)
+	print(self.bolck.enable)
+	if self.bolck~=nil and self.bolck.enable then
+		if cmd == "Up" then
+			self.bolck:move(0)
+		elseif cmd == "Down" then
+			self.bolck:move(2)
+		elseif cmd == "Left" then
+			self.bolck:move(3)
+		elseif cmd == "Right" then
+			self.bolck:move(1)
+		end
+	end
+
 	if isover and cmd=="NGUIEvent" then
-		russia.bolck.components.blockManager:gameStart()	
+		self.bolckObj.components.blockManager:gameStart()	
 		isover=false
 	end
 end
@@ -41,9 +53,10 @@ end
 
 function russia:onFocus( ... )
 	print("onFocus")
-	if russia.bolck==nil then
-		local block=ceraterussiaBlock()
-		block.parent=self
+	if self.bolckObj==nil then
+		self.bolckObj=ceraterussiaBlock()
+		self.bolckObj.parent=self
+		self.bolck=self.bolckObj.components.block
 	else
 		russia.bolck.components.blockManager:gameStart()
 	end

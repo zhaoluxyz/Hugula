@@ -233,6 +233,14 @@ local function getDir(position)
 end
 
 -------------------------------public ------------------------------------
+function Block:getStartY()
+	return startPointY
+end
+
+function Block:getStartPoint()
+	return startPoint.localPosition
+end
+
 function Block:begin()
 	self.enable = true
 	creatNewBolck()
@@ -319,33 +327,26 @@ function Block:onAssetsLoad(items)
 
 end
 
-local deltaSpeed = 0.8
-local lastFrameT = 0
-local beginDelay = false
-function Block:onUpdate(time)
-  	pos = blocks.localPosition
+function Block:move(dir)
+	--if (lastInputTime==0) then lastInputTime=time-0.16 end
+	--local dt = time-lastInputTime
+	-- if Input.touchCount > 0  then
+	-- 	local touch = Input.GetTouch(0)
+	-- 	if touch and (touch.phase == TouchPhase.Began or touch.phase ==nil ) then
+	-- 		startPos = touch.position
+	-- 		-- print(startPos)
+	-- 		-- print(dt)
+	-- 	end
+	-- elseif Input.GetMouseButtonDown(0) then
+	-- 	startPos = Input.mousePosition
+	-- 	-- print("mouse position")
+	-- 	-- print(startPos)
+	-- end
 
-	local userObj=refs.userObject
-	if (lastInputTime==0) then lastInputTime=time-0.16 end
-	local dt = time-lastInputTime
-
-	startPos = nil
-	if Input.touchCount > 0  then
-		local touch = Input.GetTouch(0)
-		if touch and (touch.phase == TouchPhase.Began or touch.phase ==nil ) then
-			startPos = touch.position
-			-- print(startPos)
-			-- print(dt)
-		end
-	elseif Input.GetMouseButtonDown(0) then
-		startPos = Input.mousePosition
-		-- print("mouse position")
-		-- print(startPos)
-	end
-
-	if startPos~=nil and dt>=0.15 then
-		local dir = getDir(startPos)
-		-- print(dir)
+	--if  dt>=0.15 then
+		local userObj=refs.userObject
+		--local dir = getDir(startPos)
+		--print(dir)
 		if dir==3 and  blockManager:check(userObj,userObj.x-1,userObj.y) then --left
 			userObj.x=userObj.x-1
 			lastInputTime = time
@@ -363,8 +364,14 @@ function Block:onUpdate(time)
 			refreshPos(refs)
 			lastInputTime = time
 		end	
-	end 
- 
+	--end 
+end
+
+local deltaSpeed = 0.8
+local lastFrameT = 0
+local beginDelay = false
+function Block:onUpdate(time)
+  --	pos = blocks.localPosition
 
 	if lastFrameT==0 then lastFrameT = time end
 	local dtspeed = time- lastFrameT
@@ -384,6 +391,7 @@ function Block:onUpdate(time)
 		creatNewBolck()
 		nowBlock =false
 		beginDelay =false
+		luaGC()
     end
 end
 

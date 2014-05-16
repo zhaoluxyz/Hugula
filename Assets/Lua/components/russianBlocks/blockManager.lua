@@ -127,8 +127,9 @@ function BlockManager:checkDelete(data)
 	--move map data
 	--if delRowCount == 0 then return end
 	self.score=self.score+delRowCount*10
-	self.luaObj.components.block:setScore(self.score/10,10,self.score)
-
+	local block =self.luaObj.components.block
+	block:setScore(self.score/10,10,self.score)
+	local getStartY = block:getStartPoint().y -self.tile/2
 	local downCount,currRow,moveToRow,rowlen,item=0,nil,nil,0,nil
 	for y=sizeY,data.y,-1 do
 		if y<=self.height then
@@ -143,7 +144,8 @@ function BlockManager:checkDelete(data)
 					moveToRow[i]=item
 					if type(item) == "userdata" then
 						p=item.transform.localPosition
-						p.y=p.y-downCount*self.tile
+						p.y= getStartY -(y+downCount-1)*self.tile--p.y-downCount*self.tile
+						--p.y = p.y-downCount*self.tile
 						item.transform.localPosition = p
 						local key = "map_"..tostring(y+downCount).."_"..tostring(i)
 						item.name = key
@@ -165,7 +167,8 @@ function BlockManager:checkDelete(data)
 					moveToRow[i]=item
 					if type(item) == "userdata" then
 						p=item.transform.localPosition
-						p.y=p.y-downCount*self.tile
+						--p.y=p.y-downCount*self.tile
+						p.y= getStartY -(y+downCount-1)*self.tile
 						item.transform.localPosition = p
 						local key = "map_"..tostring(y+downCount).."_"..tostring(i)
 						item.name = key
@@ -179,10 +182,12 @@ function BlockManager:checkDelete(data)
 	--for debug
 	for y=sizeY,minRowNumber,-1 do
 		for x=1,self.width do
-			if type(map[y][x])=="userdata" or map[y][x]==true  then
-		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(90,0,90)
-		 	else
-		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(0,0,90)
+			if map[y] then
+				if type(map[y][x])=="userdata" or map[y][x]==true  then
+			 		debugMap[y][x].transform.localRotation=Quaternion.Euler(90,0,90)
+			 	else
+			 		debugMap[y][x].transform.localRotation=Quaternion.Euler(0,0,90)
+				end
 			end
 		end
 	end

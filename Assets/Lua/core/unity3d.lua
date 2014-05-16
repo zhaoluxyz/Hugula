@@ -112,7 +112,7 @@ function class(base, _ctor)
     return c
 end
 
-function lugGC()
+function luaGC()
   local c=collectgarbage("count")
   print("begin gc ="..tostring(c).." ")
   collectgarbage("collect")
