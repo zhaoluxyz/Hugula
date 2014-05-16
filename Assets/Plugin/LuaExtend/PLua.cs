@@ -19,6 +19,7 @@ public class PLua :MonoBehaviour {
     public LuaFunction updateFn;
     public LuaFunction fixedUpdateFn;
     public LuaFunction lateUpdateFn;
+    public LuaFunction onDestroyFn;
 
     public bool isDebug = true;
     public bool openUpdate = true;
@@ -84,6 +85,7 @@ public class PLua :MonoBehaviour {
    }
 
    void  OnDestroy() {
+       if (onDestroyFn != null) onDestroyFn.Call();
         updateFn=null;
         fixedUpdateFn=null;
         lateUpdateFn=null;
