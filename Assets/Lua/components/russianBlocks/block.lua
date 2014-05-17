@@ -35,8 +35,8 @@ local startPos,directionChosen,direction
 local beginTime,clickDt,stopf=0,0,10
 local center={}
 local inputCenter = nil 
-local DebugRoot = nil
-local DebugItem = nil
+-- local DebugRoot = nil
+-- local DebugItem = nil
 
 local scorelabel = nil --提示UI
 local cutDownLabel = nil --倒计时
@@ -104,30 +104,30 @@ local function refreshBlock(data,blockRefs,pos)
 	end
 end
 
-local function refreshDebug()
-	local map = blockManager:debugMap()
-	local size = #map
-	local mx,my,key = 1,1,""
-	local row,datarow = nil,nil
-	local len = nil
-	for y,v in ipairs(map) do
-		for x,v1 in ipairs(v) do
-			local dug =v1
-			if type(v1)~="userDate" then
-				dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
-	 			map[y][x]=dug
-	 			dug.name=""..y.."_"..x
-	 			dug:SetActive(true)
-	 			dug.transform.localPosition=Vector3(x*blockManager.tile,-y*blockManager.tile,100)
- 			end
-	 		if v1==true then
-	 			dug.transform.localRotation=Quaternion.Euler(0,90,0)
-	 		else
-	 			dug.transform.localRotation=Quaternion.Euler(0,0,0)
-	 		end
-		end
-	end
-end
+-- local function refreshDebug()
+-- 	local map = blockManager:debugMap()
+-- 	local size = #map
+-- 	local mx,my,key = 1,1,""
+-- 	local row,datarow = nil,nil
+-- 	local len = nil
+-- 	for y,v in ipairs(map) do
+-- 		for x,v1 in ipairs(v) do
+-- 			local dug =v1
+-- 			if type(v1)~="userDate" then
+-- 				dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
+-- 	 			map[y][x]=dug
+-- 	 			dug.name=""..y.."_"..x
+-- 	 			dug:SetActive(true)
+-- 	 			dug.transform.localPosition=Vector3(x*blockManager.tile,-y*blockManager.tile,100)
+--  			end
+-- 	 		if v1==true then
+-- 	 			dug.transform.localRotation=Quaternion.Euler(0,90,0)
+-- 	 		else
+-- 	 			dug.transform.localRotation=Quaternion.Euler(0,0,0)
+-- 	 		end
+-- 		end
+-- 	end
+-- end
 
 local function refreshPos(blockRefs)	
 	local userObject=blockRefs.userObject
@@ -247,14 +247,13 @@ function Block:begin()
 	local asserts = self.luaObj.components.assetLoader.asserts
 
 	-- local w,h =blockManager:getRect()
-	local left=asserts.BlockRoot.items.Left
-	local right=asserts.BlockRoot.items.Right
-	left:SetActive(true)
-	right:SetActive(true)
+	-- local left=asserts.BlockRoot.items.Left
+	-- local right=asserts.BlockRoot.items.Right
+	-- left:SetActive(true)
+	-- right:SetActive(true)
 	preBlocks:SetActive(true)
 	inputCenter:SetActive(true)
 
-	refreshDebug()
 	self:setScore(0,10,0)
 end
 
@@ -262,17 +261,17 @@ function Block:endGame()
 	lastFrameT = 0
 	beginDelay = false
 	local asserts = self.luaObj.components.assetLoader.asserts
-	local left=asserts.BlockRoot.items.Left
-	local right=asserts.BlockRoot.items.Right
-	left:SetActive(false)
-	right:SetActive(false)
+	-- local left=asserts.BlockRoot.items.Left
+	-- local right=asserts.BlockRoot.items.Right
+	-- left:SetActive(false)
+	-- right:SetActive(false)
 	preBlocks:SetActive(false)
 	inputCenter:SetActive(false)
 	local function onItem(i,obj)
 		LuaHelper.Destroy(obj)
 	end
 	LuaHelper.ForeachChild(blockBoxTrans,onItem)
-	LuaHelper.ForeachChild(DebugRoot,onItem)
+	--LuaHelper.ForeachChild(DebugRoot,onItem)
 	blocks.localPosition =Vector3(10000,10000,10000)
 end
 
@@ -286,7 +285,7 @@ function Block:onAssetsLoad(items)
 
 	local asserts = self.luaObj.components.assetLoader.asserts
 	self.gameObject=asserts.BlockRoot.items.Blocks
-	local root = asserts.root
+	local root = asserts.BlockRoot.root
 	preBlocks=self.gameObject
 	preBlocks:SetActive(true)
 	preRefs = LuaHelper.GetComponent(preBlocks,"ReferGameObjects")
@@ -305,8 +304,8 @@ function Block:onAssetsLoad(items)
 	scorelabel.text = ""
 	self:setScore(0,10,0)
 	--for debug
-	DebugRoot = asserts.BlockRoot.items.Debug
-	DebugItem = asserts.BlockRoot.items.DebugBlock
+	-- DebugRoot = asserts.BlockRoot.items.Debug
+	-- DebugItem = asserts.BlockRoot.items.DebugBlock
 	--
 	inputCenter = asserts.BlockRoot.items.Input
 	local Camera = asserts.BlockRoot.items.Camera
@@ -318,12 +317,15 @@ function Block:onAssetsLoad(items)
 
 	--set wall
 	local w,h =blockManager:getRect()
-	local left=asserts.BlockRoot.items.Left
-	local right=asserts.BlockRoot.items.Right
-	left.transform.localPosition = Vector3(-w/2,0,20)
-	right.transform.localPosition = Vector3(w/2,0,20)
-	local s = bottom.transform.localScale
-	bottom.transform.localPosition = Vector3(0,startPoint.localPosition.y-h-s.y/2,0)
+	local bgUISpri = LuaHelper.GetComponentInChildren(startPoint.gameObject,"UISprite")
+	bgUISpri.width = w+blockManager.tile
+	bgUISpri.height = h+blockManager.tile
+	--local left=asserts.BlockRoot.items.Left
+	--local right=asserts.BlockRoot.items.Right
+	--left.transform.localPosition = Vector3(-w/2,0,20)
+	--right.transform.localPosition = Vector3(w/2,0,20)
+	--local s = bottom.transform.localScale
+	--bottom.transform.localPosition = Vector3(0,startPoint.localPosition.y-h-s.y/2,0)
 
 end
 

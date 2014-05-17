@@ -17,12 +17,12 @@ local block7={ --center for rota offset
 local uiBlock
 
 local map = {}
-local debugMap = {}
+-- local debugMap = {}
 local BlockManager = class(function(self,luaObj )
 	self.luaObj = luaObj
 	self.enable = false
-	self.width = 10
-	self.height = 18
+	self.width = 12
+	self.height = 17
 	self.score=0
 end)
 ----------------------------private---------------------
@@ -33,16 +33,16 @@ function BlockManager:map()
 	return map
 end
 
-function BlockManager:debugMap()
-	return debugMap
-end
+-- function BlockManager:debugMap()
+-- 	return debugMap
+-- end
 
 function BlockManager:start()
-	self.tile = 30
+	self.tile = 36
 	self.blockDropSpeed = 0.01
 	self.speed= 1
 	map={}
-	debugMap ={}
+	-- debugMap ={}
 	minRowNumber = self.height
 	for y=1,self.height+2 do
 		for x=1,self.width do
@@ -50,10 +50,10 @@ function BlockManager:start()
 			if y <= self.height then map[y][x]=false
 			else map[y][x]=true end
 
-			--for debug
-			if(debugMap[y]==nil) then debugMap[y] = {} end
-			if y <= self.height then debugMap[y][x]=false 
-			else debugMap[y][x]=true end
+			-- --for debug
+			-- if(debugMap[y]==nil) then debugMap[y] = {} end
+			-- if y <= self.height then debugMap[y][x]=false 
+			-- else debugMap[y][x]=true end
 		end
 	end
 	self.score = 0
@@ -179,18 +179,18 @@ function BlockManager:checkDelete(data)
 		end			
 	end
 
-	--for debug
-	for y=sizeY,minRowNumber,-1 do
-		for x=1,self.width do
-			if map[y] then
-				if type(map[y][x])=="userdata" or map[y][x]==true  then
-			 		debugMap[y][x].transform.localRotation=Quaternion.Euler(90,0,90)
-			 	else
-			 		debugMap[y][x].transform.localRotation=Quaternion.Euler(0,0,90)
-				end
-			end
-		end
-	end
+	-- --for debug
+	-- for y=sizeY,minRowNumber,-1 do
+	-- 	for x=1,self.width do
+	-- 		if map[y] then
+	-- 			if type(map[y][x])=="userdata" or map[y][x]==true  then
+	-- 		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(90,0,90)
+	-- 		 	else
+	-- 		 		debugMap[y][x].transform.localRotation=Quaternion.Euler(0,0,90)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 
 end
 
