@@ -254,17 +254,6 @@ function BlockManager:check(data,posx,posy)
 	 return true
 end
 
--- function BlockManager:onAssetsLoad(items)
--- 	self.enable=true
--- 	-- self.gameObject=self.luaObj.components.assetLoader.asserts.BlockRoot.Block
--- 	-- self.gameObject:SetActive(true)
--- 	-- transform=self.gameObject.transform
--- end
-
--- function BlockManager:onUpdate( ... )
--- 	--transform.position 
--- end
-
 function BlockManager:__tostring()
     return string.format("BlockManager.name = %s ", self.name)
 end

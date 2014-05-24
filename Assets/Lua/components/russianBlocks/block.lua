@@ -32,7 +32,6 @@ local nowBlock = false
 --for touch
 local touchClickThreshold = 0.03
 local startPos,directionChosen,direction
-local beginTime,clickDt,stopf=0,0,10
 local center={}
 local inputCenter = nil 
 -- local DebugRoot = nil
@@ -42,6 +41,7 @@ local scorelabel = nil --提示UI
 local cutDownLabel = nil --倒计时
 local scroteTipstr="难度: %s \n\n 层数:%s/%s \n\n 积分:%s"
 local mode = "简单"
+local beginTime,cutdownLast=0,0
 
 local Block = class(function(self,luaObj )
 	self.luaObj=luaObj
@@ -104,30 +104,19 @@ local function refreshBlock(data,blockRefs,pos)
 	end
 end
 
--- local function refreshDebug()
--- 	local map = blockManager:debugMap()
--- 	local size = #map
--- 	local mx,my,key = 1,1,""
--- 	local row,datarow = nil,nil
--- 	local len = nil
--- 	for y,v in ipairs(map) do
--- 		for x,v1 in ipairs(v) do
--- 			local dug =v1
--- 			if type(v1)~="userDate" then
--- 				dug=LuaHelper.InstantiateGlobal(DebugItem,DebugRoot)
--- 	 			map[y][x]=dug
--- 	 			dug.name=""..y.."_"..x
--- 	 			dug:SetActive(true)
--- 	 			dug.transform.localPosition=Vector3(x*blockManager.tile,-y*blockManager.tile,100)
---  			end
--- 	 		if v1==true then
--- 	 			dug.transform.localRotation=Quaternion.Euler(0,90,0)
--- 	 		else
--- 	 			dug.transform.localRotation=Quaternion.Euler(0,0,0)
--- 	 		end
--- 		end
--- 	end
--- end
+local function cutdown(time)
+	local str = "00:00:00"  dt=0
+	if beginTime then
+		local ts =  time-beginTime --t.endTime:Subtract(DateTime.Now)
+		if ts > 0 then
+			local h,h1=math.floor(ts/3600),""	if h<10 then h1="0"..h else h1=h.."" end
+			local m,m1 =math.floor((ts-h*3600)/60),"" if m<10 then m1="0"..m else m1=m.."" end
+			local s,s1 =math.floor(ts-h*3600-m*60),"" if s<10 then s1="0"..s else s1=s.."" end
+			str=h1..":"..m1..":"..s1
+		end
+	end
+	if cutDownLabel then cutDownLabel.text=str end
+end
 
 local function refreshPos(blockRefs)	
 	local userObject=blockRefs.userObject
@@ -242,36 +231,29 @@ function Block:getStartPoint()
 end
 
 function Block:begin()
+	beginTime = os.clock()
 	self.enable = true
 	creatNewBolck()
 	local asserts = self.luaObj.components.assetLoader.asserts
 
-	-- local w,h =blockManager:getRect()
-	-- local left=asserts.BlockRoot.items.Left
-	-- local right=asserts.BlockRoot.items.Right
-	-- left:SetActive(true)
-	-- right:SetActive(true)
 	preBlocks:SetActive(true)
 	inputCenter:SetActive(true)
 
 	self:setScore(0,10,0)
+	cutDownLabel.text = "00:00:00"
 end
 
 function Block:endGame()
 	lastFrameT = 0
+	cutdownLast=0
 	beginDelay = false
 	local asserts = self.luaObj.components.assetLoader.asserts
-	-- local left=asserts.BlockRoot.items.Left
-	-- local right=asserts.BlockRoot.items.Right
-	-- left:SetActive(false)
-	-- right:SetActive(false)
 	preBlocks:SetActive(false)
 	inputCenter:SetActive(false)
 	local function onItem(i,obj)
 		LuaHelper.Destroy(obj)
 	end
 	LuaHelper.ForeachChild(blockBoxTrans,onItem)
-	--LuaHelper.ForeachChild(DebugRoot,onItem)
 	blocks.localPosition =Vector3(10000,10000,10000)
 end
 
@@ -300,7 +282,7 @@ function Block:onAssetsLoad(items)
 
 	scorelabel = LuaHelper.GetComponent(asserts.BlockRoot.items.ScoreLabel,"UILabel")
 	cutDownLabel = LuaHelper.GetComponent(asserts.BlockRoot.items.TipsLabel,"UILabel")
-	cutDownLabel.text = ""
+	cutDownLabel.text = "00:00:00"
 	scorelabel.text = ""
 	self:setScore(0,10,0)
 	--for debug
@@ -320,13 +302,6 @@ function Block:onAssetsLoad(items)
 	local bgUISpri = LuaHelper.GetComponentInChildren(startPoint.gameObject,"UISprite")
 	bgUISpri.width = w+blockManager.tile
 	bgUISpri.height = h+blockManager.tile
-	--local left=asserts.BlockRoot.items.Left
-	--local right=asserts.BlockRoot.items.Right
-	--left.transform.localPosition = Vector3(-w/2,0,20)
-	--right.transform.localPosition = Vector3(w/2,0,20)
-	--local s = bottom.transform.localScale
-	--bottom.transform.localPosition = Vector3(0,startPoint.localPosition.y-h-s.y/2,0)
-
 end
 
 function Block:move(dir)
@@ -353,7 +328,6 @@ function Block:move(dir)
 			userObj.x=userObj.x-1
 			lastInputTime = time
 			refreshPos(refs)
-			print("left ...."..userObj.x)
 		elseif dir==1 and blockManager:check(userObj,userObj.x+1,userObj.y) then  --right
 			userObj.x=userObj.x+1
 			refreshPos(refs)
@@ -374,10 +348,15 @@ local lastFrameT = 0
 local beginDelay = false
 function Block:onUpdate(time)
   --	pos = blocks.localPosition
+  	if cutdownLast == 0  then cutdownLast=time end
+  	local dt =  time - cutdownLast
+  	if dt>=1 then
+  		cutdown(time)
+  	end
 
 	if lastFrameT==0 then lastFrameT = time end
-	local dtspeed = time- lastFrameT
-    if dtspeed >= fallSpeed then
+	dt = time- lastFrameT
+    if dt >= fallSpeed then
     	local canFall=fall(refs)
     	if canFall==false and beginDelay == true then beginDelay=false nowBlock=true 
     	elseif canFall==true and beginDelay == true then beginDelay=false
