@@ -1,0 +1,35 @@
+toluaCS v0.3 文档
+作者:ricky蒲
+
+toluaCS基于ulua运行，完美兼容ulua，导出绑定类后性能可以得到2-6提升。
+	原理:替换userdata的metaTable为导出类生成的metaTable，绕过反射提升性能。
+
+使用方法
+一：生成meta信息
+1;找到类文件（其他文件名也可以），右键=》选择LuaToCS *** Build.
+	to Plugin 在Assets/Plugin/ToLuaCS/Export/	下就可以看到生成的ToLuaXXX.cs文件
+	to Script 在Assets/Script/ToLuaCS/	下就可以看到生成的ToLuaXXX.cs文件
+2 右键=>LuaToCS Start Class . 创建自动注册类
+
+二：lua中使用
+GameObject=toluacs.UnityEngine.GameObject
+local g = GameObject("toluacs name"..i)
+
+
+注意。
+1：不支持泛型方法
+2：不支持默认参数
+3：某些方法可能会报错，需要自己去注释。
+
+
+
+v0.3
+	构造函数支持
+	只读属性写方法去除
+	泛型变量生成错误BUG修复
+
+v 0.2
+	静态方法支持	
+
+v 0.1
+	支持公共属性

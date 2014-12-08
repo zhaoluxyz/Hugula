@@ -1,0 +1,11 @@
+Client/Library
+Client/UnityVS.Client.CSharp.csproj
+Client/UnityVS.Client.CSharp.Editor.csproj
+Client/UnityVS.Client.CSharp.Plugins.csproj
+Client/UnityVS.Client.sln
+Client/obj
+Client/Temp
+Client/Assets/NGUI
+Client/Assets/CObjDependencies.prefab
+Client/Assets/CObjDependencies.prefab.meta
+Client/UnityVS.Client.v11.suo
