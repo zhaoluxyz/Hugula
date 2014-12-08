@@ -33,17 +33,17 @@ function Proxy:unbinding(api,fun)
 end
 
 function Proxy:distribute(msgType,data)
-	if msgType == NetAPIList.gs_bad.Code then
-		local errorfun = Proxy.errorTables[data.errno..""]
-		if errorfun then --如果有错误处理函数就直接调用
-			errorfun(data)
-		else --否则弹出提示框
-			local tips = getValue("g_notify_"..data.errno)
-			showTips(tips.."\n err:"..data.errno)
-		end	
-	elseif msgType == NetAPIList.gs_good.Code then
-		self:callHandle(data.commad,data)
-	end
+	-- if msgType == NetAPIList.gs_bad.Code then
+	-- 	local errorfun = Proxy.errorTables[data.errno..""]
+	-- 	if errorfun then --如果有错误处理函数就直接调用
+	-- 		errorfun(data)
+	-- 	else --否则弹出提示框
+	-- 		local tips = getValue("g_notify_"..data.errno)
+	-- 		showTips(tips.."\n err:"..data.errno)
+	-- 	end	
+	-- elseif msgType == NetAPIList.gs_good.Code then
+	-- 	self:callHandle(data.commad,data)
+	-- end
 
 	self:callHandle(msgType,data)
 

@@ -4,7 +4,6 @@
 --	author pu
 ------------------------------------------------
 local CUtils=CUtils
-local SINGLE,SHARE = SINGLE,SHARE 
 local LuaHelper=LuaHelper
 local GAMEOBJECT_ATLAS = GAMEOBJECT_ATLAS
 Asset = class(function(self,url,names)

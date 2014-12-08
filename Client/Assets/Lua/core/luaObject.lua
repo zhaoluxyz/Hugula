@@ -2,7 +2,8 @@
 --  Copyright © 2013-2014   Hugula: Arpg game Engine
 --  luaObject base of object
 --  author pu
-------------------------------------------------local components = {}
+------------------------------------------------
+local components = {}
 local UPDATECOMPONENTS = UPDATECOMPONENTS
 
 local function loadComponent(name)
@@ -80,7 +81,6 @@ function LuaObject:addComponent(arg)
  end
 
 function LuaObject:dispose()
-
    -- for k,v in pairs(self.components) do
        -- fn=v[method]
        --if fn then  fn(v,unpack({...})) end
@@ -89,14 +89,8 @@ function LuaObject:dispose()
     self.updatecomponents = nil
     self.active=false
 end
- -- function LuaObject:sendMessage(compName,method,...)
- --    local cmp=self.components[compName]
- --    if cmp then
- --       if cmp[method]  then  cmp[method](v, table.unpack({...})) end
- --    end
- -- end
 
- function LuaObject:sendMessage(method,...)
+function LuaObject:sendMessage(method,...)
     local cmps=self.components
     local fn
     for k,v in pairs(cmps) do

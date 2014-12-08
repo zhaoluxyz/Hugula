@@ -45,7 +45,7 @@ public class Msg  {
 	
 	public string Debug()
 	{
-		byte[] bts=ToArray();
+        byte[] bts = ToArray();
 		
 		string bstr="";
 		
@@ -55,6 +55,17 @@ public class Msg  {
 		}
         return bstr;
 	}
+
+    public static string Debug(byte[] bts)
+    {
+        string bstr = "";
+
+        foreach (byte i in bts)
+        {
+            bstr += " " + i + " ";
+        }
+        return bstr;
+    }
 	
 	/// <summary>
 	/// our message pro

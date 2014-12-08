@@ -86,6 +86,7 @@ public class TcpServer :MonoBehaviour  {
             Session ses = ((Session)client);
             foreach (var msg in broadMsg)
             {
+                //UnityEngine.Debug.Log("send to session ");
                 ses.Send((byte[])msg);
             }
         }

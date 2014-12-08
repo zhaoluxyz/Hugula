@@ -16,7 +16,7 @@ public class Session  {
 
     private ArrayList queue;//消息队列
 
-    private int len;// msg len
+    private ushort len;// msg len
 
     public Session(TcpClient client)
     {
@@ -39,7 +39,7 @@ public class Session  {
     /// <param name="bytes"></param>
     public void Send(byte[] bytes)
     {
-        Debug.Log("send msg " + bytes.Length + "  " + client.Connected);
+        //Debug.Log("send msg " + bytes.Length + "  " + client.Connected);
         if (client.Connected)
             stream.BeginWrite(bytes, 0, bytes.Length, new AsyncCallback(SendCallback), stream);
     }
@@ -79,9 +79,18 @@ public class Session  {
             {
                 byte[] message = new byte[len];
                 stream.Read(message, 0, message.Length);
-                Msg msg = new Msg(message);
+
+                byte[] lenBytes = BitConverter.GetBytes(len);// date.length
+                System.Array.Reverse(lenBytes);
+
+                byte[] send = new byte[len + lenBytes.Length];
+                lenBytes.CopyTo(send, 0);//len
+
+                message.CopyTo(send,lenBytes.Length);
+                queue.Add(send);
+
                 len = 0;
-                queue.Add(msg.ToCArray());
+                //UnityEngine.Debug.Log(" queue.add " + Msg.Debug(send));
             }
         }
     }
@@ -135,7 +144,7 @@ public class Session  {
     {
         try
         {
-            Debug.Log("  send suceess"+id.ToString());
+            //Debug.Log("  send suceess"+id.ToString());
             client.Client.EndSend(rs);
         }
         catch (Exception e)

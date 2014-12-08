@@ -71,7 +71,7 @@ public class PLua :MonoBehaviour {
         ToLuaCS.lua = lua;
         _instance = this;
         LoadScript();
-        //ToLuaCSStart.Start(luaState);
+        ToLuaCSStart.Start(luaState);
         //Profiler.BeginSample("LuaRegister");
         //LuaRegister.Start();
         //Profiler.EndSample();

@@ -286,6 +286,7 @@ public class MultipleLoader  {
 			this.BeginQueue();
 		}else
 		{
+            currentLoaded++;
 			req.DispatchEnd();
 			BeginQueue();		
 			CheckAllComplete();	

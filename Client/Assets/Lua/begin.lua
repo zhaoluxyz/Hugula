@@ -28,4 +28,4 @@ local NetAPIList = NetAPIList
 
 -- StateManager:setCurrentState(StateManager.gameloading)--StateManager.login
 
-require("Net_game")
+require("netGame")
