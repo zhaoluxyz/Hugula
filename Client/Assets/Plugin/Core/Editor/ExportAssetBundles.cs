@@ -1,4 +1,7 @@
-﻿// C# Example
+﻿// Copyright (c) 2014 hugula
+// direct https://github.com/Hugulor/Hugula
+//
+// C# Example
 // Builds an asset bundle from the selected objects in the project view.
 // Once compiled go to "Menu" -> "Assets" and select one of the choices
 // to build the Asset Bundle

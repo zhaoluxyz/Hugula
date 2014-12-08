@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2014 hugula
+// direct https://github.com/Hugulor/Hugula
+//
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
