@@ -1,888 +1,1896 @@
 ------------------- API type ---------------
 NetAPIList= { 
 
-	-- 版本检查 
-	check_version = 
+	-- 待用加密key. 
+	code_ack = 
 	{ 
-		Code = 41000,
-		DataStruct= 'send_check_version',
+		Code = 10001,
+		DataStruct= 'pt_code',
 	}, 
 
-	-- 匿名登陆 
-	player_anonymouslogin = 
+	-- HeartBeat 
+	heartbeat_req = 
 	{ 
-		Code = 121,
-		DataStruct= 'player_anonymouslogin',
+		Code = 1,
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 登入到游戏网关 
-	gs_login = 
+	-- GM指令 
+	gm_cmd_req = 
+	{ 
+		Code = 2,
+		DataStruct= 'pt_gmcmd',
+	}, 
+
+	-- 注册 
+	login_req = 
+	{ 
+		Code = 10,
+		DataStruct= 'pt_account',
+	}, 
+
+	-- 登录 
+	register_req = 
+	{ 
+		Code = 11,
+		DataStruct= 'pt_account',
+	}, 
+
+	-- 返回玩家数据快照 
+	login_ack = 
+	{ 
+		Code = 20,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求更新等级 
+	user_l_req = 
+	{ 
+		Code = 60,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 修改头像 
+	user_icon_req = 
+	{ 
+		Code = 65,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 合成魔法卷 
+	mix_magic_req = 
+	{ 
+		Code = 66,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 修改名字 
+	user_name_req = 
+	{ 
+		Code = 67,
+		DataStruct= 'string',
+	}, 
+
+	-- 改名字花费 
+	name_cost_req = 
+	{ 
+		Code = 68,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 改名字花费 
+	name_cost_ack = 
+	{ 
+		Code = 69,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 返回玩家数据快照 
+	users_cah = 
+	{ 
+		Code = 70,
+		DataStruct= 'db_user',
+	}, 
+
+	-- 加钱 
+	user_m_req = 
+	{ 
+		Code = 130,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家卡牌数据的cache组 
+	cards_cah = 
+	{ 
+		Code = 141,
+		DataStruct= 'db_cards',
+	}, 
+
+	-- 玩家卡牌数据的cache组 
+	cards_cah_new = 
+	{ 
+		Code = 142,
+		DataStruct= 'db_card',
+	}, 
+
+	-- 玩家卡牌数据的cache组 
+	cards_cah_del = 
+	{ 
+		Code = 143,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家卡牌数据的cache组 
+	cards_cah_dels = 
+	{ 
+		Code = 144,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家卡牌数据的cache组 
+	cards_cah_upt = 
+	{ 
+		Code = 145,
+		DataStruct= 'db_card',
+	}, 
+
+	-- 增加一张卡牌 
+	card_a_req = 
+	{ 
+		Code = 150,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 删除一张卡牌 
+	card_d_req = 
+	{ 
+		Code = 151,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家卡组数据的cache组. 
+	groups_cah = 
+	{ 
+		Code = 161,
+		DataStruct= 'db_groups',
+	}, 
+
+	-- 玩家卡组数据的cache组. 
+	groups_cah_new = 
+	{ 
+		Code = 162,
+		DataStruct= 'db_group',
+	}, 
+
+	-- 玩家卡组数据的cache组. 
+	groups_cah_del = 
+	{ 
+		Code = 163,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家卡组数据的cache组. 
+	groups_cah_dels = 
+	{ 
+		Code = 164,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家卡组数据的cache组. 
+	groups_cah_upt = 
+	{ 
+		Code = 165,
+		DataStruct= 'db_group',
+	}, 
+
+	-- 激活一个新开组 
+	group_a_req = 
+	{ 
+		Code = 170,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 增加一个卡牌到卡组 
+	group_upac_req = 
+	{ 
+		Code = 171,
+		DataStruct= 'pt_group_ac',
+	}, 
+
+	-- 从卡组中移除一张卡牌 
+	group_updc_req = 
+	{ 
+		Code = 172,
+		DataStruct= 'pt_group_dc',
+	}, 
+
+	-- 增加一个符文到卡组 
+	group_upar_req = 
+	{ 
+		Code = 173,
+		DataStruct= 'pt_group_ar',
+	}, 
+
+	-- 从卡组中移除一张符文 
+	group_updr_req = 
+	{ 
+		Code = 174,
+		DataStruct= 'pt_group_dr',
+	}, 
+
+	-- 交换出战卡组 
+	group_change_req = 
+	{ 
+		Code = 175,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家符文数据的cache组. 
+	runes_cah = 
+	{ 
+		Code = 181,
+		DataStruct= 'db_runes',
+	}, 
+
+	-- 玩家符文数据的cache组. 
+	runes_cah_new = 
+	{ 
+		Code = 182,
+		DataStruct= 'db_rune',
+	}, 
+
+	-- 玩家符文数据的cache组. 
+	runes_cah_del = 
+	{ 
+		Code = 183,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家符文数据的cache组. 
+	runes_cah_dels = 
+	{ 
+		Code = 184,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家符文数据的cache组. 
+	runes_cah_upt = 
+	{ 
+		Code = 185,
+		DataStruct= 'db_rune',
+	}, 
+
+	-- 增加一个符文 
+	rune_a_req = 
+	{ 
+		Code = 190,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 删除一个符文 
+	rune_d_req = 
+	{ 
+		Code = 191,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家剧情数据的cache组. 
+	storys_cah = 
+	{ 
+		Code = 201,
+		DataStruct= 'db_storys',
+	}, 
+
+	-- 玩家剧情数据的cache组. 
+	storys_cah_new = 
+	{ 
+		Code = 202,
+		DataStruct= 'db_story',
+	}, 
+
+	-- 玩家剧情数据的cache组. 
+	storys_cah_del = 
+	{ 
+		Code = 203,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家剧情数据的cache组. 
+	storys_cah_dels = 
+	{ 
+		Code = 204,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家剧情数据的cache组. 
+	storys_cah_upt = 
+	{ 
+		Code = 205,
+		DataStruct= 'db_story',
+	}, 
+
+	-- 增加一个通关剧情(挑战一个关卡) 
+	story_a_req = 
+	{ 
+		Code = 210,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求挑战战斗返回(自动战斗) 
+	fight_data_ack = 
+	{ 
+		Code = 211,
+		DataStruct= 'pk_fight_data_result',
+	}, 
+
+	-- 请求战斗的时候要求自动战斗 
+	fight_ai_req = 
+	{ 
+		Code = 212,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 发送请求出牌的卡牌列表 
+	send_card_req = 
+	{ 
+		Code = 213,
+		DataStruct= 'pt_crdlist',
+	}, 
+
+	-- 请求加入冠军争夺战 
+	champion_join_req = 
+	{ 
+		Code = 214,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 初始化战斗排名 
+	champion_init_ack = 
+	{ 
+		Code = 215,
+		DataStruct= 'pt_champion',
+	}, 
+
+	-- 请求查看挑战的对手列表 
+	champion_allenemy_req = 
+	{ 
+		Code = 216,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 所有的挑战对手详细信息 
+	champion_allenemy_ack = 
+	{ 
+		Code = 217,
+		DataStruct= 'pt_all_enemy',
+	}, 
+
+	-- 对排名xxx的玩家进行挑战 
+	champion_challenge_req = 
+	{ 
+		Code = 218,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求查看挑战的对手列表(同等级) 
+	freedom_randenemy_req = 
+	{ 
+		Code = 219,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 所有的挑战对手详细信息 
+	freedom_randenemy_ack = 
 	{ 
 		Code = 220,
-		DataStruct= 'pt_gs_login',
+		DataStruct= 'pt_all_enemy',
 	}, 
 
-	-- 成功 
-	gs_good = 
+	-- 对相同等级的某玩家发起挑战 
+	freedom_challenge_req = 
 	{ 
 		Code = 221,
-		DataStruct= 'pt_gs_good',
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 失败 
-	gs_bad = 
+	-- 向自己好友请求切磋 
+	friend_challenge_req = 
 	{ 
 		Code = 222,
-		DataStruct= 'pt_gs_bad',
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 启动心跳 
-	start_heartbeat = 
+	-- 请求强化卡牌 
+	card_enhance_req = 
 	{ 
 		Code = 223,
-		DataStruct= 'pt_int',
+		DataStruct= 'pt_card_enhance',
 	}, 
 
-	-- 心跳 
-	heartbeat = 
+	-- 请求强化符文 
+	rune_enhance_req = 
 	{ 
 		Code = 224,
-		DataStruct= 'pt_int',
+		DataStruct= 'pt_rune_enhance',
 	}, 
 
-	-- 玩家队伍 
-	player_team = 
+	-- 请求查看当前地图通关情况 
+	mapinfo_req = 
 	{ 
 		Code = 225,
-		DataStruct= 'pt_player_team',
-	}, 
-
-	-- 玩家英雄 
-	player_hero = 
-	{ 
-		Code = 226,
-		DataStruct= 'pt_player_hero',
-	}, 
-
-	-- 请求玩家关卡进度列表 
-	player_chapter_list = 
-	{ 
-		Code = 227,
-		DataStruct= 'send_player_chapter',
-	}, 
-
-	-- 玩家关卡数据 
-	recv_player_chapter_list = 
-	{ 
-		Code = 228,
-		DataStruct= 'pt_player_chapter_list',
-	}, 
-
-	-- 挑战关卡 
-	player_challenge_chapter = 
-	{ 
-		Code = 229,
-		DataStruct= 'send_challenge_chapter',
-	}, 
-
-	-- 扫荡关卡 
-	player_sweep_chapter = 
-	{ 
-		Code = 2210,
-		DataStruct= 'send_challenge_chapter',
-	}, 
-
-	-- 接收玩家属性更新 
-	recv_player_attribute1 = 
-	{ 
-		Code = 2211,
-		DataStruct= 'pt_character_attribute_a',
-	}, 
-
-	-- 发起挑战关卡战斗开始 
-	player_challenge_chapter_start = 
-	{ 
-		Code = 2212,
-		DataStruct= 'send_player_challenge_chapter_start',
-	}, 
-
-	-- 接收挑战关卡结果结算 
-	recv_player_challenge_chapter_result = 
-	{ 
-		Code = 2213,
-		DataStruct= 'recv_challenge_chapter_result',
-	}, 
-
-	-- 道具获得 
-	recv_paygoods = 
-	{ 
-		Code = 2214,
-		DataStruct= 'pt_paygoods',
-	}, 
-
-	-- 请求背包道具列表 
-	player_bag = 
-	{ 
-		Code = 2215,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 背包道具列表 
-	recv_player_bag_goods = 
+	-- 请求返回地图通关情况 
+	mapinfo_ack = 
 	{ 
-		Code = 2216,
-		DataStruct= 'recv_player_bag_goods',
+		Code = 226,
+		DataStruct= 'pt_mapinfo',
 	}, 
 
-	-- 使用道具 
-	use_goods_api = 
+	-- nadatest 
+	nada_req = 
 	{ 
-		Code = 2217,
-		DataStruct= 'pt_use_goods',
+		Code = 227,
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 玩家英雄列表 
-	player_hero_list = 
+	-- nadatestback 
+	nada_ack = 
 	{ 
-		Code = 2218,
-		DataStruct= 'send_player_hero_list',
+		Code = 228,
+		DataStruct= 'pt_nadainfo',
 	}, 
 
-	-- 英雄上阵 
-	change_player_team_up = 
+	-- 请求挑战战斗返回(手动操作) 
+	fight_data_hand_ack = 
 	{ 
-		Code = 2219,
-		DataStruct= 'send_change_player_team_up',
+		Code = 229,
+		DataStruct= 'pk_fight_data_result',
 	}, 
 
-	-- 英雄下阵 
-	change_player_team_down = 
+	-- 一次性提交卡组更新卡牌消息 
+	group_update_req = 
 	{ 
-		Code = 2220,
-		DataStruct= 'send_change_player_team_down',
+		Code = 230,
+		DataStruct= 'pt_groupupd_card',
 	}, 
 
-	-- 道具出售 
-	goods_sell = 
+	-- 一次性提交卡组更新符文消息 
+	group_updrune_req = 
 	{ 
-		Code = 2221,
-		DataStruct= 'send_player_goods_sell',
+		Code = 231,
+		DataStruct= 'pt_groupupd_rune',
 	}, 
 
-	-- 背包道具列表 
-	recv_player_bag_change_goods = 
+	-- 奖励详细信息(实际得到的) 
+	prize_get_ack = 
 	{ 
-		Code = 2222,
-		DataStruct= 'recv_player_bag_goods',
+		Code = 232,
+		DataStruct= 'pt_prize_get',
 	}, 
 
-	-- 玩家英雄装备 
-	use_equip_api = 
+	-- 玩家错误报告 
+	player_report_req = 
 	{ 
-		Code = 2223,
-		DataStruct= 'send_player_hero_equip_up',
+		Code = 233,
+		DataStruct= 'pt_player_report',
 	}, 
 
-	-- 玩家英雄进阶 
-	player_hero_advanced = 
+	-- 玩家卖出卡牌 
+	sale_card_req = 
 	{ 
-		Code = 2224,
-		DataStruct= 'send_player_hero_advanced',
+		Code = 234,
+		DataStruct= 'pt_pkids',
 	}, 
 
-	-- 击杀怪物 
-	kill_monster = 
+	-- 玩家卖出符文 
+	sale_rune_req = 
 	{ 
-		Code = 2225,
-		DataStruct= 'send_kill_monster',
+		Code = 235,
+		DataStruct= 'pt_pkids',
 	}, 
 
-	-- 接收怪物列表 
-	recv_monster_list = 
+	-- 快速通关(探索) 
+	story_quick_pass_req = 
 	{ 
-		Code = 2226,
-		DataStruct= 'recv_monster_list',
+		Code = 236,
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 获取邮件列表 
-	player_mail_list = 
+	-- 获得过的卡牌列表(换头像) 
+	card_once_req = 
 	{ 
-		Code = 2227,
-		DataStruct= 'send_player_mail_list',
+		Code = 237,
+		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收邮件列表 
-	recv_player_mail_list = 
+	-- 获得过的卡牌列表(换头像) 
+	card_once_ack = 
 	{ 
-		Code = 2228,
-		DataStruct= 'recv_mail_list',
+		Code = 238,
+		DataStruct= 'pt_pkids',
 	}, 
 
-	-- 打开附件 
-	player_mail_goods = 
+	-- 获得过的符文列表(换头像) 
+	rune_once_req = 
 	{ 
-		Code = 2229,
-		DataStruct= 'send_player_mail_goods',
+		Code = 239,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 获得过的符文列表(换头像) 
+	rune_once_ack = 
+	{ 
+		Code = 240,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 请求迷宫数据(初始化) 
+	maze_a_req = 
+	{ 
+		Code = 241,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 迷宫数据 
+	maze_a_ack = 
+	{ 
+		Code = 242,
+		DataStruct= 'pt_maze',
+	}, 
+
+	-- 请求挑战迷宫 
+	maze_fight_req = 
+	{ 
+		Code = 243,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求重置迷宫 
+	maze_refush_req = 
+	{ 
+		Code = 244,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 隐藏关卡信息 
+	story_hide_req = 
+	{ 
+		Code = 245,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 隐藏关卡信息 
+	story_hide_ack = 
+	{ 
+		Code = 246,
+		DataStruct= 'pt_story_hide',
+	}, 
+
+	-- 所有迷宫信息 
+	maze_all_req = 
+	{ 
+		Code = 247,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 所有迷宫信息 
+	maze_all_ack = 
+	{ 
+		Code = 248,
+		DataStruct= 'pt_maze_all',
+	}, 
+
+	-- 查看可以打的关卡但是还没通关的 
+	maybe_story_req = 
+	{ 
+		Code = 249,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 查看可以打的关卡但是还没通关的返回关卡 
+	maybe_story_ack = 
+	{ 
+		Code = 250,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 请求清除排名战cd 
+	champion_clean_req = 
+	{ 
+		Code = 251,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 查看排名战前100位玩家 
+	champion_top_req = 
+	{ 
+		Code = 252,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 所有的挑战对手详细信息 
+	champion_top_ack = 
+	{ 
+		Code = 253,
+		DataStruct= 'pt_all_enemy',
+	}, 
+
+	-- 请求自由切磋数据 
+	freedom_init_req = 
+	{ 
+		Code = 254,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 自由切磋信息 
+	freedom_init_ack = 
+	{ 
+		Code = 255,
+		DataStruct= 'pt_freedom',
+	}, 
+
+	-- 请求清除自由切磋cd 
+	freedom_clean_req = 
+	{ 
+		Code = 256,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求增加挑战次数 
+	champion_add_times_req = 
+	{ 
+		Code = 257,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 完成新手引导 
+	finish_first_event_req = 
+	{ 
+		Code = 260,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 发送所有我可以挑战的盗贼 
+	monster_all_req = 
+	{ 
+		Code = 450,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 可以挑战的盗贼列表 
+	monster_all_ack = 
+	{ 
+		Code = 451,
+		DataStruct= 'pt_monster_all',
+	}, 
+
+	-- 发现盗贼 
+	monster_creat_ack = 
+	{ 
+		Code = 452,
+		DataStruct= 'pt_find_monster',
+	}, 
+
+	-- 对盗贼发起挑战 
+	monster_challenge_req = 
+	{ 
+		Code = 453,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 请求清除挑战盗贼cd 
+	monster_clean_req = 
+	{ 
+		Code = 454,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 对魔神发起挑战 
+	crazy_challenge_req = 
+	{ 
+		Code = 460,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 对魔神伤害 
+	crazy_challenge_ack = 
+	{ 
+		Code = 461,
+		DataStruct= 'pt_crazy_score',
+	}, 
+
+	-- 请求清除挑战魔神cd 
+	crazy_clean_req = 
+	{ 
+		Code = 462,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 客户端发送聊天数据. 
+	chat_req = 
+	{ 
+		Code = 1010,
+		DataStruct= 'pt_chat2server',
+	}, 
+
+	-- 服务器发送聊天数据 
+	chat_ack = 
+	{ 
+		Code = 1011,
+		DataStruct= 'pt_chat2player',
+	}, 
+
+	-- 玩家好友数据的cache组. 
+	friends_cah = 
+	{ 
+		Code = 301,
+		DataStruct= 'db_friends',
+	}, 
+
+	-- 玩家好友数据的cache组. 
+	friends_cah_new = 
+	{ 
+		Code = 302,
+		DataStruct= 'db_friend',
+	}, 
+
+	-- 玩家好友数据的cache组. 
+	friends_cah_del = 
+	{ 
+		Code = 303,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家好友数据的cache组. 
+	friends_cah_dels = 
+	{ 
+		Code = 304,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家好友数据的cache组. 
+	friends_cah_upt = 
+	{ 
+		Code = 305,
+		DataStruct= 'db_friend',
+	}, 
+
+	-- 搜索玩家，好友名字 
+	friend_search_req = 
+	{ 
+		Code = 310,
+		DataStruct= 'string',
+	}, 
+
+	-- 搜索到的玩家列表 
+	friend_search_ack = 
+	{ 
+		Code = 311,
+		DataStruct= 'pt_frd_list',
+	}, 
+
+	-- 请求加好友，好友id. 
+	friend_add_req = 
+	{ 
+		Code = 315,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 同意或拒绝好友申请 
+	friend_agree_req = 
+	{ 
+		Code = 316,
+		DataStruct= 'pt_frd_agree',
+	}, 
+
+	-- 请求删好友，好友id 
+	friend_del_req = 
+	{ 
+		Code = 320,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 好友详细数据 
+	friend_info_req = 
+	{ 
+		Code = 325,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 搜索到的玩家列表 
+	friend_info_ack = 
+	{ 
+		Code = 326,
+		DataStruct= 'pt_frd_list',
+	}, 
+
+	-- 成就领取奖励 
+	grade_gain_req = 
+	{ 
+		Code = 5000,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 成就信息 
+	grade_info_req = 
+	{ 
+		Code = 5005,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 成就信息回复 
+	grade_info_ack = 
+	{ 
+		Code = 5006,
+		DataStruct= 'pt_grade_info_list',
+	}, 
+
+	-- 返回玩家数据快照 
+	signs_cah = 
+	{ 
+		Code = 5100,
+		DataStruct= 'db_sign',
+	}, 
+
+	-- 领取签到奖励 
+	sign_gain_req = 
+	{ 
+		Code = 5110,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家宝箱数据的cache组 
+	chests_cah = 
+	{ 
+		Code = 401,
+		DataStruct= 'db_chests',
+	}, 
+
+	-- 玩家宝箱数据的cache组 
+	chests_cah_new = 
+	{ 
+		Code = 402,
+		DataStruct= 'db_chest',
+	}, 
+
+	-- 玩家宝箱数据的cache组 
+	chests_cah_del = 
+	{ 
+		Code = 403,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家宝箱数据的cache组 
+	chests_cah_dels = 
+	{ 
+		Code = 404,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 玩家宝箱数据的cache组 
+	chests_cah_upt = 
+	{ 
+		Code = 405,
+		DataStruct= 'db_chest',
+	}, 
+
+	-- 领取宝箱奖励 
+	chest_get_req = 
+	{ 
+		Code = 410,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 奖励测试 
+	prize_test_req = 
+	{ 
+		Code = 411,
+		DataStruct= 'pt_prize_test',
+	}, 
+
+	-- 冥想 
+	temple_meditation_req = 
+	{ 
+		Code = 5200,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 一键处理 
+	temple_process_req = 
+	{ 
+		Code = 5201,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 符文交换 
+	temple_rune_exchange_req = 
+	{ 
+		Code = 5202,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 神庙数据请求 
+	temple_data_req = 
+	{ 
+		Code = 5203,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 神庙数据 
+	temple_data_ack = 
+	{ 
+		Code = 5204,
+		DataStruct= 'pt_temple_datas',
+	}, 
+
+	-- 军团创建 
+	legion_create_req = 
+	{ 
+		Code = 500,
+		DataStruct= 'pt_create_legion',
+	}, 
+
+	-- 获取我的军团信息 
+	legion_mine_req = 
+	{ 
+		Code = 505,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 我的军团信息 
+	legion_mine_ack = 
+	{ 
+		Code = 506,
+		DataStruct= 'pt_len_all_info',
+	}, 
+
+	-- 获取军团列表 
+	legion_list_req = 
+	{ 
+		Code = 510,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 搜索军团 
+	legion_search_req = 
+	{ 
+		Code = 511,
+		DataStruct= 'string',
+	}, 
+
+	-- 军团列表回执 
+	legion_list_ack = 
+	{ 
+		Code = 512,
+		DataStruct= 'pt_len_list',
+	}, 
+
+	-- 其他军团的详细信息 
+	legion_other_req = 
+	{ 
+		Code = 515,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 其他军团的详细信息 
+	legion_other_ack = 
+	{ 
+		Code = 516,
+		DataStruct= 'pt_len_all_info',
+	}, 
+
+	-- 获取申请入团列表 
+	legion_apply_list_req = 
+	{ 
+		Code = 530,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 申请入团列表 
+	legion_apply_list_ack = 
+	{ 
+		Code = 531,
+		DataStruct= 'pt_len_apply_list',
+	}, 
+
+	-- 申请入团 
+	legion_apply_req = 
+	{ 
+		Code = 532,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 答复入团申请 
+	legion_apply_opr_req = 
+	{ 
+		Code = 533,
+		DataStruct= 'pt_len_apply_opr',
+	}, 
+
+	-- 邀请入团 
+	legion_invite_req = 
+	{ 
+		Code = 534,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 答复入团邀请 
+	legion_invite_opr_req = 
+	{ 
+		Code = 535,
+		DataStruct= 'pt_len_apply_opr',
+	}, 
+
+	-- 申请入团回执 
+	legion_apply_ack = 
+	{ 
+		Code = 536,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 退出军团 
+	legion_quit_req = 
+	{ 
+		Code = 540,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 军团踢人 
+	legion_del_req = 
+	{ 
+		Code = 541,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 军团转让团长 
+	legion_shift_req = 
+	{ 
+		Code = 545,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 军团捐献 
+	legion_devote_req = 
+	{ 
+		Code = 550,
+		DataStruct= 'pt_len_devote',
+	}, 
+
+	-- 军团设置军旗 
+	legion_flag_req = 
+	{ 
+		Code = 555,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 设置军旗回执 
+	legion_flag_ack = 
+	{ 
+		Code = 556,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 军团购买 
+	legion_buy_req = 
+	{ 
+		Code = 560,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 修改军团口号 
+	legion_remark_req = 
+	{ 
+		Code = 565,
+		DataStruct= 'string',
+	}, 
+
+	-- 修改口号回执 
+	legion_remark_ack = 
+	{ 
+		Code = 566,
+		DataStruct= 'string',
+	}, 
+
+	-- 修改免批锁 
+	legion_lock_req = 
+	{ 
+		Code = 570,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 修改免批锁回执 
+	legion_lock_ack = 
+	{ 
+		Code = 571,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 未加入军团的玩家列表 
+	legion_notjoin_req = 
+	{ 
+		Code = 575,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 未加入军团的玩家列表 
+	legion_notjoin_ack = 
+	{ 
+		Code = 576,
+		DataStruct= 'pt_len_apply_list',
+	}, 
+
+	-- 设置守卫 
+	legion_guard_req = 
+	{ 
+		Code = 577,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 未加入军团的玩家列表 
+	legion_self_ntf = 
+	{ 
+		Code = 580,
+		DataStruct= 'pt_legion_self',
+	}, 
+
+	-- 获取商城列表 
+	market_get_req = 
+	{ 
+		Code = 600,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 商城列表 
+	market_get_ack = 
+	{ 
+		Code = 601,
+		DataStruct= 'pt_market',
+	}, 
+
+	-- 购买商城物品 
+	market_buy_req = 
+	{ 
+		Code = 602,
+		DataStruct= 'pt_market_buy',
+	}, 
+
+	-- 购买卡牌回执信息 
+	market_card_ack = 
+	{ 
+		Code = 603,
+		DataStruct= 'pt_market_card',
+	}, 
+
+	-- 购买晶钻回执信息 
+	market_gold_ack = 
+	{ 
+		Code = 604,
+		DataStruct= 'pt_market_gold',
+	}, 
+
+	-- 购买行动力回执信息 
+	market_power_ack = 
+	{ 
+		Code = 605,
+		DataStruct= 'pt_market_power',
+	}, 
+
+	-- 获取排行榜资料 
+	ranks_get_req = 
+	{ 
+		Code = 700,
+		DataStruct= 'pt_ranks_get',
+	}, 
+
+	-- 排行榜资料 
+	ranks_get_ack = 
+	{ 
+		Code = 701,
+		DataStruct= 'pt_ranks_list',
+	}, 
+
+	-- 获取大地图信息 
+	map_info_req = 
+	{ 
+		Code = 800,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 大地图信息回执 
+	map_info_ack = 
+	{ 
+		Code = 801,
+		DataStruct= 'pt_map_info',
+	}, 
+
+	-- 地图好友信息回执 
+	map_friend_ack = 
+	{ 
+		Code = 802,
+		DataStruct= 'pt_map_friend_list',
+	}, 
+
+	-- 领取地图产出 
+	map_gain_req = 
+	{ 
+		Code = 805,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 地图产出回执 
+	map_gain_ack = 
+	{ 
+		Code = 806,
+		DataStruct= 'pt_map_gain',
+	}, 
+
+	-- 一键领取地图产出 
+	map_gain_all_req = 
+	{ 
+		Code = 807,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 一键领取地图产出回执 
+	map_gain_all_ack = 
+	{ 
+		Code = 808,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 关卡入侵被清理 
+	story_invade_ntf = 
+	{ 
+		Code = 810,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 获取玩家邮件 
+	get_mail_req = 
+	{ 
+		Code = 900,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- 玩家邮件回执 
+	get_mail_ack = 
+	{ 
+		Code = 901,
+		DataStruct= 'pt_player_mail_list',
+	}, 
+
+	-- 您有新的消息^_^ 
+	new_mail_ntf = 
+	{ 
+		Code = 910,
+		DataStruct= 'pt_new_mail_list',
 	}, 
 
 	-- 读取邮件 
-	player_mail_read = 
+	read_mail_req = 
 	{ 
-		Code = 2230,
-		DataStruct= 'send_player_mail_read',
+		Code = 915,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 读取邮件回执 
+	read_mail_ack = 
+	{ 
+		Code = 916,
+		DataStruct= 'string',
 	}, 
 
 	-- 删除邮件 
-	player_mail_delete = 
+	del_mail_req = 
 	{ 
-		Code = 2231,
-		DataStruct= 'send_player_mail_delete',
+		Code = 920,
+		DataStruct= 'pt_pkid',
 	}, 
 
-	-- 更新英雄信息 
-	recv_player_hero_change = 
+	-- 写邮件 
+	write_mail_req = 
 	{ 
-		Code = 2232,
-		DataStruct= 'recv_player_hero_list',
+		Code = 925,
+		DataStruct= 'pt_write_mail',
 	}, 
 
-	-- 装备合成 
-	hero_equip_synthesis = 
+	-- PVE战斗LOG信息 
+	pve_log_req = 
 	{ 
-		Code = 2233,
-		DataStruct= 'send_hero_equip_synthesis',
-	}, 
-
-	-- 接收邮件 
-	recv_player_mail_content = 
-	{ 
-		Code = 2234,
-		DataStruct= 'recv_mail',
-	}, 
-
-	-- 发送邮件 
-	send_mail = 
-	{ 
-		Code = 2235,
-		DataStruct= 'send_mail',
-	}, 
-
-	-- 扫荡关卡数据返回 
-	recv_player_sweep_chapter = 
-	{ 
-		Code = 2236,
-		DataStruct= 'recv_player_sweep_chapter',
-	}, 
-
-	-- 接收新邮件总数 
-	recv_mail_count = 
-	{ 
-		Code = 2237,
-		DataStruct= 'recv_mail_count',
-	}, 
-
-	-- 接收关卡挑战返回数据 
-	recv_player_challenge_chapter = 
-	{ 
-		Code = 2238,
-		DataStruct= 'recv_player_challenge_chapter',
-	}, 
-
-	-- 英雄强化 
-	player_hero_strengthen = 
-	{ 
-		Code = 2239,
-		DataStruct= 'send_player_hero_strengthen',
-	}, 
-
-	-- 接收英雄强化信息 
-	recv_player_hero_strengthen = 
-	{ 
-		Code = 2240,
-		DataStruct= 'recv_player_hero_strengthen',
-	}, 
-
-	-- 发送英雄合成 
-	hero_hero_synthesis = 
-	{ 
-		Code = 2241,
-		DataStruct= 'send_hero_hero_synthesis',
-	}, 
-
-	-- 用户对发邮件 
-	player_send_mail = 
-	{ 
-		Code = 2242,
-		DataStruct= 'send_player_send_mail',
-	}, 
-
-	-- 接收登录奖励领取天数 
-	recv_reward_data = 
-	{ 
-		Code = 2243,
-		DataStruct= 'recv_reward_data',
-	}, 
-
-	-- 领取登录奖励 
-	player_login_receive = 
-	{ 
-		Code = 2244,
-		DataStruct= 'send_player_reward_login',
-	}, 
-
-	-- 获取图鉴列表 
-	select_player_hero_atlas_player_id = 
-	{ 
-		Code = 2245,
-		DataStruct= 'send_player_hero_stlas_list',
-	}, 
-
-	-- 接收图鉴列表 
-	recv_hero_atlas_list = 
-	{ 
-		Code = 2246,
-		DataStruct= 'recv_hero_atlas_list',
-	}, 
-
-	-- 获取登录奖励数据 
-	player_login_reward_data = 
-	{ 
-		Code = 2247,
-		DataStruct= 'send_player_reward_data',
-	}, 
-
-	-- 申请好友请求 
-	player_apply_add_friends = 
-	{ 
-		Code = 2248,
-		DataStruct= 'send_apply_friends_apply',
-	}, 
-
-	-- 接收好友申请列表 
-	recv_friends_apply_list = 
-	{ 
-		Code = 2249,
-		DataStruct= 'recv_friends_apply_list',
-	}, 
-
-	-- 好友申请回复 
-	player_request_add_friends = 
-	{ 
-		Code = 2250,
-		DataStruct= 'send_request_friends_apply',
-	}, 
-
-	-- 接收好友列表 
-	recv_friends_list = 
-	{ 
-		Code = 2251,
-		DataStruct= 'recv_friends_list',
-	}, 
-
-	-- 获取好友列表 
-	player_friends_list = 
-	{ 
-		Code = 2252,
-		DataStruct= 'send_friends_list',
-	}, 
-
-	-- 接收申请好友回复结果 
-	recv_friends_request = 
-	{ 
-		Code = 2253,
-		DataStruct= 'recv_friends_request',
-	}, 
-
-	-- 接收挑战关卡战斗记时 
-	recv_player_challenge_chapter_start = 
-	{ 
-		Code = 2254,
+		Code = 1000,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 领取友情值 
-	player_receive_friendship = 
+	-- PVE战斗LOG回执 
+	pve_log_ack = 
 	{ 
-		Code = 2255,
-		DataStruct= 'send_reveive_friendship',
+		Code = 1001,
+		DataStruct= 'pt_pvelog_list',
 	}, 
 
-	-- 一件领取友情值 
-	player_friends_pick_up = 
+	-- PVE战斗LOG信息 
+	pvp_log_req = 
 	{ 
-		Code = 2256,
-		DataStruct= 'send_reveive_friendship_pick_up',
-	}, 
-
-	-- 增送友情值 
-	player_add_send_value_friendship = 
-	{ 
-		Code = 2257,
-		DataStruct= 'send_value_friendship',
-	}, 
-
-	-- 查找好友 
-	player_find_list = 
-	{ 
-		Code = 2259,
-		DataStruct= 'send_player_find_list',
-	}, 
-
-	-- 接收查找好友列表 
-	recv_find_player_list = 
-	{ 
-		Code = 2260,
-		DataStruct= 'recv_find_player_list',
-	}, 
-
-	-- 删除好友 
-	player_friends_delete = 
-	{ 
-		Code = 2261,
-		DataStruct= 'send_player_friends_delete',
-	}, 
-
-	-- 获取玩家任务列表 
-	recv_player_quest_list = 
-	{ 
-		Code = 2262,
-		DataStruct= 'recv_player_quest_list',
-	}, 
-
-	-- 领取任务奖品 
-	receive_quest_goods = 
-	{ 
-		Code = 2263,
-		DataStruct= 'send_receive_quest_goods',
-	}, 
-
-	-- 接收任务奖品 
-	recv_quest_goods = 
-	{ 
-		Code = 2264,
-		DataStruct= 'recv_quest_goods',
-	}, 
-
-	-- 接收领取剩余友情值次数 
-	recv_friends_remain_count = 
-	{ 
-		Code = 2265,
-		DataStruct= 'recv_friends_remain_count',
-	}, 
-
-	-- 合成神兽碎片 
-	player_compound_goods_beast = 
-	{ 
-		Code = 2266,
-		DataStruct= 'send_player_compound_goods_beast',
-	}, 
-
-	-- 添加剧情位置 
-	player_drama = 
-	{ 
-		Code = 2267,
-		DataStruct= 'send_player_drama',
-	}, 
-
-	-- 添加新手引导位置 
-	player_boot = 
-	{ 
-		Code = 2268,
-		DataStruct= 'send_player_boot',
-	}, 
-
-	-- 接收好友邮件 
-	recv_friends_mail_list = 
-	{ 
-		Code = 2269,
-		DataStruct= 'recv_friends_mail_list',
-	}, 
-
-	-- 获取活动列表 
-	player_activity_list = 
-	{ 
-		Code = 2270,
-		DataStruct= 'player_activity_list',
-	}, 
-
-	-- 接收活动列表 
-	recv_activity_list = 
-	{ 
-		Code = 2271,
-		DataStruct= 'recv_activity_list',
-	}, 
-
-	-- 请求竟技场内与玩家排名相近的玩家10名 
-	player_arena_rank_near = 
-	{ 
-		Code = 2272,
+		Code = 1005,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收竟技场内与玩家排名相近的玩家10名 
-	recv_player_arena_rank_near = 
+	-- PVP战斗LOG回执 
+	pvp_log_ack = 
 	{ 
-		Code = 2273,
-		DataStruct= 'recv_player_arena_rank_near',
+		Code = 1006,
+		DataStruct= 'pt_pvplog_list',
 	}, 
 
-	-- 接收玩家神兽数据 
-	recv_player_beast_list = 
+	-- PVE战斗LOG信息 
+	play_fightlog_req = 
 	{ 
-		Code = 2274,
-		DataStruct= 'recv_player_beast_list',
+		Code = 1050,
+		DataStruct= 'pt_pkid',
 	}, 
 
-	-- 请求竟技场内玩家排名前10名 
-	player_arena_rank_top = 
+	-- 战斗LOG回执 
+	play_fightlog_ack = 
 	{ 
-		Code = 2275,
+		Code = 1051,
+		DataStruct= 'pk_fight_data_result',
+	}, 
+
+	-- 赠送行动力数据的cache组. 
+	powergifts_cah = 
+	{ 
+		Code = 1101,
+		DataStruct= 'db_powergifts',
+	}, 
+
+	-- 赠送行动力数据的cache组. 
+	powergifts_cah_new = 
+	{ 
+		Code = 1102,
+		DataStruct= 'db_powergift',
+	}, 
+
+	-- 赠送行动力数据的cache组. 
+	powergifts_cah_del = 
+	{ 
+		Code = 1103,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 赠送行动力数据的cache组. 
+	powergifts_cah_dels = 
+	{ 
+		Code = 1104,
+		DataStruct= 'pt_pkids',
+	}, 
+
+	-- 赠送行动力数据的cache组. 
+	powergifts_cah_upt = 
+	{ 
+		Code = 1105,
+		DataStruct= 'db_powergift',
+	}, 
+
+	-- 求救 
+	powergift_help_req = 
+	{ 
+		Code = 1110,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 赠送行动力 
+	powergift_give_req = 
+	{ 
+		Code = 1115,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 领取行动力 
+	powergift_get_req = 
+	{ 
+		Code = 1120,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 服务器验证支付请求 
+	pay_verify_req = 
+	{ 
+		Code = 1121,
+		DataStruct= 'pt_pay_verify',
+	}, 
+
+	-- 查询支付商品列表 
+	pay_list_req = 
+	{ 
+		Code = 1122,
+		DataStruct= 'pt_pay_list_get',
+	}, 
+
+	-- 支付商品列表 
+	pay_list_ack = 
+	{ 
+		Code = 1123,
+		DataStruct= 'pt_pay_list',
+	}, 
+
+	-- 积分战榜单获取 
+	legion_rank_req = 
+	{ 
+		Code = 1125,
+		DataStruct= 'pt_legion_rank_get',
+	}, 
+
+	-- 积分战榜单 
+	legion_rank_ack = 
+	{ 
+		Code = 1126,
+		DataStruct= 'pt_legion_rank_list',
+	}, 
+
+	-- 积分战中某一军团的详细信息获取 
+	legion_detail_rank_req = 
+	{ 
+		Code = 1127,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 积分战中某一军团的详细信息 
+	legion_detail_rank_ack = 
+	{ 
+		Code = 1128,
+		DataStruct= 'pt_player_rank_list',
+	}, 
+
+	-- 积分战挑战。 
+	legion_lrank_challenge_req = 
+	{ 
+		Code = 1129,
+		DataStruct= 'pt_pkid',
+	}, 
+
+	-- 玩家按照等级随机匹配积分榜上没有军团的玩家 
+	lrank_no_legion_req = 
+	{ 
+		Code = 1130,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收竟技场内玩家排名前10名 
-	recv_player_arena_rank_top = 
+	-- 未加入军团的玩家的挑战列表 
+	lrank_no_legion_ack = 
 	{ 
-		Code = 2276,
-		DataStruct= 'recv_player_arena_rank_near',
+		Code = 1131,
+		DataStruct= 'pt_player_rank_list',
 	}, 
 
-	-- 请求竟技场兑换商品 
-	player_exchanges = 
+	-- 积分战挑战次数购买 
+	lrank_buy_req = 
 	{ 
-		Code = 2277,
+		Code = 1132,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收请求竟技场兑换商品 
-	recv_player_exchanges = 
+	-- 积分战挑战次数购买 
+	lrank_buy_ack = 
 	{ 
-		Code = 2278,
-		DataStruct= 'recv_player_exchanges',
+		Code = 1133,
+		DataStruct= 'pt_lrank_buy',
 	}, 
 
-	-- 开始竟技场兑换商品 
-	exchange_goods = 
+	-- 积分战玩家榜单。 
+	player_lrank_list_req = 
 	{ 
-		Code = 2279,
-		DataStruct= 'send_exchange_goods',
+		Code = 1134,
+		DataStruct= 'pt_legion_rank_get',
 	}, 
 
-	-- 刷新兑换道具 
-	refresh_exchange_goods = 
+	-- 积分战玩家榜单。 
+	player_lrank_list_ack = 
 	{ 
-		Code = 2280,
+		Code = 1135,
+		DataStruct= 'pt_p_rank_list',
+	}, 
+
+	-- 玩家发起GVG匹配 
+	gvg_match_req = 
+	{ 
+		Code = 1200,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 请求竟技场战报 
-	player_arena_battle_report = 
+	-- 玩家进入GVG战场 
+	gvg_into_battle_req = 
 	{ 
-		Code = 2281,
+		Code = 1201,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收竟技场战报 
-	recv_player_arena_battle_report = 
+	-- 玩家退出GVG战场 
+	gvg_out_battle_req = 
 	{ 
-		Code = 2282,
-		DataStruct= 'recv_player_arena_battle_report_list',
-	}, 
-
-	-- 请求活动条件验证 
-	player_activity_verify = 
-	{ 
-		Code = 2283,
-		DataStruct= 'sned_player_activity_verify',
-	}, 
-
-	-- 接收活动条件验证结果 
-	recv_player_activity_verify = 
-	{ 
-		Code = 2284,
-		DataStruct= 'recv_player_activity_verify',
-	}, 
-
-	-- 发起竟技场挑战 
-	player_challenge_arena = 
-	{ 
-		Code = 2285,
-		DataStruct= 'send_player_challenge_arena',
-	}, 
-
-	-- 设置神兽默认出战 
-	player_besat_played = 
-	{ 
-		Code = 2286,
-		DataStruct= 'send_player_besat_played',
-	}, 
-
-	-- 英雄技能升级 
-	player_hero_skill_up = 
-	{ 
-		Code = 2287,
-		DataStruct= 'send_player_hero_skill_up',
-	}, 
-
-	-- 刷新玩家技能点数 
-	player_skill_release_up = 
-	{ 
-		Code = 2288,
-		DataStruct= 'send_player_skill_release_up',
-	}, 
-
-	-- 接收玩家技能点数刷新时间 
-	recv_player_hero_skill_time = 
-	{ 
-		Code = 2289,
-		DataStruct= 'recv_player_hero_skill_time',
-	}, 
-
-	-- 接收系统配置数据 
-	recv_system_conf_data = 
-	{ 
-		Code = 2290,
-		DataStruct= 'recv_system_conf_data',
-	}, 
-
-	-- 商城商品列表 
-	shop_goods = 
-	{ 
-		Code = 2291,
+		Code = 1203,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 接收商城商品列表 
-	recv_shop_goods_list = 
+	-- 玩家进入GVG战场时的初始化信息 
+	gvg_battle_init_ack = 
 	{ 
-		Code = 2292,
-		DataStruct= 'recv_shop_goods_list',
+		Code = 1204,
+		DataStruct= 'pt_gvg_init_battle_list',
 	}, 
 
-	-- 购买商品 
-	buy_goods = 
+	-- 通知军团所有人，GVG战斗开始 
+	gvg_battle_begin_ntf = 
 	{ 
-		Code = 2293,
-		DataStruct= 'send_buy_goods',
-	}, 
-
-	-- 接收购买商品信息 
-	recv_buy_goods = 
-	{ 
-		Code = 2294,
-		DataStruct= 'recv_buy_goods_data',
-	}, 
-
-	-- 接收活动剩余次数信息 
-	recv_activity_residue_list = 
-	{ 
-		Code = 2295,
-		DataStruct= 'recv_activity_residue_list',
-	}, 
-
-	-- 战斗中召唤神兽 
-	call_mythical_animals = 
-	{ 
-		Code = 2296,
+		Code = 1205,
 		DataStruct= 'pt_int',
 	}, 
 
-	-- 刷新玩家体力点数 
-	player_vit_release_up = 
+	-- GVG战斗结束 
+	gvg_battle_end_ntf = 
 	{ 
-		Code = 2297,
-		DataStruct= 'vit_release_up',
+		Code = 1206,
+		DataStruct= 'pt_gvg_battle_end',
 	}, 
 
-	-- 接收玩家体力点数刷新时间 
-	recv_vit_release_up = 
+	-- gvg玩家战斗请求 
+	gvg_fight_req = 
 	{ 
-		Code = 2298,
-		DataStruct= 'recv_vit_release_up',
+		Code = 1207,
+		DataStruct= 'pt_gvg_fight',
 	}, 
 
-	-- 接受玩家删除的好友数据 
-	recv_player_friends_delete = 
+	-- gvg护盾变化广播 
+	gvg_shield_ntf = 
 	{ 
-		Code = 2299,
-		DataStruct= 'recv_player_friends_delete',
+		Code = 1208,
+		DataStruct= 'pt_gvg_shield',
 	}, 
 
-	-- 英雄碎片合成英雄 
-	hero_fragments_synthetic = 
+	-- gvg战斗次数更新 
+	gvg_attack_num_ntf = 
 	{ 
-		Code = 22100,
-		DataStruct= 'send_hero_fragments_synthetic',
-	}, 
-
-	-- 英雄相关道具使用 
-	hero_goods_use = 
-	{ 
-		Code = 22101,
-		DataStruct= 'send_hero_goods_use',
-	}, 
-
-	-- 英雄出售 
-	hero_sell = 
-	{ 
-		Code = 22102,
-		DataStruct= 'send_player_hero_sell',
-	}, 
-
-	-- 聊天服务器成功 
-	chatserv_good = 
-	{ 
-		Code = 321,
-		DataStruct= 'pt_gs_good',
-	}, 
-
-	-- 聊天服务器失败 
-	chatserv_bad = 
-	{ 
-		Code = 322,
-		DataStruct= 'pt_gs_bad',
-	}, 
-
-	-- 登入聊天服务器 
-	chatserv_login = 
-	{ 
-		Code = 320,
-		DataStruct= 'pt_gs_login',
-	}, 
-
-	-- 接收聊天信息 
-	recv_broadcast_message = 
-	{ 
-		Code = 323,
-		DataStruct= 'recv_broadcast_message',
-	}, 
-
-	-- 发送收聊天信息 
-	send_chat = 
-	{ 
-		Code = 324,
-		DataStruct= 'send_chat',
-	}, 
-
-	-- 聊天心跳 
-	chat_heartbeat = 
-	{ 
-		Code = 325,
+		Code = 1209,
 		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg第一次打开界面 
+	gvg_first_req = 
+	{ 
+		Code = 1210,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg第一次打开界面回执 
+	gvg_first_ack = 
+	{ 
+		Code = 1211,
+		DataStruct= 'pt_gvg_first',
+	}, 
+
+	-- gvg星图 
+	gvg_star_req = 
+	{ 
+		Code = 1212,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg星图回执 
+	gvg_star_ack = 
+	{ 
+		Code = 1213,
+		DataStruct= 'pt_gvg_star_list',
+	}, 
+
+	-- gvg排行 
+	gvg_rank_req = 
+	{ 
+		Code = 1214,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg排行回执 
+	gvg_rank_ack = 
+	{ 
+		Code = 1215,
+		DataStruct= 'pt_gvg_rank_list',
+	}, 
+
+	-- gvg军团LOG 
+	gvg_legion_log_req = 
+	{ 
+		Code = 1216,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg军团LOG 
+	gvg_legion_log_ack = 
+	{ 
+		Code = 1217,
+		DataStruct= 'pt_gvg_legion_log_list',
+	}, 
+
+	-- gvg成员LOG 
+	gvg_player_log_req = 
+	{ 
+		Code = 1218,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg成员LOG 
+	gvg_player_log_ack = 
+	{ 
+		Code = 1219,
+		DataStruct= 'pt_gvg_player_log_list',
+	}, 
+
+	-- gvg登录提示 
+	gvg_login_ntf = 
+	{ 
+		Code = 1220,
+		DataStruct= 'pt_gvg_login',
+	}, 
+
+	-- gvg购买护盾 
+	gvg_buy_shield_req = 
+	{ 
+		Code = 1221,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg购买进攻次数 
+	gvg_buy_attack_req = 
+	{ 
+		Code = 1222,
+		DataStruct= 'pt_int',
+	}, 
+
+	-- gvg战场积分变化 
+	gvg_battle_scores_ntf = 
+	{ 
+		Code = 1223,
+		DataStruct= 'pt_gvg_scores',
 	}, 
 } 
 
 NetAPIList.CodeToMsgType = { 
-	MSGTYPE2255	=	NetAPIList.player_receive_friendship.DataStruct,
-	MSGTYPE2224	=	NetAPIList.player_hero_advanced.DataStruct,
-	MSGTYPE322	=	NetAPIList.chatserv_bad.DataStruct,
-	MSGTYPE2289	=	NetAPIList.recv_player_hero_skill_time.DataStruct,
-	MSGTYPE2278	=	NetAPIList.recv_player_exchanges.DataStruct,
-	MSGTYPE2245	=	NetAPIList.select_player_hero_atlas_player_id.DataStruct,
-	MSGTYPE2213	=	NetAPIList.recv_player_challenge_chapter_result.DataStruct,
-	MSGTYPE2248	=	NetAPIList.player_apply_add_friends.DataStruct,
-	MSGTYPE223	=	NetAPIList.start_heartbeat.DataStruct,
-	MSGTYPE2211	=	NetAPIList.recv_player_attribute1.DataStruct,
-	MSGTYPE2250	=	NetAPIList.player_request_add_friends.DataStruct,
-	MSGTYPE221	=	NetAPIList.gs_good.DataStruct,
-	MSGTYPE220	=	NetAPIList.gs_login.DataStruct,
-	MSGTYPE222	=	NetAPIList.gs_bad.DataStruct,
-	MSGTYPE2285	=	NetAPIList.player_challenge_arena.DataStruct,
-	MSGTYPE2210	=	NetAPIList.player_sweep_chapter.DataStruct,
-	MSGTYPE2240	=	NetAPIList.recv_player_hero_strengthen.DataStruct,
-	MSGTYPE226	=	NetAPIList.player_hero.DataStruct,
-	MSGTYPE2232	=	NetAPIList.recv_player_hero_change.DataStruct,
-	MSGTYPE2253	=	NetAPIList.recv_friends_request.DataStruct,
-	MSGTYPE2227	=	NetAPIList.player_mail_list.DataStruct,
-	MSGTYPE41000	=	NetAPIList.check_version.DataStruct,
-	MSGTYPE22100	=	NetAPIList.hero_fragments_synthetic.DataStruct,
-	MSGTYPE2252	=	NetAPIList.player_friends_list.DataStruct,
-	MSGTYPE2241	=	NetAPIList.hero_hero_synthesis.DataStruct,
-	MSGTYPE2244	=	NetAPIList.player_login_receive.DataStruct,
-	MSGTYPE2257	=	NetAPIList.player_add_send_value_friendship.DataStruct,
-	MSGTYPE2239	=	NetAPIList.player_hero_strengthen.DataStruct,
-	MSGTYPE2216	=	NetAPIList.recv_player_bag_goods.DataStruct,
-	MSGTYPE325	=	NetAPIList.chat_heartbeat.DataStruct,
-	MSGTYPE324	=	NetAPIList.send_chat.DataStruct,
-	MSGTYPE2296	=	NetAPIList.call_mythical_animals.DataStruct,
-	MSGTYPE2218	=	NetAPIList.player_hero_list.DataStruct,
-	MSGTYPE320	=	NetAPIList.chatserv_login.DataStruct,
-	MSGTYPE2238	=	NetAPIList.recv_player_challenge_chapter.DataStruct,
-	MSGTYPE2265	=	NetAPIList.recv_friends_remain_count.DataStruct,
-	MSGTYPE2212	=	NetAPIList.player_challenge_chapter_start.DataStruct,
-	MSGTYPE321	=	NetAPIList.chatserv_good.DataStruct,
-	MSGTYPE2214	=	NetAPIList.recv_paygoods.DataStruct,
-	MSGTYPE22102	=	NetAPIList.hero_sell.DataStruct,
-	MSGTYPE2269	=	NetAPIList.recv_friends_mail_list.DataStruct,
-	MSGTYPE227	=	NetAPIList.player_chapter_list.DataStruct,
-	MSGTYPE22101	=	NetAPIList.hero_goods_use.DataStruct,
-	MSGTYPE2246	=	NetAPIList.recv_hero_atlas_list.DataStruct,
-	MSGTYPE2298	=	NetAPIList.recv_vit_release_up.DataStruct,
-	MSGTYPE2297	=	NetAPIList.player_vit_release_up.DataStruct,
-	MSGTYPE121	=	NetAPIList.player_anonymouslogin.DataStruct,
-	MSGTYPE2219	=	NetAPIList.change_player_team_up.DataStruct,
-	MSGTYPE323	=	NetAPIList.recv_broadcast_message.DataStruct,
-	MSGTYPE2225	=	NetAPIList.kill_monster.DataStruct,
-	MSGTYPE2271	=	NetAPIList.recv_activity_list.DataStruct,
-	MSGTYPE2295	=	NetAPIList.recv_activity_residue_list.DataStruct,
-	MSGTYPE2223	=	NetAPIList.use_equip_api.DataStruct,
-	MSGTYPE2275	=	NetAPIList.player_arena_rank_top.DataStruct,
-	MSGTYPE2294	=	NetAPIList.recv_buy_goods.DataStruct,
-	MSGTYPE2293	=	NetAPIList.buy_goods.DataStruct,
-	MSGTYPE2292	=	NetAPIList.recv_shop_goods_list.DataStruct,
-	MSGTYPE2286	=	NetAPIList.player_besat_played.DataStruct,
-	MSGTYPE2235	=	NetAPIList.send_mail.DataStruct,
-	MSGTYPE2270	=	NetAPIList.player_activity_list.DataStruct,
-	MSGTYPE2290	=	NetAPIList.recv_system_conf_data.DataStruct,
-	MSGTYPE2276	=	NetAPIList.recv_player_arena_rank_top.DataStruct,
-	MSGTYPE2236	=	NetAPIList.recv_player_sweep_chapter.DataStruct,
-	MSGTYPE2287	=	NetAPIList.player_hero_skill_up.DataStruct,
-	MSGTYPE2229	=	NetAPIList.player_mail_goods.DataStruct,
-	MSGTYPE229	=	NetAPIList.player_challenge_chapter.DataStruct,
-	MSGTYPE2266	=	NetAPIList.player_compound_goods_beast.DataStruct,
-	MSGTYPE2291	=	NetAPIList.shop_goods.DataStruct,
-	MSGTYPE2280	=	NetAPIList.refresh_exchange_goods.DataStruct,
-	MSGTYPE2284	=	NetAPIList.recv_player_activity_verify.DataStruct,
-	MSGTYPE2283	=	NetAPIList.player_activity_verify.DataStruct,
-	MSGTYPE2282	=	NetAPIList.recv_player_arena_battle_report.DataStruct,
-	MSGTYPE2251	=	NetAPIList.recv_friends_list.DataStruct,
-	MSGTYPE2279	=	NetAPIList.exchange_goods.DataStruct,
-	MSGTYPE2254	=	NetAPIList.recv_player_challenge_chapter_start.DataStruct,
-	MSGTYPE224	=	NetAPIList.heartbeat.DataStruct,
-	MSGTYPE2277	=	NetAPIList.player_exchanges.DataStruct,
-	MSGTYPE2288	=	NetAPIList.player_skill_release_up.DataStruct,
-	MSGTYPE2247	=	NetAPIList.player_login_reward_data.DataStruct,
-	MSGTYPE2267	=	NetAPIList.player_drama.DataStruct,
-	MSGTYPE2274	=	NetAPIList.recv_player_beast_list.DataStruct,
-	MSGTYPE2217	=	NetAPIList.use_goods_api.DataStruct,
-	MSGTYPE2273	=	NetAPIList.recv_player_arena_rank_near.DataStruct,
-	MSGTYPE2261	=	NetAPIList.player_friends_delete.DataStruct,
-	MSGTYPE2268	=	NetAPIList.player_boot.DataStruct,
-	MSGTYPE2262	=	NetAPIList.recv_player_quest_list.DataStruct,
-	MSGTYPE2263	=	NetAPIList.receive_quest_goods.DataStruct,
-	MSGTYPE2234	=	NetAPIList.recv_player_mail_content.DataStruct,
-	MSGTYPE2264	=	NetAPIList.recv_quest_goods.DataStruct,
-	MSGTYPE2272	=	NetAPIList.player_arena_rank_near.DataStruct,
-	MSGTYPE225	=	NetAPIList.player_team.DataStruct,
-	MSGTYPE2260	=	NetAPIList.recv_find_player_list.DataStruct,
-	MSGTYPE2259	=	NetAPIList.player_find_list.DataStruct,
-	MSGTYPE2242	=	NetAPIList.player_send_mail.DataStruct,
-	MSGTYPE2281	=	NetAPIList.player_arena_battle_report.DataStruct,
-	MSGTYPE2249	=	NetAPIList.recv_friends_apply_list.DataStruct,
-	MSGTYPE2299	=	NetAPIList.recv_player_friends_delete.DataStruct,
-	MSGTYPE2230	=	NetAPIList.player_mail_read.DataStruct,
-	MSGTYPE2222	=	NetAPIList.recv_player_bag_change_goods.DataStruct,
-	MSGTYPE2220	=	NetAPIList.change_player_team_down.DataStruct,
-	MSGTYPE2233	=	NetAPIList.hero_equip_synthesis.DataStruct,
-	MSGTYPE2256	=	NetAPIList.player_friends_pick_up.DataStruct,
-	MSGTYPE2228	=	NetAPIList.recv_player_mail_list.DataStruct,
-	MSGTYPE2243	=	NetAPIList.recv_reward_data.DataStruct,
-	MSGTYPE2231	=	NetAPIList.player_mail_delete.DataStruct,
-	MSGTYPE2237	=	NetAPIList.recv_mail_count.DataStruct,
-	MSGTYPE2226	=	NetAPIList.recv_monster_list.DataStruct,
-	MSGTYPE2221	=	NetAPIList.goods_sell.DataStruct,
-	MSGTYPE2215	=	NetAPIList.player_bag.DataStruct,
-	MSGTYPE228	=	NetAPIList.recv_player_chapter_list.DataStruct,
+	MSGTYPE175	=	NetAPIList.group_change_req.DataStruct,
+	MSGTYPE920	=	NetAPIList.del_mail_req.DataStruct,
+	MSGTYPE69	=	NetAPIList.name_cost_ack.DataStruct,
+	MSGTYPE212	=	NetAPIList.fight_ai_req.DataStruct,
+	MSGTYPE67	=	NetAPIList.user_name_req.DataStruct,
+	MSGTYPE229	=	NetAPIList.fight_data_hand_ack.DataStruct,
+	MSGTYPE240	=	NetAPIList.rune_once_ack.DataStruct,
+	MSGTYPE576	=	NetAPIList.legion_notjoin_ack.DataStruct,
+	MSGTYPE800	=	NetAPIList.map_info_req.DataStruct,
+	MSGTYPE535	=	NetAPIList.legion_invite_opr_req.DataStruct,
+	MSGTYPE1221	=	NetAPIList.gvg_buy_shield_req.DataStruct,
+	MSGTYPE203	=	NetAPIList.storys_cah_del.DataStruct,
+	MSGTYPE151	=	NetAPIList.card_d_req.DataStruct,
+	MSGTYPE311	=	NetAPIList.friend_search_ack.DataStruct,
+	MSGTYPE246	=	NetAPIList.story_hide_ack.DataStruct,
+	MSGTYPE68	=	NetAPIList.name_cost_req.DataStruct,
+	MSGTYPE575	=	NetAPIList.legion_notjoin_req.DataStruct,
+	MSGTYPE10001	=	NetAPIList.code_ack.DataStruct,
+	MSGTYPE315	=	NetAPIList.friend_add_req.DataStruct,
+	MSGTYPE605	=	NetAPIList.market_power_ack.DataStruct,
+	MSGTYPE806	=	NetAPIList.map_gain_ack.DataStruct,
+	MSGTYPE172	=	NetAPIList.group_updc_req.DataStruct,
+	MSGTYPE915	=	NetAPIList.read_mail_req.DataStruct,
+	MSGTYPE301	=	NetAPIList.friends_cah.DataStruct,
+	MSGTYPE216	=	NetAPIList.champion_allenemy_req.DataStruct,
+	MSGTYPE320	=	NetAPIList.friend_del_req.DataStruct,
+	MSGTYPE600	=	NetAPIList.market_get_req.DataStruct,
+	MSGTYPE66	=	NetAPIList.mix_magic_req.DataStruct,
+	MSGTYPE219	=	NetAPIList.freedom_randenemy_req.DataStruct,
+	MSGTYPE251	=	NetAPIList.champion_clean_req.DataStruct,
+	MSGTYPE451	=	NetAPIList.monster_all_ack.DataStruct,
+	MSGTYPE234	=	NetAPIList.sale_card_req.DataStruct,
+	MSGTYPE253	=	NetAPIList.champion_top_ack.DataStruct,
+	MSGTYPE1223	=	NetAPIList.gvg_battle_scores_ntf.DataStruct,
+	MSGTYPE580	=	NetAPIList.legion_self_ntf.DataStruct,
+	MSGTYPE1222	=	NetAPIList.gvg_buy_attack_req.DataStruct,
+	MSGTYPE1220	=	NetAPIList.gvg_login_ntf.DataStruct,
+	MSGTYPE1219	=	NetAPIList.gvg_player_log_ack.DataStruct,
+	MSGTYPE1218	=	NetAPIList.gvg_player_log_req.DataStruct,
+	MSGTYPE222	=	NetAPIList.friend_challenge_req.DataStruct,
+	MSGTYPE533	=	NetAPIList.legion_apply_opr_req.DataStruct,
+	MSGTYPE1216	=	NetAPIList.gvg_legion_log_req.DataStruct,
+	MSGTYPE226	=	NetAPIList.mapinfo_ack.DataStruct,
+	MSGTYPE141	=	NetAPIList.cards_cah.DataStruct,
+	MSGTYPE1000	=	NetAPIList.pve_log_req.DataStruct,
+	MSGTYPE250	=	NetAPIList.maybe_story_ack.DataStruct,
+	MSGTYPE1104	=	NetAPIList.powergifts_cah_dels.DataStruct,
+	MSGTYPE1213	=	NetAPIList.gvg_star_ack.DataStruct,
+	MSGTYPE410	=	NetAPIList.chest_get_req.DataStruct,
+	MSGTYPE515	=	NetAPIList.legion_other_req.DataStruct,
+	MSGTYPE1212	=	NetAPIList.gvg_star_req.DataStruct,
+	MSGTYPE510	=	NetAPIList.legion_list_req.DataStruct,
+	MSGTYPE1131	=	NetAPIList.lrank_no_legion_ack.DataStruct,
+	MSGTYPE60	=	NetAPIList.user_l_req.DataStruct,
+	MSGTYPE1210	=	NetAPIList.gvg_first_req.DataStruct,
+	MSGTYPE1135	=	NetAPIList.player_lrank_list_ack.DataStruct,
+	MSGTYPE70	=	NetAPIList.users_cah.DataStruct,
+	MSGTYPE1209	=	NetAPIList.gvg_attack_num_ntf.DataStruct,
+	MSGTYPE1208	=	NetAPIList.gvg_shield_ntf.DataStruct,
+	MSGTYPE1207	=	NetAPIList.gvg_fight_req.DataStruct,
+	MSGTYPE173	=	NetAPIList.group_upar_req.DataStruct,
+	MSGTYPE232	=	NetAPIList.prize_get_ack.DataStruct,
+	MSGTYPE310	=	NetAPIList.friend_search_req.DataStruct,
+	MSGTYPE1132	=	NetAPIList.lrank_buy_req.DataStruct,
+	MSGTYPE233	=	NetAPIList.player_report_req.DataStruct,
+	MSGTYPE1129	=	NetAPIList.legion_lrank_challenge_req.DataStruct,
+	MSGTYPE1203	=	NetAPIList.gvg_out_battle_req.DataStruct,
+	MSGTYPE404	=	NetAPIList.chests_cah_dels.DataStruct,
+	MSGTYPE182	=	NetAPIList.runes_cah_new.DataStruct,
+	MSGTYPE541	=	NetAPIList.legion_del_req.DataStruct,
+	MSGTYPE925	=	NetAPIList.write_mail_req.DataStruct,
+	MSGTYPE214	=	NetAPIList.champion_join_req.DataStruct,
+	MSGTYPE217	=	NetAPIList.champion_allenemy_ack.DataStruct,
+	MSGTYPE211	=	NetAPIList.fight_data_ack.DataStruct,
+	MSGTYPE150	=	NetAPIList.card_a_req.DataStruct,
+	MSGTYPE213	=	NetAPIList.send_card_req.DataStruct,
+	MSGTYPE1134	=	NetAPIList.player_lrank_list_req.DataStruct,
+	MSGTYPE1133	=	NetAPIList.lrank_buy_ack.DataStruct,
+	MSGTYPE1205	=	NetAPIList.gvg_battle_begin_ntf.DataStruct,
+	MSGTYPE1211	=	NetAPIList.gvg_first_ack.DataStruct,
+	MSGTYPE1130	=	NetAPIList.lrank_no_legion_req.DataStruct,
+	MSGTYPE1204	=	NetAPIList.gvg_battle_init_ack.DataStruct,
+	MSGTYPE204	=	NetAPIList.storys_cah_dels.DataStruct,
+	MSGTYPE174	=	NetAPIList.group_updr_req.DataStruct,
+	MSGTYPE1128	=	NetAPIList.legion_detail_rank_ack.DataStruct,
+	MSGTYPE1127	=	NetAPIList.legion_detail_rank_req.DataStruct,
+	MSGTYPE462	=	NetAPIList.crazy_clean_req.DataStruct,
+	MSGTYPE238	=	NetAPIList.card_once_ack.DataStruct,
+	MSGTYPE2	=	NetAPIList.gm_cmd_req.DataStruct,
+	MSGTYPE571	=	NetAPIList.legion_lock_ack.DataStruct,
+	MSGTYPE1126	=	NetAPIList.legion_rank_ack.DataStruct,
+	MSGTYPE1	=	NetAPIList.heartbeat_req.DataStruct,
+	MSGTYPE243	=	NetAPIList.maze_fight_req.DataStruct,
+	MSGTYPE1102	=	NetAPIList.powergifts_cah_new.DataStruct,
+	MSGTYPE161	=	NetAPIList.groups_cah.DataStruct,
+	MSGTYPE1122	=	NetAPIList.pay_list_req.DataStruct,
+	MSGTYPE454	=	NetAPIList.monster_clean_req.DataStruct,
+	MSGTYPE163	=	NetAPIList.groups_cah_del.DataStruct,
+	MSGTYPE402	=	NetAPIList.chests_cah_new.DataStruct,
+	MSGTYPE1120	=	NetAPIList.powergift_get_req.DataStruct,
+	MSGTYPE5203	=	NetAPIList.temple_data_req.DataStruct,
+	MSGTYPE260	=	NetAPIList.finish_first_event_req.DataStruct,
+	MSGTYPE506	=	NetAPIList.legion_mine_ack.DataStruct,
+	MSGTYPE255	=	NetAPIList.freedom_init_ack.DataStruct,
+	MSGTYPE1115	=	NetAPIList.powergift_give_req.DataStruct,
+	MSGTYPE236	=	NetAPIList.story_quick_pass_req.DataStruct,
+	MSGTYPE1110	=	NetAPIList.powergift_help_req.DataStruct,
+	MSGTYPE227	=	NetAPIList.nada_req.DataStruct,
+	MSGTYPE20	=	NetAPIList.login_ack.DataStruct,
+	MSGTYPE1006	=	NetAPIList.pvp_log_ack.DataStruct,
+	MSGTYPE1214	=	NetAPIList.gvg_rank_req.DataStruct,
+	MSGTYPE1103	=	NetAPIList.powergifts_cah_del.DataStruct,
+	MSGTYPE1123	=	NetAPIList.pay_list_ack.DataStruct,
+	MSGTYPE530	=	NetAPIList.legion_apply_list_req.DataStruct,
+	MSGTYPE1200	=	NetAPIList.gvg_match_req.DataStruct,
+	MSGTYPE1050	=	NetAPIList.play_fightlog_req.DataStruct,
+	MSGTYPE1105	=	NetAPIList.powergifts_cah_upt.DataStruct,
+	MSGTYPE225	=	NetAPIList.mapinfo_req.DataStruct,
+	MSGTYPE228	=	NetAPIList.nada_ack.DataStruct,
+	MSGTYPE181	=	NetAPIList.runes_cah.DataStruct,
+	MSGTYPE411	=	NetAPIList.prize_test_req.DataStruct,
+	MSGTYPE1001	=	NetAPIList.pve_log_ack.DataStruct,
+	MSGTYPE184	=	NetAPIList.runes_cah_dels.DataStruct,
+	MSGTYPE1215	=	NetAPIList.gvg_rank_ack.DataStruct,
+	MSGTYPE231	=	NetAPIList.group_updrune_req.DataStruct,
+	MSGTYPE500	=	NetAPIList.legion_create_req.DataStruct,
+	MSGTYPE316	=	NetAPIList.friend_agree_req.DataStruct,
+	MSGTYPE1051	=	NetAPIList.play_fightlog_ack.DataStruct,
+	MSGTYPE916	=	NetAPIList.read_mail_ack.DataStruct,
+	MSGTYPE805	=	NetAPIList.map_gain_req.DataStruct,
+	MSGTYPE249	=	NetAPIList.maybe_story_req.DataStruct,
+	MSGTYPE901	=	NetAPIList.get_mail_ack.DataStruct,
+	MSGTYPE452	=	NetAPIList.monster_creat_ack.DataStruct,
+	MSGTYPE810	=	NetAPIList.story_invade_ntf.DataStruct,
+	MSGTYPE808	=	NetAPIList.map_gain_all_ack.DataStruct,
+	MSGTYPE807	=	NetAPIList.map_gain_all_req.DataStruct,
+	MSGTYPE802	=	NetAPIList.map_friend_ack.DataStruct,
+	MSGTYPE910	=	NetAPIList.new_mail_ntf.DataStruct,
+	MSGTYPE242	=	NetAPIList.maze_a_ack.DataStruct,
+	MSGTYPE604	=	NetAPIList.market_gold_ack.DataStruct,
+	MSGTYPE143	=	NetAPIList.cards_cah_del.DataStruct,
+	MSGTYPE220	=	NetAPIList.freedom_randenemy_ack.DataStruct,
+	MSGTYPE900	=	NetAPIList.get_mail_req.DataStruct,
+	MSGTYPE700	=	NetAPIList.ranks_get_req.DataStruct,
+	MSGTYPE602	=	NetAPIList.market_buy_req.DataStruct,
+	MSGTYPE223	=	NetAPIList.card_enhance_req.DataStruct,
+	MSGTYPE245	=	NetAPIList.story_hide_req.DataStruct,
+	MSGTYPE11	=	NetAPIList.register_req.DataStruct,
+	MSGTYPE603	=	NetAPIList.market_card_ack.DataStruct,
+	MSGTYPE505	=	NetAPIList.legion_mine_req.DataStruct,
+	MSGTYPE171	=	NetAPIList.group_upac_req.DataStruct,
+	MSGTYPE1125	=	NetAPIList.legion_rank_req.DataStruct,
+	MSGTYPE254	=	NetAPIList.freedom_init_req.DataStruct,
+	MSGTYPE550	=	NetAPIList.legion_devote_req.DataStruct,
+	MSGTYPE252	=	NetAPIList.champion_top_req.DataStruct,
+	MSGTYPE566	=	NetAPIList.legion_remark_ack.DataStruct,
+	MSGTYPE202	=	NetAPIList.storys_cah_new.DataStruct,
+	MSGTYPE210	=	NetAPIList.story_a_req.DataStruct,
+	MSGTYPE165	=	NetAPIList.groups_cah_upt.DataStruct,
+	MSGTYPE241	=	NetAPIList.maze_a_req.DataStruct,
+	MSGTYPE5100	=	NetAPIList.signs_cah.DataStruct,
+	MSGTYPE5000	=	NetAPIList.grade_gain_req.DataStruct,
+	MSGTYPE532	=	NetAPIList.legion_apply_req.DataStruct,
+	MSGTYPE601	=	NetAPIList.market_get_ack.DataStruct,
+	MSGTYPE191	=	NetAPIList.rune_d_req.DataStruct,
+	MSGTYPE5202	=	NetAPIList.temple_rune_exchange_req.DataStruct,
+	MSGTYPE545	=	NetAPIList.legion_shift_req.DataStruct,
+	MSGTYPE1201	=	NetAPIList.gvg_into_battle_req.DataStruct,
+	MSGTYPE190	=	NetAPIList.rune_a_req.DataStruct,
+	MSGTYPE170	=	NetAPIList.group_a_req.DataStruct,
+	MSGTYPE239	=	NetAPIList.rune_once_req.DataStruct,
+	MSGTYPE540	=	NetAPIList.legion_quit_req.DataStruct,
+	MSGTYPE142	=	NetAPIList.cards_cah_new.DataStruct,
+	MSGTYPE1101	=	NetAPIList.powergifts_cah.DataStruct,
+	MSGTYPE534	=	NetAPIList.legion_invite_req.DataStruct,
+	MSGTYPE1217	=	NetAPIList.gvg_legion_log_ack.DataStruct,
+	MSGTYPE531	=	NetAPIList.legion_apply_list_ack.DataStruct,
+	MSGTYPE536	=	NetAPIList.legion_apply_ack.DataStruct,
+	MSGTYPE453	=	NetAPIList.monster_challenge_req.DataStruct,
+	MSGTYPE215	=	NetAPIList.champion_init_ack.DataStruct,
+	MSGTYPE516	=	NetAPIList.legion_other_ack.DataStruct,
+	MSGTYPE5204	=	NetAPIList.temple_data_ack.DataStruct,
+	MSGTYPE450	=	NetAPIList.monster_all_req.DataStruct,
+	MSGTYPE230	=	NetAPIList.group_update_req.DataStruct,
+	MSGTYPE570	=	NetAPIList.legion_lock_req.DataStruct,
+	MSGTYPE560	=	NetAPIList.legion_buy_req.DataStruct,
+	MSGTYPE555	=	NetAPIList.legion_flag_req.DataStruct,
+	MSGTYPE257	=	NetAPIList.champion_add_times_req.DataStruct,
+	MSGTYPE5200	=	NetAPIList.temple_meditation_req.DataStruct,
+	MSGTYPE405	=	NetAPIList.chests_cah_upt.DataStruct,
+	MSGTYPE302	=	NetAPIList.friends_cah_new.DataStruct,
+	MSGTYPE565	=	NetAPIList.legion_remark_req.DataStruct,
+	MSGTYPE144	=	NetAPIList.cards_cah_dels.DataStruct,
+	MSGTYPE256	=	NetAPIList.freedom_clean_req.DataStruct,
+	MSGTYPE1121	=	NetAPIList.pay_verify_req.DataStruct,
+	MSGTYPE237	=	NetAPIList.card_once_req.DataStruct,
+	MSGTYPE401	=	NetAPIList.chests_cah.DataStruct,
+	MSGTYPE5110	=	NetAPIList.sign_gain_req.DataStruct,
+	MSGTYPE1010	=	NetAPIList.chat_req.DataStruct,
+	MSGTYPE403	=	NetAPIList.chests_cah_del.DataStruct,
+	MSGTYPE5006	=	NetAPIList.grade_info_ack.DataStruct,
+	MSGTYPE5005	=	NetAPIList.grade_info_req.DataStruct,
+	MSGTYPE326	=	NetAPIList.friend_info_ack.DataStruct,
+	MSGTYPE325	=	NetAPIList.friend_info_req.DataStruct,
+	MSGTYPE10	=	NetAPIList.login_req.DataStruct,
+	MSGTYPE1206	=	NetAPIList.gvg_battle_end_ntf.DataStruct,
+	MSGTYPE305	=	NetAPIList.friends_cah_upt.DataStruct,
+	MSGTYPE577	=	NetAPIList.legion_guard_req.DataStruct,
+	MSGTYPE512	=	NetAPIList.legion_list_ack.DataStruct,
+	MSGTYPE304	=	NetAPIList.friends_cah_dels.DataStruct,
+	MSGTYPE185	=	NetAPIList.runes_cah_upt.DataStruct,
+	MSGTYPE461	=	NetAPIList.crazy_challenge_ack.DataStruct,
+	MSGTYPE1005	=	NetAPIList.pvp_log_req.DataStruct,
+	MSGTYPE701	=	NetAPIList.ranks_get_ack.DataStruct,
+	MSGTYPE205	=	NetAPIList.storys_cah_upt.DataStruct,
+	MSGTYPE5201	=	NetAPIList.temple_process_req.DataStruct,
+	MSGTYPE511	=	NetAPIList.legion_search_req.DataStruct,
+	MSGTYPE248	=	NetAPIList.maze_all_ack.DataStruct,
+	MSGTYPE247	=	NetAPIList.maze_all_req.DataStruct,
+	MSGTYPE244	=	NetAPIList.maze_refush_req.DataStruct,
+	MSGTYPE1011	=	NetAPIList.chat_ack.DataStruct,
+	MSGTYPE65	=	NetAPIList.user_icon_req.DataStruct,
+	MSGTYPE235	=	NetAPIList.sale_rune_req.DataStruct,
+	MSGTYPE303	=	NetAPIList.friends_cah_del.DataStruct,
+	MSGTYPE224	=	NetAPIList.rune_enhance_req.DataStruct,
+	MSGTYPE460	=	NetAPIList.crazy_challenge_req.DataStruct,
+	MSGTYPE201	=	NetAPIList.storys_cah.DataStruct,
+	MSGTYPE164	=	NetAPIList.groups_cah_dels.DataStruct,
+	MSGTYPE221	=	NetAPIList.freedom_challenge_req.DataStruct,
+	MSGTYPE218	=	NetAPIList.champion_challenge_req.DataStruct,
+	MSGTYPE556	=	NetAPIList.legion_flag_ack.DataStruct,
+	MSGTYPE183	=	NetAPIList.runes_cah_del.DataStruct,
+	MSGTYPE162	=	NetAPIList.groups_cah_new.DataStruct,
+	MSGTYPE145	=	NetAPIList.cards_cah_upt.DataStruct,
+	MSGTYPE801	=	NetAPIList.map_info_ack.DataStruct,
+	MSGTYPE130	=	NetAPIList.user_m_req.DataStruct,
 } 
 
 function NetAPIList:getDataStructFromMsgType(msgType)

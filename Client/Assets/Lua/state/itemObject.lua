@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 LuaItemManager={}
 local LuaObject =LuaObject
 local LuaItemManager = LuaItemManager

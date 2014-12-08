@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 --Gameobject 资源集合
 local LuaHelper=LuaHelper
 local Loader=Loader

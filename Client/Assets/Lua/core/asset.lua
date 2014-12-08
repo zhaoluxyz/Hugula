@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--	asset 
+--	author pu
+------------------------------------------------
 local CUtils=CUtils
 local SINGLE,SHARE = SINGLE,SHARE 
 local LuaHelper=LuaHelper
@@ -18,20 +23,12 @@ Asset = class(function(self,url,names)
 end)
 
 function Asset:clear()
-	-- if self.type == SINGLE then
-		print("clear"..self.root.name)
-		if self.root then LuaHelper.Destroy(self.root) end
-		self.root = nil
-		GAMEOBJECT_ATLAS[self.key]=nil
-		self.items={}
-		-- self.names=nil
-		--self.names=nil
-	-- elseif self.items then
-	-- 	for k,v in pairs(self.items) do
-	-- 		LuaHelper.Destory(v)
-	-- 	end
-	-- 	self.items=nil
-	-- end
+-- if self.type == SINGLE then
+	print("clear"..self.root.name)
+	if self.root then LuaHelper.Destroy(self.root) end
+	self.root = nil
+	GAMEOBJECT_ATLAS[self.key]=nil
+	self.items={}
 end
 
 function Asset:show(...)

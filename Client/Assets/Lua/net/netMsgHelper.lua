@@ -5,51 +5,9 @@ function NetMsgHelper:makept_pkid(id)
 	return t
 end
 
-function NetMsgHelper:makesend_check_version(os) 
+function NetMsgHelper:makept_pkids(ids) 
 	local t = {}
-	t["os"]=os
-	return t
-end
-
-function NetMsgHelper:makerecv_check_version(game_ver,res_ver) 
-	local t = {}
-	t["game_ver"]=game_ver
-	t["res_ver"]=res_ver
-	return t
-end
-
-function NetMsgHelper:makeplayer_anonymouslogin(udid,os,token) 
-	local t = {}
-	t["udid"]=udid
-	t["os"]=os
-	t["token"]=token
-	return t
-end
-
-function NetMsgHelper:makept_game_serverlist(udid) 
-	local t = {}
-	t["udid"]=udid
-	return t
-end
-
-function NetMsgHelper:makept_gs_login(udid,sid,player_id) 
-	local t = {}
-	t["udid"]=udid
-	t["sid"]=sid
-	t["player_id"]=player_id
-	return t
-end
-
-function NetMsgHelper:makept_gs_good(command) 
-	local t = {}
-	t["command"]=command
-	return t
-end
-
-function NetMsgHelper:makept_gs_bad(command,errno) 
-	local t = {}
-	t["command"]=command
-	t["errno"]=errno
+	t["ids"]=ids
 	return t
 end
 
@@ -59,940 +17,1541 @@ function NetMsgHelper:makept_int(i)
 	return t
 end
 
-function NetMsgHelper:makerecv_player_hero(player_hero_id,system_hero_id,player_hero_lv,player_hero_exp,pt_hero_attribute,player_hero_color,pt_pkid,pt_hero_skill,player_hero_next_exp,pos,player_hero_num,hero_group_id,player_hero_strengthen_rate,player_hero_strengthen,pt_hero_skill) 
+function NetMsgHelper:makept_code(api,code) 
 	local t = {}
-	t["player_hero_id"]=player_hero_id
-	t["system_hero_id"]=system_hero_id
-	t["player_hero_lv"]=player_hero_lv
-	t["player_hero_exp"]=player_hero_exp
-	t["player_hero_attribute"]=pt_hero_attribute
-	t["player_hero_color"]=player_hero_color
-	t["player_hero_equip"]=pt_pkid
-	t["player_hero_skill"]=pt_hero_skill
-	t["player_hero_next_exp"]=player_hero_next_exp
-	t["pos"]=pos
-	t["player_hero_num"]=player_hero_num
-	t["hero_group_id"]=hero_group_id
-	t["player_hero_strengthen_rate"]=player_hero_strengthen_rate
-	t["player_hero_strengthen"]=player_hero_strengthen
-	t["hero_skill"]=pt_hero_skill
+	t["api"]=api
+	t["code"]=code
 	return t
 end
 
-function NetMsgHelper:makesend_player_hero_list(profession_category,page,size) 
+function NetMsgHelper:makedb_single(id,user_id,gift_power_date) 
 	local t = {}
-	t["profession_category"]=profession_category
-	t["page"]=page
-	t["size"]=size
+	t["id"]=id
+	t["user_id"]=user_id
+	t["gift_power_date"]=gift_power_date
 	return t
 end
 
-function NetMsgHelper:makerecv_player_team(player_hero_id,system_hero_id,player_hero_lv,player_hero_exp,pt_hero_attribute,player_hero_color,pt_pkid,pt_hero_skill,pos,player_hero_next_exp,hero_group_id,player_hero_strengthen_rate,player_hero_strengthen,pt_hero_skill) 
+function NetMsgHelper:makept_ubase(name,sex,account_type,account,token) 
 	local t = {}
-	t["player_hero_id"]=player_hero_id
-	t["system_hero_id"]=system_hero_id
-	t["player_hero_lv"]=player_hero_lv
-	t["player_hero_exp"]=player_hero_exp
-	t["player_hero_attribute"]=pt_hero_attribute
-	t["player_hero_color"]=player_hero_color
-	t["player_hero_equip"]=pt_pkid
-	t["player_hero_skill"]=pt_hero_skill
-	t["pos"]=pos
-	t["player_hero_next_exp"]=player_hero_next_exp
-	t["hero_group_id"]=hero_group_id
-	t["player_hero_strengthen_rate"]=player_hero_strengthen_rate
-	t["player_hero_strengthen"]=player_hero_strengthen
-	t["hero_skill"]=pt_hero_skill
+	t["name"]=name
+	t["sex"]=sex
+	t["account_type"]=account_type
+	t["account"]=account
+	t["token"]=token
 	return t
 end
 
-function NetMsgHelper:makept_player_team(recv_player_team) 
+function NetMsgHelper:makedb_device(id,d_type,udid,os,os_version,market,terminal,lcl,mac_addr,locale) 
 	local t = {}
-	t["team"]=recv_player_team
+	t["id"]=id
+	t["d_type"]=d_type
+	t["udid"]=udid
+	t["os"]=os
+	t["os_version"]=os_version
+	t["market"]=market
+	t["terminal"]=terminal
+	t["lcl"]=lcl
+	t["mac_addr"]=mac_addr
+	t["locale"]=locale
 	return t
 end
 
-function NetMsgHelper:makept_player_hero(count,recv_player_hero) 
+function NetMsgHelper:makedb_user(id,user_id,device_id,account_type,account,name,sex,icon,power,gift_power,buy_power,level,experience,money,group,story,gold,magic_card,powergift_num,powergift_date,maxfevent) 
 	local t = {}
-	t["count"]=count
-	t["heros"]=recv_player_hero
-	return t
-end
-
-function NetMsgHelper:makerecv_player_hero_list(recv_player_hero) 
-	local t = {}
-	t["heros"]=recv_player_hero
-	return t
-end
-
-function NetMsgHelper:makesend_player_chapter(parent) 
-	local t = {}
-	t["parent"]=parent
-	return t
-end
-
-function NetMsgHelper:makerecv_chapter_list(chapter_id,chapter_star,chapter_fastest_record,chapter_my_record,chapter_residue_number) 
-	local t = {}
-	t["chapter_id"]=chapter_id
-	t["chapter_star"]=chapter_star
-	t["chapter_fastest_record"]=chapter_fastest_record
-	t["chapter_my_record"]=chapter_my_record
-	t["chapter_residue_number"]=chapter_residue_number
-	return t
-end
-
-function NetMsgHelper:makept_player_chapter_list(recv_chapter_list) 
-	local t = {}
-	t["list"]=recv_chapter_list
-	return t
-end
-
-function NetMsgHelper:makesend_challenge_chapter(chapter_id) 
-	local t = {}
-	t["chapter_id"]=chapter_id
-	return t
-end
-
-function NetMsgHelper:makept_character_attribute_a(gold,crystal,vit,exp,player_friendship,player_prestige,player_arena_number,player_skill_points,lv,max_lv,max_exp,vit_limit,pt_hero_attribute) 
-	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["device_id"]=device_id
+	t["account_type"]=account_type
+	t["account"]=account
+	t["name"]=name
+	t["sex"]=sex
+	t["icon"]=icon
+	t["power"]=power
+	t["gift_power"]=gift_power
+	t["buy_power"]=buy_power
+	t["level"]=level
+	t["experience"]=experience
+	t["money"]=money
+	t["group"]=group
+	t["story"]=story
 	t["gold"]=gold
-	t["crystal"]=crystal
-	t["vit"]=vit
-	t["exp"]=exp
-	t["player_friendship"]=player_friendship
-	t["player_prestige"]=player_prestige
-	t["player_arena_number"]=player_arena_number
-	t["player_skill_points"]=player_skill_points
-	t["lv"]=lv
-	t["max_lv"]=max_lv
-	t["max_exp"]=max_exp
-	t["vit_limit"]=vit_limit
-	t["attribute"]=pt_hero_attribute
+	t["magic_card"]=magic_card
+	t["powergift_num"]=powergift_num
+	t["powergift_date"]=powergift_date
+	t["maxfevent"]=maxfevent
 	return t
 end
 
-function NetMsgHelper:makesend_player_challenge_chapter_start(chapter_id) 
-	local t = {}
-	t["chapter_id"]=chapter_id
-	return t
-end
-
-function NetMsgHelper:makerecv_challenge_chapter_result(victory,star,recv_paygoods) 
-	local t = {}
-	t["victory"]=victory
-	t["star"]=star
-	t["drop"]=recv_paygoods
-	return t
-end
-
-function NetMsgHelper:makerecv_player_sweep_chapter(recv_paygoods) 
-	local t = {}
-	t["drop"]=recv_paygoods
-	return t
-end
-
-function NetMsgHelper:makerecv_challenge_chapter_result_hero(player_hero_id,system_hero_id,exp,isup,max_exp,cur_exp,hero_lv) 
-	local t = {}
-	t["player_hero_id"]=player_hero_id
-	t["system_hero_id"]=system_hero_id
-	t["exp"]=exp
-	t["isup"]=isup
-	t["max_exp"]=max_exp
-	t["cur_exp"]=cur_exp
-	t["hero_lv"]=hero_lv
-	return t
-end
-
-function NetMsgHelper:makerecv_goods(goods_id,goods_num,goods_type) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	t["goods_type"]=goods_type
-	return t
-end
-
-function NetMsgHelper:makerecv_hero(hero_id,hero_num) 
-	local t = {}
-	t["hero_id"]=hero_id
-	t["hero_num"]=hero_num
-	return t
-end
-
-function NetMsgHelper:makept_hero_attribute(hp,mp,maxHp,maxMp,damage,defend,magicDamage,magicDefend,critValue,dodgeValue,speed,attackSpeed,turnSpeed,rangeVisible) 
-	local t = {}
-	t["hp"]=hp
-	t["mp"]=mp
-	t["maxHp"]=maxHp
-	t["maxMp"]=maxMp
-	t["damage"]=damage
-	t["defend"]=defend
-	t["magicDamage"]=magicDamage
-	t["magicDefend"]=magicDefend
-	t["critValue"]=critValue
-	t["dodgeValue"]=dodgeValue
-	t["speed"]=speed
-	t["attackSpeed"]=attackSpeed
-	t["turnSpeed"]=turnSpeed
-	t["rangeVisible"]=rangeVisible
-	return t
-end
-
-function NetMsgHelper:makerecv_paygoods(gold,crystal,recv_goods,recv_hero,recv_challenge_chapter_result_hero,player_vit,player_exp,player_cur_exp,player_lv,player_is_up,player_prestige) 
-	local t = {}
-	t["gold"]=gold
-	t["crystal"]=crystal
-	t["goods"]=recv_goods
-	t["heros"]=recv_hero
-	t["hero_exp"]=recv_challenge_chapter_result_hero
-	t["player_vit"]=player_vit
-	t["player_exp"]=player_exp
-	t["player_cur_exp"]=player_cur_exp
-	t["player_lv"]=player_lv
-	t["player_is_up"]=player_is_up
-	t["player_prestige"]=player_prestige
-	return t
-end
-
-function NetMsgHelper:makept_paygoods(recv_paygoods) 
-	local t = {}
-	t["goods"]=recv_paygoods
-	return t
-end
-
-function NetMsgHelper:makerecv_player_bag_goods(recv_goods) 
-	local t = {}
-	t["goods"]=recv_goods
-	return t
-end
-
-function NetMsgHelper:makept_use_goods(goods_id,goods_num) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	return t
-end
-
-function NetMsgHelper:makesend_hero_goods_use(goods_id,goods_num,player_hero_id) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	t["player_hero_id"]=player_hero_id
-	return t
-end
-
-function NetMsgHelper:makesend_change_player_team_up(player_hero_id,pos) 
-	local t = {}
-	t["player_hero_id"]=player_hero_id
-	t["pos"]=pos
-	return t
-end
-
-function NetMsgHelper:makesend_change_player_team_down(pos) 
-	local t = {}
-	t["pos"]=pos
-	return t
-end
-
-function NetMsgHelper:makesend_player_goods_sell(goods_id,goods_num) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	return t
-end
-
-function NetMsgHelper:makesend_player_hero_equip_up(goods_id,player_hero_id) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["player_hero_id"]=player_hero_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_hero_advanced(player_hero_id) 
-	local t = {}
-	t["player_hero_id"]=player_hero_id
-	return t
-end
-
-function NetMsgHelper:makept_hero_skill(id,lv) 
+function NetMsgHelper:makerc_buy_times(id,num) 
 	local t = {}
 	t["id"]=id
-	t["lv"]=lv
-	return t
-end
-
-function NetMsgHelper:makesend_kill_monster(chapter_id,monster_id) 
-	local t = {}
-	t["chapter_id"]=chapter_id
-	t["monster_id"]=monster_id
-	return t
-end
-
-function NetMsgHelper:makerecv_monster(id,system_hero_id,hero_group_id,hero_brain,pt_pos,pt_hero_attribute,pt_hero_skill) 
-	local t = {}
-	t["id"]=id
-	t["system_hero_id"]=system_hero_id
-	t["hero_group_id"]=hero_group_id
-	t["hero_brain"]=hero_brain
-	t["pos"]=pt_pos
-	t["player_hero_attribute"]=pt_hero_attribute
-	t["player_hero_skill"]=pt_hero_skill
-	return t
-end
-
-function NetMsgHelper:makerecv_monster_list(recv_monster,round,count_round,team) 
-	local t = {}
-	t["monster"]=recv_monster
-	t["round"]=round
-	t["count_round"]=count_round
-	t["team"]=team
-	return t
-end
-
-function NetMsgHelper:makerecv_player_challenge_chapter(chapter_type,chapter_id,pt_pkid,pt_hero_skill,recv_stronghold_army) 
-	local t = {}
-	t["chapter_type"]=chapter_type
-	t["chapter_id"]=chapter_id
-	t["hero_group_ids"]=pt_pkid
-	t["hero_skill_ids"]=pt_hero_skill
-	t["stronghold"]=recv_stronghold_army
-	return t
-end
-
-function NetMsgHelper:makerecv_stronghold_army(hero_id,hero_group_id,recv_monster) 
-	local t = {}
-	t["hero_id"]=hero_id
-	t["hero_group_id"]=hero_group_id
-	t["army"]=recv_monster
-	return t
-end
-
-function NetMsgHelper:makesend_player_mail_list(max_mail_id) 
-	local t = {}
-	t["max_mail_id"]=max_mail_id
-	return t
-end
-
-function NetMsgHelper:makerecv_mail(mail_id,mail_group,player_id,player_name,mail_title,mail_body,recv_paygoods,mail_status,mail_create_at) 
-	local t = {}
-	t["mail_id"]=mail_id
-	t["mail_group"]=mail_group
-	t["player_id"]=player_id
-	t["player_name"]=player_name
-	t["mail_title"]=mail_title
-	t["mail_body"]=mail_body
-	t["mail_goods"]=recv_paygoods
-	t["mail_status"]=mail_status
-	t["mail_create_at"]=mail_create_at
-	return t
-end
-
-function NetMsgHelper:makerecv_mail_list(recv_mail) 
-	local t = {}
-	t["list"]=recv_mail
-	return t
-end
-
-function NetMsgHelper:makesend_player_mail_goods(mail_id) 
-	local t = {}
-	t["mail_id"]=mail_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_mail_read(mail_id) 
-	local t = {}
-	t["mail_id"]=mail_id
-	return t
-end
-
-function NetMsgHelper:makerecv_mail_content(recv_mail) 
-	local t = {}
-	t["list"]=recv_mail
-	return t
-end
-
-function NetMsgHelper:makesend_player_mail_delete(mail_id) 
-	local t = {}
-	t["mail_id"]=mail_id
-	return t
-end
-
-function NetMsgHelper:makerecv_broadcast_message(channel_id,type,body,sender_player_id,sender_player_role,sender_player_name,create_at) 
-	local t = {}
-	t["channel_id"]=channel_id
-	t["type"]=type
-	t["body"]=body
-	t["sender_player_id"]=sender_player_id
-	t["sender_player_role"]=sender_player_role
-	t["sender_player_name"]=sender_player_name
-	t["create_at"]=create_at
-	return t
-end
-
-function NetMsgHelper:makesend_chat(channel_id,to_player_id,message) 
-	local t = {}
-	t["channel_id"]=channel_id
-	t["to_player_id"]=to_player_id
-	t["message"]=message
-	return t
-end
-
-function NetMsgHelper:makesend_hero_equip_synthesis(goods_id) 
-	local t = {}
-	t["goods_id"]=goods_id
-	return t
-end
-
-function NetMsgHelper:makept_pos(x,y,z) 
-	local t = {}
-	t["x"]=x
-	t["y"]=y
-	t["z"]=z
-	return t
-end
-
-function NetMsgHelper:makesend_mail(recv_mail) 
-	local t = {}
-	t["list"]=recv_mail
-	return t
-end
-
-function NetMsgHelper:makerecv_mail_count(count) 
-	local t = {}
-	t["count"]=count
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_remain_count(count) 
-	local t = {}
-	t["count"]=count
-	return t
-end
-
-function NetMsgHelper:makesend_player_send_mail(to_player_id,mail_title,mail_body) 
-	local t = {}
-	t["to_player_id"]=to_player_id
-	t["mail_title"]=mail_title
-	t["mail_body"]=mail_body
-	return t
-end
-
-function NetMsgHelper:makesend_player_hero_strengthen(player_hero_idl,player_hero_idr) 
-	local t = {}
-	t["player_hero_idl"]=player_hero_idl
-	t["player_hero_idr"]=player_hero_idr
-	return t
-end
-
-function NetMsgHelper:makerecv_player_hero_strengthen(success) 
-	local t = {}
-	t["success"]=success
-	return t
-end
-
-function NetMsgHelper:makesend_hero_hero_synthesis(player_hero_idl,player_hero_idr) 
-	local t = {}
-	t["player_hero_idl"]=player_hero_idl
-	t["player_hero_idr"]=player_hero_idr
-	return t
-end
-
-function NetMsgHelper:makesend_player_reward_data(a) 
-	local t = {}
-	t["a"]=a
-	return t
-end
-
-function NetMsgHelper:makerecv_reward_data(player_week,player_day,reward_status) 
-	local t = {}
-	t["player_week"]=player_week
-	t["player_day"]=player_day
-	t["reward_status"]=reward_status
-	return t
-end
-
-function NetMsgHelper:makesend_player_reward_login(player_week,player_day) 
-	local t = {}
-	t["player_week"]=player_week
-	t["player_day"]=player_day
-	return t
-end
-
-function NetMsgHelper:makesend_player_hero_stlas_list(a) 
-	local t = {}
-	t["a"]=a
-	return t
-end
-
-function NetMsgHelper:makerecv_hero_atlas(system_hero_id,player_hero_lv) 
-	local t = {}
-	t["system_hero_id"]=system_hero_id
-	t["player_hero_lv"]=player_hero_lv
-	return t
-end
-
-function NetMsgHelper:makerecv_hero_atlas_list(recv_hero_atlas) 
-	local t = {}
-	t["list"]=recv_hero_atlas
-	return t
-end
-
-function NetMsgHelper:makesend_apply_friends_apply(friends_player_id) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_apply(player_name,player_lv,player_role_id,player_id) 
-	local t = {}
-	t["player_name"]=player_name
-	t["player_lv"]=player_lv
-	t["player_role_id"]=player_role_id
-	t["player_id"]=player_id
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_apply_list(count,recv_friends_apply) 
-	local t = {}
-	t["count"]=count
-	t["list"]=recv_friends_apply
-	return t
-end
-
-function NetMsgHelper:makesend_request_friends_apply(friends_player_id,status) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	t["status"]=status
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_request(friends_player_id,friends_player_name,status) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	t["friends_player_name"]=friends_player_name
-	t["status"]=status
-	return t
-end
-
-function NetMsgHelper:makesend_friends_list(page,size) 
-	local t = {}
-	t["page"]=page
-	t["size"]=size
-	return t
-end
-
-function NetMsgHelper:makerecv_friends(friends_player_id,friends_player_lv,friends_player_role_id,friends_player_name,give_away_friendship,cool_down) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	t["friends_player_lv"]=friends_player_lv
-	t["friends_player_role_id"]=friends_player_role_id
-	t["friends_player_name"]=friends_player_name
-	t["give_away_friendship"]=give_away_friendship
-	t["cool_down"]=cool_down
-	return t
-end
-
-function NetMsgHelper:makesend_reveive_friendship(friends_player_id) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	return t
-end
-
-function NetMsgHelper:makesend_reveive_friendship_pick_up(a) 
-	local t = {}
-	t["a"]=a
-	return t
-end
-
-function NetMsgHelper:makesend_value_friendship(friends_player_id) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_list(count,recv_friends) 
-	local t = {}
-	t["count"]=count
-	t["list"]=recv_friends
-	return t
-end
-
-function NetMsgHelper:makesend_player_find_list(player_name,find_type,page,size) 
-	local t = {}
-	t["player_name"]=player_name
-	t["find_type"]=find_type
-	t["page"]=page
-	t["size"]=size
-	return t
-end
-
-function NetMsgHelper:makesend_player_friends_delete(friends_player_id) 
-	local t = {}
-	t["friends_player_id"]=friends_player_id
-	return t
-end
-
-function NetMsgHelper:makerecv_find_player_list(count,recv_find_player) 
-	local t = {}
-	t["count"]=count
-	t["list"]=recv_find_player
-	return t
-end
-
-function NetMsgHelper:makerecv_find_player(player_id,player_name,player_lv,player_role_id) 
-	local t = {}
-	t["player_id"]=player_id
-	t["player_name"]=player_name
-	t["player_lv"]=player_lv
-	t["player_role_id"]=player_role_id
-	return t
-end
-
-function NetMsgHelper:makerecv_player_quest_list(recv_player_quest) 
-	local t = {}
-	t["list"]=recv_player_quest
-	return t
-end
-
-function NetMsgHelper:makerecv_player_quest(id,quest_id,quest_status,recv_quest_progress) 
-	local t = {}
-	t["id"]=id
-	t["quest_id"]=quest_id
-	t["quest_status"]=quest_status
-	t["quest_progress"]=recv_quest_progress
-	return t
-end
-
-function NetMsgHelper:makerecv_quest_progress(current,total) 
-	local t = {}
-	t["current"]=current
-	t["total"]=total
-	return t
-end
-
-function NetMsgHelper:makesend_receive_quest_goods(id) 
-	local t = {}
-	t["id"]=id
-	return t
-end
-
-function NetMsgHelper:makerecv_quest_goods(recv_paygoods) 
-	local t = {}
-	t["item"]=recv_paygoods
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_remain_count(count) 
-	local t = {}
-	t["count"]=count
-	return t
-end
-
-function NetMsgHelper:makesend_player_compound_goods_beast(beast_id) 
-	local t = {}
-	t["beast_id"]=beast_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_drama(drama_id) 
-	local t = {}
-	t["drama_id"]=drama_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_boot(boot_id) 
-	local t = {}
-	t["boot_id"]=boot_id
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_mail(mail_id,player_id,player_name,mail_title,mail_body,mail_create_at) 
-	local t = {}
-	t["mail_id"]=mail_id
-	t["player_id"]=player_id
-	t["player_name"]=player_name
-	t["mail_title"]=mail_title
-	t["mail_body"]=mail_body
-	t["mail_create_at"]=mail_create_at
-	return t
-end
-
-function NetMsgHelper:makerecv_friends_mail_list(recv_friends_mail) 
-	local t = {}
-	t["list"]=recv_friends_mail
-	return t
-end
-
-function NetMsgHelper:makeplayer_activity_list(a) 
-	local t = {}
-	t["a"]=a
-	return t
-end
-
-function NetMsgHelper:makerecv_activity_list(recv_activity_one) 
-	local t = {}
-	t["list"]=recv_activity_one
-	return t
-end
-
-function NetMsgHelper:makerecv_activity_one(category,activity_a,activity_b,activity_c) 
-	local t = {}
-	t["category"]=category
-	t["activity_a"]=activity_a
-	t["activity_b"]=activity_b
-	t["activity_c"]=activity_c
-	return t
-end
-
-function NetMsgHelper:makerecv_activity(activity_id,chapter_id) 
-	local t = {}
-	t["activity_id"]=activity_id
-	t["chapter_id"]=chapter_id
-	return t
-end
-
-function NetMsgHelper:makecondition_list(key,condition) 
-	local t = {}
-	t["key"]=key
-	t["condition"]=condition
-	return t
-end
-
-function NetMsgHelper:makerecv_player_arena_rank_near(current_rank,player_prestige,remaining_number,max_limit,recv_player_arena_rank) 
-	local t = {}
-	t["current_rank"]=current_rank
-	t["player_prestige"]=player_prestige
-	t["remaining_number"]=remaining_number
-	t["max_limit"]=max_limit
-	t["list"]=recv_player_arena_rank
-	return t
-end
-
-function NetMsgHelper:makerecv_player_arena_rank(player_id,player_lv,player_name,rank,recv_player_hero,recv_paygoods,recv_reward_time) 
-	local t = {}
-	t["player_id"]=player_id
-	t["player_lv"]=player_lv
-	t["player_name"]=player_name
-	t["rank"]=rank
-	t["team"]=recv_player_hero
-	t["rank_reward"]=recv_paygoods
-	t["recv_reward_time"]=recv_reward_time
-	return t
-end
-
-function NetMsgHelper:makerecv_player_beast_list(recv_player_beast) 
-	local t = {}
-	t["list"]=recv_player_beast
-	return t
-end
-
-function NetMsgHelper:makesynthesis_goods_list(goods_id,goods_num) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	return t
-end
-
-function NetMsgHelper:makerecv_player_beast(beast_id,synthesis_goods_list,activate_status,cool_down,played) 
-	local t = {}
-	t["beast_id"]=beast_id
-	t["synthesis_goods"]=synthesis_goods_list
-	t["activate_status"]=activate_status
-	t["cool_down"]=cool_down
-	t["played"]=played
-	return t
-end
-
-function NetMsgHelper:makerecv_player_exchanges(refresh_time,player_prestige,recv_exchange_goods,recv_goods_price,refresh_current_num,refresh_limit_num) 
-	local t = {}
-	t["refresh_time"]=refresh_time
-	t["player_prestige"]=player_prestige
-	t["goods"]=recv_exchange_goods
-	t["refresh_price"]=recv_goods_price
-	t["refresh_current_num"]=refresh_current_num
-	t["refresh_limit_num"]=refresh_limit_num
-	return t
-end
-
-function NetMsgHelper:makerecv_exchange_goods(goods_id,goods_num,exchange_num,prestige) 
-	local t = {}
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	t["exchange_num"]=exchange_num
-	t["prestige"]=prestige
-	return t
-end
-
-function NetMsgHelper:makesend_exchange_goods(goods_id) 
-	local t = {}
-	t["goods_id"]=goods_id
-	return t
-end
-
-function NetMsgHelper:makerecv_player_arena_battle_report_list(recv_player_arena_battle_report) 
-	local t = {}
-	t["list"]=recv_player_arena_battle_report
-	return t
-end
-
-function NetMsgHelper:makerecv_player_arena_battle_report(battle_type,battle_player_id,battle_player_name,is_victory,rank,battle_datetime) 
-	local t = {}
-	t["battle_type"]=battle_type
-	t["battle_player_id"]=battle_player_id
-	t["battle_player_name"]=battle_player_name
-	t["is_victory"]=is_victory
-	t["rank"]=rank
-	t["battle_datetime"]=battle_datetime
-	return t
-end
-
-function NetMsgHelper:makesned_player_activity_verify(activity_id,category) 
-	local t = {}
-	t["activity_id"]=activity_id
-	t["category"]=category
-	return t
-end
-
-function NetMsgHelper:makerecv_player_activity_verify(activity_id,status) 
-	local t = {}
-	t["activity_id"]=activity_id
-	t["status"]=status
-	return t
-end
-
-function NetMsgHelper:makesend_player_challenge_arena(enemy_player_id) 
-	local t = {}
-	t["enemy_player_id"]=enemy_player_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_besat_played(beast_id) 
-	local t = {}
-	t["beast_id"]=beast_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_hero_skill_up(player_hero_id,skill_id) 
-	local t = {}
-	t["player_hero_id"]=player_hero_id
-	t["skill_id"]=skill_id
-	return t
-end
-
-function NetMsgHelper:makesend_player_skill_release_up(a) 
-	local t = {}
-	t["a"]=a
-	return t
-end
-
-function NetMsgHelper:makerecv_player_hero_skill_time(time) 
-	local t = {}
-	t["time"]=time
-	return t
-end
-
-function NetMsgHelper:makerecv_system_conf_data(system_conf_data) 
-	local t = {}
-	t["list"]=system_conf_data
-	return t
-end
-
-function NetMsgHelper:makesystem_conf_data(key,val) 
-	local t = {}
-	t["key"]=key
-	t["val"]=val
-	return t
-end
-
-function NetMsgHelper:makerecv_shop_goods_list(recv_shop_goods) 
-	local t = {}
-	t["list"]=recv_shop_goods
-	return t
-end
-
-function NetMsgHelper:makerecv_shop_goods(id,shop_no,shop_sort,goods_id,goods_num,buy_limit,recv_goods_price,goods_free_time,goods_give,shop_artno) 
-	local t = {}
-	t["id"]=id
-	t["shop_no"]=shop_no
-	t["shop_sort"]=shop_sort
-	t["goods_id"]=goods_id
-	t["goods_num"]=goods_num
-	t["buy_limit"]=buy_limit
-	t["goods_price"]=recv_goods_price
-	t["goods_free_time"]=goods_free_time
-	t["goods_give"]=goods_give
-	t["shop_artno"]=shop_artno
-	return t
-end
-
-function NetMsgHelper:makerecv_goods_price(type,price) 
-	local t = {}
-	t["type"]=type
-	t["price"]=price
-	return t
-end
-
-function NetMsgHelper:makesend_buy_goods(id,goods_num) 
-	local t = {}
-	t["id"]=id
-	t["goods_num"]=goods_num
-	return t
-end
-
-function NetMsgHelper:makerecv_buy_goods_data(shop_no,recv_buy_goods) 
-	local t = {}
-	t["shop_no"]=shop_no
-	t["items"]=recv_buy_goods
-	return t
-end
-
-function NetMsgHelper:makerecv_buy_goods(recv_goods,recv_hero,recv_goods_price) 
-	local t = {}
-	t["goods"]=recv_goods
-	t["hero"]=recv_hero
-	t["other"]=recv_goods_price
-	return t
-end
-
-function NetMsgHelper:makerecv_activity_residue_list(recv_activity_residue) 
-	local t = {}
-	t["list"]=recv_activity_residue
-	return t
-end
-
-function NetMsgHelper:makerecv_activity_residue(category,num) 
-	local t = {}
-	t["category"]=category
 	t["num"]=num
 	return t
 end
 
-function NetMsgHelper:makevit_release_up(a) 
+function NetMsgHelper:makerc_buy_log(type,rc_buy_times) 
 	local t = {}
-	t["a"]=a
+	t["type"]=type
+	t["item"]=rc_buy_times
 	return t
 end
 
-function NetMsgHelper:makerecv_vit_release_up(time) 
+function NetMsgHelper:makeflrfid(floor,type,id) 
 	local t = {}
+	t["floor"]=floor
+	t["type"]=type
+	t["id"]=id
+	return t
+end
+
+function NetMsgHelper:makemaze_fight(maze,enemy,floor,type,id,refush,step,reset) 
+	local t = {}
+	t["maze"]=maze
+	t["enemy"]=enemy
+	t["floor"]=floor
+	t["type"]=type
+	t["id"]=id
+	t["refush"]=refush
+	t["step"]=step
+	t["reset"]=reset
+	return t
+end
+
+function NetMsgHelper:makerc_magic_scroll(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makedb_userinfo(id,user_id,frd_del_num,frd_del_date,cards,runes,maze_fight,star5,rc_buy_log,buy_date,time_power_date,g_power_date,chp_times,chp_win,frd_times,frd_win,monster_add,login_time,logout_time,create_at,rc_magic_scroll,ban,mute,total_charge,lev_prize_date,change_name_num,first_event) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["frd_del_num"]=frd_del_num
+	t["frd_del_date"]=frd_del_date
+	t["cards"]=cards
+	t["runes"]=runes
+	t["mazes"]=maze_fight
+	t["star5"]=star5
+	t["buy_log"]=rc_buy_log
+	t["buy_date"]=buy_date
+	t["time_power_date"]=time_power_date
+	t["g_power_date"]=g_power_date
+	t["chp_times"]=chp_times
+	t["chp_win"]=chp_win
+	t["frd_times"]=frd_times
+	t["frd_win"]=frd_win
+	t["monster_add"]=monster_add
+	t["login_time"]=login_time
+	t["logout_time"]=logout_time
+	t["create_at"]=create_at
+	t["magic_scroll"]=rc_magic_scroll
+	t["ban"]=ban
+	t["mute"]=mute
+	t["total_charge"]=total_charge
+	t["lev_prize_date"]=lev_prize_date
+	t["change_name_num"]=change_name_num
+	t["first_event"]=first_event
+	return t
+end
+
+function NetMsgHelper:makept_account(pt_ubase,db_device,app_ver) 
+	local t = {}
+	t["base"]=pt_ubase
+	t["device"]=db_device
+	t["app_ver"]=app_ver
+	return t
+end
+
+function NetMsgHelper:makedb_card(id,user_id,base_id,level,experience) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["base_id"]=base_id
+	t["level"]=level
+	t["experience"]=experience
+	return t
+end
+
+function NetMsgHelper:makedb_cards(db_card) 
+	local t = {}
+	t["cards"]=db_card
+	return t
+end
+
+function NetMsgHelper:makegrune(id,baseid,level) 
+	local t = {}
+	t["id"]=id
+	t["baseid"]=baseid
+	t["level"]=level
+	return t
+end
+
+function NetMsgHelper:makegcard(id,baseid,level) 
+	local t = {}
+	t["id"]=id
+	t["baseid"]=baseid
+	t["level"]=level
+	return t
+end
+
+function NetMsgHelper:makedb_group(id,user_id,runes,cards) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["runes"]=runes
+	t["cards"]=cards
+	return t
+end
+
+function NetMsgHelper:makedb_groups(db_group) 
+	local t = {}
+	t["groups"]=db_group
+	return t
+end
+
+function NetMsgHelper:makept_group_ac(id,card) 
+	local t = {}
+	t["id"]=id
+	t["card"]=card
+	return t
+end
+
+function NetMsgHelper:makept_group_dc(id,card) 
+	local t = {}
+	t["id"]=id
+	t["card"]=card
+	return t
+end
+
+function NetMsgHelper:makedb_rune(id,user_id,base_id,level,experience) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["base_id"]=base_id
+	t["level"]=level
+	t["experience"]=experience
+	return t
+end
+
+function NetMsgHelper:makedb_runes(db_rune) 
+	local t = {}
+	t["runes"]=db_rune
+	return t
+end
+
+function NetMsgHelper:makept_group_ar(id,rune) 
+	local t = {}
+	t["id"]=id
+	t["rune"]=rune
+	return t
+end
+
+function NetMsgHelper:makept_group_dr(id,rune) 
+	local t = {}
+	t["id"]=id
+	t["rune"]=rune
+	return t
+end
+
+function NetMsgHelper:makedb_story(id,user_id,base_id,finish) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["base_id"]=base_id
+	t["finish"]=finish
+	return t
+end
+
+function NetMsgHelper:makedb_storys(db_story) 
+	local t = {}
+	t["storys"]=db_story
+	return t
+end
+
+function NetMsgHelper:makepk_fcard_base(baseId,hp,ad,limit,cost) 
+	local t = {}
+	t["baseId"]=baseId
+	t["hp"]=hp
+	t["ad"]=ad
+	t["limit"]=limit
+	t["cost"]=cost
+	return t
+end
+
+function NetMsgHelper:makepk_fcard_fight(nowlevel,nowhp,nowat,nowdef,nowmis) 
+	local t = {}
+	t["nowlevel"]=nowlevel
+	t["nowhp"]=nowhp
+	t["nowat"]=nowat
+	t["nowdef"]=nowdef
+	t["nowmis"]=nowmis
+	return t
+end
+
+function NetMsgHelper:makepk_fcard_temp(tmphp,tmpat,tmpap,tmpdef,tmpres,tmpmis) 
+	local t = {}
+	t["tmphp"]=tmphp
+	t["tmpat"]=tmpat
+	t["tmpap"]=tmpap
+	t["tmpdef"]=tmpdef
+	t["tmpres"]=tmpres
+	t["tmpmis"]=tmpmis
+	return t
+end
+
+function NetMsgHelper:makepk_buff(type,value,number) 
+	local t = {}
+	t["type"]=type
+	t["value"]=value
+	t["number"]=number
+	return t
+end
+
+function NetMsgHelper:makepk_apply(atk,type,def,value) 
+	local t = {}
+	t["atk"]=atk
+	t["type"]=type
+	t["def"]=def
+	t["value"]=value
+	return t
+end
+
+function NetMsgHelper:makepk_fcard(idx,pk_fcard_base,pk_fcard_fight) 
+	local t = {}
+	t["idx"]=idx
+	t["fcardbase"]=pk_fcard_base
+	t["fcardfight"]=pk_fcard_fight
+	return t
+end
+
+function NetMsgHelper:makepk_frune(idx,baseid,level,timer) 
+	local t = {}
+	t["idx"]=idx
+	t["baseid"]=baseid
+	t["level"]=level
+	t["timer"]=timer
+	return t
+end
+
+function NetMsgHelper:makepk_fight_group(hero,pk_frune,pk_fcard,pk_fcard,pk_fcard,pk_fcard) 
+	local t = {}
+	t["hero"]=hero
+	t["rune"]=pk_frune
+	t["home"]=pk_fcard
+	t["waiting"]=pk_fcard
+	t["fighting"]=pk_fcard
+	t["dead"]=pk_fcard
+	return t
+end
+
+function NetMsgHelper:makepk_area_log(hom,wit,fig,dea) 
+	local t = {}
+	t["hom"]=hom
+	t["wit"]=wit
+	t["fig"]=fig
+	t["dea"]=dea
+	return t
+end
+
+function NetMsgHelper:makepk_cres(hp,at,def,mis) 
+	local t = {}
+	t["hp"]=hp
+	t["at"]=at
+	t["def"]=def
+	t["mis"]=mis
+	return t
+end
+
+function NetMsgHelper:makepk_move(idx,from,to,pos) 
+	local t = {}
+	t["idx"]=idx
+	t["from"]=from
+	t["to"]=to
+	t["pos"]=pos
+	return t
+end
+
+function NetMsgHelper:makepk_flog(type,times,attacker,defender,skillid,target,hero_damage,hero_check,pk_cres,pk_cres,cardfstate,pk_buff,pk_apply,pk_apply,pk_cres,pk_move,pk_cres) 
+	local t = {}
+	t["type"]=type
+	t["times"]=times
+	t["attacker"]=attacker
+	t["defender"]=defender
+	t["skillid"]=skillid
+	t["target"]=target
+	t["hero_damage"]=hero_damage
+	t["hero_check"]=hero_check
+	t["cardfres"]=pk_cres
+	t["cardfdata"]=pk_cres
+	t["cardfstate"]=cardfstate
+	t["cardfbuff"]=pk_buff
+	t["atkdesc"]=pk_apply
+	t["defdesc"]=pk_apply
+	t["cardftemp"]=pk_cres
+	t["area"]=pk_move
+	t["attkerfdata"]=pk_cres
+	return t
+end
+
+function NetMsgHelper:makepk_clog(a_pos,b_pos) 
+	local t = {}
+	t["a_pos"]=a_pos
+	t["b_pos"]=b_pos
+	return t
+end
+
+function NetMsgHelper:makepk_round(opts,content) 
+	local t = {}
+	t["opts"]=opts
+	t["content"]=content
+	return t
+end
+
+function NetMsgHelper:makepk_fight_log(pk_move,pk_move,pk_flog,pk_move,pk_flog,pk_move,pk_flog,pk_move) 
+	local t = {}
+	t["areaLogCho"]=pk_move
+	t["areaLogSen"]=pk_move
+	t["fistShowLog"]=pk_flog
+	t["areaLogSho"]=pk_move
+	t["runeLog"]=pk_flog
+	t["areaLogRun"]=pk_move
+	t["commonShowLog"]=pk_flog
+	t["areaLogCom"]=pk_move
+	return t
+end
+
+function NetMsgHelper:makepk_record(round,isend,pk_fight_log) 
+	local t = {}
+	t["round"]=round
+	t["isend"]=isend
+	t["fightlog"]=pk_fight_log
+	return t
+end
+
+function NetMsgHelper:makepk_ready(first,pk_fight_group,pk_fight_group) 
+	local t = {}
+	t["first"]=first
+	t["attacker"]=pk_fight_group
+	t["defender"]=pk_fight_group
+	return t
+end
+
+function NetMsgHelper:makepk_fight_data_result(result,totle,pk_ready,pk_record) 
+	local t = {}
+	t["result"]=result
+	t["totle"]=totle
+	t["ready"]=pk_ready
+	t["recordlist"]=pk_record
+	return t
+end
+
+function NetMsgHelper:makedb_fightlog(id,user_id,pk_fight_data_result) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["log"]=pk_fight_data_result
+	return t
+end
+
+function NetMsgHelper:makedb_storylog(id,user_id,fighter,time,log) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["fighter"]=fighter
+	t["time"]=time
+	t["log"]=log
+	return t
+end
+
+function NetMsgHelper:makedb_pvplog(id,user_id,enemy,result,value,type,time,log) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["enemy"]=enemy
+	t["result"]=result
+	t["value"]=value
+	t["type"]=type
+	t["time"]=time
+	t["log"]=log
+	return t
+end
+
+function NetMsgHelper:makept_pvelog(logid,name,icon,lev) 
+	local t = {}
+	t["logid"]=logid
+	t["name"]=name
+	t["icon"]=icon
+	t["lev"]=lev
+	return t
+end
+
+function NetMsgHelper:makept_pvelog_list(story,pt_pvelog) 
+	local t = {}
+	t["story"]=story
+	t["log"]=pt_pvelog
+	return t
+end
+
+function NetMsgHelper:makept_pvplog(logid,type,enemy,name,icon,lev,rank,score,len_id,len_flag,len_name,result,value,time) 
+	local t = {}
+	t["logid"]=logid
+	t["type"]=type
+	t["enemy"]=enemy
+	t["name"]=name
+	t["icon"]=icon
+	t["lev"]=lev
+	t["rank"]=rank
+	t["score"]=score
+	t["len_id"]=len_id
+	t["len_flag"]=len_flag
+	t["len_name"]=len_name
+	t["result"]=result
+	t["value"]=value
 	t["time"]=time
 	return t
 end
 
-function NetMsgHelper:makerecv_player_friends_delete(friends_player_id) 
+function NetMsgHelper:makept_pvplog_list(rank,score,pt_pvplog) 
 	local t = {}
-	t["friends_player_id"]=friends_player_id
+	t["rank"]=rank
+	t["score"]=score
+	t["log"]=pt_pvplog
 	return t
 end
 
-function NetMsgHelper:makesend_hero_fragments_synthetic(goods_id) 
+function NetMsgHelper:makept_chat2server(channel,receiveid,content) 
 	local t = {}
-	t["goods_id"]=goods_id
+	t["channel"]=channel
+	t["receiveid"]=receiveid
+	t["content"]=content
 	return t
 end
 
-function NetMsgHelper:makesend_player_hero_sell(player_hero_id) 
+function NetMsgHelper:makept_chat2player(channel,sendid,sendname,sendlevel,sendicon,sendlen_id,sendlen_flag,sendlen_pos,receiveid,receivename,content) 
 	local t = {}
-	t["player_hero_id"]=player_hero_id
+	t["channel"]=channel
+	t["sendid"]=sendid
+	t["sendname"]=sendname
+	t["sendlevel"]=sendlevel
+	t["sendicon"]=sendicon
+	t["sendlen_id"]=sendlen_id
+	t["sendlen_flag"]=sendlen_flag
+	t["sendlen_pos"]=sendlen_pos
+	t["receiveid"]=receiveid
+	t["receivename"]=receivename
+	t["content"]=content
+	return t
+end
+
+function NetMsgHelper:makept_crdlist(crdlist) 
+	local t = {}
+	t["crdlist"]=crdlist
+	return t
+end
+
+function NetMsgHelper:makedb_friend(id,user_id,frd_id,type) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["frd_id"]=frd_id
+	t["type"]=type
+	return t
+end
+
+function NetMsgHelper:makedb_friends(db_friend) 
+	local t = {}
+	t["friends"]=db_friend
+	return t
+end
+
+function NetMsgHelper:makedb_powergift(id,user_id,other_id,self_flag,self_date,other_flag,other_date) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["other_id"]=other_id
+	t["self_flag"]=self_flag
+	t["self_date"]=self_date
+	t["other_flag"]=other_flag
+	t["other_date"]=other_date
+	return t
+end
+
+function NetMsgHelper:makedb_powergifts(db_powergift) 
+	local t = {}
+	t["gifts"]=db_powergift
+	return t
+end
+
+function NetMsgHelper:makept_frd_info(user_id,name,sex,icon,level,type) 
+	local t = {}
+	t["user_id"]=user_id
+	t["name"]=name
+	t["sex"]=sex
+	t["icon"]=icon
+	t["level"]=level
+	t["type"]=type
+	return t
+end
+
+function NetMsgHelper:makept_frd_list(pt_frd_info) 
+	local t = {}
+	t["frd_list"]=pt_frd_info
+	return t
+end
+
+function NetMsgHelper:makept_frd_init(pt_frd_info) 
+	local t = {}
+	t["frd_list"]=pt_frd_info
+	return t
+end
+
+function NetMsgHelper:makept_frd_agree(friend_id,agree) 
+	local t = {}
+	t["friend_id"]=friend_id
+	t["agree"]=agree
+	return t
+end
+
+function NetMsgHelper:makept_enemy(rank,user_id,name,sex,level,win,lose,getpic,icon) 
+	local t = {}
+	t["rank"]=rank
+	t["user_id"]=user_id
+	t["name"]=name
+	t["sex"]=sex
+	t["level"]=level
+	t["win"]=win
+	t["lose"]=lose
+	t["getpic"]=getpic
+	t["icon"]=icon
+	return t
+end
+
+function NetMsgHelper:makept_all_enemy(pt_enemy) 
+	local t = {}
+	t["enemy"]=pt_enemy
+	return t
+end
+
+function NetMsgHelper:makedb_grade(id,user_id,cfg_id,finish_date,finish,gain) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["cfg_id"]=cfg_id
+	t["finish_date"]=finish_date
+	t["finish"]=finish
+	t["gain"]=gain
+	return t
+end
+
+function NetMsgHelper:makedb_gradeevent(id,user_id,event,condition) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["event"]=event
+	t["condition"]=condition
+	return t
+end
+
+function NetMsgHelper:makept_grade_test(event,condition) 
+	local t = {}
+	t["event"]=event
+	t["condition"]=condition
+	return t
+end
+
+function NetMsgHelper:makept_grade_info(cfg_id,finish,gain,event) 
+	local t = {}
+	t["cfg_id"]=cfg_id
+	t["finish"]=finish
+	t["gain"]=gain
+	t["event"]=event
+	return t
+end
+
+function NetMsgHelper:makept_grade_info_list(pt_grade_info) 
+	local t = {}
+	t["info"]=pt_grade_info
+	return t
+end
+
+function NetMsgHelper:makept_card_enhance(id,food) 
+	local t = {}
+	t["id"]=id
+	t["food"]=food
+	return t
+end
+
+function NetMsgHelper:makept_rune_enhance(id,food) 
+	local t = {}
+	t["id"]=id
+	t["food"]=food
+	return t
+end
+
+function NetMsgHelper:makerc_chest(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makedb_chest(id,user_id,source,time,rc_chest) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["source"]=source
+	t["time"]=time
+	t["reward"]=rc_chest
+	return t
+end
+
+function NetMsgHelper:makedb_chests(db_chest) 
+	local t = {}
+	t["chests"]=db_chest
+	return t
+end
+
+function NetMsgHelper:makept_prize_test(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makerc_temple_site(type,id) 
+	local t = {}
+	t["type"]=type
+	t["id"]=id
+	return t
+end
+
+function NetMsgHelper:makerc_temple_fragment(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makedb_temple(id,user_id,grade,rc_temple_fragment,rc_temple_site) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["grade"]=grade
+	t["fragment_amount"]=rc_temple_fragment
+	t["site_goodtype"]=rc_temple_site
+	return t
+end
+
+function NetMsgHelper:makept_temple_datas(grade,rc_temple_fragment,rc_temple_site) 
+	local t = {}
+	t["grade"]=grade
+	t["fragments"]=rc_temple_fragment
+	t["sites"]=rc_temple_site
+	return t
+end
+
+function NetMsgHelper:makept_mapinfo(mapid,storyid,invade) 
+	local t = {}
+	t["mapid"]=mapid
+	t["storyid"]=storyid
+	t["invade"]=invade
+	return t
+end
+
+function NetMsgHelper:makept_nadainfo(nadaid) 
+	local t = {}
+	t["nadaid"]=nadaid
+	return t
+end
+
+function NetMsgHelper:makedb_legion(id,user_id,name,remark,flag,lock,lev,exp,guard,del_num,del_time) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["name"]=name
+	t["remark"]=remark
+	t["flag"]=flag
+	t["lock"]=lock
+	t["lev"]=lev
+	t["exp"]=exp
+	t["guard"]=guard
+	t["del_num"]=del_num
+	t["del_time"]=del_time
+	return t
+end
+
+function NetMsgHelper:makedb_lenmeb(id,user_id,player_id,pos,devote,join_time,doe_money,doe_gold,doe_date) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["player_id"]=player_id
+	t["pos"]=pos
+	t["devote"]=devote
+	t["join_time"]=join_time
+	t["doe_money"]=doe_money
+	t["doe_gold"]=doe_gold
+	t["doe_date"]=doe_date
+	return t
+end
+
+function NetMsgHelper:makedb_lenapply(id,user_id,player_id,apply,invite) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["player_id"]=player_id
+	t["apply"]=apply
+	t["invite"]=invite
+	return t
+end
+
+function NetMsgHelper:makept_len_info(id,name,remark,exp,lev,flag,lock,meb,rank,score) 
+	local t = {}
+	t["id"]=id
+	t["name"]=name
+	t["remark"]=remark
+	t["exp"]=exp
+	t["lev"]=lev
+	t["flag"]=flag
+	t["lock"]=lock
+	t["meb"]=meb
+	t["rank"]=rank
+	t["score"]=score
+	return t
+end
+
+function NetMsgHelper:makept_len_list(pt_len_info) 
+	local t = {}
+	t["list"]=pt_len_info
+	return t
+end
+
+function NetMsgHelper:makept_lenmeb_info(id,name,lev,pos,devote,rank,score) 
+	local t = {}
+	t["id"]=id
+	t["name"]=name
+	t["lev"]=lev
+	t["pos"]=pos
+	t["devote"]=devote
+	t["rank"]=rank
+	t["score"]=score
+	return t
+end
+
+function NetMsgHelper:makept_lenmeb_list(pt_lenmeb_info) 
+	local t = {}
+	t["list"]=pt_lenmeb_info
+	return t
+end
+
+function NetMsgHelper:makept_len_all_info(pt_len_info,pt_lenmeb_info) 
+	local t = {}
+	t["legion"]=pt_len_info
+	t["meb"]=pt_lenmeb_info
+	return t
+end
+
+function NetMsgHelper:makept_len_create(name) 
+	local t = {}
+	t["name"]=name
+	return t
+end
+
+function NetMsgHelper:makept_len_apply(id,name,icon,lev,rank,score) 
+	local t = {}
+	t["id"]=id
+	t["name"]=name
+	t["icon"]=icon
+	t["lev"]=lev
+	t["rank"]=rank
+	t["score"]=score
+	return t
+end
+
+function NetMsgHelper:makept_len_apply_list(pt_len_apply) 
+	local t = {}
+	t["list"]=pt_len_apply
+	return t
+end
+
+function NetMsgHelper:makept_len_apply_opr(id,agree) 
+	local t = {}
+	t["id"]=id
+	t["agree"]=agree
+	return t
+end
+
+function NetMsgHelper:makept_len_devote(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makept_create_legion(name,remark,flag,lock) 
+	local t = {}
+	t["name"]=name
+	t["remark"]=remark
+	t["flag"]=flag
+	t["lock"]=lock
+	return t
+end
+
+function NetMsgHelper:makept_legion_self(legion_id,pos) 
+	local t = {}
+	t["legion_id"]=legion_id
+	t["pos"]=pos
+	return t
+end
+
+function NetMsgHelper:makept_groupupd_rune(id,runelist) 
+	local t = {}
+	t["id"]=id
+	t["runelist"]=runelist
+	return t
+end
+
+function NetMsgHelper:makept_groupupd_card(id,cardlist) 
+	local t = {}
+	t["id"]=id
+	t["cardlist"]=cardlist
+	return t
+end
+
+function NetMsgHelper:makept_prize_get(type,prize) 
+	local t = {}
+	t["type"]=type
+	t["prize"]=prize
+	return t
+end
+
+function NetMsgHelper:makept_player_report(type,desc) 
+	local t = {}
+	t["type"]=type
+	t["desc"]=desc
+	return t
+end
+
+function NetMsgHelper:makept_rune_once(runes) 
+	local t = {}
+	t["runes"]=runes
+	return t
+end
+
+function NetMsgHelper:makept_maze(maze,enemy,floor,type,id,refush,step,reset) 
+	local t = {}
+	t["maze"]=maze
+	t["enemy"]=enemy
+	t["floor"]=floor
+	t["type"]=type
+	t["id"]=id
+	t["refush"]=refush
+	t["step"]=step
+	t["reset"]=reset
+	return t
+end
+
+function NetMsgHelper:makept_maze_all(pt_maze) 
+	local t = {}
+	t["maze"]=pt_maze
+	return t
+end
+
+function NetMsgHelper:makept_market_item(id,cost,num) 
+	local t = {}
+	t["id"]=id
+	t["cost"]=cost
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makept_market(type,pt_market_item) 
+	local t = {}
+	t["type"]=type
+	t["item"]=pt_market_item
+	return t
+end
+
+function NetMsgHelper:makept_market_buy(type,id,flag) 
+	local t = {}
+	t["type"]=type
+	t["id"]=id
+	t["flag"]=flag
+	return t
+end
+
+function NetMsgHelper:makept_market_card(type,id,pt_market_item,cards) 
+	local t = {}
+	t["type"]=type
+	t["id"]=id
+	t["item"]=pt_market_item
+	t["cards"]=cards
+	return t
+end
+
+function NetMsgHelper:makept_market_gold(type,id,pt_market_item,gold) 
+	local t = {}
+	t["type"]=type
+	t["id"]=id
+	t["item"]=pt_market_item
+	t["gold"]=gold
+	return t
+end
+
+function NetMsgHelper:makept_market_power(type,id,pt_market_item,power) 
+	local t = {}
+	t["type"]=type
+	t["id"]=id
+	t["item"]=pt_market_item
+	t["power"]=power
+	return t
+end
+
+function NetMsgHelper:makept_ranks_get(id,type) 
+	local t = {}
+	t["id"]=id
+	t["type"]=type
+	return t
+end
+
+function NetMsgHelper:makept_ranks_info(rank,user_id,name,icon,lev,value) 
+	local t = {}
+	t["rank"]=rank
+	t["user_id"]=user_id
+	t["name"]=name
+	t["icon"]=icon
+	t["lev"]=lev
+	t["value"]=value
+	return t
+end
+
+function NetMsgHelper:makept_ranks_list(id,pt_ranks_info,pt_ranks_info) 
+	local t = {}
+	t["id"]=id
+	t["self"]=pt_ranks_info
+	t["info"]=pt_ranks_info
+	return t
+end
+
+function NetMsgHelper:makept_story_hide(info) 
+	local t = {}
+	t["info"]=info
+	return t
+end
+
+function NetMsgHelper:makept_gmcmd(cmd) 
+	local t = {}
+	t["cmd"]=cmd
+	return t
+end
+
+function NetMsgHelper:makedb_mapreward(id,user_id,map_id,invade,invade_time,gain_time,gain_num) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["map_id"]=map_id
+	t["invade"]=invade
+	t["invade_time"]=invade_time
+	t["gain_time"]=gain_time
+	t["gain_num"]=gain_num
+	return t
+end
+
+function NetMsgHelper:makept_map_gain(map,money) 
+	local t = {}
+	t["map"]=map
+	t["money"]=money
+	return t
+end
+
+function NetMsgHelper:makept_map_info(date,story,gain,pt_maze,invade) 
+	local t = {}
+	t["date"]=date
+	t["story"]=story
+	t["gain"]=gain
+	t["maze"]=pt_maze
+	t["invade"]=invade
+	return t
+end
+
+function NetMsgHelper:makept_map_friend(id,story,name,icon) 
+	local t = {}
+	t["id"]=id
+	t["story"]=story
+	t["name"]=name
+	t["icon"]=icon
+	return t
+end
+
+function NetMsgHelper:makept_map_friend_list(pt_map_friend) 
+	local t = {}
+	t["list"]=pt_map_friend
+	return t
+end
+
+function NetMsgHelper:makedb_coldtime(id,user_id,chp_times,chp_gold,champion,freedom,monster,crazy,lrank,lrank_buy) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["chp_times"]=chp_times
+	t["chp_gold"]=chp_gold
+	t["champion"]=champion
+	t["freedom"]=freedom
+	t["monster"]=monster
+	t["crazy"]=crazy
+	t["lrank"]=lrank
+	t["lrank_buy"]=lrank_buy
+	return t
+end
+
+function NetMsgHelper:makept_champion(rank,times,cd) 
+	local t = {}
+	t["rank"]=rank
+	t["times"]=times
+	t["cd"]=cd
+	return t
+end
+
+function NetMsgHelper:makept_freedom(cd) 
+	local t = {}
+	t["cd"]=cd
+	return t
+end
+
+function NetMsgHelper:makemcard(baseid,level,hp,att) 
+	local t = {}
+	t["baseid"]=baseid
+	t["level"]=level
+	t["hp"]=hp
+	t["att"]=att
+	return t
+end
+
+function NetMsgHelper:makept_m_group(hero,cards) 
+	local t = {}
+	t["hero"]=hero
+	t["cards"]=cards
+	return t
+end
+
+function NetMsgHelper:makept_m_fighter(id,score) 
+	local t = {}
+	t["id"]=id
+	t["score"]=score
+	return t
+end
+
+function NetMsgHelper:makedb_monster(id,user_id,level,hard,score,find_id,find_time,end_time,pt_m_fighter,pt_m_group,killer_id,killed_time,prizecard) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["level"]=level
+	t["hard"]=hard
+	t["score"]=score
+	t["find_id"]=find_id
+	t["find_time"]=find_time
+	t["end_time"]=end_time
+	t["attacker"]=pt_m_fighter
+	t["fightdata"]=pt_m_group
+	t["killer_id"]=killer_id
+	t["killed_time"]=killed_time
+	t["prizecard"]=prizecard
+	return t
+end
+
+function NetMsgHelper:makedb_mail(id,user_id,type,new,from,event,title,content,time) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["type"]=type
+	t["new"]=new
+	t["from"]=from
+	t["event"]=event
+	t["title"]=title
+	t["content"]=content
+	t["time"]=time
+	return t
+end
+
+function NetMsgHelper:makept_player_mail(id,type,new,time,event) 
+	local t = {}
+	t["id"]=id
+	t["type"]=type
+	t["new"]=new
+	t["time"]=time
+	t["event"]=event
+	return t
+end
+
+function NetMsgHelper:makept_player_mail_list(pt_player_mail) 
+	local t = {}
+	t["info"]=pt_player_mail
+	return t
+end
+
+function NetMsgHelper:makept_write_mail(receiver,title,content) 
+	local t = {}
+	t["receiver"]=receiver
+	t["title"]=title
+	t["content"]=content
+	return t
+end
+
+function NetMsgHelper:makept_new_mail(type,num) 
+	local t = {}
+	t["type"]=type
+	t["num"]=num
+	return t
+end
+
+function NetMsgHelper:makept_new_mail_list(pt_new_mail) 
+	local t = {}
+	t["list"]=pt_new_mail
+	return t
+end
+
+function NetMsgHelper:makept_monster(level,hard,now,score,find_id,find_name,time,round,killer_id,killer_name) 
+	local t = {}
+	t["level"]=level
+	t["hard"]=hard
+	t["now"]=now
+	t["score"]=score
+	t["find_id"]=find_id
+	t["find_name"]=find_name
+	t["time"]=time
+	t["round"]=round
+	t["killer_id"]=killer_id
+	t["killer_name"]=killer_name
+	return t
+end
+
+function NetMsgHelper:makept_find_monster(pt_monster,cd) 
+	local t = {}
+	t["monster"]=pt_monster
+	t["cd"]=cd
+	return t
+end
+
+function NetMsgHelper:makept_monster_all(pt_monster,cd) 
+	local t = {}
+	t["all"]=pt_monster
+	t["cd"]=cd
+	return t
+end
+
+function NetMsgHelper:makept_crazy_score(once,totle) 
+	local t = {}
+	t["once"]=once
+	t["totle"]=totle
+	return t
+end
+
+function NetMsgHelper:makept_pay_verify(platform,pay_type,token,signature) 
+	local t = {}
+	t["platform"]=platform
+	t["pay_type"]=pay_type
+	t["token"]=token
+	t["signature"]=signature
+	return t
+end
+
+function NetMsgHelper:makept_pay_list_get(platform) 
+	local t = {}
+	t["platform"]=platform
+	return t
+end
+
+function NetMsgHelper:makept_pay_list(pay_types) 
+	local t = {}
+	t["pay_types"]=pay_types
+	return t
+end
+
+function NetMsgHelper:makept_legion_rank_get(start,size) 
+	local t = {}
+	t["start"]=start
+	t["size"]=size
+	return t
+end
+
+function NetMsgHelper:makept_lrank_buy(num,cost) 
+	local t = {}
+	t["num"]=num
+	t["cost"]=cost
+	return t
+end
+
+function NetMsgHelper:makelegion_rank(id,name,remark,exp,lev,flag,lock,meb,rank,score,threat) 
+	local t = {}
+	t["id"]=id
+	t["name"]=name
+	t["remark"]=remark
+	t["exp"]=exp
+	t["lev"]=lev
+	t["flag"]=flag
+	t["lock"]=lock
+	t["meb"]=meb
+	t["rank"]=rank
+	t["score"]=score
+	t["threat"]=threat
+	return t
+end
+
+function NetMsgHelper:makept_legion_rank_list(len_id,name,num,cost,legion_rank) 
+	local t = {}
+	t["len_id"]=len_id
+	t["name"]=name
+	t["num"]=num
+	t["cost"]=cost
+	t["legion_ranks"]=legion_rank
+	return t
+end
+
+function NetMsgHelper:makeplayer_rank_info(user_id,name,icon,level,rank,scores,pos,devote,plan_score,plan_money,protected) 
+	local t = {}
+	t["user_id"]=user_id
+	t["name"]=name
+	t["icon"]=icon
+	t["level"]=level
+	t["rank"]=rank
+	t["scores"]=scores
+	t["pos"]=pos
+	t["devote"]=devote
+	t["plan_score"]=plan_score
+	t["plan_money"]=plan_money
+	t["protected"]=protected
+	return t
+end
+
+function NetMsgHelper:makept_player_rank_list(rank,num,cost,player_rank_info) 
+	local t = {}
+	t["rank"]=rank
+	t["num"]=num
+	t["cost"]=cost
+	t["mebs"]=player_rank_info
+	return t
+end
+
+function NetMsgHelper:makep_rank_info(user_id,name,icon,level,rank,scores,legion_id,legion_name,flag) 
+	local t = {}
+	t["user_id"]=user_id
+	t["name"]=name
+	t["icon"]=icon
+	t["level"]=level
+	t["rank"]=rank
+	t["scores"]=scores
+	t["legion_id"]=legion_id
+	t["legion_name"]=legion_name
+	t["flag"]=flag
+	return t
+end
+
+function NetMsgHelper:makept_p_rank_list(rank,scores,p_rank_info) 
+	local t = {}
+	t["rank"]=rank
+	t["scores"]=scores
+	t["mebs"]=p_rank_info
+	return t
+end
+
+function NetMsgHelper:makerc_sign(num,gain) 
+	local t = {}
+	t["num"]=num
+	t["gain"]=gain
+	return t
+end
+
+function NetMsgHelper:makedb_sign(id,user_id,month,rc_sign,time) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["month"]=month
+	t["sign"]=rc_sign
+	t["time"]=time
+	return t
+end
+
+function NetMsgHelper:makept_sign(month,rc_sign) 
+	local t = {}
+	t["month"]=month
+	t["sign"]=rc_sign
+	return t
+end
+
+function NetMsgHelper:makedb_param(id,user_id,intary) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["intary"]=intary
+	return t
+end
+
+function NetMsgHelper:makepk_cteam(baseid,level) 
+	local t = {}
+	t["baseid"]=baseid
+	t["level"]=level
+	return t
+end
+
+function NetMsgHelper:makedb_war(id,user_id,pk_cteam) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["cards"]=pk_cteam
+	return t
+end
+
+function NetMsgHelper:makedb_gvglog(id,user_id,legion_id,rank,scores,shield,attack) 
+	local t = {}
+	t["id"]=id
+	t["user_id"]=user_id
+	t["legion_id"]=legion_id
+	t["rank"]=rank
+	t["scores"]=scores
+	t["shield"]=shield
+	t["attack"]=attack
+	return t
+end
+
+function NetMsgHelper:makept_gvg_init_battle(legion_id,legion_name,guard_id,guard_name,guard_icon,shield,max_shield,scores,mebs,end_time) 
+	local t = {}
+	t["legion_id"]=legion_id
+	t["legion_name"]=legion_name
+	t["guard_id"]=guard_id
+	t["guard_name"]=guard_name
+	t["guard_icon"]=guard_icon
+	t["shield"]=shield
+	t["max_shield"]=max_shield
+	t["scores"]=scores
+	t["mebs"]=mebs
+	t["end_time"]=end_time
+	return t
+end
+
+function NetMsgHelper:makept_gvg_init_battle_list(attack_num,max_attack,pt_gvg_init_battle,pt_gvg_init_battle) 
+	local t = {}
+	t["attack_num"]=attack_num
+	t["max_attack"]=max_attack
+	t["self"]=pt_gvg_init_battle
+	t["enemy"]=pt_gvg_init_battle
+	return t
+end
+
+function NetMsgHelper:makept_gvg_battle_end(result,scores,totle_scores,less_scores) 
+	local t = {}
+	t["result"]=result
+	t["scores"]=scores
+	t["totle_scores"]=totle_scores
+	t["less_scores"]=less_scores
+	return t
+end
+
+function NetMsgHelper:makept_gvg_fight(type,target) 
+	local t = {}
+	t["type"]=type
+	t["target"]=target
+	return t
+end
+
+function NetMsgHelper:makept_gvg_shield(user_id,from_legion,target_legion,name,change,shield) 
+	local t = {}
+	t["user_id"]=user_id
+	t["from_legion"]=from_legion
+	t["target_legion"]=target_legion
+	t["name"]=name
+	t["change"]=change
+	t["shield"]=shield
+	return t
+end
+
+function NetMsgHelper:makept_gvg_first(legion_id,gvg_id,gvg_state,scores,shield,extra_shield,attack,extra_attack) 
+	local t = {}
+	t["legion_id"]=legion_id
+	t["gvg_id"]=gvg_id
+	t["gvg_state"]=gvg_state
+	t["scores"]=scores
+	t["shield"]=shield
+	t["extra_shield"]=extra_shield
+	t["attack"]=attack
+	t["extra_attack"]=extra_attack
+	return t
+end
+
+function NetMsgHelper:makept_gvg_star(gvg_id,state,legion_id,name,flag) 
+	local t = {}
+	t["gvg_id"]=gvg_id
+	t["state"]=state
+	t["legion_id"]=legion_id
+	t["name"]=name
+	t["flag"]=flag
+	return t
+end
+
+function NetMsgHelper:makept_gvg_star_list(pt_gvg_star) 
+	local t = {}
+	t["list"]=pt_gvg_star
+	return t
+end
+
+function NetMsgHelper:makept_gvg_rank(legion_id,name,rank,scores) 
+	local t = {}
+	t["legion_id"]=legion_id
+	t["name"]=name
+	t["rank"]=rank
+	t["scores"]=scores
+	return t
+end
+
+function NetMsgHelper:makept_gvg_rank_list(less_scores,pt_gvg_rank) 
+	local t = {}
+	t["less_scores"]=less_scores
+	t["list"]=pt_gvg_rank
+	return t
+end
+
+function NetMsgHelper:makept_gvg_legion_log(enemy_id,result,scores,time) 
+	local t = {}
+	t["enemy_id"]=enemy_id
+	t["result"]=result
+	t["scores"]=scores
+	t["time"]=time
+	return t
+end
+
+function NetMsgHelper:makept_gvg_legion_log_list(pt_gvg_legion_log) 
+	local t = {}
+	t["list"]=pt_gvg_legion_log
+	return t
+end
+
+function NetMsgHelper:makept_gvg_player_log(user_id,name,attack,win,socres) 
+	local t = {}
+	t["user_id"]=user_id
+	t["name"]=name
+	t["attack"]=attack
+	t["win"]=win
+	t["socres"]=socres
+	return t
+end
+
+function NetMsgHelper:makept_gvg_player_log_list(pt_gvg_player_log) 
+	local t = {}
+	t["list"]=pt_gvg_player_log
+	return t
+end
+
+function NetMsgHelper:makept_gvg_login(gvg_id) 
+	local t = {}
+	t["gvg_id"]=gvg_id
+	return t
+end
+
+function NetMsgHelper:makept_gvg_scores(legion_id,scores) 
+	local t = {}
+	t["legion_id"]=legion_id
+	t["scores"]=scores
 	return t
 end
 

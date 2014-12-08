@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 require("const.importClass")
 require("net.netMsgHelper")
 require("net.netAPIList")
@@ -21,7 +26,6 @@ local Proxy=Proxy
 local NetMsgHelper = NetMsgHelper
 local NetAPIList = NetAPIList
 
-StateManager:setCurrentState(StateManager.gameloading)--StateManager.login
+-- StateManager:setCurrentState(StateManager.gameloading)--StateManager.login
 
- require("Net_game")
-require("Net_chat")
+require("Net_game")

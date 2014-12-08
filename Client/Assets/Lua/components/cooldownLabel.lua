@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 local LuaHelper=LuaHelper
 local CUtils=CUtils
 local delay = delay

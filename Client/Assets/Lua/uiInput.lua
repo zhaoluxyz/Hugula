@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   NGUIEvent
+--  author pu
+------------------------------------------------
 NGUIEvent = luanet.import_type("NGUIEvent")
 local guide = LuaItemManager:getItemObject("guide")
 local NGUIEvent=NGUIEvent.instance

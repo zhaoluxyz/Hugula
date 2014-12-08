@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 StateBase=class(function(self,itemObjects,name)
         if itemObjects then 
             self.m_itemList = itemObjects 

@@ -1,4 +1,8 @@
---local StateBase     = StateBase
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 local LuaItemManager = LuaItemManager
 StateManager =
 {

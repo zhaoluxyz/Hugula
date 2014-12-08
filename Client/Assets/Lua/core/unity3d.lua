@@ -1,20 +1,14 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 luanet.load_assembly(assemblyname)
 
 delay = toluacs.PLua.Delay
 stopDelay = toluacs.PLua.StopDelay
 
 if unpack==nil then unpack=table.unpack end
-
---json like [{a,1,2},{b,c,d,dw}]
---function jsonTolua(json)
---	local b=string.gsub(json,"%[","{")
---	local e=string.gsub(b,"%]","}")
---	e=string.gsub(e,"([%a]+)",'"%1"')
---	e="local e="..e.." return e"
-
---	local t=doString(e)[0]
---	return t
---end
 
 function tojson(tbl,indent)
   assert(tal==nil)

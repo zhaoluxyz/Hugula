@@ -1,4 +1,8 @@
-local components = {}
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--  luaObject base of object
+--  author pu
+------------------------------------------------local components = {}
 local UPDATECOMPONENTS = UPDATECOMPONENTS
 
 local function loadComponent(name)

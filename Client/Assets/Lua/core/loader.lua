@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--	loader loadresouce from assetbundl
+--	author pu
+------------------------------------------------
 Loader={}
 local luanet = luanet
 local LMultipleLoader= luanet.import_type("LMultipleLoader") --toLuaCS.LMultipleLoader--

@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 local transform = LuaItemManager:getItemObject("transform")
 transform.priority=100
 transform.assets=

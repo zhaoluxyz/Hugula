@@ -1,4 +1,0 @@
-﻿packet_type:10001
-name:code_ack
-payload:pt_code
-desc:待用加密key.

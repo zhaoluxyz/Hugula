@@ -144,69 +144,15 @@ function NetProtocalPaser:parsept_pkid(msg, key, parentTable)
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
 end
 
-function NetProtocalPaser:parsesend_check_version(msg, key, parentTable) 
+function NetProtocalPaser:parsept_pkids(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'os', parentTable)
-end
-
-function NetProtocalPaser:parserecv_check_version(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseushort(msg,'game_ver', parentTable)
-	self:parseushort(msg,'res_ver', parentTable)
-end
-
-function NetProtocalPaser:parseplayer_anonymouslogin(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parsestring(msg,'udid', parentTable)
-	self:parsestring(msg,'os', parentTable)
-	self:parsestring(msg,'token', parentTable)
-end
-
-function NetProtocalPaser:parsept_game_serverlist(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parsestring(msg,'udid', parentTable)
-end
-
-function NetProtocalPaser:parsept_gs_login(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parsestring(msg,'udid', parentTable)
-	self:parsestring(msg,'sid', parentTable)
-	self:parseuint(msg,'player_id', parentTable)
-end
-
-function NetProtocalPaser:parsept_gs_good(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseushort(msg,'command', parentTable)
-end
-
-function NetProtocalPaser:parsept_gs_bad(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseushort(msg,'command', parentTable)
-	self:parseushort(msg,'errno', parentTable)
+	self:parseArray(msg,'ids', parentTable,'pkid')
 end
 
 function NetProtocalPaser:parsept_int(msg, key, parentTable) 
@@ -214,2226 +160,3691 @@ function NetProtocalPaser:parsept_int(msg, key, parentTable)
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'i', parentTable)
+	self:parseinteger(msg,'i', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_hero(msg, key, parentTable) 
+function NetProtocalPaser:parsept_code(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-	self:parseuint(msg,'system_hero_id', parentTable)
-	self:parseushort(msg,'player_hero_lv', parentTable)
-	self:parseuint(msg,'player_hero_exp', parentTable)
-	self:parsept_hero_attribute(msg,'player_hero_attribute', parentTable)
-	self:parseushort(msg,'player_hero_color', parentTable)
-	self:parseArray(msg,'player_hero_equip', parentTable,'pt_pkid')
-	self:parseArray(msg,'player_hero_skill', parentTable,'pt_hero_skill')
-	self:parseuint(msg,'player_hero_next_exp', parentTable)
-	self:parseshort(msg,'pos', parentTable)
-	self:parseshort(msg,'player_hero_num', parentTable)
-	self:parseuint(msg,'hero_group_id', parentTable)
-	self:parseushort(msg,'player_hero_strengthen_rate', parentTable)
-	self:parseushort(msg,'player_hero_strengthen', parentTable)
-	self:parseArray(msg,'hero_skill', parentTable,'pt_hero_skill')
+	self:parseinteger(msg,'api', parentTable)
+	self:parseinteger(msg,'code', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_hero_list(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_single(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'profession_category', parentTable)
-	self:parseushort(msg,'page', parentTable)
-	self:parseushort(msg,'size', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'gift_power_date', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_team(msg, key, parentTable) 
+function NetProtocalPaser:parsept_ubase(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-	self:parseuint(msg,'system_hero_id', parentTable)
-	self:parseushort(msg,'player_hero_lv', parentTable)
-	self:parseuint(msg,'player_hero_exp', parentTable)
-	self:parsept_hero_attribute(msg,'player_hero_attribute', parentTable)
-	self:parseushort(msg,'player_hero_color', parentTable)
-	self:parseArray(msg,'player_hero_equip', parentTable,'pt_pkid')
-	self:parseArray(msg,'player_hero_skill', parentTable,'pt_hero_skill')
-	self:parseshort(msg,'pos', parentTable)
-	self:parseuint(msg,'player_hero_next_exp', parentTable)
-	self:parseuint(msg,'hero_group_id', parentTable)
-	self:parseushort(msg,'player_hero_strengthen_rate', parentTable)
-	self:parseushort(msg,'player_hero_strengthen', parentTable)
-	self:parseArray(msg,'hero_skill', parentTable,'pt_hero_skill')
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'sex', parentTable)
+	self:parseshort(msg,'account_type', parentTable)
+	self:parsestring(msg,'account', parentTable)
+	self:parsestring(msg,'token', parentTable)
 end
 
-function NetProtocalPaser:parsept_player_team(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_device(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'team', parentTable,'recv_player_team')
+	self:parsepkid(msg,'id', parentTable)
+	self:parsestring(msg,'d_type', parentTable)
+	self:parsestring(msg,'udid', parentTable)
+	self:parsestring(msg,'os', parentTable)
+	self:parsestring(msg,'os_version', parentTable)
+	self:parsestring(msg,'market', parentTable)
+	self:parsestring(msg,'terminal', parentTable)
+	self:parsestring(msg,'lcl', parentTable)
+	self:parsestring(msg,'mac_addr', parentTable)
+	self:parsestring(msg,'locale', parentTable)
 end
 
-function NetProtocalPaser:parsept_player_hero(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_user(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'count', parentTable)
-	self:parseArray(msg,'heros', parentTable,'recv_player_hero')
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'device_id', parentTable)
+	self:parseshort(msg,'account_type', parentTable)
+	self:parsestring(msg,'account', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'sex', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseshort(msg,'power', parentTable)
+	self:parseshort(msg,'gift_power', parentTable)
+	self:parseinteger(msg,'buy_power', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+	self:parsepkid(msg,'experience', parentTable)
+	self:parsepkid(msg,'money', parentTable)
+	self:parseinteger(msg,'group', parentTable)
+	self:parseinteger(msg,'story', parentTable)
+	self:parseinteger(msg,'gold', parentTable)
+	self:parseinteger(msg,'magic_card', parentTable)
+	self:parseshort(msg,'powergift_num', parentTable)
+	self:parseinteger(msg,'powergift_date', parentTable)
+	self:parseinteger(msg,'maxfevent', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_hero_list(msg, key, parentTable) 
+function NetProtocalPaser:parserc_buy_times(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'heros', parentTable,'recv_player_hero')
+	self:parseinteger(msg,'id', parentTable)
+	self:parseshort(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_chapter(msg, key, parentTable) 
+function NetProtocalPaser:parserc_buy_log(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'parent', parentTable)
-end
-
-function NetProtocalPaser:parserecv_chapter_list(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'chapter_id', parentTable)
-	self:parseuint(msg,'chapter_star', parentTable)
-	self:parseuint(msg,'chapter_fastest_record', parentTable)
-	self:parseuint(msg,'chapter_my_record', parentTable)
-	self:parseushort(msg,'chapter_residue_number', parentTable)
-end
-
-function NetProtocalPaser:parsept_player_chapter_list(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'list', parentTable,'recv_chapter_list')
-end
-
-function NetProtocalPaser:parsesend_challenge_chapter(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'chapter_id', parentTable)
-end
-
-function NetProtocalPaser:parsept_character_attribute_a(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'gold', parentTable)
-	self:parseuint(msg,'crystal', parentTable)
-	self:parseushort(msg,'vit', parentTable)
-	self:parseuint(msg,'exp', parentTable)
-	self:parseuint(msg,'player_friendship', parentTable)
-	self:parseuint(msg,'player_prestige', parentTable)
-	self:parseuint(msg,'player_arena_number', parentTable)
-	self:parseuint(msg,'player_skill_points', parentTable)
-	self:parseushort(msg,'lv', parentTable)
-	self:parseushort(msg,'max_lv', parentTable)
-	self:parseuint(msg,'max_exp', parentTable)
-	self:parseushort(msg,'vit_limit', parentTable)
-	self:parsept_hero_attribute(msg,'attribute', parentTable)
-end
-
-function NetProtocalPaser:parsesend_player_challenge_chapter_start(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'chapter_id', parentTable)
-end
-
-function NetProtocalPaser:parserecv_challenge_chapter_result(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseboolean(msg,'victory', parentTable)
-	self:parseushort(msg,'star', parentTable)
-	self:parserecv_paygoods(msg,'drop', parentTable)
-end
-
-function NetProtocalPaser:parserecv_player_sweep_chapter(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parserecv_paygoods(msg,'drop', parentTable)
-end
-
-function NetProtocalPaser:parserecv_challenge_chapter_result_hero(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-	self:parseuint(msg,'system_hero_id', parentTable)
-	self:parseuint(msg,'exp', parentTable)
-	self:parseushort(msg,'isup', parentTable)
-	self:parseuint(msg,'max_exp', parentTable)
-	self:parseuint(msg,'cur_exp', parentTable)
-	self:parseushort(msg,'hero_lv', parentTable)
-end
-
-function NetProtocalPaser:parserecv_goods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
-	self:parseshort(msg,'goods_type', parentTable)
-end
-
-function NetProtocalPaser:parserecv_hero(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'hero_id', parentTable)
-	self:parseushort(msg,'hero_num', parentTable)
-end
-
-function NetProtocalPaser:parsept_hero_attribute(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'hp', parentTable)
-	self:parseuint(msg,'mp', parentTable)
-	self:parseuint(msg,'maxHp', parentTable)
-	self:parseuint(msg,'maxMp', parentTable)
-	self:parsefloat(msg,'damage', parentTable)
-	self:parsefloat(msg,'defend', parentTable)
-	self:parsefloat(msg,'magicDamage', parentTable)
-	self:parsefloat(msg,'magicDefend', parentTable)
-	self:parsefloat(msg,'critValue', parentTable)
-	self:parsefloat(msg,'dodgeValue', parentTable)
-	self:parsefloat(msg,'speed', parentTable)
-	self:parsefloat(msg,'attackSpeed', parentTable)
-	self:parsefloat(msg,'turnSpeed', parentTable)
-	self:parsefloat(msg,'rangeVisible', parentTable)
-end
-
-function NetProtocalPaser:parserecv_paygoods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'gold', parentTable)
-	self:parseuint(msg,'crystal', parentTable)
-	self:parseArray(msg,'goods', parentTable,'recv_goods')
-	self:parseArray(msg,'heros', parentTable,'recv_hero')
-	self:parseArray(msg,'hero_exp', parentTable,'recv_challenge_chapter_result_hero')
-	self:parseuint(msg,'player_vit', parentTable)
-	self:parseuint(msg,'player_exp', parentTable)
-	self:parseuint(msg,'player_cur_exp', parentTable)
-	self:parseushort(msg,'player_lv', parentTable)
-	self:parseushort(msg,'player_is_up', parentTable)
-	self:parseuint(msg,'player_prestige', parentTable)
-end
-
-function NetProtocalPaser:parsept_paygoods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'goods', parentTable,'recv_paygoods')
-end
-
-function NetProtocalPaser:parserecv_player_bag_goods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'goods', parentTable,'recv_goods')
-end
-
-function NetProtocalPaser:parsept_use_goods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseshort(msg,'goods_num', parentTable)
-end
-
-function NetProtocalPaser:parsesend_hero_goods_use(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseshort(msg,'goods_num', parentTable)
-	self:parseuint(msg,'player_hero_id', parentTable)
-end
-
-function NetProtocalPaser:parsesend_change_player_team_up(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-	self:parseshort(msg,'pos', parentTable)
-end
-
-function NetProtocalPaser:parsesend_change_player_team_down(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseshort(msg,'pos', parentTable)
-end
-
-function NetProtocalPaser:parsesend_player_goods_sell(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
-end
-
-function NetProtocalPaser:parsesend_player_hero_equip_up(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseuint(msg,'player_hero_id', parentTable)
-end
-
-function NetProtocalPaser:parsesend_player_hero_advanced(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-end
-
-function NetProtocalPaser:parsept_hero_skill(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'id', parentTable)
-	self:parseushort(msg,'lv', parentTable)
-end
-
-function NetProtocalPaser:parsesend_kill_monster(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'chapter_id', parentTable)
-	self:parseuint(msg,'monster_id', parentTable)
-end
-
-function NetProtocalPaser:parserecv_monster(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'id', parentTable)
-	self:parseuint(msg,'system_hero_id', parentTable)
-	self:parseuint(msg,'hero_group_id', parentTable)
-	self:parsestring(msg,'hero_brain', parentTable)
-	self:parsept_pos(msg,'pos', parentTable)
-	self:parsept_hero_attribute(msg,'player_hero_attribute', parentTable)
-	self:parseArray(msg,'player_hero_skill', parentTable,'pt_hero_skill')
-end
-
-function NetProtocalPaser:parserecv_monster_list(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'monster', parentTable,'recv_monster')
-	self:parseushort(msg,'round', parentTable)
-	self:parseushort(msg,'count_round', parentTable)
-	self:parseshort(msg,'team', parentTable)
-end
-
-function NetProtocalPaser:parserecv_player_challenge_chapter(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseshort(msg,'chapter_type', parentTable)
-	self:parseuint(msg,'chapter_id', parentTable)
-	self:parseArray(msg,'hero_group_ids', parentTable,'pt_pkid')
-	self:parseArray(msg,'hero_skill_ids', parentTable,'pt_hero_skill')
-	self:parseArray(msg,'stronghold', parentTable,'recv_stronghold_army')
-end
-
-function NetProtocalPaser:parserecv_stronghold_army(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'hero_id', parentTable)
-	self:parseuint(msg,'hero_group_id', parentTable)
-	self:parseArray(msg,'army', parentTable,'recv_monster')
-end
-
-function NetProtocalPaser:parsesend_player_mail_list(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'max_mail_id', parentTable)
-end
-
-function NetProtocalPaser:parserecv_mail(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'mail_id', parentTable)
-	self:parseshort(msg,'mail_group', parentTable)
-	self:parseuint(msg,'player_id', parentTable)
-	self:parsestring(msg,'player_name', parentTable)
-	self:parsestring(msg,'mail_title', parentTable)
-	self:parsestring(msg,'mail_body', parentTable)
-	self:parserecv_paygoods(msg,'mail_goods', parentTable)
-	self:parseshort(msg,'mail_status', parentTable)
-	self:parsestring(msg,'mail_create_at', parentTable)
-end
-
-function NetProtocalPaser:parserecv_mail_list(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'list', parentTable,'recv_mail')
-end
-
-function NetProtocalPaser:parsesend_player_mail_goods(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'mail_id', parentTable)
-end
-
-function NetProtocalPaser:parsesend_player_mail_read(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'mail_id', parentTable)
-end
-
-function NetProtocalPaser:parserecv_mail_content(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseArray(msg,'list', parentTable,'recv_mail')
-end
-
-function NetProtocalPaser:parsesend_player_mail_delete(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseuint(msg,'mail_id', parentTable)
-end
-
-function NetProtocalPaser:parserecv_broadcast_message(msg, key, parentTable) 
-	if(key ~= nil) then
-		parentTable[key] = {}
-		parentTable = parentTable[key]
-	end
-	self:parseshort(msg,'channel_id', parentTable)
 	self:parseshort(msg,'type', parentTable)
-	self:parsestring(msg,'body', parentTable)
-	self:parseuint(msg,'sender_player_id', parentTable)
-	self:parseuint(msg,'sender_player_role', parentTable)
-	self:parsestring(msg,'sender_player_name', parentTable)
-	self:parseuint(msg,'create_at', parentTable)
+	self:parseArray(msg,'item', parentTable,'rc_buy_times')
 end
 
-function NetProtocalPaser:parsesend_chat(msg, key, parentTable) 
+function NetProtocalPaser:parseflrfid(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseshort(msg,'channel_id', parentTable)
-	self:parseuint(msg,'to_player_id', parentTable)
-	self:parsestring(msg,'message', parentTable)
+	self:parseshort(msg,'floor', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
 end
 
-function NetProtocalPaser:parsesend_hero_equip_synthesis(msg, key, parentTable) 
+function NetProtocalPaser:parsemaze_fight(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'goods_id', parentTable)
+	self:parseshort(msg,'maze', parentTable)
+	self:parseArray(msg,'enemy', parentTable,'flrfid')
+	self:parseshort(msg,'floor', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseinteger(msg,'refush', parentTable)
+	self:parseshort(msg,'step', parentTable)
+	self:parseinteger(msg,'reset', parentTable)
 end
 
-function NetProtocalPaser:parsept_pos(msg, key, parentTable) 
+function NetProtocalPaser:parserc_magic_scroll(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsefloat(msg,'x', parentTable)
-	self:parsefloat(msg,'y', parentTable)
-	self:parsefloat(msg,'z', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parsesend_mail(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_userinfo(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_mail')
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'frd_del_num', parentTable)
+	self:parseinteger(msg,'frd_del_date', parentTable)
+	self:parseArray(msg,'cards', parentTable,'integer')
+	self:parseArray(msg,'runes', parentTable,'integer')
+	self:parseArray(msg,'mazes', parentTable,'maze_fight')
+	self:parseshort(msg,'star5', parentTable)
+	self:parseArray(msg,'buy_log', parentTable,'rc_buy_log')
+	self:parseinteger(msg,'buy_date', parentTable)
+	self:parseinteger(msg,'time_power_date', parentTable)
+	self:parseinteger(msg,'g_power_date', parentTable)
+	self:parseinteger(msg,'chp_times', parentTable)
+	self:parseinteger(msg,'chp_win', parentTable)
+	self:parseinteger(msg,'frd_times', parentTable)
+	self:parseinteger(msg,'frd_win', parentTable)
+	self:parseshort(msg,'monster_add', parentTable)
+	self:parseinteger(msg,'login_time', parentTable)
+	self:parseinteger(msg,'logout_time', parentTable)
+	self:parsestring(msg,'create_at', parentTable)
+	self:parseArray(msg,'magic_scroll', parentTable,'rc_magic_scroll')
+	self:parseinteger(msg,'ban', parentTable)
+	self:parseinteger(msg,'mute', parentTable)
+	self:parseinteger(msg,'total_charge', parentTable)
+	self:parseinteger(msg,'lev_prize_date', parentTable)
+	self:parseshort(msg,'change_name_num', parentTable)
+	self:parseArray(msg,'first_event', parentTable,'short')
 end
 
-function NetProtocalPaser:parserecv_mail_count(msg, key, parentTable) 
+function NetProtocalPaser:parsept_account(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'count', parentTable)
+	self:parsept_ubase(msg,'base', parentTable)
+	self:parsedb_device(msg,'device', parentTable)
+	self:parseinteger(msg,'app_ver', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_remain_count(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_card(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'count', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'base_id', parentTable)
+	self:parseshort(msg,'level', parentTable)
+	self:parseinteger(msg,'experience', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_send_mail(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_cards(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'to_player_id', parentTable)
-	self:parsestring(msg,'mail_title', parentTable)
-	self:parsestring(msg,'mail_body', parentTable)
+	self:parseArray(msg,'cards', parentTable,'db_card')
 end
 
-function NetProtocalPaser:parsesend_player_hero_strengthen(msg, key, parentTable) 
+function NetProtocalPaser:parsegrune(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_idl', parentTable)
-	self:parseuint(msg,'player_hero_idr', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'baseid', parentTable)
+	self:parseinteger(msg,'level', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_hero_strengthen(msg, key, parentTable) 
+function NetProtocalPaser:parsegcard(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseboolean(msg,'success', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'baseid', parentTable)
+	self:parseinteger(msg,'level', parentTable)
 end
 
-function NetProtocalPaser:parsesend_hero_hero_synthesis(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_group(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_idl', parentTable)
-	self:parseuint(msg,'player_hero_idr', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseArray(msg,'runes', parentTable,'grune')
+	self:parseArray(msg,'cards', parentTable,'gcard')
 end
 
-function NetProtocalPaser:parsesend_player_reward_data(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_groups(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'a', parentTable)
+	self:parseArray(msg,'groups', parentTable,'db_group')
 end
 
-function NetProtocalPaser:parserecv_reward_data(msg, key, parentTable) 
+function NetProtocalPaser:parsept_group_ac(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'player_week', parentTable)
-	self:parseushort(msg,'player_day', parentTable)
-	self:parseboolean(msg,'reward_status', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'card', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_reward_login(msg, key, parentTable) 
+function NetProtocalPaser:parsept_group_dc(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'player_week', parentTable)
-	self:parseushort(msg,'player_day', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'card', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_hero_stlas_list(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_rune(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'a', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'base_id', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+	self:parseinteger(msg,'experience', parentTable)
 end
 
-function NetProtocalPaser:parserecv_hero_atlas(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_runes(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'system_hero_id', parentTable)
-	self:parseuint(msg,'player_hero_lv', parentTable)
+	self:parseArray(msg,'runes', parentTable,'db_rune')
 end
 
-function NetProtocalPaser:parserecv_hero_atlas_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_group_ar(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_hero_atlas')
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'rune', parentTable)
 end
 
-function NetProtocalPaser:parsesend_apply_friends_apply(msg, key, parentTable) 
+function NetProtocalPaser:parsept_group_dr(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'rune', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_apply(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_story(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'player_name', parentTable)
-	self:parseuint(msg,'player_lv', parentTable)
-	self:parseuint(msg,'player_role_id', parentTable)
-	self:parseuint(msg,'player_id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'base_id', parentTable)
+	self:parseinteger(msg,'finish', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_apply_list(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_storys(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'count', parentTable)
-	self:parseArray(msg,'list', parentTable,'recv_friends_apply')
+	self:parseArray(msg,'storys', parentTable,'db_story')
 end
 
-function NetProtocalPaser:parsesend_request_friends_apply(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fcard_base(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
-	self:parseushort(msg,'status', parentTable)
+	self:parseinteger(msg,'baseId', parentTable)
+	self:parseinteger(msg,'hp', parentTable)
+	self:parseinteger(msg,'ad', parentTable)
+	self:parseshort(msg,'limit', parentTable)
+	self:parseshort(msg,'cost', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_request(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fcard_fight(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
-	self:parsestring(msg,'friends_player_name', parentTable)
-	self:parseushort(msg,'status', parentTable)
+	self:parseshort(msg,'nowlevel', parentTable)
+	self:parseinteger(msg,'nowhp', parentTable)
+	self:parseinteger(msg,'nowat', parentTable)
+	self:parseshort(msg,'nowdef', parentTable)
+	self:parseshort(msg,'nowmis', parentTable)
 end
 
-function NetProtocalPaser:parsesend_friends_list(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fcard_temp(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'page', parentTable)
-	self:parseushort(msg,'size', parentTable)
+	self:parseinteger(msg,'tmphp', parentTable)
+	self:parseinteger(msg,'tmpat', parentTable)
+	self:parseinteger(msg,'tmpap', parentTable)
+	self:parseshort(msg,'tmpdef', parentTable)
+	self:parseshort(msg,'tmpres', parentTable)
+	self:parseshort(msg,'tmpmis', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_buff(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
-	self:parseuint(msg,'friends_player_lv', parentTable)
-	self:parseuint(msg,'friends_player_role_id', parentTable)
-	self:parsestring(msg,'friends_player_name', parentTable)
-	self:parseushort(msg,'give_away_friendship', parentTable)
-	self:parseuint(msg,'cool_down', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'value', parentTable)
+	self:parseshort(msg,'number', parentTable)
 end
 
-function NetProtocalPaser:parsesend_reveive_friendship(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_apply(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
+	self:parseshort(msg,'atk', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'def', parentTable)
+	self:parseshort(msg,'value', parentTable)
 end
 
-function NetProtocalPaser:parsesend_reveive_friendship_pick_up(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fcard(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'a', parentTable)
+	self:parseshort(msg,'idx', parentTable)
+	self:parsepk_fcard_base(msg,'fcardbase', parentTable)
+	self:parsepk_fcard_fight(msg,'fcardfight', parentTable)
 end
 
-function NetProtocalPaser:parsesend_value_friendship(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_frune(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
+	self:parseshort(msg,'idx', parentTable)
+	self:parseinteger(msg,'baseid', parentTable)
+	self:parseshort(msg,'level', parentTable)
+	self:parseshort(msg,'timer', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_list(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fight_group(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'count', parentTable)
-	self:parseArray(msg,'list', parentTable,'recv_friends')
+	self:parseinteger(msg,'hero', parentTable)
+	self:parseArray(msg,'rune', parentTable,'pk_frune')
+	self:parseArray(msg,'home', parentTable,'pk_fcard')
+	self:parseArray(msg,'waiting', parentTable,'pk_fcard')
+	self:parseArray(msg,'fighting', parentTable,'pk_fcard')
+	self:parseArray(msg,'dead', parentTable,'pk_fcard')
 end
 
-function NetProtocalPaser:parsesend_player_find_list(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_area_log(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'player_name', parentTable)
-	self:parseushort(msg,'find_type', parentTable)
-	self:parseushort(msg,'page', parentTable)
-	self:parseushort(msg,'size', parentTable)
+	self:parseArray(msg,'hom', parentTable,'short')
+	self:parseArray(msg,'wit', parentTable,'short')
+	self:parseArray(msg,'fig', parentTable,'short')
+	self:parseArray(msg,'dea', parentTable,'short')
 end
 
-function NetProtocalPaser:parsesend_player_friends_delete(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_cres(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
+	self:parseinteger(msg,'hp', parentTable)
+	self:parseinteger(msg,'at', parentTable)
+	self:parseshort(msg,'def', parentTable)
+	self:parseshort(msg,'mis', parentTable)
 end
 
-function NetProtocalPaser:parserecv_find_player_list(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_move(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'count', parentTable)
-	self:parseArray(msg,'list', parentTable,'recv_find_player')
+	self:parseinteger(msg,'idx', parentTable)
+	self:parseshort(msg,'from', parentTable)
+	self:parseshort(msg,'to', parentTable)
+	self:parseshort(msg,'pos', parentTable)
 end
 
-function NetProtocalPaser:parserecv_find_player(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_flog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_id', parentTable)
-	self:parsestring(msg,'player_name', parentTable)
-	self:parseuint(msg,'player_lv', parentTable)
-	self:parseuint(msg,'player_role_id', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'times', parentTable)
+	self:parseshort(msg,'attacker', parentTable)
+	self:parseshort(msg,'defender', parentTable)
+	self:parseinteger(msg,'skillid', parentTable)
+	self:parseshort(msg,'target', parentTable)
+	self:parseinteger(msg,'hero_damage', parentTable)
+	self:parseinteger(msg,'hero_check', parentTable)
+	self:parsepk_cres(msg,'cardfres', parentTable)
+	self:parsepk_cres(msg,'cardfdata', parentTable)
+	self:parseArray(msg,'cardfstate', parentTable,'short')
+	self:parseArray(msg,'cardfbuff', parentTable,'pk_buff')
+	self:parseArray(msg,'atkdesc', parentTable,'pk_apply')
+	self:parseArray(msg,'defdesc', parentTable,'pk_apply')
+	self:parsepk_cres(msg,'cardftemp', parentTable)
+	self:parseArray(msg,'area', parentTable,'pk_move')
+	self:parsepk_cres(msg,'attkerfdata', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_quest_list(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_clog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_player_quest')
+	self:parsestring(msg,'a_pos', parentTable)
+	self:parsestring(msg,'b_pos', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_quest(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_round(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'id', parentTable)
-	self:parseuint(msg,'quest_id', parentTable)
-	self:parseshort(msg,'quest_status', parentTable)
-	self:parserecv_quest_progress(msg,'quest_progress', parentTable)
+	self:parseshort(msg,'opts', parentTable)
+	self:parsestring(msg,'content', parentTable)
 end
 
-function NetProtocalPaser:parserecv_quest_progress(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fight_log(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'current', parentTable)
-	self:parseushort(msg,'total', parentTable)
+	self:parseArray(msg,'areaLogCho', parentTable,'pk_move')
+	self:parseArray(msg,'areaLogSen', parentTable,'pk_move')
+	self:parseArray(msg,'fistShowLog', parentTable,'pk_flog')
+	self:parseArray(msg,'areaLogSho', parentTable,'pk_move')
+	self:parseArray(msg,'runeLog', parentTable,'pk_flog')
+	self:parseArray(msg,'areaLogRun', parentTable,'pk_move')
+	self:parseArray(msg,'commonShowLog', parentTable,'pk_flog')
+	self:parseArray(msg,'areaLogCom', parentTable,'pk_move')
 end
 
-function NetProtocalPaser:parsesend_receive_quest_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_record(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'id', parentTable)
+	self:parseshort(msg,'round', parentTable)
+	self:parseshort(msg,'isend', parentTable)
+	self:parsepk_fight_log(msg,'fightlog', parentTable)
 end
 
-function NetProtocalPaser:parserecv_quest_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_ready(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parserecv_paygoods(msg,'item', parentTable)
+	self:parseshort(msg,'first', parentTable)
+	self:parsepk_fight_group(msg,'attacker', parentTable)
+	self:parsepk_fight_group(msg,'defender', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_remain_count(msg, key, parentTable) 
+function NetProtocalPaser:parsepk_fight_data_result(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'count', parentTable)
+	self:parseshort(msg,'result', parentTable)
+	self:parseshort(msg,'totle', parentTable)
+	self:parsepk_ready(msg,'ready', parentTable)
+	self:parseArray(msg,'recordlist', parentTable,'pk_record')
 end
 
-function NetProtocalPaser:parsesend_player_compound_goods_beast(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_fightlog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'beast_id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepk_fight_data_result(msg,'log', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_drama(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_storylog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'drama_id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'user_id', parentTable)
+	self:parsepkid(msg,'fighter', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+	self:parsepkid(msg,'log', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_boot(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_pvplog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'boot_id', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'enemy', parentTable)
+	self:parseshort(msg,'result', parentTable)
+	self:parseshort(msg,'value', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+	self:parsepkid(msg,'log', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_mail(msg, key, parentTable) 
+function NetProtocalPaser:parsept_pvelog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'mail_id', parentTable)
-	self:parseuint(msg,'player_id', parentTable)
-	self:parsestring(msg,'player_name', parentTable)
-	self:parsestring(msg,'mail_title', parentTable)
-	self:parsestring(msg,'mail_body', parentTable)
-	self:parsestring(msg,'mail_create_at', parentTable)
+	self:parsepkid(msg,'logid', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'lev', parentTable)
 end
 
-function NetProtocalPaser:parserecv_friends_mail_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_pvelog_list(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_friends_mail')
+	self:parseinteger(msg,'story', parentTable)
+	self:parseArray(msg,'log', parentTable,'pt_pvelog')
 end
 
-function NetProtocalPaser:parseplayer_activity_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_pvplog(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'a', parentTable)
+	self:parsepkid(msg,'logid', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parsepkid(msg,'enemy', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'lev', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+	self:parsepkid(msg,'len_id', parentTable)
+	self:parseshort(msg,'len_flag', parentTable)
+	self:parsestring(msg,'len_name', parentTable)
+	self:parseshort(msg,'result', parentTable)
+	self:parseshort(msg,'value', parentTable)
+	self:parseinteger(msg,'time', parentTable)
 end
 
-function NetProtocalPaser:parserecv_activity_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_pvplog_list(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_activity_one')
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+	self:parseArray(msg,'log', parentTable,'pt_pvplog')
 end
 
-function NetProtocalPaser:parserecv_activity_one(msg, key, parentTable) 
+function NetProtocalPaser:parsept_chat2server(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'category', parentTable)
-	self:parseuint(msg,'activity_a', parentTable)
-	self:parseuint(msg,'activity_b', parentTable)
-	self:parseuint(msg,'activity_c', parentTable)
+	self:parseinteger(msg,'channel', parentTable)
+	self:parsepkid(msg,'receiveid', parentTable)
+	self:parsestring(msg,'content', parentTable)
 end
 
-function NetProtocalPaser:parserecv_activity(msg, key, parentTable) 
+function NetProtocalPaser:parsept_chat2player(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'activity_id', parentTable)
-	self:parseuint(msg,'chapter_id', parentTable)
+	self:parseinteger(msg,'channel', parentTable)
+	self:parsepkid(msg,'sendid', parentTable)
+	self:parsestring(msg,'sendname', parentTable)
+	self:parseinteger(msg,'sendlevel', parentTable)
+	self:parsestring(msg,'sendicon', parentTable)
+	self:parsepkid(msg,'sendlen_id', parentTable)
+	self:parseshort(msg,'sendlen_flag', parentTable)
+	self:parseshort(msg,'sendlen_pos', parentTable)
+	self:parsepkid(msg,'receiveid', parentTable)
+	self:parsestring(msg,'receivename', parentTable)
+	self:parsestring(msg,'content', parentTable)
 end
 
-function NetProtocalPaser:parsecondition_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_crdlist(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'key', parentTable)
+	self:parseArray(msg,'crdlist', parentTable,'integer')
+end
+
+function NetProtocalPaser:parsedb_friend(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'frd_id', parentTable)
+	self:parseshort(msg,'type', parentTable)
+end
+
+function NetProtocalPaser:parsedb_friends(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'friends', parentTable,'db_friend')
+end
+
+function NetProtocalPaser:parsedb_powergift(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'other_id', parentTable)
+	self:parseshort(msg,'self_flag', parentTable)
+	self:parseinteger(msg,'self_date', parentTable)
+	self:parseshort(msg,'other_flag', parentTable)
+	self:parseinteger(msg,'other_date', parentTable)
+end
+
+function NetProtocalPaser:parsedb_powergifts(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'gifts', parentTable,'db_powergift')
+end
+
+function NetProtocalPaser:parsept_frd_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'sex', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+	self:parseshort(msg,'type', parentTable)
+end
+
+function NetProtocalPaser:parsept_frd_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'frd_list', parentTable,'pt_frd_info')
+end
+
+function NetProtocalPaser:parsept_frd_init(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'frd_list', parentTable,'pt_frd_info')
+end
+
+function NetProtocalPaser:parsept_frd_agree(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'friend_id', parentTable)
+	self:parseboolean(msg,'agree', parentTable)
+end
+
+function NetProtocalPaser:parsept_enemy(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'rank', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'sex', parentTable)
+	self:parseshort(msg,'level', parentTable)
+	self:parseinteger(msg,'win', parentTable)
+	self:parseinteger(msg,'lose', parentTable)
+	self:parseshort(msg,'getpic', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+end
+
+function NetProtocalPaser:parsept_all_enemy(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'enemy', parentTable,'pt_enemy')
+end
+
+function NetProtocalPaser:parsedb_grade(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'cfg_id', parentTable)
+	self:parseinteger(msg,'finish_date', parentTable)
+	self:parseshort(msg,'finish', parentTable)
+	self:parseshort(msg,'gain', parentTable)
+end
+
+function NetProtocalPaser:parsedb_gradeevent(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'event', parentTable)
 	self:parsestring(msg,'condition', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_arena_rank_near(msg, key, parentTable) 
+function NetProtocalPaser:parsept_grade_test(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'current_rank', parentTable)
-	self:parseuint(msg,'player_prestige', parentTable)
-	self:parseushort(msg,'remaining_number', parentTable)
-	self:parseushort(msg,'max_limit', parentTable)
-	self:parseArray(msg,'list', parentTable,'recv_player_arena_rank')
+	self:parsestring(msg,'event', parentTable)
+	self:parsestring(msg,'condition', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_arena_rank(msg, key, parentTable) 
+function NetProtocalPaser:parsept_grade_info(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_id', parentTable)
-	self:parseushort(msg,'player_lv', parentTable)
-	self:parsestring(msg,'player_name', parentTable)
-	self:parseushort(msg,'rank', parentTable)
-	self:parseArray(msg,'team', parentTable,'recv_player_hero')
-	self:parserecv_paygoods(msg,'rank_reward', parentTable)
-	self:parseinteger(msg,'recv_reward_time', parentTable)
+	self:parseinteger(msg,'cfg_id', parentTable)
+	self:parseshort(msg,'finish', parentTable)
+	self:parseshort(msg,'gain', parentTable)
+	self:parsestring(msg,'event', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_beast_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_grade_info_list(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_player_beast')
+	self:parseArray(msg,'info', parentTable,'pt_grade_info')
 end
 
-function NetProtocalPaser:parsesynthesis_goods_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_card_enhance(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseArray(msg,'food', parentTable,'integer')
 end
 
-function NetProtocalPaser:parserecv_player_beast(msg, key, parentTable) 
+function NetProtocalPaser:parsept_rune_enhance(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'beast_id', parentTable)
-	self:parseArray(msg,'synthesis_goods', parentTable,'synthesis_goods_list')
-	self:parseushort(msg,'activate_status', parentTable)
-	self:parseuint(msg,'cool_down', parentTable)
-	self:parseushort(msg,'played', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parseArray(msg,'food', parentTable,'integer')
 end
 
-function NetProtocalPaser:parserecv_player_exchanges(msg, key, parentTable) 
+function NetProtocalPaser:parserc_chest(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'refresh_time', parentTable)
-	self:parseuint(msg,'player_prestige', parentTable)
-	self:parseArray(msg,'goods', parentTable,'recv_exchange_goods')
-	self:parserecv_goods_price(msg,'refresh_price', parentTable)
-	self:parseushort(msg,'refresh_current_num', parentTable)
-	self:parseushort(msg,'refresh_limit_num', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parserecv_exchange_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_chest(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
-	self:parseushort(msg,'exchange_num', parentTable)
-	self:parseuint(msg,'prestige', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'source', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+	self:parseArray(msg,'reward', parentTable,'rc_chest')
 end
 
-function NetProtocalPaser:parsesend_exchange_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_chests(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'goods_id', parentTable)
+	self:parseArray(msg,'chests', parentTable,'db_chest')
 end
 
-function NetProtocalPaser:parserecv_player_arena_battle_report_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_prize_test(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_player_arena_battle_report')
+	self:parseinteger(msg,'type', parentTable)
+	self:parseinteger(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_arena_battle_report(msg, key, parentTable) 
+function NetProtocalPaser:parserc_temple_site(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseshort(msg,'battle_type', parentTable)
-	self:parseuint(msg,'battle_player_id', parentTable)
-	self:parsestring(msg,'battle_player_name', parentTable)
-	self:parseboolean(msg,'is_victory', parentTable)
-	self:parseushort(msg,'rank', parentTable)
-	self:parsestring(msg,'battle_datetime', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
 end
 
-function NetProtocalPaser:parsesned_player_activity_verify(msg, key, parentTable) 
+function NetProtocalPaser:parserc_temple_fragment(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'activity_id', parentTable)
-	self:parseuint(msg,'category', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_activity_verify(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_temple(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'activity_id', parentTable)
-	self:parseushort(msg,'status', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'grade', parentTable)
+	self:parseArray(msg,'fragment_amount', parentTable,'rc_temple_fragment')
+	self:parseArray(msg,'site_goodtype', parentTable,'rc_temple_site')
 end
 
-function NetProtocalPaser:parsesend_player_challenge_arena(msg, key, parentTable) 
+function NetProtocalPaser:parsept_temple_datas(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'enemy_player_id', parentTable)
+	self:parseinteger(msg,'grade', parentTable)
+	self:parseArray(msg,'fragments', parentTable,'rc_temple_fragment')
+	self:parseArray(msg,'sites', parentTable,'rc_temple_site')
 end
 
-function NetProtocalPaser:parsesend_player_besat_played(msg, key, parentTable) 
+function NetProtocalPaser:parsept_mapinfo(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'beast_id', parentTable)
+	self:parseinteger(msg,'mapid', parentTable)
+	self:parseArray(msg,'storyid', parentTable,'integer')
+	self:parseArray(msg,'invade', parentTable,'integer')
 end
 
-function NetProtocalPaser:parsesend_player_hero_skill_up(msg, key, parentTable) 
+function NetProtocalPaser:parsept_nadainfo(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_id', parentTable)
-	self:parseuint(msg,'skill_id', parentTable)
+	self:parseArray(msg,'nadaid', parentTable,'integer')
 end
 
-function NetProtocalPaser:parsesend_player_skill_release_up(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_legion(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'a', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'remark', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+	self:parseshort(msg,'lock', parentTable)
+	self:parseshort(msg,'lev', parentTable)
+	self:parseinteger(msg,'exp', parentTable)
+	self:parsepkid(msg,'guard', parentTable)
+	self:parseshort(msg,'del_num', parentTable)
+	self:parseinteger(msg,'del_time', parentTable)
 end
 
-function NetProtocalPaser:parserecv_player_hero_skill_time(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_lenmeb(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'time', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'player_id', parentTable)
+	self:parseshort(msg,'pos', parentTable)
+	self:parseinteger(msg,'devote', parentTable)
+	self:parseinteger(msg,'join_time', parentTable)
+	self:parseinteger(msg,'doe_money', parentTable)
+	self:parseinteger(msg,'doe_gold', parentTable)
+	self:parseinteger(msg,'doe_date', parentTable)
 end
 
-function NetProtocalPaser:parserecv_system_conf_data(msg, key, parentTable) 
+function NetProtocalPaser:parsedb_lenapply(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'system_conf_data')
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'player_id', parentTable)
+	self:parseshort(msg,'apply', parentTable)
+	self:parseshort(msg,'invite', parentTable)
 end
 
-function NetProtocalPaser:parsesystem_conf_data(msg, key, parentTable) 
+function NetProtocalPaser:parsept_len_info(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parsestring(msg,'key', parentTable)
-	self:parsestring(msg,'val', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'remark', parentTable)
+	self:parseinteger(msg,'exp', parentTable)
+	self:parseshort(msg,'lev', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+	self:parseshort(msg,'lock', parentTable)
+	self:parseshort(msg,'meb', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
 end
 
-function NetProtocalPaser:parserecv_shop_goods_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_len_list(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_shop_goods')
+	self:parseArray(msg,'list', parentTable,'pt_len_info')
 end
 
-function NetProtocalPaser:parserecv_shop_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsept_lenmeb_info(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'id', parentTable)
-	self:parseshort(msg,'shop_no', parentTable)
-	self:parseushort(msg,'shop_sort', parentTable)
-	self:parseuint(msg,'goods_id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
-	self:parseshort(msg,'buy_limit', parentTable)
-	self:parserecv_goods_price(msg,'goods_price', parentTable)
-	self:parseinteger(msg,'goods_free_time', parentTable)
-	self:parseuint(msg,'goods_give', parentTable)
-	self:parsestring(msg,'shop_artno', parentTable)
+	self:parsepkid(msg,'id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseinteger(msg,'lev', parentTable)
+	self:parseshort(msg,'pos', parentTable)
+	self:parseinteger(msg,'devote', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
 end
 
-function NetProtocalPaser:parserecv_goods_price(msg, key, parentTable) 
+function NetProtocalPaser:parsept_lenmeb_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_lenmeb_info')
+end
+
+function NetProtocalPaser:parsept_len_all_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsept_len_info(msg,'legion', parentTable)
+	self:parseArray(msg,'meb', parentTable,'pt_lenmeb_info')
+end
+
+function NetProtocalPaser:parsept_len_create(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsestring(msg,'name', parentTable)
+end
+
+function NetProtocalPaser:parsept_len_apply(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'lev', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+end
+
+function NetProtocalPaser:parsept_len_apply_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_len_apply')
+end
+
+function NetProtocalPaser:parsept_len_apply_opr(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseboolean(msg,'agree', parentTable)
+end
+
+function NetProtocalPaser:parsept_len_devote(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'num', parentTable)
+end
+
+function NetProtocalPaser:parsept_create_legion(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'remark', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+	self:parseshort(msg,'lock', parentTable)
+end
+
+function NetProtocalPaser:parsept_legion_self(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parseshort(msg,'pos', parentTable)
+end
+
+function NetProtocalPaser:parsept_groupupd_rune(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseArray(msg,'runelist', parentTable,'integer')
+end
+
+function NetProtocalPaser:parsept_groupupd_card(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseArray(msg,'cardlist', parentTable,'integer')
+end
+
+function NetProtocalPaser:parsept_prize_get(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'type', parentTable)
+	self:parsestring(msg,'prize', parentTable)
+end
+
+function NetProtocalPaser:parsept_player_report(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
 	self:parsestring(msg,'type', parentTable)
-	self:parseuint(msg,'price', parentTable)
+	self:parsestring(msg,'desc', parentTable)
 end
 
-function NetProtocalPaser:parsesend_buy_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsept_rune_once(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'id', parentTable)
-	self:parseushort(msg,'goods_num', parentTable)
+	self:parsestring(msg,'runes', parentTable)
 end
 
-function NetProtocalPaser:parserecv_buy_goods_data(msg, key, parentTable) 
+function NetProtocalPaser:parsept_maze(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseshort(msg,'shop_no', parentTable)
-	self:parserecv_buy_goods(msg,'items', parentTable)
+	self:parseinteger(msg,'maze', parentTable)
+	self:parseArray(msg,'enemy', parentTable,'flrfid')
+	self:parseshort(msg,'floor', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseinteger(msg,'refush', parentTable)
+	self:parseshort(msg,'step', parentTable)
+	self:parseinteger(msg,'reset', parentTable)
 end
 
-function NetProtocalPaser:parserecv_buy_goods(msg, key, parentTable) 
+function NetProtocalPaser:parsept_maze_all(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'goods', parentTable,'recv_goods')
-	self:parseArray(msg,'hero', parentTable,'recv_hero')
-	self:parseArray(msg,'other', parentTable,'recv_goods_price')
+	self:parseArray(msg,'maze', parentTable,'pt_maze')
 end
 
-function NetProtocalPaser:parserecv_activity_residue_list(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market_item(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseArray(msg,'list', parentTable,'recv_activity_residue')
+	self:parseinteger(msg,'id', parentTable)
+	self:parseinteger(msg,'cost', parentTable)
+	self:parseinteger(msg,'num', parentTable)
 end
 
-function NetProtocalPaser:parserecv_activity_residue(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'category', parentTable)
-	self:parseuint(msg,'num', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+	self:parseArray(msg,'item', parentTable,'pt_market_item')
 end
 
-function NetProtocalPaser:parsevit_release_up(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market_buy(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseushort(msg,'a', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseboolean(msg,'flag', parentTable)
 end
 
-function NetProtocalPaser:parserecv_vit_release_up(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market_card(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'time', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseArray(msg,'item', parentTable,'pt_market_item')
+	self:parseArray(msg,'cards', parentTable,'pkid')
 end
 
-function NetProtocalPaser:parserecv_player_friends_delete(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market_gold(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'friends_player_id', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseArray(msg,'item', parentTable,'pt_market_item')
+	self:parseinteger(msg,'gold', parentTable)
 end
 
-function NetProtocalPaser:parsesend_hero_fragments_synthetic(msg, key, parentTable) 
+function NetProtocalPaser:parsept_market_power(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'goods_id', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseArray(msg,'item', parentTable,'pt_market_item')
+	self:parseinteger(msg,'power', parentTable)
 end
 
-function NetProtocalPaser:parsesend_player_hero_sell(msg, key, parentTable) 
+function NetProtocalPaser:parsept_ranks_get(msg, key, parentTable) 
 	if(key ~= nil) then
 		parentTable[key] = {}
 		parentTable = parentTable[key]
 	end
-	self:parseuint(msg,'player_hero_id', parentTable)
+	self:parseinteger(msg,'id', parentTable)
+	self:parseinteger(msg,'type', parentTable)
+end
+
+function NetProtocalPaser:parsept_ranks_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'rank', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'lev', parentTable)
+	self:parseinteger(msg,'value', parentTable)
+end
+
+function NetProtocalPaser:parsept_ranks_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'id', parentTable)
+	self:parsept_ranks_info(msg,'self', parentTable)
+	self:parseArray(msg,'info', parentTable,'pt_ranks_info')
+end
+
+function NetProtocalPaser:parsept_story_hide(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsestring(msg,'info', parentTable)
+end
+
+function NetProtocalPaser:parsept_gmcmd(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsestring(msg,'cmd', parentTable)
+end
+
+function NetProtocalPaser:parsedb_mapreward(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseinteger(msg,'map_id', parentTable)
+	self:parseArray(msg,'invade', parentTable,'integer')
+	self:parseinteger(msg,'invade_time', parentTable)
+	self:parseinteger(msg,'gain_time', parentTable)
+	self:parseshort(msg,'gain_num', parentTable)
+end
+
+function NetProtocalPaser:parsept_map_gain(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'map', parentTable)
+	self:parseinteger(msg,'money', parentTable)
+end
+
+function NetProtocalPaser:parsept_map_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'date', parentTable)
+	self:parseArray(msg,'story', parentTable,'integer')
+	self:parseinteger(msg,'gain', parentTable)
+	self:parseArray(msg,'maze', parentTable,'pt_maze')
+	self:parseArray(msg,'invade', parentTable,'integer')
+end
+
+function NetProtocalPaser:parsept_map_friend(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'story', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+end
+
+function NetProtocalPaser:parsept_map_friend_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_map_friend')
+end
+
+function NetProtocalPaser:parsedb_coldtime(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'chp_times', parentTable)
+	self:parseshort(msg,'chp_gold', parentTable)
+	self:parseinteger(msg,'champion', parentTable)
+	self:parseinteger(msg,'freedom', parentTable)
+	self:parseinteger(msg,'monster', parentTable)
+	self:parseinteger(msg,'crazy', parentTable)
+	self:parseinteger(msg,'lrank', parentTable)
+	self:parseinteger(msg,'lrank_buy', parentTable)
+end
+
+function NetProtocalPaser:parsept_champion(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseshort(msg,'times', parentTable)
+	self:parseshort(msg,'cd', parentTable)
+end
+
+function NetProtocalPaser:parsept_freedom(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'cd', parentTable)
+end
+
+function NetProtocalPaser:parsemcard(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'baseid', parentTable)
+	self:parseshort(msg,'level', parentTable)
+	self:parseinteger(msg,'hp', parentTable)
+	self:parseshort(msg,'att', parentTable)
+end
+
+function NetProtocalPaser:parsept_m_group(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'hero', parentTable)
+	self:parseArray(msg,'cards', parentTable,'mcard')
+end
+
+function NetProtocalPaser:parsept_m_fighter(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+end
+
+function NetProtocalPaser:parsedb_monster(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'level', parentTable)
+	self:parseshort(msg,'hard', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+	self:parsepkid(msg,'find_id', parentTable)
+	self:parseinteger(msg,'find_time', parentTable)
+	self:parseinteger(msg,'end_time', parentTable)
+	self:parseArray(msg,'attacker', parentTable,'pt_m_fighter')
+	self:parsept_m_group(msg,'fightdata', parentTable)
+	self:parsepkid(msg,'killer_id', parentTable)
+	self:parseinteger(msg,'killed_time', parentTable)
+	self:parseinteger(msg,'prizecard', parentTable)
+end
+
+function NetProtocalPaser:parsedb_mail(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'new', parentTable)
+	self:parsepkid(msg,'from', parentTable)
+	self:parseinteger(msg,'event', parentTable)
+	self:parsestring(msg,'title', parentTable)
+	self:parsestring(msg,'content', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+end
+
+function NetProtocalPaser:parsept_player_mail(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'new', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+	self:parsestring(msg,'event', parentTable)
+end
+
+function NetProtocalPaser:parsept_player_mail_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'info', parentTable,'pt_player_mail')
+end
+
+function NetProtocalPaser:parsept_write_mail(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'receiver', parentTable)
+	self:parsestring(msg,'title', parentTable)
+	self:parsestring(msg,'content', parentTable)
+end
+
+function NetProtocalPaser:parsept_new_mail(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'type', parentTable)
+	self:parseshort(msg,'num', parentTable)
+end
+
+function NetProtocalPaser:parsept_new_mail_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_new_mail')
+end
+
+function NetProtocalPaser:parsept_monster(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'level', parentTable)
+	self:parseshort(msg,'hard', parentTable)
+	self:parseshort(msg,'now', parentTable)
+	self:parseshort(msg,'score', parentTable)
+	self:parsepkid(msg,'find_id', parentTable)
+	self:parsestring(msg,'find_name', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+	self:parseshort(msg,'round', parentTable)
+	self:parsepkid(msg,'killer_id', parentTable)
+	self:parsestring(msg,'killer_name', parentTable)
+end
+
+function NetProtocalPaser:parsept_find_monster(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsept_monster(msg,'monster', parentTable)
+	self:parseshort(msg,'cd', parentTable)
+end
+
+function NetProtocalPaser:parsept_monster_all(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'all', parentTable,'pt_monster')
+	self:parseshort(msg,'cd', parentTable)
+end
+
+function NetProtocalPaser:parsept_crazy_score(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'once', parentTable)
+	self:parseinteger(msg,'totle', parentTable)
+end
+
+function NetProtocalPaser:parsept_pay_verify(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'platform', parentTable)
+	self:parsestring(msg,'pay_type', parentTable)
+	self:parsestring(msg,'token', parentTable)
+	self:parsestring(msg,'signature', parentTable)
+end
+
+function NetProtocalPaser:parsept_pay_list_get(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'platform', parentTable)
+end
+
+function NetProtocalPaser:parsept_pay_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'pay_types', parentTable,'string')
+end
+
+function NetProtocalPaser:parsept_legion_rank_get(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'start', parentTable)
+	self:parseinteger(msg,'size', parentTable)
+end
+
+function NetProtocalPaser:parsept_lrank_buy(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'num', parentTable)
+	self:parseinteger(msg,'cost', parentTable)
+end
+
+function NetProtocalPaser:parselegion_rank(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'remark', parentTable)
+	self:parseinteger(msg,'exp', parentTable)
+	self:parseshort(msg,'lev', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+	self:parseshort(msg,'lock', parentTable)
+	self:parseshort(msg,'meb', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'score', parentTable)
+	self:parseinteger(msg,'threat', parentTable)
+end
+
+function NetProtocalPaser:parsept_legion_rank_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'len_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'num', parentTable)
+	self:parseinteger(msg,'cost', parentTable)
+	self:parseArray(msg,'legion_ranks', parentTable,'legion_rank')
+end
+
+function NetProtocalPaser:parseplayer_rank_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseshort(msg,'pos', parentTable)
+	self:parseinteger(msg,'devote', parentTable)
+	self:parseinteger(msg,'plan_score', parentTable)
+	self:parseinteger(msg,'plan_money', parentTable)
+	self:parseinteger(msg,'protected', parentTable)
+end
+
+function NetProtocalPaser:parsept_player_rank_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseshort(msg,'num', parentTable)
+	self:parseinteger(msg,'cost', parentTable)
+	self:parseArray(msg,'mebs', parentTable,'player_rank_info')
+end
+
+function NetProtocalPaser:parsep_rank_info(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parsestring(msg,'icon', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parsestring(msg,'legion_name', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+end
+
+function NetProtocalPaser:parsept_p_rank_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseArray(msg,'mebs', parentTable,'p_rank_info')
+end
+
+function NetProtocalPaser:parserc_sign(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'num', parentTable)
+	self:parseshort(msg,'gain', parentTable)
+end
+
+function NetProtocalPaser:parsedb_sign(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseshort(msg,'month', parentTable)
+	self:parseArray(msg,'sign', parentTable,'rc_sign')
+	self:parseinteger(msg,'time', parentTable)
+end
+
+function NetProtocalPaser:parsept_sign(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'month', parentTable)
+	self:parserc_sign(msg,'sign', parentTable)
+end
+
+function NetProtocalPaser:parsedb_param(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseArray(msg,'intary', parentTable,'integer')
+end
+
+function NetProtocalPaser:parsepk_cteam(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'baseid', parentTable)
+	self:parseinteger(msg,'level', parentTable)
+end
+
+function NetProtocalPaser:parsedb_war(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parseArray(msg,'cards', parentTable,'pk_cteam')
+end
+
+function NetProtocalPaser:parsedb_gvglog(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'id', parentTable)
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseinteger(msg,'shield', parentTable)
+	self:parseinteger(msg,'attack', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_init_battle(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parsestring(msg,'legion_name', parentTable)
+	self:parsepkid(msg,'guard_id', parentTable)
+	self:parsestring(msg,'guard_name', parentTable)
+	self:parsestring(msg,'guard_icon', parentTable)
+	self:parseinteger(msg,'shield', parentTable)
+	self:parseinteger(msg,'max_shield', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseArray(msg,'mebs', parentTable,'pkid')
+	self:parseinteger(msg,'end_time', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_init_battle_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'attack_num', parentTable)
+	self:parseshort(msg,'max_attack', parentTable)
+	self:parsept_gvg_init_battle(msg,'self', parentTable)
+	self:parsept_gvg_init_battle(msg,'enemy', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_battle_end(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'result', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseinteger(msg,'totle_scores', parentTable)
+	self:parseinteger(msg,'less_scores', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_fight(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseshort(msg,'type', parentTable)
+	self:parsepkid(msg,'target', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_shield(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsepkid(msg,'from_legion', parentTable)
+	self:parsepkid(msg,'target_legion', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseinteger(msg,'change', parentTable)
+	self:parseinteger(msg,'shield', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_first(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parseinteger(msg,'gvg_id', parentTable)
+	self:parseshort(msg,'gvg_state', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseinteger(msg,'shield', parentTable)
+	self:parseinteger(msg,'extra_shield', parentTable)
+	self:parseinteger(msg,'attack', parentTable)
+	self:parseinteger(msg,'extra_attack', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_star(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'gvg_id', parentTable)
+	self:parseinteger(msg,'state', parentTable)
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'flag', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_star_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_gvg_star')
+end
+
+function NetProtocalPaser:parsept_gvg_rank(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseinteger(msg,'rank', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_rank_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'less_scores', parentTable)
+	self:parseArray(msg,'list', parentTable,'pt_gvg_rank')
+end
+
+function NetProtocalPaser:parsept_gvg_legion_log(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'enemy_id', parentTable)
+	self:parseshort(msg,'result', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
+	self:parseinteger(msg,'time', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_legion_log_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_gvg_legion_log')
+end
+
+function NetProtocalPaser:parsept_gvg_player_log(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'user_id', parentTable)
+	self:parsestring(msg,'name', parentTable)
+	self:parseshort(msg,'attack', parentTable)
+	self:parseshort(msg,'win', parentTable)
+	self:parseinteger(msg,'socres', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_player_log_list(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseArray(msg,'list', parentTable,'pt_gvg_player_log')
+end
+
+function NetProtocalPaser:parsept_gvg_login(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parseinteger(msg,'gvg_id', parentTable)
+end
+
+function NetProtocalPaser:parsept_gvg_scores(msg, key, parentTable) 
+	if(key ~= nil) then
+		parentTable[key] = {}
+		parentTable = parentTable[key]
+	end
+	self:parsepkid(msg,'legion_id', parentTable)
+	self:parseinteger(msg,'scores', parentTable)
 end
 
 function NetProtocalPaser:formatpt_pkid(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
+	self:formatpkid(msg,content.id)
 end
 
-function NetProtocalPaser:formatsend_check_version(msg, content) 
-	if(content.os == nil) then print('formatNetMessage Error: os is nil' ) end 
-	self:formatstring(msg,content.os)
-end
-
-function NetProtocalPaser:formatrecv_check_version(msg, content) 
-	if(content.game_ver == nil) then print('formatNetMessage Error: game_ver is nil' ) end 
-	self:formatushort(msg,content.game_ver)
-	if(content.res_ver == nil) then print('formatNetMessage Error: res_ver is nil' ) end 
-	self:formatushort(msg,content.res_ver)
-end
-
-function NetProtocalPaser:formatplayer_anonymouslogin(msg, content) 
-	if(content.udid == nil) then print('formatNetMessage Error: udid is nil' ) end 
-	self:formatstring(msg,content.udid)
-	if(content.os == nil) then print('formatNetMessage Error: os is nil' ) end 
-	self:formatstring(msg,content.os)
-	if(content.token == nil) then print('formatNetMessage Error: token is nil' ) end 
-	self:formatstring(msg,content.token)
-end
-
-function NetProtocalPaser:formatpt_game_serverlist(msg, content) 
-	if(content.udid == nil) then print('formatNetMessage Error: udid is nil' ) end 
-	self:formatstring(msg,content.udid)
-end
-
-function NetProtocalPaser:formatpt_gs_login(msg, content) 
-	if(content.udid == nil) then print('formatNetMessage Error: udid is nil' ) end 
-	self:formatstring(msg,content.udid)
-	if(content.sid == nil) then print('formatNetMessage Error: sid is nil' ) end 
-	self:formatstring(msg,content.sid)
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-end
-
-function NetProtocalPaser:formatpt_gs_good(msg, content) 
-	if(content.command == nil) then print('formatNetMessage Error: command is nil' ) end 
-	self:formatushort(msg,content.command)
-end
-
-function NetProtocalPaser:formatpt_gs_bad(msg, content) 
-	if(content.command == nil) then print('formatNetMessage Error: command is nil' ) end 
-	self:formatushort(msg,content.command)
-	if(content.errno == nil) then print('formatNetMessage Error: errno is nil' ) end 
-	self:formatushort(msg,content.errno)
+function NetProtocalPaser:formatpt_pkids(msg, content) 
+	self:formatArray(msg,content.ids,'pkid')
 end
 
 function NetProtocalPaser:formatpt_int(msg, content) 
 	if(content.i == nil) then print('formatNetMessage Error: i is nil' ) end 
-	self:formatuint(msg,content.i)
+	self:formatinteger(msg,content.i)
 end
 
-function NetProtocalPaser:formatrecv_player_hero(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-	if(content.system_hero_id == nil) then print('formatNetMessage Error: system_hero_id is nil' ) end 
-	self:formatuint(msg,content.system_hero_id)
-	if(content.player_hero_lv == nil) then print('formatNetMessage Error: player_hero_lv is nil' ) end 
-	self:formatushort(msg,content.player_hero_lv)
-	if(content.player_hero_exp == nil) then print('formatNetMessage Error: player_hero_exp is nil' ) end 
-	self:formatuint(msg,content.player_hero_exp)
-	if(content.player_hero_attribute == nil) then print('formatNetMessage Error: player_hero_attribute is nil' ) end 
-	self:formatpt_hero_attribute(msg,content.player_hero_attribute)
-	if(content.player_hero_color == nil) then print('formatNetMessage Error: player_hero_color is nil' ) end 
-	self:formatushort(msg,content.player_hero_color)
-	self:formatArray(msg,content.player_hero_equip,'pt_pkid')
-	self:formatArray(msg,content.player_hero_skill,'pt_hero_skill')
-	if(content.player_hero_next_exp == nil) then print('formatNetMessage Error: player_hero_next_exp is nil' ) end 
-	self:formatuint(msg,content.player_hero_next_exp)
-	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
-	self:formatshort(msg,content.pos)
-	if(content.player_hero_num == nil) then print('formatNetMessage Error: player_hero_num is nil' ) end 
-	self:formatshort(msg,content.player_hero_num)
-	if(content.hero_group_id == nil) then print('formatNetMessage Error: hero_group_id is nil' ) end 
-	self:formatuint(msg,content.hero_group_id)
-	if(content.player_hero_strengthen_rate == nil) then print('formatNetMessage Error: player_hero_strengthen_rate is nil' ) end 
-	self:formatushort(msg,content.player_hero_strengthen_rate)
-	if(content.player_hero_strengthen == nil) then print('formatNetMessage Error: player_hero_strengthen is nil' ) end 
-	self:formatushort(msg,content.player_hero_strengthen)
-	self:formatArray(msg,content.hero_skill,'pt_hero_skill')
+function NetProtocalPaser:formatpt_code(msg, content) 
+	if(content.api == nil) then print('formatNetMessage Error: api is nil' ) end 
+	self:formatinteger(msg,content.api)
+	if(content.code == nil) then print('formatNetMessage Error: code is nil' ) end 
+	self:formatinteger(msg,content.code)
 end
 
-function NetProtocalPaser:formatsend_player_hero_list(msg, content) 
-	if(content.profession_category == nil) then print('formatNetMessage Error: profession_category is nil' ) end 
-	self:formatushort(msg,content.profession_category)
-	if(content.page == nil) then print('formatNetMessage Error: page is nil' ) end 
-	self:formatushort(msg,content.page)
-	if(content.size == nil) then print('formatNetMessage Error: size is nil' ) end 
-	self:formatushort(msg,content.size)
-end
-
-function NetProtocalPaser:formatrecv_player_team(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-	if(content.system_hero_id == nil) then print('formatNetMessage Error: system_hero_id is nil' ) end 
-	self:formatuint(msg,content.system_hero_id)
-	if(content.player_hero_lv == nil) then print('formatNetMessage Error: player_hero_lv is nil' ) end 
-	self:formatushort(msg,content.player_hero_lv)
-	if(content.player_hero_exp == nil) then print('formatNetMessage Error: player_hero_exp is nil' ) end 
-	self:formatuint(msg,content.player_hero_exp)
-	if(content.player_hero_attribute == nil) then print('formatNetMessage Error: player_hero_attribute is nil' ) end 
-	self:formatpt_hero_attribute(msg,content.player_hero_attribute)
-	if(content.player_hero_color == nil) then print('formatNetMessage Error: player_hero_color is nil' ) end 
-	self:formatushort(msg,content.player_hero_color)
-	self:formatArray(msg,content.player_hero_equip,'pt_pkid')
-	self:formatArray(msg,content.player_hero_skill,'pt_hero_skill')
-	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
-	self:formatshort(msg,content.pos)
-	if(content.player_hero_next_exp == nil) then print('formatNetMessage Error: player_hero_next_exp is nil' ) end 
-	self:formatuint(msg,content.player_hero_next_exp)
-	if(content.hero_group_id == nil) then print('formatNetMessage Error: hero_group_id is nil' ) end 
-	self:formatuint(msg,content.hero_group_id)
-	if(content.player_hero_strengthen_rate == nil) then print('formatNetMessage Error: player_hero_strengthen_rate is nil' ) end 
-	self:formatushort(msg,content.player_hero_strengthen_rate)
-	if(content.player_hero_strengthen == nil) then print('formatNetMessage Error: player_hero_strengthen is nil' ) end 
-	self:formatushort(msg,content.player_hero_strengthen)
-	self:formatArray(msg,content.hero_skill,'pt_hero_skill')
-end
-
-function NetProtocalPaser:formatpt_player_team(msg, content) 
-	self:formatArray(msg,content.team,'recv_player_team')
-end
-
-function NetProtocalPaser:formatpt_player_hero(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatushort(msg,content.count)
-	self:formatArray(msg,content.heros,'recv_player_hero')
-end
-
-function NetProtocalPaser:formatrecv_player_hero_list(msg, content) 
-	self:formatArray(msg,content.heros,'recv_player_hero')
-end
-
-function NetProtocalPaser:formatsend_player_chapter(msg, content) 
-	if(content.parent == nil) then print('formatNetMessage Error: parent is nil' ) end 
-	self:formatuint(msg,content.parent)
-end
-
-function NetProtocalPaser:formatrecv_chapter_list(msg, content) 
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
-	if(content.chapter_star == nil) then print('formatNetMessage Error: chapter_star is nil' ) end 
-	self:formatuint(msg,content.chapter_star)
-	if(content.chapter_fastest_record == nil) then print('formatNetMessage Error: chapter_fastest_record is nil' ) end 
-	self:formatuint(msg,content.chapter_fastest_record)
-	if(content.chapter_my_record == nil) then print('formatNetMessage Error: chapter_my_record is nil' ) end 
-	self:formatuint(msg,content.chapter_my_record)
-	if(content.chapter_residue_number == nil) then print('formatNetMessage Error: chapter_residue_number is nil' ) end 
-	self:formatushort(msg,content.chapter_residue_number)
-end
-
-function NetProtocalPaser:formatpt_player_chapter_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_chapter_list')
-end
-
-function NetProtocalPaser:formatsend_challenge_chapter(msg, content) 
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
-end
-
-function NetProtocalPaser:formatpt_character_attribute_a(msg, content) 
-	if(content.gold == nil) then print('formatNetMessage Error: gold is nil' ) end 
-	self:formatuint(msg,content.gold)
-	if(content.crystal == nil) then print('formatNetMessage Error: crystal is nil' ) end 
-	self:formatuint(msg,content.crystal)
-	if(content.vit == nil) then print('formatNetMessage Error: vit is nil' ) end 
-	self:formatushort(msg,content.vit)
-	if(content.exp == nil) then print('formatNetMessage Error: exp is nil' ) end 
-	self:formatuint(msg,content.exp)
-	if(content.player_friendship == nil) then print('formatNetMessage Error: player_friendship is nil' ) end 
-	self:formatuint(msg,content.player_friendship)
-	if(content.player_prestige == nil) then print('formatNetMessage Error: player_prestige is nil' ) end 
-	self:formatuint(msg,content.player_prestige)
-	if(content.player_arena_number == nil) then print('formatNetMessage Error: player_arena_number is nil' ) end 
-	self:formatuint(msg,content.player_arena_number)
-	if(content.player_skill_points == nil) then print('formatNetMessage Error: player_skill_points is nil' ) end 
-	self:formatuint(msg,content.player_skill_points)
-	if(content.lv == nil) then print('formatNetMessage Error: lv is nil' ) end 
-	self:formatushort(msg,content.lv)
-	if(content.max_lv == nil) then print('formatNetMessage Error: max_lv is nil' ) end 
-	self:formatushort(msg,content.max_lv)
-	if(content.max_exp == nil) then print('formatNetMessage Error: max_exp is nil' ) end 
-	self:formatuint(msg,content.max_exp)
-	if(content.vit_limit == nil) then print('formatNetMessage Error: vit_limit is nil' ) end 
-	self:formatushort(msg,content.vit_limit)
-	if(content.attribute == nil) then print('formatNetMessage Error: attribute is nil' ) end 
-	self:formatpt_hero_attribute(msg,content.attribute)
-end
-
-function NetProtocalPaser:formatsend_player_challenge_chapter_start(msg, content) 
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
-end
-
-function NetProtocalPaser:formatrecv_challenge_chapter_result(msg, content) 
-	if(content.victory == nil) then print('formatNetMessage Error: victory is nil' ) end 
-	self:formatboolean(msg,content.victory)
-	if(content.star == nil) then print('formatNetMessage Error: star is nil' ) end 
-	self:formatushort(msg,content.star)
-	if(content.drop == nil) then print('formatNetMessage Error: drop is nil' ) end 
-	self:formatrecv_paygoods(msg,content.drop)
-end
-
-function NetProtocalPaser:formatrecv_player_sweep_chapter(msg, content) 
-	if(content.drop == nil) then print('formatNetMessage Error: drop is nil' ) end 
-	self:formatrecv_paygoods(msg,content.drop)
-end
-
-function NetProtocalPaser:formatrecv_challenge_chapter_result_hero(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-	if(content.system_hero_id == nil) then print('formatNetMessage Error: system_hero_id is nil' ) end 
-	self:formatuint(msg,content.system_hero_id)
-	if(content.exp == nil) then print('formatNetMessage Error: exp is nil' ) end 
-	self:formatuint(msg,content.exp)
-	if(content.isup == nil) then print('formatNetMessage Error: isup is nil' ) end 
-	self:formatushort(msg,content.isup)
-	if(content.max_exp == nil) then print('formatNetMessage Error: max_exp is nil' ) end 
-	self:formatuint(msg,content.max_exp)
-	if(content.cur_exp == nil) then print('formatNetMessage Error: cur_exp is nil' ) end 
-	self:formatuint(msg,content.cur_exp)
-	if(content.hero_lv == nil) then print('formatNetMessage Error: hero_lv is nil' ) end 
-	self:formatushort(msg,content.hero_lv)
-end
-
-function NetProtocalPaser:formatrecv_goods(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
-	if(content.goods_type == nil) then print('formatNetMessage Error: goods_type is nil' ) end 
-	self:formatshort(msg,content.goods_type)
-end
-
-function NetProtocalPaser:formatrecv_hero(msg, content) 
-	if(content.hero_id == nil) then print('formatNetMessage Error: hero_id is nil' ) end 
-	self:formatuint(msg,content.hero_id)
-	if(content.hero_num == nil) then print('formatNetMessage Error: hero_num is nil' ) end 
-	self:formatushort(msg,content.hero_num)
-end
-
-function NetProtocalPaser:formatpt_hero_attribute(msg, content) 
-	if(content.hp == nil) then print('formatNetMessage Error: hp is nil' ) end 
-	self:formatuint(msg,content.hp)
-	if(content.mp == nil) then print('formatNetMessage Error: mp is nil' ) end 
-	self:formatuint(msg,content.mp)
-	if(content.maxHp == nil) then print('formatNetMessage Error: maxHp is nil' ) end 
-	self:formatuint(msg,content.maxHp)
-	if(content.maxMp == nil) then print('formatNetMessage Error: maxMp is nil' ) end 
-	self:formatuint(msg,content.maxMp)
-	if(content.damage == nil) then print('formatNetMessage Error: damage is nil' ) end 
-	self:formatfloat(msg,content.damage)
-	if(content.defend == nil) then print('formatNetMessage Error: defend is nil' ) end 
-	self:formatfloat(msg,content.defend)
-	if(content.magicDamage == nil) then print('formatNetMessage Error: magicDamage is nil' ) end 
-	self:formatfloat(msg,content.magicDamage)
-	if(content.magicDefend == nil) then print('formatNetMessage Error: magicDefend is nil' ) end 
-	self:formatfloat(msg,content.magicDefend)
-	if(content.critValue == nil) then print('formatNetMessage Error: critValue is nil' ) end 
-	self:formatfloat(msg,content.critValue)
-	if(content.dodgeValue == nil) then print('formatNetMessage Error: dodgeValue is nil' ) end 
-	self:formatfloat(msg,content.dodgeValue)
-	if(content.speed == nil) then print('formatNetMessage Error: speed is nil' ) end 
-	self:formatfloat(msg,content.speed)
-	if(content.attackSpeed == nil) then print('formatNetMessage Error: attackSpeed is nil' ) end 
-	self:formatfloat(msg,content.attackSpeed)
-	if(content.turnSpeed == nil) then print('formatNetMessage Error: turnSpeed is nil' ) end 
-	self:formatfloat(msg,content.turnSpeed)
-	if(content.rangeVisible == nil) then print('formatNetMessage Error: rangeVisible is nil' ) end 
-	self:formatfloat(msg,content.rangeVisible)
-end
-
-function NetProtocalPaser:formatrecv_paygoods(msg, content) 
-	if(content.gold == nil) then print('formatNetMessage Error: gold is nil' ) end 
-	self:formatuint(msg,content.gold)
-	if(content.crystal == nil) then print('formatNetMessage Error: crystal is nil' ) end 
-	self:formatuint(msg,content.crystal)
-	self:formatArray(msg,content.goods,'recv_goods')
-	self:formatArray(msg,content.heros,'recv_hero')
-	self:formatArray(msg,content.hero_exp,'recv_challenge_chapter_result_hero')
-	if(content.player_vit == nil) then print('formatNetMessage Error: player_vit is nil' ) end 
-	self:formatuint(msg,content.player_vit)
-	if(content.player_exp == nil) then print('formatNetMessage Error: player_exp is nil' ) end 
-	self:formatuint(msg,content.player_exp)
-	if(content.player_cur_exp == nil) then print('formatNetMessage Error: player_cur_exp is nil' ) end 
-	self:formatuint(msg,content.player_cur_exp)
-	if(content.player_lv == nil) then print('formatNetMessage Error: player_lv is nil' ) end 
-	self:formatushort(msg,content.player_lv)
-	if(content.player_is_up == nil) then print('formatNetMessage Error: player_is_up is nil' ) end 
-	self:formatushort(msg,content.player_is_up)
-	if(content.player_prestige == nil) then print('formatNetMessage Error: player_prestige is nil' ) end 
-	self:formatuint(msg,content.player_prestige)
-end
-
-function NetProtocalPaser:formatpt_paygoods(msg, content) 
-	self:formatArray(msg,content.goods,'recv_paygoods')
-end
-
-function NetProtocalPaser:formatrecv_player_bag_goods(msg, content) 
-	self:formatArray(msg,content.goods,'recv_goods')
-end
-
-function NetProtocalPaser:formatpt_use_goods(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatshort(msg,content.goods_num)
-end
-
-function NetProtocalPaser:formatsend_hero_goods_use(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatshort(msg,content.goods_num)
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-end
-
-function NetProtocalPaser:formatsend_change_player_team_up(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
-	self:formatshort(msg,content.pos)
-end
-
-function NetProtocalPaser:formatsend_change_player_team_down(msg, content) 
-	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
-	self:formatshort(msg,content.pos)
-end
-
-function NetProtocalPaser:formatsend_player_goods_sell(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
-end
-
-function NetProtocalPaser:formatsend_player_hero_equip_up(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-end
-
-function NetProtocalPaser:formatsend_player_hero_advanced(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-end
-
-function NetProtocalPaser:formatpt_hero_skill(msg, content) 
+function NetProtocalPaser:formatdb_single(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
-	if(content.lv == nil) then print('formatNetMessage Error: lv is nil' ) end 
-	self:formatushort(msg,content.lv)
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.gift_power_date == nil) then print('formatNetMessage Error: gift_power_date is nil' ) end 
+	self:formatinteger(msg,content.gift_power_date)
 end
 
-function NetProtocalPaser:formatsend_kill_monster(msg, content) 
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
-	if(content.monster_id == nil) then print('formatNetMessage Error: monster_id is nil' ) end 
-	self:formatuint(msg,content.monster_id)
+function NetProtocalPaser:formatpt_ubase(msg, content) 
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.sex == nil) then print('formatNetMessage Error: sex is nil' ) end 
+	self:formatshort(msg,content.sex)
+	if(content.account_type == nil) then print('formatNetMessage Error: account_type is nil' ) end 
+	self:formatshort(msg,content.account_type)
+	if(content.account == nil) then print('formatNetMessage Error: account is nil' ) end 
+	self:formatstring(msg,content.account)
+	if(content.token == nil) then print('formatNetMessage Error: token is nil' ) end 
+	self:formatstring(msg,content.token)
 end
 
-function NetProtocalPaser:formatrecv_monster(msg, content) 
+function NetProtocalPaser:formatdb_device(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
-	if(content.system_hero_id == nil) then print('formatNetMessage Error: system_hero_id is nil' ) end 
-	self:formatuint(msg,content.system_hero_id)
-	if(content.hero_group_id == nil) then print('formatNetMessage Error: hero_group_id is nil' ) end 
-	self:formatuint(msg,content.hero_group_id)
-	if(content.hero_brain == nil) then print('formatNetMessage Error: hero_brain is nil' ) end 
-	self:formatstring(msg,content.hero_brain)
-	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
-	self:formatpt_pos(msg,content.pos)
-	if(content.player_hero_attribute == nil) then print('formatNetMessage Error: player_hero_attribute is nil' ) end 
-	self:formatpt_hero_attribute(msg,content.player_hero_attribute)
-	self:formatArray(msg,content.player_hero_skill,'pt_hero_skill')
+	self:formatpkid(msg,content.id)
+	if(content.d_type == nil) then print('formatNetMessage Error: d_type is nil' ) end 
+	self:formatstring(msg,content.d_type)
+	if(content.udid == nil) then print('formatNetMessage Error: udid is nil' ) end 
+	self:formatstring(msg,content.udid)
+	if(content.os == nil) then print('formatNetMessage Error: os is nil' ) end 
+	self:formatstring(msg,content.os)
+	if(content.os_version == nil) then print('formatNetMessage Error: os_version is nil' ) end 
+	self:formatstring(msg,content.os_version)
+	if(content.market == nil) then print('formatNetMessage Error: market is nil' ) end 
+	self:formatstring(msg,content.market)
+	if(content.terminal == nil) then print('formatNetMessage Error: terminal is nil' ) end 
+	self:formatstring(msg,content.terminal)
+	if(content.lcl == nil) then print('formatNetMessage Error: lcl is nil' ) end 
+	self:formatstring(msg,content.lcl)
+	if(content.mac_addr == nil) then print('formatNetMessage Error: mac_addr is nil' ) end 
+	self:formatstring(msg,content.mac_addr)
+	if(content.locale == nil) then print('formatNetMessage Error: locale is nil' ) end 
+	self:formatstring(msg,content.locale)
 end
 
-function NetProtocalPaser:formatrecv_monster_list(msg, content) 
-	self:formatArray(msg,content.monster,'recv_monster')
-	if(content.round == nil) then print('formatNetMessage Error: round is nil' ) end 
-	self:formatushort(msg,content.round)
-	if(content.count_round == nil) then print('formatNetMessage Error: count_round is nil' ) end 
-	self:formatushort(msg,content.count_round)
-	if(content.team == nil) then print('formatNetMessage Error: team is nil' ) end 
-	self:formatshort(msg,content.team)
+function NetProtocalPaser:formatdb_user(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.device_id == nil) then print('formatNetMessage Error: device_id is nil' ) end 
+	self:formatpkid(msg,content.device_id)
+	if(content.account_type == nil) then print('formatNetMessage Error: account_type is nil' ) end 
+	self:formatshort(msg,content.account_type)
+	if(content.account == nil) then print('formatNetMessage Error: account is nil' ) end 
+	self:formatstring(msg,content.account)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.sex == nil) then print('formatNetMessage Error: sex is nil' ) end 
+	self:formatshort(msg,content.sex)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.power == nil) then print('formatNetMessage Error: power is nil' ) end 
+	self:formatshort(msg,content.power)
+	if(content.gift_power == nil) then print('formatNetMessage Error: gift_power is nil' ) end 
+	self:formatshort(msg,content.gift_power)
+	if(content.buy_power == nil) then print('formatNetMessage Error: buy_power is nil' ) end 
+	self:formatinteger(msg,content.buy_power)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+	if(content.experience == nil) then print('formatNetMessage Error: experience is nil' ) end 
+	self:formatpkid(msg,content.experience)
+	if(content.money == nil) then print('formatNetMessage Error: money is nil' ) end 
+	self:formatpkid(msg,content.money)
+	if(content.group == nil) then print('formatNetMessage Error: group is nil' ) end 
+	self:formatinteger(msg,content.group)
+	if(content.story == nil) then print('formatNetMessage Error: story is nil' ) end 
+	self:formatinteger(msg,content.story)
+	if(content.gold == nil) then print('formatNetMessage Error: gold is nil' ) end 
+	self:formatinteger(msg,content.gold)
+	if(content.magic_card == nil) then print('formatNetMessage Error: magic_card is nil' ) end 
+	self:formatinteger(msg,content.magic_card)
+	if(content.powergift_num == nil) then print('formatNetMessage Error: powergift_num is nil' ) end 
+	self:formatshort(msg,content.powergift_num)
+	if(content.powergift_date == nil) then print('formatNetMessage Error: powergift_date is nil' ) end 
+	self:formatinteger(msg,content.powergift_date)
+	if(content.maxfevent == nil) then print('formatNetMessage Error: maxfevent is nil' ) end 
+	self:formatinteger(msg,content.maxfevent)
 end
 
-function NetProtocalPaser:formatrecv_player_challenge_chapter(msg, content) 
-	if(content.chapter_type == nil) then print('formatNetMessage Error: chapter_type is nil' ) end 
-	self:formatshort(msg,content.chapter_type)
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
-	self:formatArray(msg,content.hero_group_ids,'pt_pkid')
-	self:formatArray(msg,content.hero_skill_ids,'pt_hero_skill')
-	self:formatArray(msg,content.stronghold,'recv_stronghold_army')
+function NetProtocalPaser:formatrc_buy_times(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
 end
 
-function NetProtocalPaser:formatrecv_stronghold_army(msg, content) 
-	if(content.hero_id == nil) then print('formatNetMessage Error: hero_id is nil' ) end 
-	self:formatuint(msg,content.hero_id)
-	if(content.hero_group_id == nil) then print('formatNetMessage Error: hero_group_id is nil' ) end 
-	self:formatuint(msg,content.hero_group_id)
-	self:formatArray(msg,content.army,'recv_monster')
-end
-
-function NetProtocalPaser:formatsend_player_mail_list(msg, content) 
-	if(content.max_mail_id == nil) then print('formatNetMessage Error: max_mail_id is nil' ) end 
-	self:formatuint(msg,content.max_mail_id)
-end
-
-function NetProtocalPaser:formatrecv_mail(msg, content) 
-	if(content.mail_id == nil) then print('formatNetMessage Error: mail_id is nil' ) end 
-	self:formatuint(msg,content.mail_id)
-	if(content.mail_group == nil) then print('formatNetMessage Error: mail_group is nil' ) end 
-	self:formatshort(msg,content.mail_group)
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.mail_title == nil) then print('formatNetMessage Error: mail_title is nil' ) end 
-	self:formatstring(msg,content.mail_title)
-	if(content.mail_body == nil) then print('formatNetMessage Error: mail_body is nil' ) end 
-	self:formatstring(msg,content.mail_body)
-	if(content.mail_goods == nil) then print('formatNetMessage Error: mail_goods is nil' ) end 
-	self:formatrecv_paygoods(msg,content.mail_goods)
-	if(content.mail_status == nil) then print('formatNetMessage Error: mail_status is nil' ) end 
-	self:formatshort(msg,content.mail_status)
-	if(content.mail_create_at == nil) then print('formatNetMessage Error: mail_create_at is nil' ) end 
-	self:formatstring(msg,content.mail_create_at)
-end
-
-function NetProtocalPaser:formatrecv_mail_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_mail')
-end
-
-function NetProtocalPaser:formatsend_player_mail_goods(msg, content) 
-	if(content.mail_id == nil) then print('formatNetMessage Error: mail_id is nil' ) end 
-	self:formatuint(msg,content.mail_id)
-end
-
-function NetProtocalPaser:formatsend_player_mail_read(msg, content) 
-	if(content.mail_id == nil) then print('formatNetMessage Error: mail_id is nil' ) end 
-	self:formatuint(msg,content.mail_id)
-end
-
-function NetProtocalPaser:formatrecv_mail_content(msg, content) 
-	self:formatArray(msg,content.list,'recv_mail')
-end
-
-function NetProtocalPaser:formatsend_player_mail_delete(msg, content) 
-	if(content.mail_id == nil) then print('formatNetMessage Error: mail_id is nil' ) end 
-	self:formatuint(msg,content.mail_id)
-end
-
-function NetProtocalPaser:formatrecv_broadcast_message(msg, content) 
-	if(content.channel_id == nil) then print('formatNetMessage Error: channel_id is nil' ) end 
-	self:formatshort(msg,content.channel_id)
+function NetProtocalPaser:formatrc_buy_log(msg, content) 
 	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
 	self:formatshort(msg,content.type)
-	if(content.body == nil) then print('formatNetMessage Error: body is nil' ) end 
-	self:formatstring(msg,content.body)
-	if(content.sender_player_id == nil) then print('formatNetMessage Error: sender_player_id is nil' ) end 
-	self:formatuint(msg,content.sender_player_id)
-	if(content.sender_player_role == nil) then print('formatNetMessage Error: sender_player_role is nil' ) end 
-	self:formatuint(msg,content.sender_player_role)
-	if(content.sender_player_name == nil) then print('formatNetMessage Error: sender_player_name is nil' ) end 
-	self:formatstring(msg,content.sender_player_name)
+	self:formatArray(msg,content.item,'rc_buy_times')
+end
+
+function NetProtocalPaser:formatflrfid(msg, content) 
+	if(content.floor == nil) then print('formatNetMessage Error: floor is nil' ) end 
+	self:formatshort(msg,content.floor)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+end
+
+function NetProtocalPaser:formatmaze_fight(msg, content) 
+	if(content.maze == nil) then print('formatNetMessage Error: maze is nil' ) end 
+	self:formatshort(msg,content.maze)
+	self:formatArray(msg,content.enemy,'flrfid')
+	if(content.floor == nil) then print('formatNetMessage Error: floor is nil' ) end 
+	self:formatshort(msg,content.floor)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.refush == nil) then print('formatNetMessage Error: refush is nil' ) end 
+	self:formatinteger(msg,content.refush)
+	if(content.step == nil) then print('formatNetMessage Error: step is nil' ) end 
+	self:formatshort(msg,content.step)
+	if(content.reset == nil) then print('formatNetMessage Error: reset is nil' ) end 
+	self:formatinteger(msg,content.reset)
+end
+
+function NetProtocalPaser:formatrc_magic_scroll(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
+end
+
+function NetProtocalPaser:formatdb_userinfo(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.frd_del_num == nil) then print('formatNetMessage Error: frd_del_num is nil' ) end 
+	self:formatshort(msg,content.frd_del_num)
+	if(content.frd_del_date == nil) then print('formatNetMessage Error: frd_del_date is nil' ) end 
+	self:formatinteger(msg,content.frd_del_date)
+	self:formatArray(msg,content.cards,'integer')
+	self:formatArray(msg,content.runes,'integer')
+	self:formatArray(msg,content.mazes,'maze_fight')
+	if(content.star5 == nil) then print('formatNetMessage Error: star5 is nil' ) end 
+	self:formatshort(msg,content.star5)
+	self:formatArray(msg,content.buy_log,'rc_buy_log')
+	if(content.buy_date == nil) then print('formatNetMessage Error: buy_date is nil' ) end 
+	self:formatinteger(msg,content.buy_date)
+	if(content.time_power_date == nil) then print('formatNetMessage Error: time_power_date is nil' ) end 
+	self:formatinteger(msg,content.time_power_date)
+	if(content.g_power_date == nil) then print('formatNetMessage Error: g_power_date is nil' ) end 
+	self:formatinteger(msg,content.g_power_date)
+	if(content.chp_times == nil) then print('formatNetMessage Error: chp_times is nil' ) end 
+	self:formatinteger(msg,content.chp_times)
+	if(content.chp_win == nil) then print('formatNetMessage Error: chp_win is nil' ) end 
+	self:formatinteger(msg,content.chp_win)
+	if(content.frd_times == nil) then print('formatNetMessage Error: frd_times is nil' ) end 
+	self:formatinteger(msg,content.frd_times)
+	if(content.frd_win == nil) then print('formatNetMessage Error: frd_win is nil' ) end 
+	self:formatinteger(msg,content.frd_win)
+	if(content.monster_add == nil) then print('formatNetMessage Error: monster_add is nil' ) end 
+	self:formatshort(msg,content.monster_add)
+	if(content.login_time == nil) then print('formatNetMessage Error: login_time is nil' ) end 
+	self:formatinteger(msg,content.login_time)
+	if(content.logout_time == nil) then print('formatNetMessage Error: logout_time is nil' ) end 
+	self:formatinteger(msg,content.logout_time)
 	if(content.create_at == nil) then print('formatNetMessage Error: create_at is nil' ) end 
-	self:formatuint(msg,content.create_at)
+	self:formatstring(msg,content.create_at)
+	self:formatArray(msg,content.magic_scroll,'rc_magic_scroll')
+	if(content.ban == nil) then print('formatNetMessage Error: ban is nil' ) end 
+	self:formatinteger(msg,content.ban)
+	if(content.mute == nil) then print('formatNetMessage Error: mute is nil' ) end 
+	self:formatinteger(msg,content.mute)
+	if(content.total_charge == nil) then print('formatNetMessage Error: total_charge is nil' ) end 
+	self:formatinteger(msg,content.total_charge)
+	if(content.lev_prize_date == nil) then print('formatNetMessage Error: lev_prize_date is nil' ) end 
+	self:formatinteger(msg,content.lev_prize_date)
+	if(content.change_name_num == nil) then print('formatNetMessage Error: change_name_num is nil' ) end 
+	self:formatshort(msg,content.change_name_num)
+	self:formatArray(msg,content.first_event,'short')
 end
 
-function NetProtocalPaser:formatsend_chat(msg, content) 
-	if(content.channel_id == nil) then print('formatNetMessage Error: channel_id is nil' ) end 
-	self:formatshort(msg,content.channel_id)
-	if(content.to_player_id == nil) then print('formatNetMessage Error: to_player_id is nil' ) end 
-	self:formatuint(msg,content.to_player_id)
-	if(content.message == nil) then print('formatNetMessage Error: message is nil' ) end 
-	self:formatstring(msg,content.message)
+function NetProtocalPaser:formatpt_account(msg, content) 
+	if(content.base == nil) then print('formatNetMessage Error: base is nil' ) end 
+	self:formatpt_ubase(msg,content.base)
+	if(content.device == nil) then print('formatNetMessage Error: device is nil' ) end 
+	self:formatdb_device(msg,content.device)
+	if(content.app_ver == nil) then print('formatNetMessage Error: app_ver is nil' ) end 
+	self:formatinteger(msg,content.app_ver)
 end
 
-function NetProtocalPaser:formatsend_hero_equip_synthesis(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-end
-
-function NetProtocalPaser:formatpt_pos(msg, content) 
-	if(content.x == nil) then print('formatNetMessage Error: x is nil' ) end 
-	self:formatfloat(msg,content.x)
-	if(content.y == nil) then print('formatNetMessage Error: y is nil' ) end 
-	self:formatfloat(msg,content.y)
-	if(content.z == nil) then print('formatNetMessage Error: z is nil' ) end 
-	self:formatfloat(msg,content.z)
-end
-
-function NetProtocalPaser:formatsend_mail(msg, content) 
-	self:formatArray(msg,content.list,'recv_mail')
-end
-
-function NetProtocalPaser:formatrecv_mail_count(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatushort(msg,content.count)
-end
-
-function NetProtocalPaser:formatrecv_friends_remain_count(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatushort(msg,content.count)
-end
-
-function NetProtocalPaser:formatsend_player_send_mail(msg, content) 
-	if(content.to_player_id == nil) then print('formatNetMessage Error: to_player_id is nil' ) end 
-	self:formatuint(msg,content.to_player_id)
-	if(content.mail_title == nil) then print('formatNetMessage Error: mail_title is nil' ) end 
-	self:formatstring(msg,content.mail_title)
-	if(content.mail_body == nil) then print('formatNetMessage Error: mail_body is nil' ) end 
-	self:formatstring(msg,content.mail_body)
-end
-
-function NetProtocalPaser:formatsend_player_hero_strengthen(msg, content) 
-	if(content.player_hero_idl == nil) then print('formatNetMessage Error: player_hero_idl is nil' ) end 
-	self:formatuint(msg,content.player_hero_idl)
-	if(content.player_hero_idr == nil) then print('formatNetMessage Error: player_hero_idr is nil' ) end 
-	self:formatuint(msg,content.player_hero_idr)
-end
-
-function NetProtocalPaser:formatrecv_player_hero_strengthen(msg, content) 
-	if(content.success == nil) then print('formatNetMessage Error: success is nil' ) end 
-	self:formatboolean(msg,content.success)
-end
-
-function NetProtocalPaser:formatsend_hero_hero_synthesis(msg, content) 
-	if(content.player_hero_idl == nil) then print('formatNetMessage Error: player_hero_idl is nil' ) end 
-	self:formatuint(msg,content.player_hero_idl)
-	if(content.player_hero_idr == nil) then print('formatNetMessage Error: player_hero_idr is nil' ) end 
-	self:formatuint(msg,content.player_hero_idr)
-end
-
-function NetProtocalPaser:formatsend_player_reward_data(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatushort(msg,content.a)
-end
-
-function NetProtocalPaser:formatrecv_reward_data(msg, content) 
-	if(content.player_week == nil) then print('formatNetMessage Error: player_week is nil' ) end 
-	self:formatushort(msg,content.player_week)
-	if(content.player_day == nil) then print('formatNetMessage Error: player_day is nil' ) end 
-	self:formatushort(msg,content.player_day)
-	if(content.reward_status == nil) then print('formatNetMessage Error: reward_status is nil' ) end 
-	self:formatboolean(msg,content.reward_status)
-end
-
-function NetProtocalPaser:formatsend_player_reward_login(msg, content) 
-	if(content.player_week == nil) then print('formatNetMessage Error: player_week is nil' ) end 
-	self:formatushort(msg,content.player_week)
-	if(content.player_day == nil) then print('formatNetMessage Error: player_day is nil' ) end 
-	self:formatushort(msg,content.player_day)
-end
-
-function NetProtocalPaser:formatsend_player_hero_stlas_list(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatushort(msg,content.a)
-end
-
-function NetProtocalPaser:formatrecv_hero_atlas(msg, content) 
-	if(content.system_hero_id == nil) then print('formatNetMessage Error: system_hero_id is nil' ) end 
-	self:formatuint(msg,content.system_hero_id)
-	if(content.player_hero_lv == nil) then print('formatNetMessage Error: player_hero_lv is nil' ) end 
-	self:formatuint(msg,content.player_hero_lv)
-end
-
-function NetProtocalPaser:formatrecv_hero_atlas_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_hero_atlas')
-end
-
-function NetProtocalPaser:formatsend_apply_friends_apply(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-end
-
-function NetProtocalPaser:formatrecv_friends_apply(msg, content) 
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.player_lv == nil) then print('formatNetMessage Error: player_lv is nil' ) end 
-	self:formatuint(msg,content.player_lv)
-	if(content.player_role_id == nil) then print('formatNetMessage Error: player_role_id is nil' ) end 
-	self:formatuint(msg,content.player_role_id)
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-end
-
-function NetProtocalPaser:formatrecv_friends_apply_list(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatushort(msg,content.count)
-	self:formatArray(msg,content.list,'recv_friends_apply')
-end
-
-function NetProtocalPaser:formatsend_request_friends_apply(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-	if(content.status == nil) then print('formatNetMessage Error: status is nil' ) end 
-	self:formatushort(msg,content.status)
-end
-
-function NetProtocalPaser:formatrecv_friends_request(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-	if(content.friends_player_name == nil) then print('formatNetMessage Error: friends_player_name is nil' ) end 
-	self:formatstring(msg,content.friends_player_name)
-	if(content.status == nil) then print('formatNetMessage Error: status is nil' ) end 
-	self:formatushort(msg,content.status)
-end
-
-function NetProtocalPaser:formatsend_friends_list(msg, content) 
-	if(content.page == nil) then print('formatNetMessage Error: page is nil' ) end 
-	self:formatushort(msg,content.page)
-	if(content.size == nil) then print('formatNetMessage Error: size is nil' ) end 
-	self:formatushort(msg,content.size)
-end
-
-function NetProtocalPaser:formatrecv_friends(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-	if(content.friends_player_lv == nil) then print('formatNetMessage Error: friends_player_lv is nil' ) end 
-	self:formatuint(msg,content.friends_player_lv)
-	if(content.friends_player_role_id == nil) then print('formatNetMessage Error: friends_player_role_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_role_id)
-	if(content.friends_player_name == nil) then print('formatNetMessage Error: friends_player_name is nil' ) end 
-	self:formatstring(msg,content.friends_player_name)
-	if(content.give_away_friendship == nil) then print('formatNetMessage Error: give_away_friendship is nil' ) end 
-	self:formatushort(msg,content.give_away_friendship)
-	if(content.cool_down == nil) then print('formatNetMessage Error: cool_down is nil' ) end 
-	self:formatuint(msg,content.cool_down)
-end
-
-function NetProtocalPaser:formatsend_reveive_friendship(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-end
-
-function NetProtocalPaser:formatsend_reveive_friendship_pick_up(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatuint(msg,content.a)
-end
-
-function NetProtocalPaser:formatsend_value_friendship(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-end
-
-function NetProtocalPaser:formatrecv_friends_list(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatushort(msg,content.count)
-	self:formatArray(msg,content.list,'recv_friends')
-end
-
-function NetProtocalPaser:formatsend_player_find_list(msg, content) 
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.find_type == nil) then print('formatNetMessage Error: find_type is nil' ) end 
-	self:formatushort(msg,content.find_type)
-	if(content.page == nil) then print('formatNetMessage Error: page is nil' ) end 
-	self:formatushort(msg,content.page)
-	if(content.size == nil) then print('formatNetMessage Error: size is nil' ) end 
-	self:formatushort(msg,content.size)
-end
-
-function NetProtocalPaser:formatsend_player_friends_delete(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
-end
-
-function NetProtocalPaser:formatrecv_find_player_list(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatuint(msg,content.count)
-	self:formatArray(msg,content.list,'recv_find_player')
-end
-
-function NetProtocalPaser:formatrecv_find_player(msg, content) 
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.player_lv == nil) then print('formatNetMessage Error: player_lv is nil' ) end 
-	self:formatuint(msg,content.player_lv)
-	if(content.player_role_id == nil) then print('formatNetMessage Error: player_role_id is nil' ) end 
-	self:formatuint(msg,content.player_role_id)
-end
-
-function NetProtocalPaser:formatrecv_player_quest_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_player_quest')
-end
-
-function NetProtocalPaser:formatrecv_player_quest(msg, content) 
+function NetProtocalPaser:formatdb_card(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
-	if(content.quest_id == nil) then print('formatNetMessage Error: quest_id is nil' ) end 
-	self:formatuint(msg,content.quest_id)
-	if(content.quest_status == nil) then print('formatNetMessage Error: quest_status is nil' ) end 
-	self:formatshort(msg,content.quest_status)
-	if(content.quest_progress == nil) then print('formatNetMessage Error: quest_progress is nil' ) end 
-	self:formatrecv_quest_progress(msg,content.quest_progress)
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.base_id == nil) then print('formatNetMessage Error: base_id is nil' ) end 
+	self:formatinteger(msg,content.base_id)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.experience == nil) then print('formatNetMessage Error: experience is nil' ) end 
+	self:formatinteger(msg,content.experience)
 end
 
-function NetProtocalPaser:formatrecv_quest_progress(msg, content) 
-	if(content.current == nil) then print('formatNetMessage Error: current is nil' ) end 
-	self:formatushort(msg,content.current)
-	if(content.total == nil) then print('formatNetMessage Error: total is nil' ) end 
-	self:formatushort(msg,content.total)
+function NetProtocalPaser:formatdb_cards(msg, content) 
+	self:formatArray(msg,content.cards,'db_card')
 end
 
-function NetProtocalPaser:formatsend_receive_quest_goods(msg, content) 
+function NetProtocalPaser:formatgrune(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
+	self:formatpkid(msg,content.id)
+	if(content.baseid == nil) then print('formatNetMessage Error: baseid is nil' ) end 
+	self:formatinteger(msg,content.baseid)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
 end
 
-function NetProtocalPaser:formatrecv_quest_goods(msg, content) 
-	if(content.item == nil) then print('formatNetMessage Error: item is nil' ) end 
-	self:formatrecv_paygoods(msg,content.item)
+function NetProtocalPaser:formatgcard(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.baseid == nil) then print('formatNetMessage Error: baseid is nil' ) end 
+	self:formatinteger(msg,content.baseid)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
 end
 
-function NetProtocalPaser:formatrecv_friends_remain_count(msg, content) 
-	if(content.count == nil) then print('formatNetMessage Error: count is nil' ) end 
-	self:formatuint(msg,content.count)
+function NetProtocalPaser:formatdb_group(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	self:formatArray(msg,content.runes,'grune')
+	self:formatArray(msg,content.cards,'gcard')
 end
 
-function NetProtocalPaser:formatsend_player_compound_goods_beast(msg, content) 
-	if(content.beast_id == nil) then print('formatNetMessage Error: beast_id is nil' ) end 
-	self:formatuint(msg,content.beast_id)
+function NetProtocalPaser:formatdb_groups(msg, content) 
+	self:formatArray(msg,content.groups,'db_group')
 end
 
-function NetProtocalPaser:formatsend_player_drama(msg, content) 
-	if(content.drama_id == nil) then print('formatNetMessage Error: drama_id is nil' ) end 
-	self:formatuint(msg,content.drama_id)
+function NetProtocalPaser:formatpt_group_ac(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.card == nil) then print('formatNetMessage Error: card is nil' ) end 
+	self:formatinteger(msg,content.card)
 end
 
-function NetProtocalPaser:formatsend_player_boot(msg, content) 
-	if(content.boot_id == nil) then print('formatNetMessage Error: boot_id is nil' ) end 
-	self:formatuint(msg,content.boot_id)
+function NetProtocalPaser:formatpt_group_dc(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.card == nil) then print('formatNetMessage Error: card is nil' ) end 
+	self:formatinteger(msg,content.card)
 end
 
-function NetProtocalPaser:formatrecv_friends_mail(msg, content) 
-	if(content.mail_id == nil) then print('formatNetMessage Error: mail_id is nil' ) end 
-	self:formatuint(msg,content.mail_id)
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.mail_title == nil) then print('formatNetMessage Error: mail_title is nil' ) end 
-	self:formatstring(msg,content.mail_title)
-	if(content.mail_body == nil) then print('formatNetMessage Error: mail_body is nil' ) end 
-	self:formatstring(msg,content.mail_body)
-	if(content.mail_create_at == nil) then print('formatNetMessage Error: mail_create_at is nil' ) end 
-	self:formatstring(msg,content.mail_create_at)
+function NetProtocalPaser:formatdb_rune(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.base_id == nil) then print('formatNetMessage Error: base_id is nil' ) end 
+	self:formatinteger(msg,content.base_id)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+	if(content.experience == nil) then print('formatNetMessage Error: experience is nil' ) end 
+	self:formatinteger(msg,content.experience)
 end
 
-function NetProtocalPaser:formatrecv_friends_mail_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_friends_mail')
+function NetProtocalPaser:formatdb_runes(msg, content) 
+	self:formatArray(msg,content.runes,'db_rune')
 end
 
-function NetProtocalPaser:formatplayer_activity_list(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatuint(msg,content.a)
+function NetProtocalPaser:formatpt_group_ar(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.rune == nil) then print('formatNetMessage Error: rune is nil' ) end 
+	self:formatinteger(msg,content.rune)
 end
 
-function NetProtocalPaser:formatrecv_activity_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_activity_one')
+function NetProtocalPaser:formatpt_group_dr(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.rune == nil) then print('formatNetMessage Error: rune is nil' ) end 
+	self:formatinteger(msg,content.rune)
 end
 
-function NetProtocalPaser:formatrecv_activity_one(msg, content) 
-	if(content.category == nil) then print('formatNetMessage Error: category is nil' ) end 
-	self:formatushort(msg,content.category)
-	if(content.activity_a == nil) then print('formatNetMessage Error: activity_a is nil' ) end 
-	self:formatuint(msg,content.activity_a)
-	if(content.activity_b == nil) then print('formatNetMessage Error: activity_b is nil' ) end 
-	self:formatuint(msg,content.activity_b)
-	if(content.activity_c == nil) then print('formatNetMessage Error: activity_c is nil' ) end 
-	self:formatuint(msg,content.activity_c)
+function NetProtocalPaser:formatdb_story(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.base_id == nil) then print('formatNetMessage Error: base_id is nil' ) end 
+	self:formatinteger(msg,content.base_id)
+	if(content.finish == nil) then print('formatNetMessage Error: finish is nil' ) end 
+	self:formatinteger(msg,content.finish)
 end
 
-function NetProtocalPaser:formatrecv_activity(msg, content) 
-	if(content.activity_id == nil) then print('formatNetMessage Error: activity_id is nil' ) end 
-	self:formatuint(msg,content.activity_id)
-	if(content.chapter_id == nil) then print('formatNetMessage Error: chapter_id is nil' ) end 
-	self:formatuint(msg,content.chapter_id)
+function NetProtocalPaser:formatdb_storys(msg, content) 
+	self:formatArray(msg,content.storys,'db_story')
 end
 
-function NetProtocalPaser:formatcondition_list(msg, content) 
-	if(content.key == nil) then print('formatNetMessage Error: key is nil' ) end 
-	self:formatstring(msg,content.key)
+function NetProtocalPaser:formatpk_fcard_base(msg, content) 
+	if(content.baseId == nil) then print('formatNetMessage Error: baseId is nil' ) end 
+	self:formatinteger(msg,content.baseId)
+	if(content.hp == nil) then print('formatNetMessage Error: hp is nil' ) end 
+	self:formatinteger(msg,content.hp)
+	if(content.ad == nil) then print('formatNetMessage Error: ad is nil' ) end 
+	self:formatinteger(msg,content.ad)
+	if(content.limit == nil) then print('formatNetMessage Error: limit is nil' ) end 
+	self:formatshort(msg,content.limit)
+	if(content.cost == nil) then print('formatNetMessage Error: cost is nil' ) end 
+	self:formatshort(msg,content.cost)
+end
+
+function NetProtocalPaser:formatpk_fcard_fight(msg, content) 
+	if(content.nowlevel == nil) then print('formatNetMessage Error: nowlevel is nil' ) end 
+	self:formatshort(msg,content.nowlevel)
+	if(content.nowhp == nil) then print('formatNetMessage Error: nowhp is nil' ) end 
+	self:formatinteger(msg,content.nowhp)
+	if(content.nowat == nil) then print('formatNetMessage Error: nowat is nil' ) end 
+	self:formatinteger(msg,content.nowat)
+	if(content.nowdef == nil) then print('formatNetMessage Error: nowdef is nil' ) end 
+	self:formatshort(msg,content.nowdef)
+	if(content.nowmis == nil) then print('formatNetMessage Error: nowmis is nil' ) end 
+	self:formatshort(msg,content.nowmis)
+end
+
+function NetProtocalPaser:formatpk_fcard_temp(msg, content) 
+	if(content.tmphp == nil) then print('formatNetMessage Error: tmphp is nil' ) end 
+	self:formatinteger(msg,content.tmphp)
+	if(content.tmpat == nil) then print('formatNetMessage Error: tmpat is nil' ) end 
+	self:formatinteger(msg,content.tmpat)
+	if(content.tmpap == nil) then print('formatNetMessage Error: tmpap is nil' ) end 
+	self:formatinteger(msg,content.tmpap)
+	if(content.tmpdef == nil) then print('formatNetMessage Error: tmpdef is nil' ) end 
+	self:formatshort(msg,content.tmpdef)
+	if(content.tmpres == nil) then print('formatNetMessage Error: tmpres is nil' ) end 
+	self:formatshort(msg,content.tmpres)
+	if(content.tmpmis == nil) then print('formatNetMessage Error: tmpmis is nil' ) end 
+	self:formatshort(msg,content.tmpmis)
+end
+
+function NetProtocalPaser:formatpk_buff(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.value == nil) then print('formatNetMessage Error: value is nil' ) end 
+	self:formatshort(msg,content.value)
+	if(content.number == nil) then print('formatNetMessage Error: number is nil' ) end 
+	self:formatshort(msg,content.number)
+end
+
+function NetProtocalPaser:formatpk_apply(msg, content) 
+	if(content.atk == nil) then print('formatNetMessage Error: atk is nil' ) end 
+	self:formatshort(msg,content.atk)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.def == nil) then print('formatNetMessage Error: def is nil' ) end 
+	self:formatshort(msg,content.def)
+	if(content.value == nil) then print('formatNetMessage Error: value is nil' ) end 
+	self:formatshort(msg,content.value)
+end
+
+function NetProtocalPaser:formatpk_fcard(msg, content) 
+	if(content.idx == nil) then print('formatNetMessage Error: idx is nil' ) end 
+	self:formatshort(msg,content.idx)
+	if(content.fcardbase == nil) then print('formatNetMessage Error: fcardbase is nil' ) end 
+	self:formatpk_fcard_base(msg,content.fcardbase)
+	if(content.fcardfight == nil) then print('formatNetMessage Error: fcardfight is nil' ) end 
+	self:formatpk_fcard_fight(msg,content.fcardfight)
+end
+
+function NetProtocalPaser:formatpk_frune(msg, content) 
+	if(content.idx == nil) then print('formatNetMessage Error: idx is nil' ) end 
+	self:formatshort(msg,content.idx)
+	if(content.baseid == nil) then print('formatNetMessage Error: baseid is nil' ) end 
+	self:formatinteger(msg,content.baseid)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.timer == nil) then print('formatNetMessage Error: timer is nil' ) end 
+	self:formatshort(msg,content.timer)
+end
+
+function NetProtocalPaser:formatpk_fight_group(msg, content) 
+	if(content.hero == nil) then print('formatNetMessage Error: hero is nil' ) end 
+	self:formatinteger(msg,content.hero)
+	self:formatArray(msg,content.rune,'pk_frune')
+	self:formatArray(msg,content.home,'pk_fcard')
+	self:formatArray(msg,content.waiting,'pk_fcard')
+	self:formatArray(msg,content.fighting,'pk_fcard')
+	self:formatArray(msg,content.dead,'pk_fcard')
+end
+
+function NetProtocalPaser:formatpk_area_log(msg, content) 
+	self:formatArray(msg,content.hom,'short')
+	self:formatArray(msg,content.wit,'short')
+	self:formatArray(msg,content.fig,'short')
+	self:formatArray(msg,content.dea,'short')
+end
+
+function NetProtocalPaser:formatpk_cres(msg, content) 
+	if(content.hp == nil) then print('formatNetMessage Error: hp is nil' ) end 
+	self:formatinteger(msg,content.hp)
+	if(content.at == nil) then print('formatNetMessage Error: at is nil' ) end 
+	self:formatinteger(msg,content.at)
+	if(content.def == nil) then print('formatNetMessage Error: def is nil' ) end 
+	self:formatshort(msg,content.def)
+	if(content.mis == nil) then print('formatNetMessage Error: mis is nil' ) end 
+	self:formatshort(msg,content.mis)
+end
+
+function NetProtocalPaser:formatpk_move(msg, content) 
+	if(content.idx == nil) then print('formatNetMessage Error: idx is nil' ) end 
+	self:formatinteger(msg,content.idx)
+	if(content.from == nil) then print('formatNetMessage Error: from is nil' ) end 
+	self:formatshort(msg,content.from)
+	if(content.to == nil) then print('formatNetMessage Error: to is nil' ) end 
+	self:formatshort(msg,content.to)
+	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
+	self:formatshort(msg,content.pos)
+end
+
+function NetProtocalPaser:formatpk_flog(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.times == nil) then print('formatNetMessage Error: times is nil' ) end 
+	self:formatshort(msg,content.times)
+	if(content.attacker == nil) then print('formatNetMessage Error: attacker is nil' ) end 
+	self:formatshort(msg,content.attacker)
+	if(content.defender == nil) then print('formatNetMessage Error: defender is nil' ) end 
+	self:formatshort(msg,content.defender)
+	if(content.skillid == nil) then print('formatNetMessage Error: skillid is nil' ) end 
+	self:formatinteger(msg,content.skillid)
+	if(content.target == nil) then print('formatNetMessage Error: target is nil' ) end 
+	self:formatshort(msg,content.target)
+	if(content.hero_damage == nil) then print('formatNetMessage Error: hero_damage is nil' ) end 
+	self:formatinteger(msg,content.hero_damage)
+	if(content.hero_check == nil) then print('formatNetMessage Error: hero_check is nil' ) end 
+	self:formatinteger(msg,content.hero_check)
+	if(content.cardfres == nil) then print('formatNetMessage Error: cardfres is nil' ) end 
+	self:formatpk_cres(msg,content.cardfres)
+	if(content.cardfdata == nil) then print('formatNetMessage Error: cardfdata is nil' ) end 
+	self:formatpk_cres(msg,content.cardfdata)
+	self:formatArray(msg,content.cardfstate,'short')
+	self:formatArray(msg,content.cardfbuff,'pk_buff')
+	self:formatArray(msg,content.atkdesc,'pk_apply')
+	self:formatArray(msg,content.defdesc,'pk_apply')
+	if(content.cardftemp == nil) then print('formatNetMessage Error: cardftemp is nil' ) end 
+	self:formatpk_cres(msg,content.cardftemp)
+	self:formatArray(msg,content.area,'pk_move')
+	if(content.attkerfdata == nil) then print('formatNetMessage Error: attkerfdata is nil' ) end 
+	self:formatpk_cres(msg,content.attkerfdata)
+end
+
+function NetProtocalPaser:formatpk_clog(msg, content) 
+	if(content.a_pos == nil) then print('formatNetMessage Error: a_pos is nil' ) end 
+	self:formatstring(msg,content.a_pos)
+	if(content.b_pos == nil) then print('formatNetMessage Error: b_pos is nil' ) end 
+	self:formatstring(msg,content.b_pos)
+end
+
+function NetProtocalPaser:formatpk_round(msg, content) 
+	if(content.opts == nil) then print('formatNetMessage Error: opts is nil' ) end 
+	self:formatshort(msg,content.opts)
+	if(content.content == nil) then print('formatNetMessage Error: content is nil' ) end 
+	self:formatstring(msg,content.content)
+end
+
+function NetProtocalPaser:formatpk_fight_log(msg, content) 
+	self:formatArray(msg,content.areaLogCho,'pk_move')
+	self:formatArray(msg,content.areaLogSen,'pk_move')
+	self:formatArray(msg,content.fistShowLog,'pk_flog')
+	self:formatArray(msg,content.areaLogSho,'pk_move')
+	self:formatArray(msg,content.runeLog,'pk_flog')
+	self:formatArray(msg,content.areaLogRun,'pk_move')
+	self:formatArray(msg,content.commonShowLog,'pk_flog')
+	self:formatArray(msg,content.areaLogCom,'pk_move')
+end
+
+function NetProtocalPaser:formatpk_record(msg, content) 
+	if(content.round == nil) then print('formatNetMessage Error: round is nil' ) end 
+	self:formatshort(msg,content.round)
+	if(content.isend == nil) then print('formatNetMessage Error: isend is nil' ) end 
+	self:formatshort(msg,content.isend)
+	if(content.fightlog == nil) then print('formatNetMessage Error: fightlog is nil' ) end 
+	self:formatpk_fight_log(msg,content.fightlog)
+end
+
+function NetProtocalPaser:formatpk_ready(msg, content) 
+	if(content.first == nil) then print('formatNetMessage Error: first is nil' ) end 
+	self:formatshort(msg,content.first)
+	if(content.attacker == nil) then print('formatNetMessage Error: attacker is nil' ) end 
+	self:formatpk_fight_group(msg,content.attacker)
+	if(content.defender == nil) then print('formatNetMessage Error: defender is nil' ) end 
+	self:formatpk_fight_group(msg,content.defender)
+end
+
+function NetProtocalPaser:formatpk_fight_data_result(msg, content) 
+	if(content.result == nil) then print('formatNetMessage Error: result is nil' ) end 
+	self:formatshort(msg,content.result)
+	if(content.totle == nil) then print('formatNetMessage Error: totle is nil' ) end 
+	self:formatshort(msg,content.totle)
+	if(content.ready == nil) then print('formatNetMessage Error: ready is nil' ) end 
+	self:formatpk_ready(msg,content.ready)
+	self:formatArray(msg,content.recordlist,'pk_record')
+end
+
+function NetProtocalPaser:formatdb_fightlog(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.log == nil) then print('formatNetMessage Error: log is nil' ) end 
+	self:formatpk_fight_data_result(msg,content.log)
+end
+
+function NetProtocalPaser:formatdb_storylog(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatinteger(msg,content.user_id)
+	if(content.fighter == nil) then print('formatNetMessage Error: fighter is nil' ) end 
+	self:formatpkid(msg,content.fighter)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+	if(content.log == nil) then print('formatNetMessage Error: log is nil' ) end 
+	self:formatpkid(msg,content.log)
+end
+
+function NetProtocalPaser:formatdb_pvplog(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.enemy == nil) then print('formatNetMessage Error: enemy is nil' ) end 
+	self:formatpkid(msg,content.enemy)
+	if(content.result == nil) then print('formatNetMessage Error: result is nil' ) end 
+	self:formatshort(msg,content.result)
+	if(content.value == nil) then print('formatNetMessage Error: value is nil' ) end 
+	self:formatshort(msg,content.value)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+	if(content.log == nil) then print('formatNetMessage Error: log is nil' ) end 
+	self:formatpkid(msg,content.log)
+end
+
+function NetProtocalPaser:formatpt_pvelog(msg, content) 
+	if(content.logid == nil) then print('formatNetMessage Error: logid is nil' ) end 
+	self:formatpkid(msg,content.logid)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatinteger(msg,content.lev)
+end
+
+function NetProtocalPaser:formatpt_pvelog_list(msg, content) 
+	if(content.story == nil) then print('formatNetMessage Error: story is nil' ) end 
+	self:formatinteger(msg,content.story)
+	self:formatArray(msg,content.log,'pt_pvelog')
+end
+
+function NetProtocalPaser:formatpt_pvplog(msg, content) 
+	if(content.logid == nil) then print('formatNetMessage Error: logid is nil' ) end 
+	self:formatpkid(msg,content.logid)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.enemy == nil) then print('formatNetMessage Error: enemy is nil' ) end 
+	self:formatpkid(msg,content.enemy)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatinteger(msg,content.lev)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+	if(content.len_id == nil) then print('formatNetMessage Error: len_id is nil' ) end 
+	self:formatpkid(msg,content.len_id)
+	if(content.len_flag == nil) then print('formatNetMessage Error: len_flag is nil' ) end 
+	self:formatshort(msg,content.len_flag)
+	if(content.len_name == nil) then print('formatNetMessage Error: len_name is nil' ) end 
+	self:formatstring(msg,content.len_name)
+	if(content.result == nil) then print('formatNetMessage Error: result is nil' ) end 
+	self:formatshort(msg,content.result)
+	if(content.value == nil) then print('formatNetMessage Error: value is nil' ) end 
+	self:formatshort(msg,content.value)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+end
+
+function NetProtocalPaser:formatpt_pvplog_list(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+	self:formatArray(msg,content.log,'pt_pvplog')
+end
+
+function NetProtocalPaser:formatpt_chat2server(msg, content) 
+	if(content.channel == nil) then print('formatNetMessage Error: channel is nil' ) end 
+	self:formatinteger(msg,content.channel)
+	if(content.receiveid == nil) then print('formatNetMessage Error: receiveid is nil' ) end 
+	self:formatpkid(msg,content.receiveid)
+	if(content.content == nil) then print('formatNetMessage Error: content is nil' ) end 
+	self:formatstring(msg,content.content)
+end
+
+function NetProtocalPaser:formatpt_chat2player(msg, content) 
+	if(content.channel == nil) then print('formatNetMessage Error: channel is nil' ) end 
+	self:formatinteger(msg,content.channel)
+	if(content.sendid == nil) then print('formatNetMessage Error: sendid is nil' ) end 
+	self:formatpkid(msg,content.sendid)
+	if(content.sendname == nil) then print('formatNetMessage Error: sendname is nil' ) end 
+	self:formatstring(msg,content.sendname)
+	if(content.sendlevel == nil) then print('formatNetMessage Error: sendlevel is nil' ) end 
+	self:formatinteger(msg,content.sendlevel)
+	if(content.sendicon == nil) then print('formatNetMessage Error: sendicon is nil' ) end 
+	self:formatstring(msg,content.sendicon)
+	if(content.sendlen_id == nil) then print('formatNetMessage Error: sendlen_id is nil' ) end 
+	self:formatpkid(msg,content.sendlen_id)
+	if(content.sendlen_flag == nil) then print('formatNetMessage Error: sendlen_flag is nil' ) end 
+	self:formatshort(msg,content.sendlen_flag)
+	if(content.sendlen_pos == nil) then print('formatNetMessage Error: sendlen_pos is nil' ) end 
+	self:formatshort(msg,content.sendlen_pos)
+	if(content.receiveid == nil) then print('formatNetMessage Error: receiveid is nil' ) end 
+	self:formatpkid(msg,content.receiveid)
+	if(content.receivename == nil) then print('formatNetMessage Error: receivename is nil' ) end 
+	self:formatstring(msg,content.receivename)
+	if(content.content == nil) then print('formatNetMessage Error: content is nil' ) end 
+	self:formatstring(msg,content.content)
+end
+
+function NetProtocalPaser:formatpt_crdlist(msg, content) 
+	self:formatArray(msg,content.crdlist,'integer')
+end
+
+function NetProtocalPaser:formatdb_friend(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.frd_id == nil) then print('formatNetMessage Error: frd_id is nil' ) end 
+	self:formatpkid(msg,content.frd_id)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+end
+
+function NetProtocalPaser:formatdb_friends(msg, content) 
+	self:formatArray(msg,content.friends,'db_friend')
+end
+
+function NetProtocalPaser:formatdb_powergift(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.other_id == nil) then print('formatNetMessage Error: other_id is nil' ) end 
+	self:formatpkid(msg,content.other_id)
+	if(content.self_flag == nil) then print('formatNetMessage Error: self_flag is nil' ) end 
+	self:formatshort(msg,content.self_flag)
+	if(content.self_date == nil) then print('formatNetMessage Error: self_date is nil' ) end 
+	self:formatinteger(msg,content.self_date)
+	if(content.other_flag == nil) then print('formatNetMessage Error: other_flag is nil' ) end 
+	self:formatshort(msg,content.other_flag)
+	if(content.other_date == nil) then print('formatNetMessage Error: other_date is nil' ) end 
+	self:formatinteger(msg,content.other_date)
+end
+
+function NetProtocalPaser:formatdb_powergifts(msg, content) 
+	self:formatArray(msg,content.gifts,'db_powergift')
+end
+
+function NetProtocalPaser:formatpt_frd_info(msg, content) 
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.sex == nil) then print('formatNetMessage Error: sex is nil' ) end 
+	self:formatshort(msg,content.sex)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+end
+
+function NetProtocalPaser:formatpt_frd_list(msg, content) 
+	self:formatArray(msg,content.frd_list,'pt_frd_info')
+end
+
+function NetProtocalPaser:formatpt_frd_init(msg, content) 
+	self:formatArray(msg,content.frd_list,'pt_frd_info')
+end
+
+function NetProtocalPaser:formatpt_frd_agree(msg, content) 
+	if(content.friend_id == nil) then print('formatNetMessage Error: friend_id is nil' ) end 
+	self:formatpkid(msg,content.friend_id)
+	if(content.agree == nil) then print('formatNetMessage Error: agree is nil' ) end 
+	self:formatboolean(msg,content.agree)
+end
+
+function NetProtocalPaser:formatpt_enemy(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.sex == nil) then print('formatNetMessage Error: sex is nil' ) end 
+	self:formatshort(msg,content.sex)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.win == nil) then print('formatNetMessage Error: win is nil' ) end 
+	self:formatinteger(msg,content.win)
+	if(content.lose == nil) then print('formatNetMessage Error: lose is nil' ) end 
+	self:formatinteger(msg,content.lose)
+	if(content.getpic == nil) then print('formatNetMessage Error: getpic is nil' ) end 
+	self:formatshort(msg,content.getpic)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+end
+
+function NetProtocalPaser:formatpt_all_enemy(msg, content) 
+	self:formatArray(msg,content.enemy,'pt_enemy')
+end
+
+function NetProtocalPaser:formatdb_grade(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.cfg_id == nil) then print('formatNetMessage Error: cfg_id is nil' ) end 
+	self:formatinteger(msg,content.cfg_id)
+	if(content.finish_date == nil) then print('formatNetMessage Error: finish_date is nil' ) end 
+	self:formatinteger(msg,content.finish_date)
+	if(content.finish == nil) then print('formatNetMessage Error: finish is nil' ) end 
+	self:formatshort(msg,content.finish)
+	if(content.gain == nil) then print('formatNetMessage Error: gain is nil' ) end 
+	self:formatshort(msg,content.gain)
+end
+
+function NetProtocalPaser:formatdb_gradeevent(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.event == nil) then print('formatNetMessage Error: event is nil' ) end 
+	self:formatstring(msg,content.event)
 	if(content.condition == nil) then print('formatNetMessage Error: condition is nil' ) end 
 	self:formatstring(msg,content.condition)
 end
 
-function NetProtocalPaser:formatrecv_player_arena_rank_near(msg, content) 
-	if(content.current_rank == nil) then print('formatNetMessage Error: current_rank is nil' ) end 
-	self:formatushort(msg,content.current_rank)
-	if(content.player_prestige == nil) then print('formatNetMessage Error: player_prestige is nil' ) end 
-	self:formatuint(msg,content.player_prestige)
-	if(content.remaining_number == nil) then print('formatNetMessage Error: remaining_number is nil' ) end 
-	self:formatushort(msg,content.remaining_number)
-	if(content.max_limit == nil) then print('formatNetMessage Error: max_limit is nil' ) end 
-	self:formatushort(msg,content.max_limit)
-	self:formatArray(msg,content.list,'recv_player_arena_rank')
+function NetProtocalPaser:formatpt_grade_test(msg, content) 
+	if(content.event == nil) then print('formatNetMessage Error: event is nil' ) end 
+	self:formatstring(msg,content.event)
+	if(content.condition == nil) then print('formatNetMessage Error: condition is nil' ) end 
+	self:formatstring(msg,content.condition)
 end
 
-function NetProtocalPaser:formatrecv_player_arena_rank(msg, content) 
-	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
-	self:formatuint(msg,content.player_id)
-	if(content.player_lv == nil) then print('formatNetMessage Error: player_lv is nil' ) end 
-	self:formatushort(msg,content.player_lv)
-	if(content.player_name == nil) then print('formatNetMessage Error: player_name is nil' ) end 
-	self:formatstring(msg,content.player_name)
-	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
-	self:formatushort(msg,content.rank)
-	self:formatArray(msg,content.team,'recv_player_hero')
-	if(content.rank_reward == nil) then print('formatNetMessage Error: rank_reward is nil' ) end 
-	self:formatrecv_paygoods(msg,content.rank_reward)
-	if(content.recv_reward_time == nil) then print('formatNetMessage Error: recv_reward_time is nil' ) end 
-	self:formatinteger(msg,content.recv_reward_time)
+function NetProtocalPaser:formatpt_grade_info(msg, content) 
+	if(content.cfg_id == nil) then print('formatNetMessage Error: cfg_id is nil' ) end 
+	self:formatinteger(msg,content.cfg_id)
+	if(content.finish == nil) then print('formatNetMessage Error: finish is nil' ) end 
+	self:formatshort(msg,content.finish)
+	if(content.gain == nil) then print('formatNetMessage Error: gain is nil' ) end 
+	self:formatshort(msg,content.gain)
+	if(content.event == nil) then print('formatNetMessage Error: event is nil' ) end 
+	self:formatstring(msg,content.event)
 end
 
-function NetProtocalPaser:formatrecv_player_beast_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_player_beast')
+function NetProtocalPaser:formatpt_grade_info_list(msg, content) 
+	self:formatArray(msg,content.info,'pt_grade_info')
 end
 
-function NetProtocalPaser:formatsynthesis_goods_list(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
-end
-
-function NetProtocalPaser:formatrecv_player_beast(msg, content) 
-	if(content.beast_id == nil) then print('formatNetMessage Error: beast_id is nil' ) end 
-	self:formatuint(msg,content.beast_id)
-	self:formatArray(msg,content.synthesis_goods,'synthesis_goods_list')
-	if(content.activate_status == nil) then print('formatNetMessage Error: activate_status is nil' ) end 
-	self:formatushort(msg,content.activate_status)
-	if(content.cool_down == nil) then print('formatNetMessage Error: cool_down is nil' ) end 
-	self:formatuint(msg,content.cool_down)
-	if(content.played == nil) then print('formatNetMessage Error: played is nil' ) end 
-	self:formatushort(msg,content.played)
-end
-
-function NetProtocalPaser:formatrecv_player_exchanges(msg, content) 
-	if(content.refresh_time == nil) then print('formatNetMessage Error: refresh_time is nil' ) end 
-	self:formatstring(msg,content.refresh_time)
-	if(content.player_prestige == nil) then print('formatNetMessage Error: player_prestige is nil' ) end 
-	self:formatuint(msg,content.player_prestige)
-	self:formatArray(msg,content.goods,'recv_exchange_goods')
-	if(content.refresh_price == nil) then print('formatNetMessage Error: refresh_price is nil' ) end 
-	self:formatrecv_goods_price(msg,content.refresh_price)
-	if(content.refresh_current_num == nil) then print('formatNetMessage Error: refresh_current_num is nil' ) end 
-	self:formatushort(msg,content.refresh_current_num)
-	if(content.refresh_limit_num == nil) then print('formatNetMessage Error: refresh_limit_num is nil' ) end 
-	self:formatushort(msg,content.refresh_limit_num)
-end
-
-function NetProtocalPaser:formatrecv_exchange_goods(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
-	if(content.exchange_num == nil) then print('formatNetMessage Error: exchange_num is nil' ) end 
-	self:formatushort(msg,content.exchange_num)
-	if(content.prestige == nil) then print('formatNetMessage Error: prestige is nil' ) end 
-	self:formatuint(msg,content.prestige)
-end
-
-function NetProtocalPaser:formatsend_exchange_goods(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-end
-
-function NetProtocalPaser:formatrecv_player_arena_battle_report_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_player_arena_battle_report')
-end
-
-function NetProtocalPaser:formatrecv_player_arena_battle_report(msg, content) 
-	if(content.battle_type == nil) then print('formatNetMessage Error: battle_type is nil' ) end 
-	self:formatshort(msg,content.battle_type)
-	if(content.battle_player_id == nil) then print('formatNetMessage Error: battle_player_id is nil' ) end 
-	self:formatuint(msg,content.battle_player_id)
-	if(content.battle_player_name == nil) then print('formatNetMessage Error: battle_player_name is nil' ) end 
-	self:formatstring(msg,content.battle_player_name)
-	if(content.is_victory == nil) then print('formatNetMessage Error: is_victory is nil' ) end 
-	self:formatboolean(msg,content.is_victory)
-	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
-	self:formatushort(msg,content.rank)
-	if(content.battle_datetime == nil) then print('formatNetMessage Error: battle_datetime is nil' ) end 
-	self:formatstring(msg,content.battle_datetime)
-end
-
-function NetProtocalPaser:formatsned_player_activity_verify(msg, content) 
-	if(content.activity_id == nil) then print('formatNetMessage Error: activity_id is nil' ) end 
-	self:formatuint(msg,content.activity_id)
-	if(content.category == nil) then print('formatNetMessage Error: category is nil' ) end 
-	self:formatuint(msg,content.category)
-end
-
-function NetProtocalPaser:formatrecv_player_activity_verify(msg, content) 
-	if(content.activity_id == nil) then print('formatNetMessage Error: activity_id is nil' ) end 
-	self:formatuint(msg,content.activity_id)
-	if(content.status == nil) then print('formatNetMessage Error: status is nil' ) end 
-	self:formatushort(msg,content.status)
-end
-
-function NetProtocalPaser:formatsend_player_challenge_arena(msg, content) 
-	if(content.enemy_player_id == nil) then print('formatNetMessage Error: enemy_player_id is nil' ) end 
-	self:formatuint(msg,content.enemy_player_id)
-end
-
-function NetProtocalPaser:formatsend_player_besat_played(msg, content) 
-	if(content.beast_id == nil) then print('formatNetMessage Error: beast_id is nil' ) end 
-	self:formatuint(msg,content.beast_id)
-end
-
-function NetProtocalPaser:formatsend_player_hero_skill_up(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
-	if(content.skill_id == nil) then print('formatNetMessage Error: skill_id is nil' ) end 
-	self:formatuint(msg,content.skill_id)
-end
-
-function NetProtocalPaser:formatsend_player_skill_release_up(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatushort(msg,content.a)
-end
-
-function NetProtocalPaser:formatrecv_player_hero_skill_time(msg, content) 
-	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
-	self:formatuint(msg,content.time)
-end
-
-function NetProtocalPaser:formatrecv_system_conf_data(msg, content) 
-	self:formatArray(msg,content.list,'system_conf_data')
-end
-
-function NetProtocalPaser:formatsystem_conf_data(msg, content) 
-	if(content.key == nil) then print('formatNetMessage Error: key is nil' ) end 
-	self:formatstring(msg,content.key)
-	if(content.val == nil) then print('formatNetMessage Error: val is nil' ) end 
-	self:formatstring(msg,content.val)
-end
-
-function NetProtocalPaser:formatrecv_shop_goods_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_shop_goods')
-end
-
-function NetProtocalPaser:formatrecv_shop_goods(msg, content) 
+function NetProtocalPaser:formatpt_card_enhance(msg, content) 
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
-	if(content.shop_no == nil) then print('formatNetMessage Error: shop_no is nil' ) end 
-	self:formatshort(msg,content.shop_no)
-	if(content.shop_sort == nil) then print('formatNetMessage Error: shop_sort is nil' ) end 
-	self:formatushort(msg,content.shop_sort)
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
-	if(content.buy_limit == nil) then print('formatNetMessage Error: buy_limit is nil' ) end 
-	self:formatshort(msg,content.buy_limit)
-	if(content.goods_price == nil) then print('formatNetMessage Error: goods_price is nil' ) end 
-	self:formatrecv_goods_price(msg,content.goods_price)
-	if(content.goods_free_time == nil) then print('formatNetMessage Error: goods_free_time is nil' ) end 
-	self:formatinteger(msg,content.goods_free_time)
-	if(content.goods_give == nil) then print('formatNetMessage Error: goods_give is nil' ) end 
-	self:formatuint(msg,content.goods_give)
-	if(content.shop_artno == nil) then print('formatNetMessage Error: shop_artno is nil' ) end 
-	self:formatstring(msg,content.shop_artno)
+	self:formatpkid(msg,content.id)
+	self:formatArray(msg,content.food,'integer')
 end
 
-function NetProtocalPaser:formatrecv_goods_price(msg, content) 
+function NetProtocalPaser:formatpt_rune_enhance(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	self:formatArray(msg,content.food,'integer')
+end
+
+function NetProtocalPaser:formatrc_chest(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatinteger(msg,content.num)
+end
+
+function NetProtocalPaser:formatdb_chest(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.source == nil) then print('formatNetMessage Error: source is nil' ) end 
+	self:formatshort(msg,content.source)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+	self:formatArray(msg,content.reward,'rc_chest')
+end
+
+function NetProtocalPaser:formatdb_chests(msg, content) 
+	self:formatArray(msg,content.chests,'db_chest')
+end
+
+function NetProtocalPaser:formatpt_prize_test(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatinteger(msg,content.num)
+end
+
+function NetProtocalPaser:formatrc_temple_site(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+end
+
+function NetProtocalPaser:formatrc_temple_fragment(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatinteger(msg,content.num)
+end
+
+function NetProtocalPaser:formatdb_temple(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.grade == nil) then print('formatNetMessage Error: grade is nil' ) end 
+	self:formatshort(msg,content.grade)
+	self:formatArray(msg,content.fragment_amount,'rc_temple_fragment')
+	self:formatArray(msg,content.site_goodtype,'rc_temple_site')
+end
+
+function NetProtocalPaser:formatpt_temple_datas(msg, content) 
+	if(content.grade == nil) then print('formatNetMessage Error: grade is nil' ) end 
+	self:formatinteger(msg,content.grade)
+	self:formatArray(msg,content.fragments,'rc_temple_fragment')
+	self:formatArray(msg,content.sites,'rc_temple_site')
+end
+
+function NetProtocalPaser:formatpt_mapinfo(msg, content) 
+	if(content.mapid == nil) then print('formatNetMessage Error: mapid is nil' ) end 
+	self:formatinteger(msg,content.mapid)
+	self:formatArray(msg,content.storyid,'integer')
+	self:formatArray(msg,content.invade,'integer')
+end
+
+function NetProtocalPaser:formatpt_nadainfo(msg, content) 
+	self:formatArray(msg,content.nadaid,'integer')
+end
+
+function NetProtocalPaser:formatdb_legion(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.remark == nil) then print('formatNetMessage Error: remark is nil' ) end 
+	self:formatstring(msg,content.remark)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+	if(content.lock == nil) then print('formatNetMessage Error: lock is nil' ) end 
+	self:formatshort(msg,content.lock)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatshort(msg,content.lev)
+	if(content.exp == nil) then print('formatNetMessage Error: exp is nil' ) end 
+	self:formatinteger(msg,content.exp)
+	if(content.guard == nil) then print('formatNetMessage Error: guard is nil' ) end 
+	self:formatpkid(msg,content.guard)
+	if(content.del_num == nil) then print('formatNetMessage Error: del_num is nil' ) end 
+	self:formatshort(msg,content.del_num)
+	if(content.del_time == nil) then print('formatNetMessage Error: del_time is nil' ) end 
+	self:formatinteger(msg,content.del_time)
+end
+
+function NetProtocalPaser:formatdb_lenmeb(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
+	self:formatpkid(msg,content.player_id)
+	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
+	self:formatshort(msg,content.pos)
+	if(content.devote == nil) then print('formatNetMessage Error: devote is nil' ) end 
+	self:formatinteger(msg,content.devote)
+	if(content.join_time == nil) then print('formatNetMessage Error: join_time is nil' ) end 
+	self:formatinteger(msg,content.join_time)
+	if(content.doe_money == nil) then print('formatNetMessage Error: doe_money is nil' ) end 
+	self:formatinteger(msg,content.doe_money)
+	if(content.doe_gold == nil) then print('formatNetMessage Error: doe_gold is nil' ) end 
+	self:formatinteger(msg,content.doe_gold)
+	if(content.doe_date == nil) then print('formatNetMessage Error: doe_date is nil' ) end 
+	self:formatinteger(msg,content.doe_date)
+end
+
+function NetProtocalPaser:formatdb_lenapply(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.player_id == nil) then print('formatNetMessage Error: player_id is nil' ) end 
+	self:formatpkid(msg,content.player_id)
+	if(content.apply == nil) then print('formatNetMessage Error: apply is nil' ) end 
+	self:formatshort(msg,content.apply)
+	if(content.invite == nil) then print('formatNetMessage Error: invite is nil' ) end 
+	self:formatshort(msg,content.invite)
+end
+
+function NetProtocalPaser:formatpt_len_info(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.remark == nil) then print('formatNetMessage Error: remark is nil' ) end 
+	self:formatstring(msg,content.remark)
+	if(content.exp == nil) then print('formatNetMessage Error: exp is nil' ) end 
+	self:formatinteger(msg,content.exp)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatshort(msg,content.lev)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+	if(content.lock == nil) then print('formatNetMessage Error: lock is nil' ) end 
+	self:formatshort(msg,content.lock)
+	if(content.meb == nil) then print('formatNetMessage Error: meb is nil' ) end 
+	self:formatshort(msg,content.meb)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+end
+
+function NetProtocalPaser:formatpt_len_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_len_info')
+end
+
+function NetProtocalPaser:formatpt_lenmeb_info(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatinteger(msg,content.lev)
+	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
+	self:formatshort(msg,content.pos)
+	if(content.devote == nil) then print('formatNetMessage Error: devote is nil' ) end 
+	self:formatinteger(msg,content.devote)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+end
+
+function NetProtocalPaser:formatpt_lenmeb_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_lenmeb_info')
+end
+
+function NetProtocalPaser:formatpt_len_all_info(msg, content) 
+	if(content.legion == nil) then print('formatNetMessage Error: legion is nil' ) end 
+	self:formatpt_len_info(msg,content.legion)
+	self:formatArray(msg,content.meb,'pt_lenmeb_info')
+end
+
+function NetProtocalPaser:formatpt_len_create(msg, content) 
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+end
+
+function NetProtocalPaser:formatpt_len_apply(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatinteger(msg,content.lev)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+end
+
+function NetProtocalPaser:formatpt_len_apply_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_len_apply')
+end
+
+function NetProtocalPaser:formatpt_len_apply_opr(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.agree == nil) then print('formatNetMessage Error: agree is nil' ) end 
+	self:formatboolean(msg,content.agree)
+end
+
+function NetProtocalPaser:formatpt_len_devote(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatinteger(msg,content.num)
+end
+
+function NetProtocalPaser:formatpt_create_legion(msg, content) 
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.remark == nil) then print('formatNetMessage Error: remark is nil' ) end 
+	self:formatstring(msg,content.remark)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+	if(content.lock == nil) then print('formatNetMessage Error: lock is nil' ) end 
+	self:formatshort(msg,content.lock)
+end
+
+function NetProtocalPaser:formatpt_legion_self(msg, content) 
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
+	self:formatshort(msg,content.pos)
+end
+
+function NetProtocalPaser:formatpt_groupupd_rune(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	self:formatArray(msg,content.runelist,'integer')
+end
+
+function NetProtocalPaser:formatpt_groupupd_card(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	self:formatArray(msg,content.cardlist,'integer')
+end
+
+function NetProtocalPaser:formatpt_prize_get(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.prize == nil) then print('formatNetMessage Error: prize is nil' ) end 
+	self:formatstring(msg,content.prize)
+end
+
+function NetProtocalPaser:formatpt_player_report(msg, content) 
 	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
 	self:formatstring(msg,content.type)
-	if(content.price == nil) then print('formatNetMessage Error: price is nil' ) end 
-	self:formatuint(msg,content.price)
+	if(content.desc == nil) then print('formatNetMessage Error: desc is nil' ) end 
+	self:formatstring(msg,content.desc)
 end
 
-function NetProtocalPaser:formatsend_buy_goods(msg, content) 
+function NetProtocalPaser:formatpt_rune_once(msg, content) 
+	if(content.runes == nil) then print('formatNetMessage Error: runes is nil' ) end 
+	self:formatstring(msg,content.runes)
+end
+
+function NetProtocalPaser:formatpt_maze(msg, content) 
+	if(content.maze == nil) then print('formatNetMessage Error: maze is nil' ) end 
+	self:formatinteger(msg,content.maze)
+	self:formatArray(msg,content.enemy,'flrfid')
+	if(content.floor == nil) then print('formatNetMessage Error: floor is nil' ) end 
+	self:formatshort(msg,content.floor)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
 	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
-	self:formatuint(msg,content.id)
-	if(content.goods_num == nil) then print('formatNetMessage Error: goods_num is nil' ) end 
-	self:formatushort(msg,content.goods_num)
+	self:formatinteger(msg,content.id)
+	if(content.refush == nil) then print('formatNetMessage Error: refush is nil' ) end 
+	self:formatinteger(msg,content.refush)
+	if(content.step == nil) then print('formatNetMessage Error: step is nil' ) end 
+	self:formatshort(msg,content.step)
+	if(content.reset == nil) then print('formatNetMessage Error: reset is nil' ) end 
+	self:formatinteger(msg,content.reset)
 end
 
-function NetProtocalPaser:formatrecv_buy_goods_data(msg, content) 
-	if(content.shop_no == nil) then print('formatNetMessage Error: shop_no is nil' ) end 
-	self:formatshort(msg,content.shop_no)
-	if(content.items == nil) then print('formatNetMessage Error: items is nil' ) end 
-	self:formatrecv_buy_goods(msg,content.items)
+function NetProtocalPaser:formatpt_maze_all(msg, content) 
+	self:formatArray(msg,content.maze,'pt_maze')
 end
 
-function NetProtocalPaser:formatrecv_buy_goods(msg, content) 
-	self:formatArray(msg,content.goods,'recv_goods')
-	self:formatArray(msg,content.hero,'recv_hero')
-	self:formatArray(msg,content.other,'recv_goods_price')
-end
-
-function NetProtocalPaser:formatrecv_activity_residue_list(msg, content) 
-	self:formatArray(msg,content.list,'recv_activity_residue')
-end
-
-function NetProtocalPaser:formatrecv_activity_residue(msg, content) 
-	if(content.category == nil) then print('formatNetMessage Error: category is nil' ) end 
-	self:formatuint(msg,content.category)
+function NetProtocalPaser:formatpt_market_item(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.cost == nil) then print('formatNetMessage Error: cost is nil' ) end 
+	self:formatinteger(msg,content.cost)
 	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
-	self:formatuint(msg,content.num)
+	self:formatinteger(msg,content.num)
 end
 
-function NetProtocalPaser:formatvit_release_up(msg, content) 
-	if(content.a == nil) then print('formatNetMessage Error: a is nil' ) end 
-	self:formatushort(msg,content.a)
+function NetProtocalPaser:formatpt_market(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	self:formatArray(msg,content.item,'pt_market_item')
 end
 
-function NetProtocalPaser:formatrecv_vit_release_up(msg, content) 
+function NetProtocalPaser:formatpt_market_buy(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatboolean(msg,content.flag)
+end
+
+function NetProtocalPaser:formatpt_market_card(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	self:formatArray(msg,content.item,'pt_market_item')
+	self:formatArray(msg,content.cards,'pkid')
+end
+
+function NetProtocalPaser:formatpt_market_gold(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	self:formatArray(msg,content.item,'pt_market_item')
+	if(content.gold == nil) then print('formatNetMessage Error: gold is nil' ) end 
+	self:formatinteger(msg,content.gold)
+end
+
+function NetProtocalPaser:formatpt_market_power(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	self:formatArray(msg,content.item,'pt_market_item')
+	if(content.power == nil) then print('formatNetMessage Error: power is nil' ) end 
+	self:formatinteger(msg,content.power)
+end
+
+function NetProtocalPaser:formatpt_ranks_get(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatinteger(msg,content.type)
+end
+
+function NetProtocalPaser:formatpt_ranks_info(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatinteger(msg,content.lev)
+	if(content.value == nil) then print('formatNetMessage Error: value is nil' ) end 
+	self:formatinteger(msg,content.value)
+end
+
+function NetProtocalPaser:formatpt_ranks_list(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatinteger(msg,content.id)
+	if(content.self == nil) then print('formatNetMessage Error: self is nil' ) end 
+	self:formatpt_ranks_info(msg,content.self)
+	self:formatArray(msg,content.info,'pt_ranks_info')
+end
+
+function NetProtocalPaser:formatpt_story_hide(msg, content) 
+	if(content.info == nil) then print('formatNetMessage Error: info is nil' ) end 
+	self:formatstring(msg,content.info)
+end
+
+function NetProtocalPaser:formatpt_gmcmd(msg, content) 
+	if(content.cmd == nil) then print('formatNetMessage Error: cmd is nil' ) end 
+	self:formatstring(msg,content.cmd)
+end
+
+function NetProtocalPaser:formatdb_mapreward(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.map_id == nil) then print('formatNetMessage Error: map_id is nil' ) end 
+	self:formatinteger(msg,content.map_id)
+	self:formatArray(msg,content.invade,'integer')
+	if(content.invade_time == nil) then print('formatNetMessage Error: invade_time is nil' ) end 
+	self:formatinteger(msg,content.invade_time)
+	if(content.gain_time == nil) then print('formatNetMessage Error: gain_time is nil' ) end 
+	self:formatinteger(msg,content.gain_time)
+	if(content.gain_num == nil) then print('formatNetMessage Error: gain_num is nil' ) end 
+	self:formatshort(msg,content.gain_num)
+end
+
+function NetProtocalPaser:formatpt_map_gain(msg, content) 
+	if(content.map == nil) then print('formatNetMessage Error: map is nil' ) end 
+	self:formatinteger(msg,content.map)
+	if(content.money == nil) then print('formatNetMessage Error: money is nil' ) end 
+	self:formatinteger(msg,content.money)
+end
+
+function NetProtocalPaser:formatpt_map_info(msg, content) 
+	if(content.date == nil) then print('formatNetMessage Error: date is nil' ) end 
+	self:formatinteger(msg,content.date)
+	self:formatArray(msg,content.story,'integer')
+	if(content.gain == nil) then print('formatNetMessage Error: gain is nil' ) end 
+	self:formatinteger(msg,content.gain)
+	self:formatArray(msg,content.maze,'pt_maze')
+	self:formatArray(msg,content.invade,'integer')
+end
+
+function NetProtocalPaser:formatpt_map_friend(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.story == nil) then print('formatNetMessage Error: story is nil' ) end 
+	self:formatinteger(msg,content.story)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+end
+
+function NetProtocalPaser:formatpt_map_friend_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_map_friend')
+end
+
+function NetProtocalPaser:formatdb_coldtime(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.chp_times == nil) then print('formatNetMessage Error: chp_times is nil' ) end 
+	self:formatshort(msg,content.chp_times)
+	if(content.chp_gold == nil) then print('formatNetMessage Error: chp_gold is nil' ) end 
+	self:formatshort(msg,content.chp_gold)
+	if(content.champion == nil) then print('formatNetMessage Error: champion is nil' ) end 
+	self:formatinteger(msg,content.champion)
+	if(content.freedom == nil) then print('formatNetMessage Error: freedom is nil' ) end 
+	self:formatinteger(msg,content.freedom)
+	if(content.monster == nil) then print('formatNetMessage Error: monster is nil' ) end 
+	self:formatinteger(msg,content.monster)
+	if(content.crazy == nil) then print('formatNetMessage Error: crazy is nil' ) end 
+	self:formatinteger(msg,content.crazy)
+	if(content.lrank == nil) then print('formatNetMessage Error: lrank is nil' ) end 
+	self:formatinteger(msg,content.lrank)
+	if(content.lrank_buy == nil) then print('formatNetMessage Error: lrank_buy is nil' ) end 
+	self:formatinteger(msg,content.lrank_buy)
+end
+
+function NetProtocalPaser:formatpt_champion(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.times == nil) then print('formatNetMessage Error: times is nil' ) end 
+	self:formatshort(msg,content.times)
+	if(content.cd == nil) then print('formatNetMessage Error: cd is nil' ) end 
+	self:formatshort(msg,content.cd)
+end
+
+function NetProtocalPaser:formatpt_freedom(msg, content) 
+	if(content.cd == nil) then print('formatNetMessage Error: cd is nil' ) end 
+	self:formatshort(msg,content.cd)
+end
+
+function NetProtocalPaser:formatmcard(msg, content) 
+	if(content.baseid == nil) then print('formatNetMessage Error: baseid is nil' ) end 
+	self:formatinteger(msg,content.baseid)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.hp == nil) then print('formatNetMessage Error: hp is nil' ) end 
+	self:formatinteger(msg,content.hp)
+	if(content.att == nil) then print('formatNetMessage Error: att is nil' ) end 
+	self:formatshort(msg,content.att)
+end
+
+function NetProtocalPaser:formatpt_m_group(msg, content) 
+	if(content.hero == nil) then print('formatNetMessage Error: hero is nil' ) end 
+	self:formatinteger(msg,content.hero)
+	self:formatArray(msg,content.cards,'mcard')
+end
+
+function NetProtocalPaser:formatpt_m_fighter(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+end
+
+function NetProtocalPaser:formatdb_monster(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.hard == nil) then print('formatNetMessage Error: hard is nil' ) end 
+	self:formatshort(msg,content.hard)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+	if(content.find_id == nil) then print('formatNetMessage Error: find_id is nil' ) end 
+	self:formatpkid(msg,content.find_id)
+	if(content.find_time == nil) then print('formatNetMessage Error: find_time is nil' ) end 
+	self:formatinteger(msg,content.find_time)
+	if(content.end_time == nil) then print('formatNetMessage Error: end_time is nil' ) end 
+	self:formatinteger(msg,content.end_time)
+	self:formatArray(msg,content.attacker,'pt_m_fighter')
+	if(content.fightdata == nil) then print('formatNetMessage Error: fightdata is nil' ) end 
+	self:formatpt_m_group(msg,content.fightdata)
+	if(content.killer_id == nil) then print('formatNetMessage Error: killer_id is nil' ) end 
+	self:formatpkid(msg,content.killer_id)
+	if(content.killed_time == nil) then print('formatNetMessage Error: killed_time is nil' ) end 
+	self:formatinteger(msg,content.killed_time)
+	if(content.prizecard == nil) then print('formatNetMessage Error: prizecard is nil' ) end 
+	self:formatinteger(msg,content.prizecard)
+end
+
+function NetProtocalPaser:formatdb_mail(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.new == nil) then print('formatNetMessage Error: new is nil' ) end 
+	self:formatshort(msg,content.new)
+	if(content.from == nil) then print('formatNetMessage Error: from is nil' ) end 
+	self:formatpkid(msg,content.from)
+	if(content.event == nil) then print('formatNetMessage Error: event is nil' ) end 
+	self:formatinteger(msg,content.event)
+	if(content.title == nil) then print('formatNetMessage Error: title is nil' ) end 
+	self:formatstring(msg,content.title)
+	if(content.content == nil) then print('formatNetMessage Error: content is nil' ) end 
+	self:formatstring(msg,content.content)
 	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
-	self:formatuint(msg,content.time)
+	self:formatinteger(msg,content.time)
 end
 
-function NetProtocalPaser:formatrecv_player_friends_delete(msg, content) 
-	if(content.friends_player_id == nil) then print('formatNetMessage Error: friends_player_id is nil' ) end 
-	self:formatuint(msg,content.friends_player_id)
+function NetProtocalPaser:formatpt_player_mail(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.new == nil) then print('formatNetMessage Error: new is nil' ) end 
+	self:formatshort(msg,content.new)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+	if(content.event == nil) then print('formatNetMessage Error: event is nil' ) end 
+	self:formatstring(msg,content.event)
 end
 
-function NetProtocalPaser:formatsend_hero_fragments_synthetic(msg, content) 
-	if(content.goods_id == nil) then print('formatNetMessage Error: goods_id is nil' ) end 
-	self:formatuint(msg,content.goods_id)
+function NetProtocalPaser:formatpt_player_mail_list(msg, content) 
+	self:formatArray(msg,content.info,'pt_player_mail')
 end
 
-function NetProtocalPaser:formatsend_player_hero_sell(msg, content) 
-	if(content.player_hero_id == nil) then print('formatNetMessage Error: player_hero_id is nil' ) end 
-	self:formatuint(msg,content.player_hero_id)
+function NetProtocalPaser:formatpt_write_mail(msg, content) 
+	if(content.receiver == nil) then print('formatNetMessage Error: receiver is nil' ) end 
+	self:formatpkid(msg,content.receiver)
+	if(content.title == nil) then print('formatNetMessage Error: title is nil' ) end 
+	self:formatstring(msg,content.title)
+	if(content.content == nil) then print('formatNetMessage Error: content is nil' ) end 
+	self:formatstring(msg,content.content)
+end
+
+function NetProtocalPaser:formatpt_new_mail(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
+end
+
+function NetProtocalPaser:formatpt_new_mail_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_new_mail')
+end
+
+function NetProtocalPaser:formatpt_monster(msg, content) 
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatshort(msg,content.level)
+	if(content.hard == nil) then print('formatNetMessage Error: hard is nil' ) end 
+	self:formatshort(msg,content.hard)
+	if(content.now == nil) then print('formatNetMessage Error: now is nil' ) end 
+	self:formatshort(msg,content.now)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatshort(msg,content.score)
+	if(content.find_id == nil) then print('formatNetMessage Error: find_id is nil' ) end 
+	self:formatpkid(msg,content.find_id)
+	if(content.find_name == nil) then print('formatNetMessage Error: find_name is nil' ) end 
+	self:formatstring(msg,content.find_name)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+	if(content.round == nil) then print('formatNetMessage Error: round is nil' ) end 
+	self:formatshort(msg,content.round)
+	if(content.killer_id == nil) then print('formatNetMessage Error: killer_id is nil' ) end 
+	self:formatpkid(msg,content.killer_id)
+	if(content.killer_name == nil) then print('formatNetMessage Error: killer_name is nil' ) end 
+	self:formatstring(msg,content.killer_name)
+end
+
+function NetProtocalPaser:formatpt_find_monster(msg, content) 
+	if(content.monster == nil) then print('formatNetMessage Error: monster is nil' ) end 
+	self:formatpt_monster(msg,content.monster)
+	if(content.cd == nil) then print('formatNetMessage Error: cd is nil' ) end 
+	self:formatshort(msg,content.cd)
+end
+
+function NetProtocalPaser:formatpt_monster_all(msg, content) 
+	self:formatArray(msg,content.all,'pt_monster')
+	if(content.cd == nil) then print('formatNetMessage Error: cd is nil' ) end 
+	self:formatshort(msg,content.cd)
+end
+
+function NetProtocalPaser:formatpt_crazy_score(msg, content) 
+	if(content.once == nil) then print('formatNetMessage Error: once is nil' ) end 
+	self:formatinteger(msg,content.once)
+	if(content.totle == nil) then print('formatNetMessage Error: totle is nil' ) end 
+	self:formatinteger(msg,content.totle)
+end
+
+function NetProtocalPaser:formatpt_pay_verify(msg, content) 
+	if(content.platform == nil) then print('formatNetMessage Error: platform is nil' ) end 
+	self:formatshort(msg,content.platform)
+	if(content.pay_type == nil) then print('formatNetMessage Error: pay_type is nil' ) end 
+	self:formatstring(msg,content.pay_type)
+	if(content.token == nil) then print('formatNetMessage Error: token is nil' ) end 
+	self:formatstring(msg,content.token)
+	if(content.signature == nil) then print('formatNetMessage Error: signature is nil' ) end 
+	self:formatstring(msg,content.signature)
+end
+
+function NetProtocalPaser:formatpt_pay_list_get(msg, content) 
+	if(content.platform == nil) then print('formatNetMessage Error: platform is nil' ) end 
+	self:formatshort(msg,content.platform)
+end
+
+function NetProtocalPaser:formatpt_pay_list(msg, content) 
+	self:formatArray(msg,content.pay_types,'string')
+end
+
+function NetProtocalPaser:formatpt_legion_rank_get(msg, content) 
+	if(content.start == nil) then print('formatNetMessage Error: start is nil' ) end 
+	self:formatinteger(msg,content.start)
+	if(content.size == nil) then print('formatNetMessage Error: size is nil' ) end 
+	self:formatinteger(msg,content.size)
+end
+
+function NetProtocalPaser:formatpt_lrank_buy(msg, content) 
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
+	if(content.cost == nil) then print('formatNetMessage Error: cost is nil' ) end 
+	self:formatinteger(msg,content.cost)
+end
+
+function NetProtocalPaser:formatlegion_rank(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.remark == nil) then print('formatNetMessage Error: remark is nil' ) end 
+	self:formatstring(msg,content.remark)
+	if(content.exp == nil) then print('formatNetMessage Error: exp is nil' ) end 
+	self:formatinteger(msg,content.exp)
+	if(content.lev == nil) then print('formatNetMessage Error: lev is nil' ) end 
+	self:formatshort(msg,content.lev)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+	if(content.lock == nil) then print('formatNetMessage Error: lock is nil' ) end 
+	self:formatshort(msg,content.lock)
+	if(content.meb == nil) then print('formatNetMessage Error: meb is nil' ) end 
+	self:formatshort(msg,content.meb)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.score == nil) then print('formatNetMessage Error: score is nil' ) end 
+	self:formatinteger(msg,content.score)
+	if(content.threat == nil) then print('formatNetMessage Error: threat is nil' ) end 
+	self:formatinteger(msg,content.threat)
+end
+
+function NetProtocalPaser:formatpt_legion_rank_list(msg, content) 
+	if(content.len_id == nil) then print('formatNetMessage Error: len_id is nil' ) end 
+	self:formatpkid(msg,content.len_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
+	if(content.cost == nil) then print('formatNetMessage Error: cost is nil' ) end 
+	self:formatinteger(msg,content.cost)
+	self:formatArray(msg,content.legion_ranks,'legion_rank')
+end
+
+function NetProtocalPaser:formatplayer_rank_info(msg, content) 
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.pos == nil) then print('formatNetMessage Error: pos is nil' ) end 
+	self:formatshort(msg,content.pos)
+	if(content.devote == nil) then print('formatNetMessage Error: devote is nil' ) end 
+	self:formatinteger(msg,content.devote)
+	if(content.plan_score == nil) then print('formatNetMessage Error: plan_score is nil' ) end 
+	self:formatinteger(msg,content.plan_score)
+	if(content.plan_money == nil) then print('formatNetMessage Error: plan_money is nil' ) end 
+	self:formatinteger(msg,content.plan_money)
+	if(content.protected == nil) then print('formatNetMessage Error: protected is nil' ) end 
+	self:formatinteger(msg,content.protected)
+end
+
+function NetProtocalPaser:formatpt_player_rank_list(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatshort(msg,content.num)
+	if(content.cost == nil) then print('formatNetMessage Error: cost is nil' ) end 
+	self:formatinteger(msg,content.cost)
+	self:formatArray(msg,content.mebs,'player_rank_info')
+end
+
+function NetProtocalPaser:formatp_rank_info(msg, content) 
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.icon == nil) then print('formatNetMessage Error: icon is nil' ) end 
+	self:formatstring(msg,content.icon)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.legion_name == nil) then print('formatNetMessage Error: legion_name is nil' ) end 
+	self:formatstring(msg,content.legion_name)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+end
+
+function NetProtocalPaser:formatpt_p_rank_list(msg, content) 
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	self:formatArray(msg,content.mebs,'p_rank_info')
+end
+
+function NetProtocalPaser:formatrc_sign(msg, content) 
+	if(content.num == nil) then print('formatNetMessage Error: num is nil' ) end 
+	self:formatinteger(msg,content.num)
+	if(content.gain == nil) then print('formatNetMessage Error: gain is nil' ) end 
+	self:formatshort(msg,content.gain)
+end
+
+function NetProtocalPaser:formatdb_sign(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.month == nil) then print('formatNetMessage Error: month is nil' ) end 
+	self:formatshort(msg,content.month)
+	self:formatArray(msg,content.sign,'rc_sign')
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+end
+
+function NetProtocalPaser:formatpt_sign(msg, content) 
+	if(content.month == nil) then print('formatNetMessage Error: month is nil' ) end 
+	self:formatshort(msg,content.month)
+	if(content.sign == nil) then print('formatNetMessage Error: sign is nil' ) end 
+	self:formatrc_sign(msg,content.sign)
+end
+
+function NetProtocalPaser:formatdb_param(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	self:formatArray(msg,content.intary,'integer')
+end
+
+function NetProtocalPaser:formatpk_cteam(msg, content) 
+	if(content.baseid == nil) then print('formatNetMessage Error: baseid is nil' ) end 
+	self:formatinteger(msg,content.baseid)
+	if(content.level == nil) then print('formatNetMessage Error: level is nil' ) end 
+	self:formatinteger(msg,content.level)
+end
+
+function NetProtocalPaser:formatdb_war(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	self:formatArray(msg,content.cards,'pk_cteam')
+end
+
+function NetProtocalPaser:formatdb_gvglog(msg, content) 
+	if(content.id == nil) then print('formatNetMessage Error: id is nil' ) end 
+	self:formatpkid(msg,content.id)
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.shield == nil) then print('formatNetMessage Error: shield is nil' ) end 
+	self:formatinteger(msg,content.shield)
+	if(content.attack == nil) then print('formatNetMessage Error: attack is nil' ) end 
+	self:formatinteger(msg,content.attack)
+end
+
+function NetProtocalPaser:formatpt_gvg_init_battle(msg, content) 
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.legion_name == nil) then print('formatNetMessage Error: legion_name is nil' ) end 
+	self:formatstring(msg,content.legion_name)
+	if(content.guard_id == nil) then print('formatNetMessage Error: guard_id is nil' ) end 
+	self:formatpkid(msg,content.guard_id)
+	if(content.guard_name == nil) then print('formatNetMessage Error: guard_name is nil' ) end 
+	self:formatstring(msg,content.guard_name)
+	if(content.guard_icon == nil) then print('formatNetMessage Error: guard_icon is nil' ) end 
+	self:formatstring(msg,content.guard_icon)
+	if(content.shield == nil) then print('formatNetMessage Error: shield is nil' ) end 
+	self:formatinteger(msg,content.shield)
+	if(content.max_shield == nil) then print('formatNetMessage Error: max_shield is nil' ) end 
+	self:formatinteger(msg,content.max_shield)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	self:formatArray(msg,content.mebs,'pkid')
+	if(content.end_time == nil) then print('formatNetMessage Error: end_time is nil' ) end 
+	self:formatinteger(msg,content.end_time)
+end
+
+function NetProtocalPaser:formatpt_gvg_init_battle_list(msg, content) 
+	if(content.attack_num == nil) then print('formatNetMessage Error: attack_num is nil' ) end 
+	self:formatshort(msg,content.attack_num)
+	if(content.max_attack == nil) then print('formatNetMessage Error: max_attack is nil' ) end 
+	self:formatshort(msg,content.max_attack)
+	if(content.self == nil) then print('formatNetMessage Error: self is nil' ) end 
+	self:formatpt_gvg_init_battle(msg,content.self)
+	if(content.enemy == nil) then print('formatNetMessage Error: enemy is nil' ) end 
+	self:formatpt_gvg_init_battle(msg,content.enemy)
+end
+
+function NetProtocalPaser:formatpt_gvg_battle_end(msg, content) 
+	if(content.result == nil) then print('formatNetMessage Error: result is nil' ) end 
+	self:formatshort(msg,content.result)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.totle_scores == nil) then print('formatNetMessage Error: totle_scores is nil' ) end 
+	self:formatinteger(msg,content.totle_scores)
+	if(content.less_scores == nil) then print('formatNetMessage Error: less_scores is nil' ) end 
+	self:formatinteger(msg,content.less_scores)
+end
+
+function NetProtocalPaser:formatpt_gvg_fight(msg, content) 
+	if(content.type == nil) then print('formatNetMessage Error: type is nil' ) end 
+	self:formatshort(msg,content.type)
+	if(content.target == nil) then print('formatNetMessage Error: target is nil' ) end 
+	self:formatpkid(msg,content.target)
+end
+
+function NetProtocalPaser:formatpt_gvg_shield(msg, content) 
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.from_legion == nil) then print('formatNetMessage Error: from_legion is nil' ) end 
+	self:formatpkid(msg,content.from_legion)
+	if(content.target_legion == nil) then print('formatNetMessage Error: target_legion is nil' ) end 
+	self:formatpkid(msg,content.target_legion)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.change == nil) then print('formatNetMessage Error: change is nil' ) end 
+	self:formatinteger(msg,content.change)
+	if(content.shield == nil) then print('formatNetMessage Error: shield is nil' ) end 
+	self:formatinteger(msg,content.shield)
+end
+
+function NetProtocalPaser:formatpt_gvg_first(msg, content) 
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.gvg_id == nil) then print('formatNetMessage Error: gvg_id is nil' ) end 
+	self:formatinteger(msg,content.gvg_id)
+	if(content.gvg_state == nil) then print('formatNetMessage Error: gvg_state is nil' ) end 
+	self:formatshort(msg,content.gvg_state)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.shield == nil) then print('formatNetMessage Error: shield is nil' ) end 
+	self:formatinteger(msg,content.shield)
+	if(content.extra_shield == nil) then print('formatNetMessage Error: extra_shield is nil' ) end 
+	self:formatinteger(msg,content.extra_shield)
+	if(content.attack == nil) then print('formatNetMessage Error: attack is nil' ) end 
+	self:formatinteger(msg,content.attack)
+	if(content.extra_attack == nil) then print('formatNetMessage Error: extra_attack is nil' ) end 
+	self:formatinteger(msg,content.extra_attack)
+end
+
+function NetProtocalPaser:formatpt_gvg_star(msg, content) 
+	if(content.gvg_id == nil) then print('formatNetMessage Error: gvg_id is nil' ) end 
+	self:formatinteger(msg,content.gvg_id)
+	if(content.state == nil) then print('formatNetMessage Error: state is nil' ) end 
+	self:formatinteger(msg,content.state)
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.flag == nil) then print('formatNetMessage Error: flag is nil' ) end 
+	self:formatshort(msg,content.flag)
+end
+
+function NetProtocalPaser:formatpt_gvg_star_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_gvg_star')
+end
+
+function NetProtocalPaser:formatpt_gvg_rank(msg, content) 
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.rank == nil) then print('formatNetMessage Error: rank is nil' ) end 
+	self:formatinteger(msg,content.rank)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+end
+
+function NetProtocalPaser:formatpt_gvg_rank_list(msg, content) 
+	if(content.less_scores == nil) then print('formatNetMessage Error: less_scores is nil' ) end 
+	self:formatinteger(msg,content.less_scores)
+	self:formatArray(msg,content.list,'pt_gvg_rank')
+end
+
+function NetProtocalPaser:formatpt_gvg_legion_log(msg, content) 
+	if(content.enemy_id == nil) then print('formatNetMessage Error: enemy_id is nil' ) end 
+	self:formatpkid(msg,content.enemy_id)
+	if(content.result == nil) then print('formatNetMessage Error: result is nil' ) end 
+	self:formatshort(msg,content.result)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
+	if(content.time == nil) then print('formatNetMessage Error: time is nil' ) end 
+	self:formatinteger(msg,content.time)
+end
+
+function NetProtocalPaser:formatpt_gvg_legion_log_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_gvg_legion_log')
+end
+
+function NetProtocalPaser:formatpt_gvg_player_log(msg, content) 
+	if(content.user_id == nil) then print('formatNetMessage Error: user_id is nil' ) end 
+	self:formatpkid(msg,content.user_id)
+	if(content.name == nil) then print('formatNetMessage Error: name is nil' ) end 
+	self:formatstring(msg,content.name)
+	if(content.attack == nil) then print('formatNetMessage Error: attack is nil' ) end 
+	self:formatshort(msg,content.attack)
+	if(content.win == nil) then print('formatNetMessage Error: win is nil' ) end 
+	self:formatshort(msg,content.win)
+	if(content.socres == nil) then print('formatNetMessage Error: socres is nil' ) end 
+	self:formatinteger(msg,content.socres)
+end
+
+function NetProtocalPaser:formatpt_gvg_player_log_list(msg, content) 
+	self:formatArray(msg,content.list,'pt_gvg_player_log')
+end
+
+function NetProtocalPaser:formatpt_gvg_login(msg, content) 
+	if(content.gvg_id == nil) then print('formatNetMessage Error: gvg_id is nil' ) end 
+	self:formatinteger(msg,content.gvg_id)
+end
+
+function NetProtocalPaser:formatpt_gvg_scores(msg, content) 
+	if(content.legion_id == nil) then print('formatNetMessage Error: legion_id is nil' ) end 
+	self:formatpkid(msg,content.legion_id)
+	if(content.scores == nil) then print('formatNetMessage Error: scores is nil' ) end 
+	self:formatinteger(msg,content.scores)
 end
 

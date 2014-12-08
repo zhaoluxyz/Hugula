@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 local CUtils=CUtils
 local FileHelper=toluacs.FileHelper   --luanet.import_type("FileHelper")
 local Loader = Loader
@@ -8,16 +13,9 @@ local split = split
 local url_Unit="Unit"
 local url_Skill = "Skill"
 local url_Buff = "Buff"
-local url_chapterData = "chapterData"
-local url_taskData = "taskData"
-local url_itemData = "goods"
-local url_goodComp = "synthesis"
-local url_strenth = "hero_str"
-local url_teamBuff = "team_buff"
-local url_discrete = "discreteData"
-local url_storyDlg = "storyDlg"
+local url_LevelData = "LevelData"
+local url_GoodsData = "Goods"
 local url_Guide = "Guide"
-local url_Active = "Active"
 
 local lineCount
 local rowNum
@@ -114,23 +112,22 @@ local function decoderZipTxt(name,context)
 	if name == url_Unit then decodeUnit(data)
 	elseif name ==url_Skill then decodeSkill(data)
 	elseif name ==url_Buff then decodeBuff(data)
-	elseif name == url_chapterData then decodeChapterData(data)
-	elseif name == url_itemData then decodeItemData(data)
-	elseif name == url_goodComp then decodeGoodComp(data)
-	elseif name == url_strenth then decodeHeroStren(data)
-	elseif name == url_teamBuff then decodeTeamBuff(data)
-	elseif name == url_discrete then decodeDiscrete(data)
-	elseif name == url_taskData then decodeTaskData(data)
-	elseif name == url_storyDlg then decodeStoryDlg(data)
-	elseif name == url_Guide then decodeGuide(data)
-	elseif name == url_Active then decodeActive(data)
+	-- elseif name == url_chapterData then decodeChapterData(data)
+	-- elseif name == url_itemData then decodeItemData(data)
+	-- elseif name == url_goodComp then decodeGoodComp(data)
+	-- elseif name == url_strenth then decodeHeroStren(data)
+	-- elseif name == url_teamBuff then decodeTeamBuff(data)
+	-- elseif name == url_discrete then decodeDiscrete(data)
+	-- elseif name == url_taskData then decodeTaskData(data)
+	-- elseif name == url_storyDlg then decodeStoryDlg(data)
+	-- elseif name == url_Guide then decodeGuide(data)
+	-- elseif name == url_Active then decodeActive(data)
 	end
 	print(name.."  decoded     ")
 end
 
 
 local function loadComp(req)
-	-- FileHelper.UnpackConfigZipFn(req.data.bytes,decoderZipTxt)
 	FileHelper.UnpackConfigAssetBundleFn(req.data.assetBundle,decoderZipTxt)
     disposeWWW(req.data)
 end

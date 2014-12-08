@@ -1,3 +1,8 @@
+------------------------------------------------
+--  Copyright © 2013-2014   Hugula: Arpg game Engine
+--   
+--  author pu
+------------------------------------------------
 require("core.unity3d")
 require("core.loader")
 json=require("lib/json")
@@ -16,11 +21,6 @@ local Application= luanet.UnityEngine.Application
 local GameObject= luanet.UnityEngine.GameObject
 local PlayerPrefs = luanet.UnityEngine.PlayerPrefs
 local Request=luanet.import_type("LRequest")
--- local tolua1 = luanet.import_type("Localization")
--- 	  tolua1 = luanet.FileHelper
--- 	  tolua1 = luanet.UILabel
--- 	  tolua1 = luanet.UISprite
--- 	  tolua1 = luanet.UITexture
 
 local CUtils=toluacs.CUtils
 local LuaHelper=toluacs.LuaHelper
