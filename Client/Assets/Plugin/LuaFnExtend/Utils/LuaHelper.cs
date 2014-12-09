@@ -360,6 +360,13 @@ public class  LuaHelper {
         return System.Text.Encoding.UTF8.GetBytes(utf8Str);
     }
 
+    /// <summary>
+    /// 调用GC.Collect
+    /// </summary>
+    public void GCCollect()
+    {
+        System.GC.Collect();
+    }
 }
 
 

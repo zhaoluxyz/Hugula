@@ -4,6 +4,7 @@
 --	author pu
 ------------------------------------------------
 Loader={}
+local Resources = toluacs.UnityEngine.Resources
 local luanet = luanet
 local LMultipleLoader= luanet.import_type("LMultipleLoader") --toLuaCS.LMultipleLoader--
 LMultipleLoader=LMultipleLoader.instance
@@ -91,12 +92,14 @@ function Loader:clear(key)
 			self:clearItem(k)
 		end
 	end 
+    unloadUnusedAssets()
 end
 
 function Loader:unload(url)
 	if url then
 		local key=CUtils.getURLFullFileName(url)
 		self:clearItem(key)
+        unloadUnusedAssets()
 	end
 end
 

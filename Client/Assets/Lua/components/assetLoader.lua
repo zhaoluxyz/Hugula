@@ -10,6 +10,7 @@ local CUtils=CUtils
 local Asset = Asset
 local StateManager = StateManager
 local GAMEOBJECT_ATLAS = GAMEOBJECT_ATLAS
+
 local AssetLoader=class(function(self,luaObj)
 	self.items={}
 	self.luaObj=luaObj
@@ -97,6 +98,7 @@ function AssetLoader:clear()
 	self.url=nil
 	self.name=nil
 	self.luaObj.assetsLoaded = false
+    unloadUnusedAssets()
 end
 
 function AssetLoader:load(asts)

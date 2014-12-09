@@ -4,6 +4,7 @@
 --  author pu
 ------------------------------------------------
 local LuaItemManager = LuaItemManager
+local Resources = toluacs.UnityEngine.Resources
 StateManager =
 {
     m_currentGameState  =   nil,
@@ -65,5 +66,5 @@ function StateManager:setCurrentState(newState,callFocues)
     --if self.m_autoShowLoading and callFocues then self:showTransform() end
     if callFocues then newState:onFocus(previousState) end
 
-    luaGC()
+    unloadUnusedAssets()
 end

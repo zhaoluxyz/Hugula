@@ -50,6 +50,11 @@ public static class LuaToLuaHelper {
       #endregion
 
       #region  注册实例luameta
+          LuaDLL.lua_pushstring(L,"GCCollect");
+          luafn_GCCollect= new LuaCSFunction(GCCollect);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GCCollect);
+          LuaDLL.lua_rawset(L, -3);
+
       #endregion
 
   #region  static method       
@@ -203,6 +208,7 @@ public static class LuaToLuaHelper {
          }
 }
   #region instances declaration       
+          private static LuaCSFunction luafn_GCCollect;
  #endregion        
   #region statics declaration       
           private static LuaCSFunction luafn_Destroy;
@@ -228,6 +234,17 @@ public static class LuaToLuaHelper {
           private static LuaCSFunction luafn__luahelper;
  #endregion        
   #region  instances method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GCCollect(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  LuaHelper target= (LuaHelper) original ;
+                  target.GCCollect();
+                 return 0;
+
+          }
   #endregion       
   #region  static method       
           

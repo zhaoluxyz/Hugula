@@ -10,6 +10,8 @@ local UnityEngine = UnityEngine
 GameObject=UnityEngine.GameObject
 Vector3=UnityEngine.Vector3
 Quaternion = UnityEngine.Quaternion
+local Resources = toluacs.UnityEngine.Resources
+
 -----------------------init---------------------------
 
 iTween = luanet.import_type("iTween")
@@ -28,7 +30,14 @@ Msg=luanet.import_type("Msg")
 Request=luanet.import_type("LRequest")
 
 local LocalizationMy = toluacs.Localization
+
 --获取语言包内容
 function getValue(key)
     return LocalizationMy.Get(key)
+end
+
+--释放没使用的资源
+function unloadUnusedAssets()
+    luaGC()
+    Resources.UnloadUnusedAssets()
 end

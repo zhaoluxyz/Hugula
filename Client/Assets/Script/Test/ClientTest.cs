@@ -51,9 +51,9 @@ public class ClientTest : MonoBehaviour {
             {
                 Msg m = new Msg();
                 m.Type = 2;
-                m.WriteString("hello server ");
+                m.WriteString("hello server "+System.DateTime.Now.ToShortTimeString());
                 LNet.instance.Send(m);
-                Debug.Log("send:" + Msg.Debug(m.ToCArray()));
+                //Debug.Log("send:" + Msg.Debug(m.ToCArray()));
             }
             GUILayout.EndVertical();
           
