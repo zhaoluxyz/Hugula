@@ -19,6 +19,8 @@ public class TcpServer :MonoBehaviour  {
     /// </summary>
     public int port = 12000;
 
+    public const String GAME_TYPE = "Hugula";
+
 	#endregion
 
 	#region private member
@@ -51,9 +53,11 @@ public class TcpServer :MonoBehaviour  {
         clients = ArrayList.Synchronized(new ArrayList());
         sessions = ArrayList.Synchronized(new ArrayList());
         broadMsg = ArrayList.Synchronized(new ArrayList());
+        //获取IP
+
         if(server==null)server = new TcpListener(localAddr, port);
         server.Start();
-        Debug.Log(localAddr.ToString() + " is Start");
+        RegisterHost();
         server.BeginAcceptTcpClient(DoAcceptTcpClientCallback, server); //开始监听
 	}
 
@@ -73,7 +77,6 @@ public class TcpServer :MonoBehaviour  {
 
         BroadCast();
 	}
-
 
     /// <summary>
     /// 广播消息
@@ -100,6 +103,31 @@ public class TcpServer :MonoBehaviour  {
 	#endregion
 
 	#region private method
+    /// <summary>
+    /// 注册地址
+    /// </summary>
+    private void RegisterHost()
+    {
+        // Get server related information.
+        IPHostEntry heserver = Dns.GetHostEntry(Dns.GetHostName());
+        //本机IP
+        IPAddress localIP = null;
+        // Loop on the AddressList
+        foreach (IPAddress curAdd in heserver.AddressList)
+        {
+            localIP = curAdd;
+            Debug.Log("local IP :"+localIP.ToString());
+        }
+        Debug.Log(localAddr.ToString() + " is Start");
+
+        if (localIP != null)
+        {
+            bool useNat = !Network.HavePublicAddress();
+            //Network.ip
+            Network.InitializeServer(32, port + 2, useNat);
+            MasterServer.RegisterHost(GAME_TYPE, SystemInfo.deviceName, localIP.ToString());
+        }
+    }
 
     private void DoAcceptTcpClientCallback(IAsyncResult ar)
     {

@@ -36,8 +36,8 @@ public class ClientTest : MonoBehaviour {
         GUILayout.BeginHorizontal();
         GUILayout.Space(10);
         //Debug.Log(Network.peerType);
-        if (Network.peerType == NetworkPeerType.Disconnected)
-        {
+        //if (Network.peerType == NetworkPeerType.Disconnected)
+        //{
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
@@ -60,17 +60,17 @@ public class ClientTest : MonoBehaviour {
             {
                
             }
-        }
-        else
-        {
-            GUILayout.Label("GUID: " + Network.player.guid + " - ");
-            GUILayout.Label("Local IP/port: " + Network.player.ipAddress + "/" + Network.player.port);
-            GUILayout.Label(" - External IP/port: " + Network.player.externalIP + "/" + Network.player.externalPort);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Disconnect"))
-                Network.Disconnect(200);
-        }
+        //}
+        //else
+        //{
+        //    GUILayout.Label("GUID: " + Network.player.guid + " - ");
+        //    GUILayout.Label("Local IP/port: " + Network.player.ipAddress + "/" + Network.player.port);
+        //    GUILayout.Label(" - External IP/port: " + Network.player.externalIP + "/" + Network.player.externalPort);
+        //    GUILayout.EndHorizontal();
+        //    GUILayout.BeginHorizontal();
+        //    if (GUILayout.Button("Disconnect"))
+        //        Network.Disconnect(200);
+        //}
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
     }
