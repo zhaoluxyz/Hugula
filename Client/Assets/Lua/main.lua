@@ -39,7 +39,7 @@ local function languageInit()
 end 
 
 local function enterGame()
-    languageInit()
+    -- languageInit()
 
 	require("begin")
 --	if fristView then LuaHelper.Destroy(fristView) end

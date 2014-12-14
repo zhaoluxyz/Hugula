@@ -4,18 +4,15 @@
 --  author pu
 ------------------------------------------------
 NGUIEvent = luanet.import_type("NGUIEvent")
-local guide = LuaItemManager:getItemObject("guide")
 local NGUIEvent=NGUIEvent.instance
 local StateManager = StateManager
 --InputEvent={}
 local InputEvent = {}
 function InputEvent.onPress(sender,arg)
-    guide:checkCondition("onPress",sender,arg)
 	StateManager:getCurrentState():onEvent("onPress",sender,arg)
 end
 
 function InputEvent.onClick(sender,arg)
-    guide:checkCondition("onClick",sender,arg)
 	StateManager:getCurrentState():onEvent("onClick",sender,arg)
 end
 

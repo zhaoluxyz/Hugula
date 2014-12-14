@@ -59,6 +59,14 @@ public class Session  {
         if (stream != null) stream.Close();
     }
 
+    public TcpClient Client
+    {
+        get
+        {
+            return client;
+        }
+    }
+
     /// <summary>
     /// 读取消息
     /// </summary>
@@ -66,7 +74,7 @@ public class Session  {
     {
         if (client.Connected && stream.DataAvailable)
         {
-            //Debug.Log(stream + " Available = " + stream.DataAvailable);
+            //Debug.Log(stream + " Available = " + client.Available);
             if (len == 0)
             {
                 byte[] header = new byte[2];

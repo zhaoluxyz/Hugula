@@ -10,81 +10,157 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System;
+using LuaInterface;
 
-public class TcpServer :MonoBehaviour  {
+public class TcpServer : MonoBehaviour
+{
 
-	#region pulic member
+    #region pulic member
     /// <summary>
     /// server端口
     /// </summary>
-    public int port = 12000;
+    public static int port = 12000;
 
     public const String GAME_TYPE = "Hugula";
 
-	#endregion
-
-	#region private member
     /// <summary>
-    /// IP 地址
+    /// 自动广播
     /// </summary>
-    private IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+    public bool autoBroadcast = false;
+
+    /// <summary>
+    /// 有客户端连接
+    /// </summary>
+    public LuaFunction onClientConnectFn;
+
+    /// <summary>
+    /// 客户端消息
+    /// </summary>
+    public LuaFunction onMessageArriveFn;
+
+    /// <summary>
+    /// 客户端关闭
+    /// </summary>
+    public LuaFunction onClientCloseFn;
+    #endregion
+
+    #region private member
+    ///// <summary>
+    ///// IP 地址
+    ///// </summary>
+    //private IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
     private TcpListener server;
 
-    private ArrayList clients;// = new List<TcpClient>();
-    private ArrayList sessions;// = new List<TcpClient>();
+    private Hashtable sessions;// = new List<TcpClient>();
     private ArrayList broadMsg;//广播的消息
+    private List<int> closeClients;
+    private List<Session> newClients;//新添加进来的
+    public static ManualResetEvent tcpClientConnected = new ManualResetEvent(false);
+    #endregion
 
-    public static ManualResetEvent tcpClientConnected =  new ManualResetEvent(false);
-	#endregion
-
-	#region mono
+    #region mono
 
     void OnDisable()
     {
-        server.Stop();
-        Debug.Log("server.stop");
+        Stop();
     }
 
-	/// <summary>
-	/// 开启服务
-	/// </summary>
-	void Start () {
-        clients = ArrayList.Synchronized(new ArrayList());
-        sessions = ArrayList.Synchronized(new ArrayList());
-        broadMsg = ArrayList.Synchronized(new ArrayList());
-        //获取IP
+    //void OnEnable()
+    //{
 
-        if(server==null)server = new TcpListener(localAddr, port);
+
+    //}
+
+    /// <summary>
+    /// 开启服务
+    /// </summary>
+    void Start()
+    {
+        newClients = new List<Session>();
+        closeClients = new List<int>();
+        sessions = Hashtable.Synchronized(new Hashtable());//线程安全的  //ArrayList.Synchronized(new ArrayList());
+        broadMsg = ArrayList.Synchronized(new ArrayList());
+
+        server = new TcpListener(IPAddress.Any, port);
         server.Start();
         RegisterHost();
         server.BeginAcceptTcpClient(DoAcceptTcpClientCallback, server); //开始监听
-	}
+    }
 
 
     // Update is called once per frame
-	void Update () {
-        foreach (var client in sessions)
+    void Update()
+    {
+
+        foreach (var ses in newClients)
         {
-            Session ses = ((Session)client);
-            ses.Receive();
-            byte[] msg = ses.GetMessage();
-            if (msg != null)
+            if (onClientConnectFn != null)
             {
-                broadMsg.Add(msg);
+                onClientConnectFn.Call(ses);
             }
         }
 
-        BroadCast();
-	}
+        newClients.Clear();
+        closeClients.Clear();
+
+        var list = sessions.Values;
+        foreach (var client in list)
+        {
+            Session ses = ((Session)client);
+            if (ses.Client.Connected)
+            {
+                ses.Receive();
+                byte[] msg = ses.GetMessage();
+                if (msg != null)
+                {
+                    if (autoBroadcast)
+                    {
+                        broadMsg.Add(msg);
+                    }
+
+                    if (onMessageArriveFn != null)
+                    {
+                        try
+                        {
+                             byte[] send = new byte[msg.Length -2];
+                             System.Array.Copy(msg, 2, send, 0, send.Length);
+                             onMessageArriveFn.Call(ses, new Msg(send));
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogWarning(ex);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                closeClients.Add(ses.id);
+            }
+        }
+
+        foreach (int id in closeClients)
+        {
+            Kick(id);
+        }
+
+        closeClients.Clear();
+
+        if (autoBroadcast)
+        {
+            BroadCast();
+        }
+
+        broadMsg.Clear();
+    }
 
     /// <summary>
     /// 广播消息
     /// </summary>
     public void BroadCast()
     {
-        //Debug.Log("BroadCast");
-        foreach (var client in sessions)
+        foreach (var client in sessions.Values)
         {
             Session ses = ((Session)client);
             foreach (var msg in broadMsg)
@@ -94,19 +170,102 @@ public class TcpServer :MonoBehaviour  {
             }
         }
 
-        broadMsg.Clear();
+        //broadMsg.Clear();
     }
-	#endregion
 
-	#region pulic method
+    public void BroadCast(byte[] msg)
+    {
+        foreach (var client in sessions.Values)
+        {
+            Session ses = ((Session)client);
+            ses.Send(msg);
+        }
+    }
 
-	#endregion
+    public void BroadCast(Msg msg)
+    {
+        foreach (var client in sessions.Values)
+        {
+            Session ses = ((Session)client);
+            ses.Send(msg);
+        }
+    }
 
-	#region private method
+    public void Kick(int SensionId)
+    {
+        if (sessions.ContainsKey(SensionId))
+        {
+            Session delses = (Session)sessions[SensionId];
+            if (onClientCloseFn != null)
+                onClientCloseFn.Call(delses);
+
+            delses.Close();
+            sessions.Remove(SensionId);
+        }
+    }
+
     /// <summary>
-    /// 注册地址
+    /// 停止服务
     /// </summary>
-    private void RegisterHost()
+    public void Stop()
+    {
+        closeClients.Clear();
+        foreach (Session se in sessions.Values)
+            closeClients.Add(se.id);
+
+        foreach (int i in closeClients)
+            Kick(i);
+
+        broadMsg.Clear();
+        sessions.Clear();
+        server.Stop();
+        Network.Disconnect();
+        MasterServer.UnregisterHost();
+        Debug.Log("server.stop");
+    }
+    #endregion
+
+    #region pulic method
+
+    public static TcpServer currTcpServer;
+
+    private static GameObject svrObj;
+    /// <summary>
+    /// 开始服务
+    /// </summary>
+    public static void StartTcpServer()
+    {
+        if (svrObj == null)
+            svrObj = new GameObject("TcpServer");
+
+        TcpServer comp = svrObj.GetComponent<TcpServer>();
+        if (comp == null)
+        {
+            currTcpServer = svrObj.AddComponent<TcpServer>();
+        }
+        else
+        {
+            currTcpServer = comp;
+        }
+    }
+
+    /// <summary>
+    /// 停止服务
+    /// </summary>
+    public static void StopTcpServer()
+    {
+        if (currTcpServer != null)
+        {
+            LuaHelper.Destroy(currTcpServer);
+        }
+        currTcpServer = null;
+    }
+
+    /// <summary>
+    /// 获取本机局域网IP
+    /// </summary>
+    /// <returns></returns>
+    public static IPAddress GetLocalIP()
     {
         // Get server related information.
         IPHostEntry heserver = Dns.GetHostEntry(Dns.GetHostName());
@@ -116,14 +275,26 @@ public class TcpServer :MonoBehaviour  {
         foreach (IPAddress curAdd in heserver.AddressList)
         {
             localIP = curAdd;
-            Debug.Log("local IP :"+localIP.ToString());
+            //Debug.Log("local IP :" + localIP.ToString());
         }
-        Debug.Log(localAddr.ToString() + " is Start");
 
+        return localIP;
+    }
+
+    #endregion
+
+    #region private method
+    /// <summary>
+    /// 注册地址
+    /// </summary>
+    private void RegisterHost()
+    {
+        //本机IP
+        IPAddress localIP = GetLocalIP();
+        Debug.Log(localIP.ToString() + " is Start  ManagedThreadId " + System.Threading.Thread.CurrentThread.ManagedThreadId);
         if (localIP != null)
         {
             bool useNat = !Network.HavePublicAddress();
-            //Network.ip
             Network.InitializeServer(32, port + 2, useNat);
             MasterServer.RegisterHost(GAME_TYPE, SystemInfo.deviceName, localIP.ToString());
         }
@@ -132,22 +303,17 @@ public class TcpServer :MonoBehaviour  {
     private void DoAcceptTcpClientCallback(IAsyncResult ar)
     {
         TcpListener listener = (TcpListener)ar.AsyncState;
-
         TcpClient client = listener.EndAcceptTcpClient(ar);
         //add to server list
-        if (!clients.Contains(listener))
+        int hashCode = client.GetHashCode();
+        if (!sessions.ContainsKey(hashCode))
         {
-            clients.Add(client);
-            sessions.Add(new Session(client));
-            Debug.Log("new clinet"+client.GetHashCode());
+            var ses = new Session(client);
+            sessions[hashCode] = ses;//.Add(ses);
+            newClients.Add(ses);
+            Debug.Log("new client" + client.GetHashCode() + " ManagedThreadId " + System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
         server.BeginAcceptTcpClient(DoAcceptTcpClientCallback, server); //开始监听
-
-        // Process the connection here. (Add the client to a
-        // server table, read data, etc.)
-
-        //Debug.Log(" Available = " + client.Available);
-        //tcpClientConnected.Set();
     }
-	#endregion
+    #endregion
 }

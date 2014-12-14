@@ -98,7 +98,7 @@ function AssetLoader:clear()
 	self.url=nil
 	self.name=nil
 	self.luaObj.assetsLoaded = false
-    unloadUnusedAssets()
+    -- unloadUnusedAssets()
 end
 
 function AssetLoader:load(asts)

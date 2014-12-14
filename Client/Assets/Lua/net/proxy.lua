@@ -74,6 +74,12 @@ end
  -- 	local fun = self.errorTables[code..""]
  -- 	if fun ~= nil then	fun(code) end
  -- end
+function Proxy:getMsg(api,content)
+	local msg=Msg()
+	msg.Type = api.Code
+	NetProtocalPaser:formatMessage(msg,api.Code,content) 
+	return msg
+end
 
 --发送消息到服务端
 function Proxy:send(api,content)
@@ -84,11 +90,7 @@ function Proxy:send(api,content)
 	Net:Send(msg)
 end
 
---发送消息到服务端
-function Proxy:sendChat(api,content)
-	local msg=Msg()
-	-- print(msg)
-	msg:set_Type(api.Code)
-	NetProtocalPaser:formatMessage(msg,api.Code,content) 
-	NetChat:Send(msg)
+--关闭
+function Proxy:close()
+	Net:Close()
 end

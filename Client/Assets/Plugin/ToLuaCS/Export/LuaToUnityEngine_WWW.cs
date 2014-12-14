@@ -642,18 +642,18 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int _www(LuaState L)
           {
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[] && ToLuaCS.getObject(L, 4) is System.Collections.Hashtable)
-              {
-                  System.String url_ =  LuaDLL.lua_tostring(L,2); 
+              //if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[] && ToLuaCS.getObject(L, 4) is System.Collections.Hashtable)
+              //{
+              //    System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
-                  System.Collections.Hashtable headers_ = (System.Collections.Hashtable)ToLuaCS.getObject(L,4);
+              //    System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
+              //    System.Collections.Hashtable headers_ = (System.Collections.Hashtable)ToLuaCS.getObject(L,4);
 
-                  UnityEngine.WWW _www= new UnityEngine.WWW( url_, postData_, headers_);
-                  ToLuaCS.push(L,_www); 
-                  return 1;
+              //    UnityEngine.WWW _www= new UnityEngine.WWW( url_, postData_, headers_);
+              //    ToLuaCS.push(L,_www); 
+              //    return 1;
 
-              }
+              //}
               if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[] && ToLuaCS.getObject(L, 4) is System.Collections.Generic.Dictionary<System.String,System.String>)
               {
                   System.String url_ =  LuaDLL.lua_tostring(L,2); 

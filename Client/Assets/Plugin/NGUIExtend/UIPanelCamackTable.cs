@@ -15,10 +15,37 @@ using Lua = LuaInterface.LuaState;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/UIPanel Camack Table ")]
-public class UIPanelCamackTable : MonoBehaviour {
-	
-	#region public attribute
-	public enum Direction
+public class UIPanelCamackTable : MonoBehaviour
+{
+
+    #region public static
+    /// <summary>
+    /// ²åÈëÊý¾ÝµÄÊ±ºòµ÷ÓÃ
+    /// </summary>
+    public static string DataInsertStr = @"return function(data,index,script)
+      if script.data==nil then script.data={} end
+      local lenold=#script.data
+      table.insert(script.data,index,data)
+  end";
+
+    /// <summary>
+    /// ÒÆ³ýÊý¾ÝµÄÊ±ºòµ÷ÓÃ
+    /// </summary>
+    public static string DataRemoveStr = @"return function(data,index,script)
+      table.remove(data,index)
+  end";
+
+    /// <summary>
+    /// Ô¤äÖÈ¾µÄÊ±ºòµ÷ÓÃ
+    /// </summary>
+    public static string PreRenderStr = @"return function(referScipt,index,dataItem)
+    referScipt.name=""Pre""..tostring(index)  
+    referScipt.gameObject:SetActive(false)
+  end";
+    #endregion
+
+    #region public attribute
+    public enum Direction
 	{
 		Down,
 		Up,
@@ -122,12 +149,10 @@ public class UIPanelCamackTable : MonoBehaviour {
 		int i=getIndex(item);
 		if(i>=0)
 		{
-			if(onDataRemove!=null)
-			{
-				onDataRemove.Call(new object[]{this.data,i+1,this});
-				this.CalcPage();
-			}
-		}
+            if (onDataRemove == null) onDataRemove = PLua.instance.lua.LoadString(DataRemoveStr, "onDataRemove");
+            onDataRemove.Call(this.data,i+1,this);
+			this.CalcPage();
+        }
 		return i;
 	}
 	
@@ -135,8 +160,8 @@ public class UIPanelCamackTable : MonoBehaviour {
 	{
 		if(index<0)index=0;
 		if(index>=this.recordCount)index=this.recordCount;
-		if(onDataInsert!=null)
-			onDataInsert.Call(new object[]{item,index+1,this});
+        if (onDataInsert == null) onDataInsert = PLua.instance.lua.LoadString(DataInsertStr, "onDataInsert");
+		onDataInsert.Call(item,index+1,this);
 		this.CalcPage();
 		return index;
 	}
@@ -145,12 +170,10 @@ public class UIPanelCamackTable : MonoBehaviour {
 	{
 		if(index>=0 && index<this.recordCount)
 		{
-			if(onDataRemove!=null)
-			{
-				onDataRemove.Call(new object[]{data,index+1,this});
-				this.CalcPage();
-			}
-			return index;
+            if (onDataRemove == null) onDataRemove = PLua.instance.lua.LoadString(DataRemoveStr, "onDataRemove");
+            onDataRemove.Call(data,index+1,this);
+			this.CalcPage();
+            return index;
 		}
 		
 		return -1;
@@ -434,11 +457,9 @@ public class UIPanelCamackTable : MonoBehaviour {
 	void preRender(ReferGameObjects item,int index)
 	{
 		setPosition(item.transform,index);
-		if(this.onPreRender!=null)
-		{
-			object dataI=index+1<=recordCount?data[index+1]:null;
-			onPreRender.Call(new object[]{item,index,dataI});
-		}
+        if (this.onPreRender == null) onPreRender = PLua.instance.lua.LoadString(PreRenderStr, "onPreRenderStr");
+		object dataI=index+1<=recordCount?data[index+1]:null;
+		onPreRender.Call(new object[]{item,index,dataI});
 	}
 	
 	void preRefresh(int i)

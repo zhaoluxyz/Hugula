@@ -92,14 +92,23 @@ function Loader:clear(key)
 			self:clearItem(k)
 		end
 	end 
-    unloadUnusedAssets()
+--    unloadUnusedAssets()
+end
+
+function Loader:clearSharedAB()
+    local share = Loader.shareCache
+    for k,v in pairs(share) do
+        disposeWWW(v)
+        print("clearSharedAB "..k)
+    end
+    Loader.shareCache = {}
 end
 
 function Loader:unload(url)
 	if url then
 		local key=CUtils.getURLFullFileName(url)
 		self:clearItem(key)
-        unloadUnusedAssets()
+--        unloadUnusedAssets()
 	end
 end
 
@@ -137,15 +146,17 @@ local function onSharedComplete(req)
 		local key=req.key
 		local www=req.data
 		local name = www.assetBundle.mainAsset:GetType().Name
+        Loader.resdic[key]= www
+        Loader.shareCache[key] = www
 		if name == "GameObject" then
 			LuaHelper.RefreshShader(www)
-			local m = www.assetBundle.mainAsset--LuaHelper.Instantiate(www.assetBundle.mainAsset)
-			Loader.resdic[key]= m
-			Loader.shareCache[key] = m
+--			local m = www.assetBundle.mainAsset--LuaHelper.Instantiate(www.assetBundle.mainAsset)
+--			Loader.resdic[key]= www
+			Loader.shareCache[key] = www
 			--local dis = function()  disposeWWW(www)  print("dispose www"..key) end
 			--delay(dis,5,nil)
 		else
-			Loader.resdic[key] = www.assetBundle.mainAsset --www.assetBundle.mainAsset
+--			Loader.resdic[key] = www.assetBundle.mainAsset --www.assetBundle.mainAsset
 			--www.assetBundle:Unload(false) 
 			--disposeWWW(www)
 		end

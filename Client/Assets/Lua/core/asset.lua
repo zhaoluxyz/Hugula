@@ -30,6 +30,19 @@ function Asset:clear()
 	self.items={}
 end
 
+--显示一些状态
+function Asset:showState(states)
+	local items = self.items
+	for k,v in pairs(items) do
+		v:SetActive(false)
+		for k1,v1 in ipairs(states) do
+			if v1==k then
+				v:SetActive(true)
+			end
+		end
+	end
+end
+
 function Asset:show(...)
 	if self.names then
 		for k,v in pairs(self.names) do

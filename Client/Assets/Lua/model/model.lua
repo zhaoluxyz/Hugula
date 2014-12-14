@@ -23,3 +23,7 @@ Model.buff = {}
 function Model.getBuff(id)
 	return Model.buff[id..""]
 end
+
+Model.session = 0 --sessionID
+Model.isServer = false --是否服务器
+Model.clientName = "" --名称
