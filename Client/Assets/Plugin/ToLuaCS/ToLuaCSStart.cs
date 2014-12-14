@@ -8,18 +8,19 @@ public static class ToLuaCSStart  {
   
   public static void Start(LuaState L){
   
-      LuaToUnityEngine_Object.CreateMetaTableToLua(L);
       LuaToSystem_Object.CreateMetaTableToLua(L);
-      LuaToUnityEngine_Vector3.CreateMetaTableToLua(L);
       LuaToUnityEngine_WWW.CreateMetaTableToLua(L);
-      LuaToUnityEngine_Time.CreateMetaTableToLua(L);
+      LuaToUnityEngine_Object.CreateMetaTableToLua(L);
       LuaToUnityEngine_MonoBehaviour.CreateMetaTableToLua(L);
-      LuaToUnityEngine_Transform.CreateMetaTableToLua(L);
+      LuaToUnityEngine_Vector3.CreateMetaTableToLua(L);
       LuaToUnityEngine_Resources.CreateMetaTableToLua(L);
-      LuaToUnityEngine_Quaternion.CreateMetaTableToLua(L);
+      LuaToUnityEngine_Time.CreateMetaTableToLua(L);
       LuaToUnityEngine_Random.CreateMetaTableToLua(L);
-      LuaToiTween.CreateMetaTableToLua(L);
+      LuaToUnityEngine_Transform.CreateMetaTableToLua(L);
       LuaToUnityEngine_RenderSettings.CreateMetaTableToLua(L);
+      LuaToUnityEngine_Quaternion.CreateMetaTableToLua(L);
+      LuaToUnityEngine_MasterServer.CreateMetaTableToLua(L);
+      LuaToiTween.CreateMetaTableToLua(L);
       LuaToUnityEngine_Camera.CreateMetaTableToLua(L);
       LuaToUnityEngine_GameObject.CreateMetaTableToLua(L);
       LuaToUIPanelCamackTable.CreateMetaTableToLua(L);

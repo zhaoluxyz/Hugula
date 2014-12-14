@@ -45,7 +45,7 @@ public class ToLuaCSEditor
         }
     }
 
-    [MenuItem("Assets/ToLuaCS/LuaToCS Build To Script", false, 2)]
+    //[MenuItem("Assets/ToLuaCS/LuaToCS Build To Script", false, 2)]
     static void ExportLuaToCS()
     {
         UnityEngine.Object[] objs = Selection.objects;
@@ -56,7 +56,7 @@ public class ToLuaCSEditor
         }
     }
 
-    [MenuItem("Assets/ToLuaCS/LuaToCS DeclaredOnly Build To Script", false, 1)]
+    //[MenuItem("Assets/ToLuaCS/LuaToCS DeclaredOnly Build To Script", false, 1)]
     static void ExportLuaToCS1()
     {
         UnityEngine.Object[] objs = Selection.objects;

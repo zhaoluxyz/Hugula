@@ -1,4 +1,4 @@
-require("game.server.ServerMsgHelperr")
+require("game.server.serverMsgHelperr")
 local hall = LuaItemManager:getItemObject("hall")
 local StateManager = StateManager
 local delay = delay
@@ -12,7 +12,7 @@ local NetAPIList = NetAPIList
 local SystemInfo = luanet.UnityEngine.SystemInfo
 local ServerMsgHelperr = ServerMsgHelperr
 local NGUIText = luanet.NGUIText
-local MasterServer = luanet.UnityEngine.MasterServer
+local MasterServer = toluacs.UnityEngine.MasterServer
 hall.assets=
 {
   Asset("Hall.u3d",{"Main","Create"})
