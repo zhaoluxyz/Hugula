@@ -32,10 +32,10 @@ public class ExportResources{
 
 
     #region export
-    [MenuItem("Pu Game/", false, 11)]
+    [MenuItem("Hugula/", false, 11)]
     static void Breaker() { }
 
-	[MenuItem("Pu Game/export lua [Assets\\Lua]",false,12)]
+    [MenuItem("Hugula/export lua [Assets\\Lua]", false, 12)]
 	public static void exportLua()
 	{
 		checkLuaExportPath();
@@ -79,7 +79,7 @@ public class ExportResources{
 		 Debug.Log("lua:"+path+"files="+files.Count+" completed");
 	}
 
-    [MenuItem("Pu Game/export config [Assets\\Config]", false, 13)]
+    [MenuItem("Hugula/export config [Assets\\Config]", false, 13)]
 	public static void exportConfig()
 	{
 		string  path= Application.dataPath+"/Config"; //AssetDatabase.GetAssetPath(obj).Replace("Assets","");
@@ -110,7 +110,7 @@ public class ExportResources{
 
 	}
 
-    [MenuItem("Pu Game/export language [Assets\\Lan]", false, 14)]
+    [MenuItem("Hugula/export language [Assets\\Lan]", false, 14)]
     public static void exportLanguage()
     {
         string assetPath = "Assets/Lan/";
@@ -130,10 +130,10 @@ public class ExportResources{
         }
     }
 
-    [MenuItem("Pu Game/", false, 15)]
+    [MenuItem("Hugula/", false, 15)]
     static void Breaker1() { }
 
-    [MenuItem("Pu Game/android export one key ", false,15)]
+    [MenuItem("Hugula/android export one key ", false, 15)]
 	public static void exporAndroid()
 	{
 		exportLua();
@@ -215,7 +215,7 @@ public class ExportResources{
 
     }
 
-    [MenuItem("Pu Game/other platform export one key ", false, 16)]
+    [MenuItem("Hugula/other platform export one key ", false, 16)]
 	public static void exportIphone()
 	{
 		exportLua();

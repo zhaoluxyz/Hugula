@@ -73,6 +73,7 @@ public class MultipleLoader  {
 		  	//this.totalLoading=this.queue.size();
 			this.currentWillLoading=0;
 			this.currentLoaded=0;
+            this.loadingEvent.current = currentLoaded;
 		}else
 		{
 			//this.totalLoading=totalLoading+this.queue.size();
@@ -139,7 +140,7 @@ public class MultipleLoader  {
 	{
 		loadingEvent.target=this;
 		loadingEvent.total=totalLoading;
-		loadingEvent.current=currentLoaded;
+        if(loadingEvent.current<currentLoaded)loadingEvent.current=currentLoaded;
 		loadingEvent.progress=progress;
 		loadingEvent.number=loader.number;
 		if(OnProgress!=null && totalLoading>0)
@@ -286,7 +287,6 @@ public class MultipleLoader  {
 			this.BeginQueue();
 		}else
 		{
-            currentLoaded++;
 			req.DispatchEnd();
 			BeginQueue();		
 			CheckAllComplete();	

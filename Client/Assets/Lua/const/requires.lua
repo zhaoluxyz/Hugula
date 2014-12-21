@@ -16,4 +16,4 @@ require("state.stateManager")
 require("state.itemObject")
 require("state.stateBase")
 
-require("model.model")
+require("game.model.model")

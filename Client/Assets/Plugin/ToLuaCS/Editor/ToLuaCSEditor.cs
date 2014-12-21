@@ -24,7 +24,8 @@ public class ToLuaCSEditor
     [MenuItem("Assets/", false, 2)]
     static void Breaker() { }
 
-    [MenuItem("Assets/ToLuaCS/LuaToCS Build To (Plugin)", false, 4)]
+    [MenuItem("Assets/ToLuaCS/Generate LuaToCS(xxx)", false, 4)]
+    [MenuItem("ToLuaCS/Generate LuaToCS(xxx)", false, 4)]
     static void ExportLuaToCSP()
     {
         UnityEngine.Object[] objs = Selection.objects;
@@ -34,7 +35,9 @@ public class ToLuaCSEditor
             ExportFullCalssMtLua(o.name, OutLuaPath);
         }
     }
-    [MenuItem("Assets/ToLuaCS/LuaToCS DeclaredOnly Build To (Plugin) Floder", false ,3)]
+
+    [MenuItem("Assets/ToLuaCS/ Generate DeclaredOnly LuaToCS(xxx)", false, 3)]
+    [MenuItem("ToLuaCS/Generate DeclaredOnly LuaToCS(xxx) ", false, 3)]
     static void ExportLuaToCSP1()
     {
         UnityEngine.Object[] objs = Selection.objects;
@@ -45,29 +48,8 @@ public class ToLuaCSEditor
         }
     }
 
-    //[MenuItem("Assets/ToLuaCS/LuaToCS Build To Script", false, 2)]
-    static void ExportLuaToCS()
-    {
-        UnityEngine.Object[] objs = Selection.objects;
-
-        foreach (var o in objs)
-        {
-            ExportFullCalssMtLua(o.name, OutLuaPath1);
-        }
-    }
-
-    //[MenuItem("Assets/ToLuaCS/LuaToCS DeclaredOnly Build To Script", false, 1)]
-    static void ExportLuaToCS1()
-    {
-        UnityEngine.Object[] objs = Selection.objects;
-
-        foreach (var o in objs)
-        {
-            ExportDeclaredOnlyClassMtLua(o.name, OutLuaPath1);
-        }
-    }
-
-    [MenuItem("Assets/ToLuaCS/LuaToCS Start Class", false, 5)]
+    [MenuItem("Assets/ToLuaCS/Generate ToLuaCSStart", false, 5)]
+    [MenuItem("ToLuaCS/Generate ToLuaCSStart ", false, 5)]
     static void ExprotLuatoStartClass()
     {
         StringBuilder sbTmp = new StringBuilder();

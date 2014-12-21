@@ -79,8 +79,14 @@ function ItemObject:onFocus( ... )
         self:show()  
         self:onShowed()     
     else
-        StateManager:checkShowTransform()
-        self.assetLoader:load(self.assets)  
+        if self.assets and #self.assets>=1 then --如果没有资源
+            StateManager:checkShowTransform()
+            self.assetLoader:load(self.assets)  
+        else
+            self.assetsLoaded = true
+            self:show()  
+            self:onShowed() 
+        end
     end
     -- self:setActive(true)
 end

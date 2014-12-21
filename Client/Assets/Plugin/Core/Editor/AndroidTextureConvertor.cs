@@ -9,10 +9,11 @@ using System.Collections.Generic;
 public class AndroidTextureConvertor
 {
 
-    [MenuItem("Pu Game/", false, 20)]
+    [MenuItem("Hugula/", false, 20)]
     static void Breaker() { }
 
-     [MenuItem("Pu Game/AndroidAtlasConver ", false, 21)]
+     [MenuItem("Hugula/AndroidAtlasConver ", false, 21)]
+     [MenuItem("Assets/Hugula_AndroidAtlasConver", false, 21)]
     static void ConvertUIAtlas()
     {
         Object selPrefab = Selection.activeObject;
