@@ -518,11 +518,11 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int DebugRequireLua(LuaState L)
           {
-                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
+                  //System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
 
-                  System.Int32 debugrequirelua= PLua.DebugRequireLua( L_);
-                  ToLuaCS.push(L,debugrequirelua); 
-                  return 1;
+                  //System.Int32 debugrequirelua= PLua.DebugRequireLua( L_);
+                  //ToLuaCS.push(L,debugrequirelua); 
+              return 1;
 
           }
           
@@ -531,8 +531,8 @@ public static class LuaToPLua {
           {
                   System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
 
-                  System.Int32 requirelua= PLua.RequireLua( L_);
-                  ToLuaCS.push(L,requirelua); 
+                  //System.Int32 requirelua= PLua.RequireLua( L_);
+                  //ToLuaCS.push(L,requirelua); 
                   return 1;
 
           }

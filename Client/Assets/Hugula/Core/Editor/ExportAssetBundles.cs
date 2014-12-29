@@ -126,7 +126,11 @@ public class ExportAssetBundles
             //}
         }
 
+#if UNITY_5
+        EditorUtility.UnloadUnusedAssetsImmediate();
+#else
         EditorUtility.UnloadUnusedAssets();
+#endif
     }
 
 	static void ExportGourpAssetBundleDependenGameObject(BuildTarget btarget)
@@ -150,7 +154,11 @@ public class ExportAssetBundles
 		}
 		
 		BuildPipeline.PopAssetDependencies();
-		EditorUtility.UnloadUnusedAssets();
+#if UNITY_5
+        EditorUtility.UnloadUnusedAssetsImmediate();
+#else
+        EditorUtility.UnloadUnusedAssets();
+#endif
 	}
 
 
@@ -190,7 +198,11 @@ public class ExportAssetBundles
          }
 
          BuildPipeline.PopAssetDependencies();
-		EditorUtility.UnloadUnusedAssets();
+#if UNITY_5
+         EditorUtility.UnloadUnusedAssetsImmediate();
+#else
+        EditorUtility.UnloadUnusedAssets();
+#endif
      }
 	
 	static void ExportGourpAssetBundle(BuildTarget btarget)
@@ -214,8 +226,12 @@ public class ExportAssetBundles
 		}
 		
 		BuildPipeline.PopAssetDependencies();
-		
-		EditorUtility.UnloadUnusedAssets();
+
+#if UNITY_5
+        EditorUtility.UnloadUnusedAssetsImmediate();
+#else
+        EditorUtility.UnloadUnusedAssets();
+#endif
 	}
 	
 	static void checkstreamingAssetsPath()

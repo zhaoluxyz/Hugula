@@ -200,7 +200,6 @@ public class PLua : MonoBehaviour
     /// </summary>
     public void DoMain()
     {
-        Debug.Log("DoMain");
         lua.DoString(this.luaMain);
     }
 
@@ -218,26 +217,22 @@ public class PLua : MonoBehaviour
 
     public void RegisterFunc()
     {
-#if UNITY_EDITOR
-        if (isDebug)
-        {
-            requireFunction = new LuaCSFunction(DebugRequireLua);
-            LuaDLL.lua_pushstdcallcfunction(luaState, requireFunction);
-            LuaDLL.lua_setfield(luaState, LuaIndexes.LUA_GLOBALSINDEX, "require");
-        }
-        else
-        {
-            requireFunction = new LuaCSFunction(RequireLua);
-            LuaDLL.lua_pushstdcallcfunction(luaState, requireFunction);
-            LuaDLL.lua_setfield(luaState, LuaIndexes.LUA_GLOBALSINDEX, "require");
-        }
-
-#else
-        requireFunction = new LuaCSFunction(RequireLua);
+        requireFunction = new LuaCSFunction(Require);
 		LuaDLL.lua_pushstdcallcfunction(luaState, requireFunction);
 		LuaDLL.lua_setfield(luaState, LuaIndexes.LUA_GLOBALSINDEX, "require");
-#endif
+    }
 
+    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+    public static int Require(LuaState L)
+    {
+#if UNITY_EDITOR
+        if (isDebug)
+            return DebugRequireLua(L);
+        else
+            return RequireLua(L);
+#else
+         return RequireLua(L);
+#endif
     }
 
     private static char[] split = new char[] { ';' };
@@ -248,8 +243,8 @@ public class PLua : MonoBehaviour
     /// debug
     /// </summary>
     /// <param name="L">L.</param>
-    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-    public static int DebugRequireLua(LuaState L)
+
+    private static int DebugRequireLua(LuaState L)
     {
         string modle = LuaDLL.lua_tostring(L, 1);
         string path = modle.Replace(".", "/");
@@ -281,7 +276,7 @@ public class PLua : MonoBehaviour
 #endif
 
     [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-    public static int RequireLua(LuaState L)
+    private static int RequireLua(LuaState L)
     {
         string fileName = String.Empty;
 
