@@ -38,13 +38,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-#if Nlua
-using NLua;
-using Lua = NLua.Lua;
-#else
 using LuaInterface;
 using Lua = LuaInterface.LuaState;
-#endif
 #endregion
 
 /// <summary>

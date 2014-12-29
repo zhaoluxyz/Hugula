@@ -95,16 +95,6 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_set_onDestroyFn);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"get_isDebug");
-          luafn_get_isDebug= new LuaCSFunction(get_isDebug);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isDebug);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"set_isDebug");
-          luafn_set_isDebug= new LuaCSFunction(set_isDebug);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_isDebug);
-          LuaDLL.lua_rawset(L, -3);
-
           LuaDLL.lua_pushstring(L,"get_lua");
           luafn_get_lua= new LuaCSFunction(get_lua);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_lua);
@@ -199,14 +189,9 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isNlua);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"DebugRequireLua");
-          luafn_DebugRequireLua= new LuaCSFunction(DebugRequireLua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_DebugRequireLua);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"RequireLua");
-          luafn_RequireLua= new LuaCSFunction(RequireLua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_RequireLua);
+          LuaDLL.lua_pushstring(L,"Require");
+          luafn_Require= new LuaCSFunction(Require);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Require);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"Log");
@@ -234,6 +219,16 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn__plua);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"get_isDebug");
+          luafn_get_isDebug= new LuaCSFunction(get_isDebug);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isDebug);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"set_isDebug");
+          luafn_set_isDebug= new LuaCSFunction(set_isDebug);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_isDebug);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"get_luacache");
           luafn_get_luacache= new LuaCSFunction(get_luacache);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_luacache);
@@ -257,8 +252,6 @@ public static class LuaToPLua {
           private static LuaCSFunction luafn_set_enterLua;
           private static LuaCSFunction luafn_get_onDestroyFn;
           private static LuaCSFunction luafn_set_onDestroyFn;
-          private static LuaCSFunction luafn_get_isDebug;
-          private static LuaCSFunction luafn_set_isDebug;
           private static LuaCSFunction luafn_get_lua;
           private static LuaCSFunction luafn_set_lua;
           private static LuaCSFunction luafn_get_net;
@@ -271,13 +264,14 @@ public static class LuaToPLua {
   #region statics declaration       
           private static LuaCSFunction luafn_get_package_path;
           private static LuaCSFunction luafn_get_isNlua;
-          private static LuaCSFunction luafn_DebugRequireLua;
-          private static LuaCSFunction luafn_RequireLua;
+          private static LuaCSFunction luafn_Require;
           private static LuaCSFunction luafn_Log;
           private static LuaCSFunction luafn_Delay;
           private static LuaCSFunction luafn_StopDelay;
           private static LuaCSFunction luafn_get_instance;
           private static LuaCSFunction luafn__plua;
+          private static LuaCSFunction luafn_get_isDebug;
+          private static LuaCSFunction luafn_set_isDebug;
           private static LuaCSFunction luafn_get_luacache;
           private static LuaCSFunction luafn_set_luacache;
  #endregion        
@@ -380,27 +374,6 @@ public static class LuaToPLua {
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.onDestroyFn= (LuaInterface.LuaFunction)val;
-                  return 0;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_isDebug(LuaState L)
-          {
-                  object original = ToLuaCS.getObject(L, 1);
-                  PLua target= (PLua) original ;
-                  //var val=  target.isDebug;
-                  //ToLuaCS.push(L,val);
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int set_isDebug(LuaState L)
-          {
-                  object original = ToLuaCS.getObject(L, 1);
-                  PLua target= (PLua) original;
-                  //target.isDebug= LuaDLL.lua_toboolean(L,2);
                   return 0;
 
           }
@@ -509,30 +482,19 @@ public static class LuaToPLua {
           public static int get_isNlua(LuaState L)
           {
 
-                  System.Boolean isNlua= PLua.isNlua;
-                  ToLuaCS.push(L,isNlua); 
+                  //System.Boolean isNlua= PLua.isNlua;
+                  ToLuaCS.push(L,false); 
                   return 1;
 
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int DebugRequireLua(LuaState L)
-          {
-                  //System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
-
-                  //System.Int32 debugrequirelua= PLua.DebugRequireLua( L_);
-                  //ToLuaCS.push(L,debugrequirelua); 
-              return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int RequireLua(LuaState L)
+          public static int Require(LuaState L)
           {
                   System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
 
-                  //System.Int32 requirelua= PLua.RequireLua( L_);
-                  //ToLuaCS.push(L,requirelua); 
+                  System.Int32 require= PLua.Require( L_);
+                  ToLuaCS.push(L,require); 
                   return 1;
 
           }
@@ -587,6 +549,23 @@ public static class LuaToPLua {
                   PLua _plua= new PLua();
                   ToLuaCS.push(L,_plua); 
                   return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_isDebug(LuaState L)
+          {
+                  var val=   PLua.isDebug;
+                  ToLuaCS.push(L,val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_isDebug(LuaState L)
+          {
+                  PLua.isDebug= LuaDLL.lua_toboolean(L,1);
+                  return 0;
 
           }
           

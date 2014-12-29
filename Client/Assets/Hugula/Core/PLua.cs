@@ -9,16 +9,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System;
 using System.Text;
-#if Nlua
-using NLua;
-using Lua = NLua.Lua;
-#else
+
 using LuaInterface;
 using Lua = LuaInterface.LuaState;
 using LuaState = System.IntPtr;
 using MonoPInvokeCallbackAttribute = LuaInterface.MonoPInvokeCallbackAttribute;
 using LuaCSFunction = LuaInterface.LuaCSFunction;
-#endif
 
 public class PLua : MonoBehaviour
 {
@@ -40,7 +36,6 @@ public class PLua : MonoBehaviour
     //入口lua
     private string luaMain = "";
 
-    public static bool isNlua { private set; get; }
     //程序集名key
     private const string assemblyname = "assemblyname";
     private LuaCSFunction requireFunction;
@@ -67,14 +62,8 @@ public class PLua : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
         luacache = new Dictionary<string, TextAsset>();
-#if Nlua
         lua = new Lua();
-        isNlua = true;
-#else
-        lua = new Lua();
-        isNlua = false;
         luaState = lua.L;
-#endif
         ToLuaCS.lua = lua;
         _instance = this;
         LoadScript();

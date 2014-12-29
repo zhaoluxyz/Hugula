@@ -3,13 +3,9 @@
 //
 using UnityEngine;
 using System.Collections;
-#if Nlua
-using NLua;
-using Lua = NLua.Lua;
-#else
+
 using LuaInterface;
 using Lua = LuaInterface.LuaState;
-#endif
 
 public class NGUIEvent :MonoBehaviour {
 

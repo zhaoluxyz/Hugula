@@ -3,11 +3,7 @@
 //
 using UnityEngine;
 using System.Collections;
-#if Nlua
-using NLua;
-#else
 using LuaInterface;
-#endif
 
 public class LRequest : CRequest {
 

@@ -4,14 +4,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
-#if Nlua
-using NLua;
-using LuaState = KeraLua.LuaState;
-#else
+
 using LuaInterface;
 using LuaState =LuaInterface.LuaState;
-#endif
 
+/// <summary>
+/// lua helper类
+/// </summary>
 public class  LuaHelper {
 
     /// <summary>

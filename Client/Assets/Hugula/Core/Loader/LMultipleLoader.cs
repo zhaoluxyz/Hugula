@@ -3,11 +3,7 @@
 //
 using UnityEngine;
 using System.Collections.Generic;
-#if Nlua
-using NLua;
-#else
 using LuaInterface;
-#endif
 
 
 public class LMultipleLoader : MultipleLoader {

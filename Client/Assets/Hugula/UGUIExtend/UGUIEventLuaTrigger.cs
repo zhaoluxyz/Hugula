@@ -5,13 +5,9 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-#if Nlua
-using NLua;
-using Lua = NLua.Lua;
-#else
 using LuaInterface;
 using Lua = LuaInterface.LuaState;
-#endif
+
 /// <summary>
 /// Attaching this script to an object will let you trigger remote functions using NGUI events.
 /// </summary>

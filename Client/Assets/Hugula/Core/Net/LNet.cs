@@ -7,12 +7,10 @@ using System.Net.Sockets;
 using System;
 using System.IO;
 using System.Threading;
-#if Nlua
-using NLua;
-#else
 using LuaInterface;
-#endif
-
+/// <summary>
+/// ÍøÂçÁ¬½ÓÀà
+/// </summary>
 public class LNet :IDisposable  {
 
     TcpClient client;
