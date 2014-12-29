@@ -27,7 +27,7 @@ public  class Common
     /// <summary>
     /// the lua suffix
     /// </summary>
-    public const string LUA_LC_SUFFIX = "txt";
+    public const string LUA_LC_SUFFIX = "bytes";
 
     /// <summary>
     /// config.tz pwd

@@ -73,9 +73,8 @@ public class ExportResources{
             sb.Append(crypName);
             sb.Append("\n");
 
-            //System.Diagnostics.Process.Start(luacPath, arg);//arg -b hello1.lua hello1.out
-
-            File.Copy(filePath, outfilePath, true);
+            System.Diagnostics.Process.Start(luacPath, arg);//arg -b hello1.lua hello1.out
+            //File.Copy(filePath, outfilePath, true);
 		 }
             Debug.Log(sb.ToString());
 		 Debug.Log("lua:"+path+"files="+files.Count+" completed");

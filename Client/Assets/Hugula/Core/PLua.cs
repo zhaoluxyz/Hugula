@@ -25,7 +25,7 @@ public class PLua : MonoBehaviour
 
     public string enterLua = "main";
     public LuaFunction onDestroyFn;
-    public bool isDebug = true;
+    public static bool isDebug = true;
 
     public Lua lua;
     public LNet net;
@@ -253,7 +253,7 @@ public class PLua : MonoBehaviour
     {
         string modle = LuaDLL.lua_tostring(L, 1);
         string path = modle.Replace(".", "/");
-        //object[] re=null;
+
         string paths = package_path.Replace("?", path);
         string[] lua_paths = paths.Split(split);
         LuaDLL.lua_pop(L, 1);
@@ -299,7 +299,7 @@ public class PLua : MonoBehaviour
         if (luacache.ContainsKey(fileName))
         {
             TextAsset file = luacache[fileName];
-            if (LuaDLL.luaL_loadbuffer(L, file.text, Encoding.UTF8.GetByteCount(file.text), fileName) == 0)
+            if (LuaDLL.luaL_loadbuffer(L, file.bytes, file.bytes.Length, fileName) == 0)
             {
                 LuaDLL.lua_call(L, 0, 1);// LuaDLL.LUA_MULTRET
             }

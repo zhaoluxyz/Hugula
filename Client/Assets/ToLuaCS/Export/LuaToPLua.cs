@@ -389,8 +389,8 @@ public static class LuaToPLua {
           {
                   object original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
-                  var val=  target.isDebug;
-                  ToLuaCS.push(L,val);
+                  //var val=  target.isDebug;
+                  //ToLuaCS.push(L,val);
                   return 1;
 
           }
@@ -400,7 +400,7 @@ public static class LuaToPLua {
           {
                   object original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
-                  target.isDebug= LuaDLL.lua_toboolean(L,2);
+                  //target.isDebug= LuaDLL.lua_toboolean(L,2);
                   return 0;
 
           }
