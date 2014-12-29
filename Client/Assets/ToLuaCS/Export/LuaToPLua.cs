@@ -60,6 +60,16 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_set_updateFn);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"DoMain");
+          luafn_DoMain= new LuaCSFunction(DoMain);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_DoMain);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"LoadBundle");
+          luafn_LoadBundle= new LuaCSFunction(LoadBundle);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadBundle);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"RegisterFunc");
           luafn_RegisterFunc= new LuaCSFunction(RegisterFunc);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_RegisterFunc);
@@ -189,6 +199,16 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isNlua);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"DebugRequireLua");
+          luafn_DebugRequireLua= new LuaCSFunction(DebugRequireLua);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_DebugRequireLua);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"RequireLua");
+          luafn_RequireLua= new LuaCSFunction(RequireLua);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_RequireLua);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"Log");
           luafn_Log= new LuaCSFunction(Log);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_Log);
@@ -204,11 +224,6 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_StopDelay);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"DelayLua");
-          luafn_DelayLua= new LuaCSFunction(DelayLua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_DelayLua);
-          LuaDLL.lua_rawset(L, -3);
-
           LuaDLL.lua_pushstring(L,"get_instance");
           luafn_get_instance= new LuaCSFunction(get_instance);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_instance);
@@ -219,12 +234,24 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn__plua);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"get_luacache");
+          luafn_get_luacache= new LuaCSFunction(get_luacache);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_luacache);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"set_luacache");
+          luafn_set_luacache= new LuaCSFunction(set_luacache);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_luacache);
+          LuaDLL.lua_rawset(L, -3);
+
 #endregion       
          }
 }
   #region instances declaration       
           private static LuaCSFunction luafn_get_updateFn;
           private static LuaCSFunction luafn_set_updateFn;
+          private static LuaCSFunction luafn_DoMain;
+          private static LuaCSFunction luafn_LoadBundle;
           private static LuaCSFunction luafn_RegisterFunc;
           private static LuaCSFunction luafn_get_enterLua;
           private static LuaCSFunction luafn_set_enterLua;
@@ -244,12 +271,15 @@ public static class LuaToPLua {
   #region statics declaration       
           private static LuaCSFunction luafn_get_package_path;
           private static LuaCSFunction luafn_get_isNlua;
+          private static LuaCSFunction luafn_DebugRequireLua;
+          private static LuaCSFunction luafn_RequireLua;
           private static LuaCSFunction luafn_Log;
           private static LuaCSFunction luafn_Delay;
           private static LuaCSFunction luafn_StopDelay;
-          private static LuaCSFunction luafn_DelayLua;
           private static LuaCSFunction luafn_get_instance;
           private static LuaCSFunction luafn__plua;
+          private static LuaCSFunction luafn_get_luacache;
+          private static LuaCSFunction luafn_set_luacache;
  #endregion        
   #region  instances method       
           
@@ -273,6 +303,29 @@ public static class LuaToPLua {
                   object original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   target.updateFn= value_;
+                 return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int DoMain(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  PLua target= (PLua) original ;
+                  target.DoMain();
+                 return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int LoadBundle(LuaState L)
+          {
+                  System.Boolean domain_ =  LuaDLL.lua_toboolean(L,2);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  PLua target= (PLua) original ;
+                  target.LoadBundle( domain_);
                  return 0;
 
           }
@@ -463,6 +516,28 @@ public static class LuaToPLua {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int DebugRequireLua(LuaState L)
+          {
+                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
+
+                  System.Int32 debugrequirelua= PLua.DebugRequireLua( L_);
+                  ToLuaCS.push(L,debugrequirelua); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int RequireLua(LuaState L)
+          {
+                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
+
+                  System.Int32 requirelua= PLua.RequireLua( L_);
+                  ToLuaCS.push(L,requirelua); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Log(LuaState L)
           {
                   System.Object msg_ = (System.Object)ToLuaCS.getObject(L,1);
@@ -487,25 +562,11 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int StopDelay(LuaState L)
           {
-                  System.String methodName_ =  LuaDLL.lua_tostring(L,1);
+                  System.String methodName_ =  LuaDLL.lua_tostring(L,1); 
 
-                  if (string.IsNullOrEmpty(methodName_))
-                      PLua.StopDelay();
-                  else
-                      PLua.StopDelay(methodName_);
 
+                  PLua.StopDelay( methodName_);
                  return 0;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int DelayLua(LuaState L)
-          {
-                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
-
-                  System.Int32 delaylua= PLua.DelayLua( L_);
-                  ToLuaCS.push(L,delaylua); 
-                  return 1;
 
           }
           
@@ -526,6 +587,24 @@ public static class LuaToPLua {
                   PLua _plua= new PLua();
                   ToLuaCS.push(L,_plua); 
                   return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_luacache(LuaState L)
+          {
+                  var val=   PLua.luacache;
+                  ToLuaCS.push(L,val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_luacache(LuaState L)
+          {
+                   var val= ToLuaCS.getObject(L, 1);
+                  PLua.luacache= (System.Collections.Generic.Dictionary<System.String,UnityEngine.TextAsset>)val;
+                  return 0;
 
           }
   #endregion       

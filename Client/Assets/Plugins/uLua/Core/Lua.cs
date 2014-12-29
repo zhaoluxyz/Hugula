@@ -117,8 +117,8 @@ namespace LuaInterface
             LuaDLL.lua_settop(L, oldTop);
 
             // A pre-wrapped exception - just rethrow it (stack trace of InnerException will be preserved)
-            //LuaScriptException luaEx = err as LuaScriptException;
-            //if (luaEx != null) throw luaEx;
+            LuaScriptException luaEx = err as LuaScriptException;
+            if (luaEx != null) throw luaEx;
 
             // A non-wrapped Lua error (best interpreted as a string) - wrap it and throw it
             if (err == null) err = "Unknown Lua Error";

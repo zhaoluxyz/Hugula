@@ -59,7 +59,27 @@ public class CUtils {
 	}
 
     /// <summary>
-    /// 
+    /// 获取文件名不要后缀
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public static string GetFileName(string url)
+    {
+        string re = "";
+        int len = url.Length - 1;
+        char[] arr = url.ToCharArray();
+        while (len >= 0 && arr[len] != '/' && arr[len] != '\\')
+            len = len - 1;
+
+        re = url.Substring(len + 1);
+        int last = re.LastIndexOf(".");
+        if (last == -1) last = re.Length;
+        string cut = re.Substring(0, last);
+        return cut;
+    }
+
+    /// <summary>
+    /// 获取文件名 并把.替换成_
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>

@@ -80,14 +80,16 @@ public class CLoader : MonoBehaviour {
                         && www.assetBundle.Contains(Common.DEPENDENCIES_OBJECT_NAME)
                     )
                     {
-//#if UNITY_5
+#if UNITY_5
                         CDependenciesScript script = www.assetBundle.LoadAsset<CDependenciesScript>(Common.DEPENDENCIES_OBJECT_NAME);
                         BeginLoadDependencies(script.paths);
-//# else
+# else
+                        CDependenciesScript script = www.assetBundle.Load<CDependenciesScript>(Common.DEPENDENCIES_OBJECT_NAME);
+                        BeginLoadDependencies(script.paths);
 //                        GameObject gameob = (GameObject)www.assetBundle.Load(Common.DEPENDENCIES_OBJECT_NAME);
 //                        CDependencies script = gameob.GetComponent<CDependencies>();
 //                        BeginLoadDependencies(script.paths);
-//#endif
+#endif
                     }
                     else
                     {

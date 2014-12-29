@@ -11,7 +11,7 @@ public class ExportResources{
 	
 	#region public p
 	
-	public const string OutLuaPath="/StreamingAssets/"+Common.LUACFOLDER;
+	public const string OutLuaPath="/Tmp/"+Common.LUACFOLDER;
 	public static string outConfigPath=Application.streamingAssetsPath+"/config.tz";
 	//public const string zipPassword="hugula@pl@";
 	public static string outAndroidZipt4f=Application.streamingAssetsPath+"/data.zip";
@@ -29,7 +29,6 @@ public class ExportResources{
     #endif
 #endif
 	#endregion
-
 
     #region export
     [MenuItem("Hugula/", false, 11)]
@@ -73,7 +72,10 @@ public class ExportResources{
             sb.Append("=");
             sb.Append(crypName);
             sb.Append("\n");
-            System.Diagnostics.Process.Start(luacPath, arg);//arg -b hello1.lua hello1.out
+
+            //System.Diagnostics.Process.Start(luacPath, arg);//arg -b hello1.lua hello1.out
+
+            File.Copy(filePath, outfilePath, true);
 		 }
             Debug.Log(sb.ToString());
 		 Debug.Log("lua:"+path+"files="+files.Count+" completed");
@@ -82,18 +84,22 @@ public class ExportResources{
          AssetDatabase.Refresh();
 
         //打包成assetbundle
-         string luaOut = Application.streamingAssetsPath + "/" + Common.LUACFOLDER;
+         string luaOut = Application.dataPath + OutLuaPath;
+         Debug.Log(luaOut);
          List<string> luafiles = getAllChildFiles(luaOut + "/", Common.LUA_LC_SUFFIX);
          string assetPath = "Assets" + OutLuaPath;
          List<UnityEngine.Object> res = new List<Object>();
-
+         string relatePathName = "";
          foreach (string name in luafiles)
          {
-             string abPath = assetPath + name.Replace(luaOut, "");
+             relatePathName = name.Replace(luaOut, "");
+             string abPath = assetPath + relatePathName;
              Debug.Log(abPath);
-             //Object txt = AssetDatabase.LoadAssetAtPath(abPath, typeof(TextAsset));
-             Object txt = AssetDatabase.LoadMainAssetAtPath(abPath);
-             Debug.Log(txt);
+             Debug.Log(relatePathName);
+             Object txt = AssetDatabase.LoadAssetAtPath(abPath, typeof(TextAsset));
+             txt.name = relatePathName.Replace(@"\", @".").Replace("/", "").Replace("." + Common.LUA_LC_SUFFIX, "");
+             //Object txt = AssetDatabase.LoadMainAssetAtPath(abPath);
+             Debug.Log(txt.name);
              //Debug.Log(((TextAsset)txt).name);
              res.Add(txt);
          }
