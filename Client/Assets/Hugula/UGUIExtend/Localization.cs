@@ -233,7 +233,7 @@ public static class Localization
 
         mLanguage = language;
         PlayerPrefs.SetString("Language", mLanguage);
-        UIRoot.Broadcast("OnLocalize");
+        //UIRoot.Broadcast("OnLocalize");
 
 		return true;
 	}

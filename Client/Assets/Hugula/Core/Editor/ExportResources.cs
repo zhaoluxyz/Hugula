@@ -97,9 +97,7 @@ public class ExportResources{
              Debug.Log(relatePathName);
              Object txt = AssetDatabase.LoadAssetAtPath(abPath, typeof(TextAsset));
              txt.name = relatePathName.Replace(@"\", @".").Replace("/", "").Replace("." + Common.LUA_LC_SUFFIX, "");
-             //Object txt = AssetDatabase.LoadMainAssetAtPath(abPath);
              Debug.Log(txt.name);
-             //Debug.Log(((TextAsset)txt).name);
              res.Add(txt);
          }
 
@@ -136,7 +134,7 @@ public class ExportResources{
             res.Add(txt);
         }
 
-        string cname = "/config.tz";
+        string cname = "/font1.u3d";
         string outPath= ExportAssetBundles.GetOutPath();
         string tarName = outPath + cname;
         Object[] ress=res.ToArray();
@@ -169,90 +167,9 @@ public class ExportResources{
     [MenuItem("Hugula/", false, 15)]
     static void Breaker1() { }
 
-    [MenuItem("Hugula/android export one key ", false, 15)]
-	public static void exporAndroid()
-	{
-		exportLua();
-		
-		exportConfig();
-
-        exportLanguage();
-
-        autoVerAdd();
-		
-		string  path= Application.streamingAssetsPath+""; //AssetDatabase.GetAssetPath(obj).Replace("Assets","");
-		FastZip f=new FastZip();
-		f.CreateZip(outAndroidZipt4f,path,true,"(^.*(."+Common.LUA_LC_SUFFIX+")$|ver.t$)");//[^.*(.t4f)$|Ver.txt|t4f]
-		Debug.Log(" export android done: "+outConfigPath+" !");
-
-       // Directory.Delete(Application.streamingAssetsPath + "/" + Common.LUACFOLDER, true);
-	}
-
-    public static void autoBindAndroid()
-    {
-
-        //Directory.Delete(Application.streamingAssetsPath + "/" + BuildOptions., true);
-        string dirPath = Application.streamingAssetsPath + "/" + BuildTarget.Android;
-        if (Directory.Exists(dirPath)) Directory.Delete(dirPath, true);
-        dirPath = Application.streamingAssetsPath + "/" + BuildTarget.iOS;
-        if (Directory.Exists(dirPath)) Directory.Delete(dirPath, true);
-        dirPath = Application.streamingAssetsPath + "/" + BuildTarget.StandaloneWindows;
-        if (Directory.Exists(dirPath)) Directory.Delete(dirPath, true);
-        dirPath = Application.streamingAssetsPath + "/PW";
-        if (Directory.Exists(dirPath)) Directory.Delete(dirPath, true);
-
-        //导出所有需要的prefab
-        string assetPath = "Assets/Resource/Export/";
-        string path = Application.dataPath + "/Resource/Export/"; //AssetDatabase.GetAssetPath(obj).Replace("Assets","");
-
-        List<string> files = getAllChildFiles(path,"prefab");
-        foreach (string name in files)
-        {
-            string abPath = assetPath + name.Replace(path, "");
-            Debug.Log(abPath);
-            ExportAssetBundles.ExportNGUIAssetBundle(abPath);
-        }
-
-        //导出英雄半生像
-        assetPath = "Assets/Resource/Export/HerePhoto/";
-        path = Application.dataPath + "/Resource/Export/HerePhoto/";
-        files = getAllChildFiles(path, "png");
-        foreach (string name in files)
-        {
-            string abPath = assetPath + name.Replace(path, "");
-            Debug.Log(abPath);
-            Object txt = AssetDatabase.LoadAssetAtPath(abPath, typeof(Texture));
-            string cname = txt.name;
-            string outPath = ExportAssetBundles.GetOutPath();
-            string tarName = outPath + "/" + cname + "." + Common.ASSETBUNDLE_SUFFIX;
-            ExportAssetBundles.BuildAB(txt, null, tarName, BuildAssetBundleOptions.CompleteAssets);
-            Debug.Log("export texture " + tarName);
-        }
-
-        //导出材质集合
-        assetPath = "Assets/Resource/Export/Altals/";
-        path = Application.dataPath + "/Resource/Export/Altals/"; //AssetDatabase.GetAssetPath(obj).Replace("Assets","");
-
-        files = getAllChildFiles(path, "prefab");
-        foreach (string name in files)
-        {
-            string abPath = assetPath + name.Replace(path, "");
-            Object txt = AssetDatabase.LoadAssetAtPath(abPath, typeof(GameObject));
-            string cname = txt.name;
-            string outPath = ExportAssetBundles.GetOutPath();
-            string tarName = outPath + "/" + cname + "." + Common.ASSETBUNDLE_SUFFIX;
-            ExportAssetBundles.BuildAB(txt, null, tarName, BuildAssetBundleOptions.CompleteAssets);
-            System.Threading.Thread.Sleep(10);
-            Debug.Log("export atlas " + tarName);
-          //  ExportAssetBundles.ExportNGUIAssetBundle(abPath);
-        }
-
-        exporAndroid();
-
-    }
-
-    [MenuItem("Hugula/other platform export one key ", false, 16)]
-	public static void exportIphone()
+ 
+    [MenuItem("Hugula/build for publish ", false, 16)]
+	public static void exportPublish()
 	{
 		exportLua();
 		

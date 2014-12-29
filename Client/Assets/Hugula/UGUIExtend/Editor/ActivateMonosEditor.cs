@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Reflection;
 using System.Collections.Generic;
-using Entry = PropertyReferenceDrawer.Entry;
+//using Entry = PropertyReferenceDrawer.Entry;
 
 //[CustomPropertyDrawer(typeof(MonoBehaviour))]
 public class ActivateMonosDrawer : PropertyDrawer

@@ -8,7 +8,7 @@ using LuaInterface;
 using Lua = LuaInterface.LuaState;
 
 public class NGUIEvent :MonoBehaviour {
-
+    /**
 	void Awake()
 	{
 		DontDestroyOnLoad(this.gameObject);
@@ -163,6 +163,6 @@ public class NGUIEvent :MonoBehaviour {
 			return _instance;
 		}
 	}
-
+    **/
 }
 

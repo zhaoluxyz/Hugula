@@ -300,11 +300,11 @@ public class  LuaHelper {
 #if UNITY_5
         UnityEngine.Material[] materials = assetBundle.LoadAllAssets<Material>();
 #else
-        UnityEngine.Material[] materials = assetBundle.LoadAll<Material>();
+        UnityEngine.Object[] materials = assetBundle.LoadAll(typeof(Material));  //LoadAll<Material>();
 #endif
-        foreach (UnityEngine.Material m in materials)
+        foreach (UnityEngine.Object m in materials)
         {
-            Material mat = m;// as Material;
+            Material mat = m as Material;
             string shaderName = mat.shader.name;
             Shader newShader = Shader.Find(shaderName);
             if (newShader != null)

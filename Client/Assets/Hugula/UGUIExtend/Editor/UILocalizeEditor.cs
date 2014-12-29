@@ -11,7 +11,7 @@ using System.Collections.Generic;
 #if UNITY_3_5
 [CustomEditor(typeof(UILocalize))]
 #else
-[CustomEditor(typeof(UILocalize), true)]
+[CustomEditor(typeof(UGUILocalize), true)]
 #endif
 public class UILocalizeEditor : Editor
 {
@@ -83,7 +83,7 @@ public class UILocalizeEditor : Editor
 
 						if (GUILayout.Button(values[i], "AS TextArea", GUILayout.MinWidth(80f), GUILayout.MaxWidth(Screen.width - 110f)))
 						{
-							(target as UILocalize).value = values[i];
+                            (target as UGUILocalize).value = values[i];
 							GUIUtility.hotControl = 0;
 							GUIUtility.keyboardControl = 0;
 						}

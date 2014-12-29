@@ -60,34 +60,19 @@ public static class LuaToUnityEngine_AssetBundle {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_Contains);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"LoadAsset");
-          luafn_LoadAsset= new LuaCSFunction(LoadAsset);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAsset);
+          LuaDLL.lua_pushstring(L,"Load");
+          luafn_Load= new LuaCSFunction(Load);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Load);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"LoadAssetAsync");
-          luafn_LoadAssetAsync= new LuaCSFunction(LoadAssetAsync);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAssetAsync);
+          LuaDLL.lua_pushstring(L,"LoadAsync");
+          luafn_LoadAsync= new LuaCSFunction(LoadAsync);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAsync);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"LoadAssetWithSubAssets");
-          luafn_LoadAssetWithSubAssets= new LuaCSFunction(LoadAssetWithSubAssets);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAssetWithSubAssets);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"LoadAssetWithSubAssetsAsync");
-          luafn_LoadAssetWithSubAssetsAsync= new LuaCSFunction(LoadAssetWithSubAssetsAsync);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAssetWithSubAssetsAsync);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"LoadAllAssets");
-          luafn_LoadAllAssets= new LuaCSFunction(LoadAllAssets);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAllAssets);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"LoadAllAssetsAsync");
-          luafn_LoadAllAssetsAsync= new LuaCSFunction(LoadAllAssetsAsync);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAllAssetsAsync);
+          LuaDLL.lua_pushstring(L,"LoadAll");
+          luafn_LoadAll= new LuaCSFunction(LoadAll);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_LoadAll);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"Unload");
@@ -95,9 +80,19 @@ public static class LuaToUnityEngine_AssetBundle {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_Unload);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"AllAssetNames");
-          luafn_AllAssetNames= new LuaCSFunction(AllAssetNames);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_AllAssetNames);
+          LuaDLL.lua_pushstring(L,"Equals");
+          luafn_Equals= new LuaCSFunction(Equals);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Equals);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetHashCode");
+          luafn_GetHashCode= new LuaCSFunction(GetHashCode);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetHashCode);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetInstanceID");
+          luafn_GetInstanceID= new LuaCSFunction(GetInstanceID);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetInstanceID);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"get_name");
@@ -123,21 +118,6 @@ public static class LuaToUnityEngine_AssetBundle {
           LuaDLL.lua_pushstring(L,"ToString");
           luafn_ToString= new LuaCSFunction(ToString);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_ToString);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"Equals");
-          luafn_Equals= new LuaCSFunction(Equals);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Equals);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"GetHashCode");
-          luafn_GetHashCode= new LuaCSFunction(GetHashCode);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetHashCode);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"GetInstanceID");
-          luafn_GetInstanceID= new LuaCSFunction(GetInstanceID);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetInstanceID);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"GetType");
@@ -215,22 +195,18 @@ public static class LuaToUnityEngine_AssetBundle {
   #region instances declaration       
           private static LuaCSFunction luafn_get_mainAsset;
           private static LuaCSFunction luafn_Contains;
-          private static LuaCSFunction luafn_LoadAsset;
-          private static LuaCSFunction luafn_LoadAssetAsync;
-          private static LuaCSFunction luafn_LoadAssetWithSubAssets;
-          private static LuaCSFunction luafn_LoadAssetWithSubAssetsAsync;
-          private static LuaCSFunction luafn_LoadAllAssets;
-          private static LuaCSFunction luafn_LoadAllAssetsAsync;
+          private static LuaCSFunction luafn_Load;
+          private static LuaCSFunction luafn_LoadAsync;
+          private static LuaCSFunction luafn_LoadAll;
           private static LuaCSFunction luafn_Unload;
-          private static LuaCSFunction luafn_AllAssetNames;
+          private static LuaCSFunction luafn_Equals;
+          private static LuaCSFunction luafn_GetHashCode;
+          private static LuaCSFunction luafn_GetInstanceID;
           private static LuaCSFunction luafn_get_name;
           private static LuaCSFunction luafn_set_name;
           private static LuaCSFunction luafn_get_hideFlags;
           private static LuaCSFunction luafn_set_hideFlags;
           private static LuaCSFunction luafn_ToString;
-          private static LuaCSFunction luafn_Equals;
-          private static LuaCSFunction luafn_GetHashCode;
-          private static LuaCSFunction luafn_GetInstanceID;
           private static LuaCSFunction luafn_GetType;
  #endregion        
   #region statics declaration       
@@ -268,7 +244,7 @@ public static class LuaToUnityEngine_AssetBundle {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAsset(LuaState L)
+          public static int Load(LuaState L)
           {
               if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Type)
               {
@@ -278,8 +254,8 @@ public static class LuaToUnityEngine_AssetBundle {
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object loadasset= target.LoadAsset( name_, type_);
-                  ToLuaCS.push(L,loadasset); 
+                  UnityEngine.Object load= target.Load( name_, type_);
+                  ToLuaCS.push(L,load); 
                   return 1;
 
               }
@@ -290,8 +266,8 @@ public static class LuaToUnityEngine_AssetBundle {
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object loadasset= target.LoadAsset( name_);
-                  ToLuaCS.push(L,loadasset); 
+                  UnityEngine.Object load= target.Load( name_);
+                  ToLuaCS.push(L,load); 
                   return 1;
 
               }
@@ -299,100 +275,22 @@ public static class LuaToUnityEngine_AssetBundle {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAssetAsync(LuaState L)
+          public static int LoadAsync(LuaState L)
           {
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Type)
-              {
                   System.String name_ =  LuaDLL.lua_tostring(L,2); 
 
                   System.Type type_ = (System.Type)ToLuaCS.getObject(L,3);
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadassetasync= target.LoadAssetAsync( name_, type_);
-                  ToLuaCS.push(L,loadassetasync); 
+                  UnityEngine.AssetBundleRequest loadasync= target.LoadAsync( name_, type_);
+                  ToLuaCS.push(L,loadasync); 
                   return 1;
 
-              }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING )
-              {
-                  System.String name_ =  LuaDLL.lua_tostring(L,2); 
-
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadassetasync= target.LoadAssetAsync( name_);
-                  ToLuaCS.push(L,loadassetasync); 
-                  return 1;
-
-              }
-          return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAssetWithSubAssets(LuaState L)
-          {
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Type)
-              {
-                  System.String name_ =  LuaDLL.lua_tostring(L,2); 
-
-                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,3);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object[] loadassetwithsubassets= target.LoadAssetWithSubAssets( name_, type_);
-                  ToLuaCS.push(L,loadassetwithsubassets); 
-                  return 1;
-
-              }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING )
-              {
-                  System.String name_ =  LuaDLL.lua_tostring(L,2); 
-
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object[] loadassetwithsubassets= target.LoadAssetWithSubAssets( name_);
-                  ToLuaCS.push(L,loadassetwithsubassets); 
-                  return 1;
-
-              }
-          return 0;
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAssetWithSubAssetsAsync(LuaState L)
-          {
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Type)
-              {
-                  System.String name_ =  LuaDLL.lua_tostring(L,2); 
-
-                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,3);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadassetwithsubassetsasync= target.LoadAssetWithSubAssetsAsync( name_, type_);
-                  ToLuaCS.push(L,loadassetwithsubassetsasync); 
-                  return 1;
-
-              }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING )
-              {
-                  System.String name_ =  LuaDLL.lua_tostring(L,2); 
-
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadassetwithsubassetsasync= target.LoadAssetWithSubAssetsAsync( name_);
-                  ToLuaCS.push(L,loadassetwithsubassetsasync); 
-                  return 1;
-
-              }
-          return 0;
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAllAssets(LuaState L)
+          public static int LoadAll(LuaState L)
           {
               if( ToLuaCS.getObject(L, 2) is System.Type)
               {
@@ -400,8 +298,8 @@ public static class LuaToUnityEngine_AssetBundle {
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object[] loadallassets= target.LoadAllAssets( type_);
-                  ToLuaCS.push(L,loadallassets); 
+                  UnityEngine.Object[] loadall= target.LoadAll( type_);
+                  ToLuaCS.push(L,loadall); 
                   return 1;
 
               }
@@ -410,35 +308,8 @@ public static class LuaToUnityEngine_AssetBundle {
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.Object[] loadallassets= target.LoadAllAssets();
-                  ToLuaCS.push(L,loadallassets); 
-                  return 1;
-
-              }
-          return 0;
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int LoadAllAssetsAsync(LuaState L)
-          {
-              if( ToLuaCS.getObject(L, 2) is System.Type)
-              {
-                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,2);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadallassetsasync= target.LoadAllAssetsAsync( type_);
-                  ToLuaCS.push(L,loadallassetsasync); 
-                  return 1;
-
-              }
-              if(true)
-              {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  UnityEngine.AssetBundleRequest loadallassetsasync= target.LoadAllAssetsAsync();
-                  ToLuaCS.push(L,loadallassetsasync); 
+                  UnityEngine.Object[] loadall= target.LoadAll();
+                  ToLuaCS.push(L,loadall); 
                   return 1;
 
               }
@@ -458,13 +329,38 @@ public static class LuaToUnityEngine_AssetBundle {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int AllAssetNames(LuaState L)
+          public static int Equals(LuaState L)
+          {
+                  System.Object o_ = (System.Object)ToLuaCS.getObject(L,2);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
+                  System.Boolean equals= target.Equals( o_);
+                  ToLuaCS.push(L,equals); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetHashCode(LuaState L)
           {
 
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  System.String[] allassetnames= target.AllAssetNames();
-                  ToLuaCS.push(L,allassetnames); 
+                  System.Int32 gethashcode= target.GetHashCode();
+                  ToLuaCS.push(L,gethashcode); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetInstanceID(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
+                  System.Int32 getinstanceid= target.GetInstanceID();
+                  ToLuaCS.push(L,getinstanceid); 
                   return 1;
 
           }
@@ -526,43 +422,6 @@ public static class LuaToUnityEngine_AssetBundle {
                   UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
                   System.String tostring= target.ToString();
                   ToLuaCS.push(L,tostring); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int Equals(LuaState L)
-          {
-                  System.Object o_ = (System.Object)ToLuaCS.getObject(L,2);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  System.Boolean equals= target.Equals( o_);
-                  ToLuaCS.push(L,equals); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int GetHashCode(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  System.Int32 gethashcode= target.GetHashCode();
-                  ToLuaCS.push(L,gethashcode); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int GetInstanceID(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.AssetBundle target= (UnityEngine.AssetBundle) original ;
-                  System.Int32 getinstanceid= target.GetInstanceID();
-                  ToLuaCS.push(L,getinstanceid); 
                   return 1;
 
           }

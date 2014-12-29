@@ -165,13 +165,22 @@ public class PLua : MonoBehaviour
                 {
                     AssetBundle item = null;
                     item = luaLoader.assetBundle;
+#if UNITY_5
                     TextAsset[] all = item.LoadAllAssets<TextAsset>();
                     foreach (var ass in all)
                     {
                         keyName = ass.name;
-                        //Debug.Log(keyName);
                         luacache[keyName] = ass;
                     }
+#else
+                    UnityEngine.Object[] all = item.LoadAll(typeof(TextAsset));
+                    foreach (var ass in all)
+                    {
+                        keyName = ass.name;
+                        luacache[keyName] = ass as TextAsset;
+                    }
+#endif
+
                     luaLoader.assetBundle.Unload(false);
                     luaLoader.Dispose();
                 }

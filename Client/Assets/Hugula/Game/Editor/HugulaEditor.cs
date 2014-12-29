@@ -70,53 +70,6 @@ public static class HugulaEditor
     }
     #endregion
 
-    [MenuItem("Assets/Hugula/CreatAnimationTest", false, 1)]
-    static public void CreatAnimationTest()
-    {
-        // Creates the controller
-        var controller = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath("Assets/Mecanim/StateMachineTransitions.controller");
-
-        // Add parameters
-        controller.AddParameter("TransitionNow", UnityEngine.AnimatorControllerParameterType.Trigger);
-        controller.AddParameter("Reset", UnityEngine.AnimatorControllerParameterType.Trigger);
-        controller.AddParameter("GotoB1", UnityEngine.AnimatorControllerParameterType.Trigger);
-        controller.AddParameter("GotoC", UnityEngine.AnimatorControllerParameterType.Trigger);
-
-        // Add StateMachines
-        var rootStateMachine = controller.layers[0].stateMachine;
-        var stateMachineA = rootStateMachine.AddStateMachine("smA");
-        var stateMachineB = rootStateMachine.AddStateMachine("smB");
-        var stateMachineC = stateMachineB.AddStateMachine("smC");
-
-        // Add States
-        var stateA1 = stateMachineA.AddState("stateA1");
-        var stateB1 = stateMachineB.AddState("stateB1");
-        var stateB2 = stateMachineB.AddState("stateB2");
-        stateMachineC.AddState("stateC1");
-        var stateC2 = stateMachineC.AddState("stateC2"); // don’t add an entry transition, should entry to state by default
-
-        // Add Transitions
-        var exitTransition = stateA1.AddExitTransition();
-        exitTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "TransitionNow");
-        exitTransition.duration = 0;
-
-        var resetTransition = stateMachineA.AddAnyStateTransition(stateA1);
-        resetTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "Reset");
-        resetTransition.duration = 0;
-
-        var transitionB1 = stateMachineB.AddEntryTransition(stateB1);
-        transitionB1.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "GotoB1");
-        stateMachineB.AddEntryTransition(stateB2);
-        stateMachineC.defaultState = stateC2;
-        var exitTransitionC2 = stateC2.AddExitTransition();
-        exitTransitionC2.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "TransitionNow");
-        exitTransitionC2.duration = 0;
-
-        var stateMachineTransition = rootStateMachine.AddStateMachineTransition(stateMachineA, stateMachineC);
-        stateMachineTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "GotoC");
-        rootStateMachine.AddStateMachineTransition(stateMachineA, stateMachineB);
-
-    }
 
     #region pulic method
     /// <summary>
@@ -135,7 +88,11 @@ public static class HugulaEditor
         clone.name = roleModel.name;
         clone.transform.parent = tmp.transform;
 
+#if UNITY_5 
         UnityEditor.Animations.AnimatorController newContr = CreateAnimatorController(sourceController, roleModel.name);
+#else
+        AnimatorController newContr = CreateAnimatorController(sourceController, roleModel.name);
+#endif
         Animator animator = AddRoleScript(tmp);
         //添加影子
         Object shad = AssetDatabase.LoadMainAssetAtPath(ShadowPath);
@@ -173,8 +130,11 @@ public static class HugulaEditor
         clone.name = roleModel.name;
         clone.transform.parent = tmp.transform;
         Animator animator = AddBuildingScript(tmp);
+#if UNITY_5 
         UnityEditor.Animations.AnimatorController newContr = CreateAnimatorController(sourceController, roleModel.name);
-
+#else
+        AnimatorController newContr = CreateAnimatorController(sourceController, roleModel.name);
+#endif
         //绑定动画控制器
         Dictionary<string, AnimationClip> clips = FindClips(currPath);
         CopyAnimatorController(animator, newContr, clips);
@@ -200,7 +160,7 @@ public static class HugulaEditor
         ActorAnimator roleAnimator = AddComponent<ActorAnimator>(role);
         //RoleSlider roleSlider = AddComponent<RoleSlider>(role);
 
-        UISlider hpSlider = role.GetComponentInChildren<UISlider>();
+        //UISlider hpSlider = role.GetComponentInChildren<UISlider>();
 
         //
         List<GameObject> pos = CreateHeadAndArm(role);
@@ -222,10 +182,10 @@ public static class HugulaEditor
         animator.applyRootMotion = false;
 
         //roleSlider.actor = roleAc;
-        if (hpSlider != null)
-        {
-            //roleSlider.hpSlider.Add(hpSlider);
-        }
+        //if (hpSlider != null)
+        //{
+        //    //roleSlider.hpSlider.Add(hpSlider);
+        //}
 
         return animator;
     }
@@ -243,7 +203,7 @@ public static class HugulaEditor
 
         Actor roleAc = AddComponent<Actor>(role);
         //RoleSlider roleSlider = AddComponent<RoleSlider>(role);
-        UISlider hpSlider = role.GetComponentInChildren<UISlider>();
+        //UISlider hpSlider = role.GetComponentInChildren<UISlider>();
 
         List<GameObject> pos = CreateHeadAndArm(role);
         if (pos.Count >= 1) roleAc.head = pos[0].transform;
@@ -310,23 +270,6 @@ public static class HugulaEditor
     }
 
     /// <summary>
-    /// 创建动画控制器
-    /// </summary>
-    /// <param name="contorllName"></param>
-    /// <returns></returns>
-    static UnityEditor.Animations.AnimatorController CreateAnimatorController(string source, string target)
-    {
-        //Animator a;
-        string controllSourcePath = string.Format(ControllSourcePath, source); // "Assets/Resource/AnimatorController/" + source + ".controller";
-        string toPath = string.Format(AnimatorControllerToPath, target); //"Assets/Resource/Roles/AnimatorController/" + target + "Contr.controller";
-        AssetDatabase.DeleteAsset(toPath);
-        AssetDatabase.CopyAsset(controllSourcePath, toPath);
-        AssetDatabase.Refresh();
-        UnityEditor.Animations.AnimatorController copy = (UnityEditor.Animations.AnimatorController)AssetDatabase.LoadMainAssetAtPath(toPath);
-        return copy;
-    }
-
-    /// <summary>
     /// 寻找当前目录下面的所有clips
     /// </summary>
     /// <param name="currPath"></param>
@@ -354,6 +297,8 @@ public static class HugulaEditor
         return clips;
     }
 
+#if UNITY_5
+
     /// <summary>
     /// 拷贝动画剪辑到新的动画控制器
     /// </summary>
@@ -363,7 +308,6 @@ public static class HugulaEditor
     static void CopyAnimatorController(Animator animator, UnityEditor.Animations.AnimatorController newContr, Dictionary<string, AnimationClip> clips)
     {
 
-#if UNITY_5
         UnityEditor.Animations.AnimatorControllerLayer lay = newContr.layers[0];
         UnityEditor.Animations.AnimatorStateMachine sm = lay.stateMachine;
         int count = sm.stateMachines.Length;
@@ -394,22 +338,68 @@ public static class HugulaEditor
                 }
             }
         }
-#else
-        UnityEditor.Animations.AnimatorControllerLayer lay = newContr.GetLayer(0);
+            UnityEditor.Animations.AnimatorController.SetAnimatorController(animator, newContr);
+    }
 
-        UnityEditor.Animations.AnimatorStateMachine sm = lay.stateMachine;
+       /// <summary>
+    /// 创建动画控制器
+    /// </summary>
+    /// <param name="contorllName"></param>
+    /// <returns></returns>
+    static UnityEditor.Animations.AnimatorController CreateAnimatorController(string source, string target)
+    {
+        //Animator a;
+        string controllSourcePath = string.Format(ControllSourcePath, source); // "Assets/Resource/AnimatorController/" + source + ".controller";
+        string toPath = string.Format(AnimatorControllerToPath, target); //"Assets/Resource/Roles/AnimatorController/" + target + "Contr.controller";
+        AssetDatabase.DeleteAsset(toPath);
+        AssetDatabase.CopyAsset(controllSourcePath, toPath);
+        AssetDatabase.Refresh();
+        UnityEditor.Animations.AnimatorController copy = (UnityEditor.Animations.AnimatorController)AssetDatabase.LoadMainAssetAtPath(toPath);
+        return copy;
+    }
+#else
+
+    /// <summary>
+    /// 创建动画控制器
+    /// </summary>
+    /// <param name="contorllName"></param>
+    /// <returns></returns>
+    static AnimatorController CreateAnimatorController(string source, string target)
+    {
+        //Animator a;
+        string controllSourcePath = string.Format(ControllSourcePath, source); // "Assets/Resource/AnimatorController/" + source + ".controller";
+        string toPath = string.Format(AnimatorControllerToPath, target); //"Assets/Resource/Roles/AnimatorController/" + target + "Contr.controller";
+        AssetDatabase.DeleteAsset(toPath);
+        AssetDatabase.CopyAsset(controllSourcePath, toPath);
+        AssetDatabase.Refresh();
+        AnimatorController copy = (AnimatorController)AssetDatabase.LoadMainAssetAtPath(toPath);
+        return copy;
+    }
+
+    /// <summary>
+    /// 拷贝动画剪辑到新的动画控制器
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="newContr"></param>
+    /// <param name="clips"></param>
+    static void CopyAnimatorController(Animator animator, AnimatorController newContr, Dictionary<string, AnimationClip> clips)
+    {
+        AnimatorController.SetAnimatorController(animator, newContr);
+        AnimatorControllerLayer lay = newContr.GetLayer(0);
+
+        StateMachine sm = lay.stateMachine;
 
         int count = sm.stateMachineCount;
 
         count = sm.stateCount;
         for (int i = 0; i < count; i++)
         {
-            UnityEditor.Animations.AnimatorState s1 = sm.GetState(i);
+            State s1 = sm.GetState(i);
 
             Motion m = s1.GetMotion();
-            if (m is UnityEditor.Animations.BlendTree)
+            if (m is BlendTree)
             {
-                UnityEditor.Animations.BlendTree m1 = m as UnityEditor.Animations.BlendTree;
+                BlendTree m1 = m as BlendTree;
                 int c = m1.childCount;
                 for (int j = 0; j < c; j++)
                 {
@@ -436,10 +426,8 @@ public static class HugulaEditor
                 }
             }
         }
-#endif
-        UnityEditor.Animations.AnimatorController.SetAnimatorController(animator, newContr);
-
     }
+#endif
 
     /// <summary>
     /// 判断添加组件

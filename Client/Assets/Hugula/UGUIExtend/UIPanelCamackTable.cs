@@ -12,7 +12,7 @@ using Lua = LuaInterface.LuaState;
 [AddComponentMenu("NGUI/Interaction/UIPanel Camack Table ")]
 public class UIPanelCamackTable : MonoBehaviour
 {
-
+    /**
     #region public static
     /// <summary>
     /// ²åÈëÊý¾ÝµÄÊ±ºòµ÷ÓÃ
@@ -636,5 +636,5 @@ public class UIPanelCamackTable : MonoBehaviour
 	{
 		if(this.repositionIntList.Count>0)renderItem();
 	}
-	
+	***/
 }

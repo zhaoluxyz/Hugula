@@ -105,7 +105,7 @@ public class ToLuaCSEditor
         sbTmp.AppendLine("}");
 
         string classTname = "ToLuaCSStart";
-        string path = Application.dataPath + "/Plugin/ToLuaCS/" + classTname.Replace(".", "_") + ".cs";
+        string path = Application.dataPath + "/ToLuaCS/" + classTname.Replace(".", "_") + ".cs";
         checkLuaToCSExportPath();
         using (StreamWriter sr = new StreamWriter(path, false))
         {

@@ -12,10 +12,11 @@ public class AndroidTextureConvertor
     [MenuItem("Hugula/", false, 20)]
     static void Breaker() { }
 
-     [MenuItem("Hugula/AndroidAtlasConver ", false, 21)]
-     [MenuItem("Assets/Hugula_AndroidAtlasConver", false, 21)]
+     //[MenuItem("Hugula/AndroidAtlasConver ", false, 21)]
+     //[MenuItem("Assets/Hugula_AndroidAtlasConver", false, 21)]
     static void ConvertUIAtlas()
     {
+        /**
         Object selPrefab = Selection.activeObject;
 
         string path = AssetDatabase.GetAssetPath(selPrefab);
@@ -123,6 +124,8 @@ public class AndroidTextureConvertor
 
 //			at.spriteMaterial = newMat;
         }
+         * 
+         * **/
     }
 
     //----------------------------------------------------------------------------------------------------------------
