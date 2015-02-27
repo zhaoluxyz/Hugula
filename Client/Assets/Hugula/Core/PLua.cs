@@ -151,20 +151,15 @@ public class PLua : MonoBehaviour
     /// <returns></returns>
     private IEnumerator loadLuaBundle(bool domain)
     {
-        //luaBundles = new AssetBundle[package_paths.Length];
-        int i = package_paths.Length - 1;
         string keyName = "";
-        for (; i >= 0; i--)
+        string luaP = CUtils.GetAssetFullPath("font.u3d");
+        Debug.Log("load lua bundle" + luaP);
+        WWW luaLoader = new WWW(luaP);
+        yield return luaLoader;
+        if (luaLoader.error == null)
         {
-            string luaP = package_paths[i];
-            if (File.Exists(luaP)) //Èç¹û´æÔÚ
-            {
-                WWW luaLoader = new WWW("file://" + luaP);
-                yield return luaLoader;
-                if (luaLoader.error == null)
-                {
-                    AssetBundle item = null;
-                    item = luaLoader.assetBundle;
+            AssetBundle item = null;
+            item = luaLoader.assetBundle;
 #if UNITY_5
                     TextAsset[] all = item.LoadAllAssets<TextAsset>();
                     foreach (var ass in all)
@@ -173,23 +168,20 @@ public class PLua : MonoBehaviour
                         luacache[keyName] = ass;
                     }
 #else
-                    UnityEngine.Object[] all = item.LoadAll(typeof(TextAsset));
-                    foreach (var ass in all)
-                    {
-                        keyName = ass.name;
-                        luacache[keyName] = ass as TextAsset;
-                    }
-#endif
-
-                    luaLoader.assetBundle.Unload(false);
-                    luaLoader.Dispose();
-                }
+            UnityEngine.Object[] all = item.LoadAll(typeof(TextAsset));
+            foreach (var ass in all)
+            {
+                keyName = ass.name;
+                luacache[keyName] = ass as TextAsset;
             }
+#endif
+            Debug.Log("loaded lua bundle complete" + luaP);
+            luaLoader.assetBundle.Unload(false);
+            luaLoader.Dispose();
         }
 
         if (domain)
             DoMain();
-
     }
 
     #region public

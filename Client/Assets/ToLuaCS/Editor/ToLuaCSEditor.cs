@@ -648,8 +648,9 @@ public class ToLuaCSEditor
                 target = classTname;
             }
 
-            returnType = GetSafeTypeString(((MethodInfo)mInfo).ReturnType);
-            hasReturn = ((MethodInfo)mInfo).ReturnType !=typeof(void);
+            System.Type returnT = ((MethodInfo)mInfo).ReturnType;
+            returnType = GetSafeTypeString(returnT);
+            hasReturn = ((MethodInfo)mInfo).ReturnType != typeof(void);
 
             if (hasReturn == false)
             {
@@ -676,20 +677,23 @@ public class ToLuaCSEditor
                     if (pars.Length > 0)
                     {
                         sbTmp.AppendLine("                  " + returnType + " " + proName + "= " + target + "[" + parstr + "];");
-                        sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
+                        //sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
+                        sbTmp.AppendLine(LuaDLLPush(returnT, proName));
                         sbTmp.AppendLine("                  return 1;");
                     }
                     else
                     {
                         sbTmp.AppendLine("                  " + returnType + " " + proName + "= " + target + "." + proName + ";");
-                        sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
+                        //sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
+                        sbTmp.AppendLine(LuaDLLPush(returnT, proName));
                         sbTmp.AppendLine("                  return 1;");
                     }
                 }
                 else
                 {
                     sbTmp.AppendLine("                  " + returnType + " " + mInfo.Name.ToLower() + "= " + target + "." + mInfo.Name + "(" + parstr + ");");
-                    sbTmp.AppendLine("                  ToLuaCS.push(L," + mInfo.Name.ToLower() + "); ");
+                    //sbTmp.AppendLine("                  ToLuaCS.push(L," + mInfo.Name.ToLower() + "); ");
+                    sbTmp.AppendLine(LuaDLLPush(returnT, mInfo.Name.ToLower()));
                     sbTmp.AppendLine("                  return 1;");
                 }
             }
@@ -701,7 +705,8 @@ public class ToLuaCSEditor
             string mname1 = GetSafeMethodName(t, mInfo.Name.ToLower());
 
             sbTmp.AppendLine("                  " + returnType + " " + mname1 + "= new " + classTname + "(" + parstr + ");");
-            sbTmp.AppendLine("                  ToLuaCS.push(L," + mname1 + "); ");
+            //sbTmp.AppendLine("                  ToLuaCS.push(L," + mname1 + "); ");
+            sbTmp.AppendLine(LuaDLLPush(t, mname1));
             sbTmp.AppendLine("                  return 1;");
         }
 
@@ -723,7 +728,8 @@ public class ToLuaCSEditor
             if (isGet)
             {
                 re.AppendLine("                  var val=   " + classTname + "." + proName + ";");
-                re.AppendLine("                  ToLuaCS.push(L,val);");
+                //re.AppendLine("                  ToLuaCS.push(L,val);");
+                re.AppendLine(LuaDLLPush(ft, "val"));
                 re.AppendLine("                  return 1;");
             }
             else //set
@@ -758,7 +764,8 @@ public class ToLuaCSEditor
                 re.AppendLine("                  object original = ToLuaCS.getObject(L, 1);");
                 re.AppendLine("                  " + classTname + " target= (" + classTname + ") original ;");
                 re.AppendLine("                  var val=  target." + proName + ";");
-                re.AppendLine("                  ToLuaCS.push(L,val);");
+                //re.AppendLine("                  ToLuaCS.push(L,val);");
+                re.AppendLine(LuaDLLPush(ft, "val"));
                 re.AppendLine("                  return 1;");
             }
             else
@@ -794,7 +801,38 @@ public class ToLuaCSEditor
 
     #endregion
 
-     #region helper
+    #region helper
+    /// <summary>
+    /// 以lua原始值得方式push值
+    /// </summary>
+    /// <param name="returnType"></param>
+    /// <param name="mname1"></param>
+    /// <returns></returns>
+    public static string LuaDLLPush(System.Type pt, string mname1)
+    {
+        string re = string.Empty;
+
+        if (pt == typeof(sbyte) || pt == typeof(byte) || pt == typeof(short) || pt == typeof(ushort)
+                        || pt == typeof(int) || pt == typeof(uint) || pt == typeof(long)
+                        || pt == typeof(float) || pt == typeof(ulong) || pt == typeof(decimal) || pt == typeof(double) || pt == typeof(char))
+        {
+            re = "                  LuaDLL.lua_pushnumber(L, " + mname1 + ");";
+        }
+        else if (pt == typeof(string))
+        {
+            re = "                  LuaDLL.lua_pushstring(L, " + mname1 + ");";
+        }
+        else if (pt == typeof(bool))
+        {
+            re = "                  LuaDLL.lua_pushboolean(L," + mname1 + ");";
+        }
+        else
+        {
+            re = "                  ToLuaCS.push(L," + mname1 + ");";
+        }
+
+        return re;
+    }
 
     /// <summary>
     /// super是否是t1的基类
