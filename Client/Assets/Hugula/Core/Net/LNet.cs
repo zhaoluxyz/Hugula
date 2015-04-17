@@ -44,7 +44,7 @@ public class LNet :IDisposable  {
         isConnectioned = false;
         isbegin = true;
         isConnectCall = true;
-        Debug.Log("begin connect:" + host + " :" + port + " time:" + begin.ToString());
+        //Debug.Log("begin connect:" + host + " :" + port + " time:" + begin.ToString());
         if (client != null)
             client.Close();
         client = new TcpClient();
