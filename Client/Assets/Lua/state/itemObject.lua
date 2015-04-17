@@ -31,6 +31,7 @@ function LuaItemManager:getItemObject(objectName)
 end
 
 function LuaItemManager:registerItemObject(objectName, luaPath, instanceNow)
+
     assert(self.items[objectName] == nil)
 
     local newClass   = ItemObject(objectName)

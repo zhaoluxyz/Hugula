@@ -172,7 +172,8 @@ public class LNet :IDisposable  {
 	public void Receive()
 	{
         ushort len = 0;
-
+        byte[] buffer = null;
+        ushort readLen = 0;
         while (client.Connected)
         {
             if (len == 0)
@@ -181,16 +182,49 @@ public class LNet :IDisposable  {
                 stream.Read(header, 0, 2);
                 Array.Reverse(header);
                 len = BitConverter.ToUInt16(header, 0);
+                buffer = new byte[len];
+                readLen = 0;
+                //if (len > client.ReceiveBufferSize)//如果长度大于了缓冲区
+                //{
+                //    buffer = new byte[len];
+                //}
+                //else
+                //{
+                //    buffer = null;
+                //}
             }
 
-            if (len > 0 && len <= client.Available)
+            if (len > 0 && readLen < len)
             {
-                byte[] message = new byte[len];
-                stream.Read(message, 0, message.Length);
-                Msg msg = new Msg(message);
-                queue.Add(msg);
-                len = 0;
+                int offset = readLen;//开始点
+                int msgLen = client.Available;//可读长度
+                int size = offset + msgLen;
+                if (size > len)//如果可读长度大于len
+                {
+                    msgLen = len - offset;
+                }
+
+                stream.Read(buffer, offset, msgLen);
+                readLen = Convert.ToUInt16(offset + msgLen);
+                if (readLen >= len)//读取完毕
+                {
+                    Msg msg = new Msg(buffer);
+                    queue.Add(msg);
+                    len = 0;
+                }
             }
+            //if (len > 0 && buffer==null && len <= client.Available) //如果没有分页
+            //{
+            //    byte[] message = new byte[len];
+            //    stream.Read(message, 0, message.Length);
+            //    Msg msg = new Msg(message);
+            //    queue.Add(msg);
+            //    len = 0;
+            //}
+            //else if (len > 0 && buffer != null)
+            //{
+
+            //}
 
             Thread.Sleep(16);
         }

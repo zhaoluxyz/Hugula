@@ -28,22 +28,11 @@ public class MultipleLoader  {
 	   */
 	  public void LoadReq(IList<CRequest>  req)//onAllCompleteHandle onAllCompletehandle=null,onProgressHandle onProgresshandle=null
 	  {
-		   foreach(var reqi in req)
-		   {
-		    	AddReqToQueue(reqi);
-		   }
+          for(int i=0;i<req.Count;i++)
+              AddReqToQueue(req[i]);
 			BeginQueue();
 	  }
 
-      //public void LoadReq(ArrayList reqs)
-      //{
-      //    foreach (CRequest reqi in reqs)
-      //    {
-      //        AddReqToQueue(reqi);
-      //    }
-      //    BeginQueue();
-      //}
-	
 	public void LoadReq(CRequest req)
 	{
         AddReqToQueue(req);
@@ -61,7 +50,15 @@ public class MultipleLoader  {
 			requestCallBackList[key]=new List<CRequest>();
 			requestCallBackList[key].Add(req);
 			queue.Add(req);
-			totalLoading++;
+            if (queue.Size() == 0 && currentLoading==0)
+            {
+                totalLoading = 1;
+                currentLoaded = 0;
+            }
+            else
+            {
+                totalLoading++;
+            }
 		}
 	}
 	
@@ -70,7 +67,6 @@ public class MultipleLoader  {
 		if (this.currentLoading<=0)
 		{
 			totalLoading=0;
-		  	//this.totalLoading=this.queue.size();
 			this.currentWillLoading=0;
 			this.currentLoaded=0;
             this.loadingEvent.current = currentLoaded;
@@ -83,7 +79,7 @@ public class MultipleLoader  {
     protected void BeginQueue()
 	{
 		CRequest req1;
-		while(this.currentLoading<this.maxLoading && queue.Size()>0)
+		while(this.currentLoading<=this.maxLoading && queue.Size()>0)
 		{
 			req1=queue.First();
 			if(req1!=null)
@@ -155,8 +151,10 @@ public class MultipleLoader  {
         string key = "";
         IList<CRequest> reqsAdd = new List<CRequest>();
         IDictionary<string, object> resdic = this._cache;// req.cache as IDictionary<string, object>;
-        foreach (CRequest item in reqs)
+        //foreach (CRequest item in reqs)
+        for(int i=0;i<reqs.Count;i++)
         {
+            CRequest item = reqs[i];
             key = item.key;
             //item.cache = resdic;
             if(resdic!=null && resdic[key]!=null )//.ContainsKey(key))
@@ -251,7 +249,7 @@ public class MultipleLoader  {
 	
 	protected void CheckAllComplete()
 	{
-		if(currentLoading<=0)
+		if(currentLoading<=0 && queue.Size()==0)
 		{
 			loadingEvent.target=this;
 			loadingEvent.total=totalLoading;
@@ -279,10 +277,11 @@ public class MultipleLoader  {
 		
 		RemoveRequest(req);		
 #if	UNITY_EDITOR
-		Debug.Log("load Error : times="+req.times+" url="+req.url);
+		Debug.LogWarning("load Error : times="+req.times+" url="+req.url);
 #endif
 		if(req.times<2)
 		{
+            req.priority = req.priority - 10;
 			this.AddReqToQueue(req);
 			this.BeginQueue();
 		}else
@@ -310,7 +309,7 @@ public class MultipleLoader  {
 	
 	public int currentLoading{
 		get{
-				return _currentLoading;
+            return loader.Keys.Count;
 		}
 	}
 	

@@ -302,7 +302,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Int64 Length= target.Length;
-                  ToLuaCS.push(L,Length); 
+                  LuaDLL.lua_pushnumber(L, Length);
                   return 1;
 
           }
@@ -314,7 +314,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Int64 Position= target.Position;
-                  ToLuaCS.push(L,Position); 
+                  LuaDLL.lua_pushnumber(L, Position);
                   return 1;
 
           }
@@ -338,7 +338,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Byte[] toarray= target.ToArray();
-                  ToLuaCS.push(L,toarray); 
+                  ToLuaCS.push(L,toarray);
                   return 1;
 
           }
@@ -346,13 +346,26 @@ public static class LuaToMsg {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Debug(LuaState L)
           {
+              if( ToLuaCS.getObject(L, 2) is System.Byte[])
+              {
+                  System.Byte[] bts_ = (System.Byte[])ToLuaCS.getObject(L,2);
+
+                  System.String debug= Msg.Debug( bts_);
+                  LuaDLL.lua_pushstring(L, debug);
+                  return 1;
+
+              }
+              if(true)
+              {
 
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.String debug= target.Debug();
-                  ToLuaCS.push(L,debug); 
+                  LuaDLL.lua_pushstring(L, debug);
                   return 1;
 
+              }
+          return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -362,7 +375,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Byte[] tocarray= target.ToCArray();
-                  ToLuaCS.push(L,tocarray); 
+                  ToLuaCS.push(L,tocarray);
                   return 1;
 
           }
@@ -374,7 +387,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Int32 Type= target.Type;
-                  ToLuaCS.push(L,Type); 
+                  LuaDLL.lua_pushnumber(L, Type);
                   return 1;
 
           }
@@ -544,7 +557,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Boolean readboolean= target.ReadBoolean();
-                  ToLuaCS.push(L,readboolean); 
+                  LuaDLL.lua_pushboolean(L,readboolean);
                   return 1;
 
           }
@@ -556,7 +569,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Byte readbyte= target.ReadByte();
-                  ToLuaCS.push(L,readbyte); 
+                  LuaDLL.lua_pushnumber(L, readbyte);
                   return 1;
 
           }
@@ -568,7 +581,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Char readchar= target.ReadChar();
-                  ToLuaCS.push(L,readchar); 
+                  LuaDLL.lua_pushnumber(L, readchar);
                   return 1;
 
           }
@@ -580,7 +593,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.UInt16 readushort= target.ReadUShort();
-                  ToLuaCS.push(L,readushort); 
+                  LuaDLL.lua_pushnumber(L, readushort);
                   return 1;
 
           }
@@ -592,7 +605,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.UInt32 readuint= target.ReadUInt();
-                  ToLuaCS.push(L,readuint); 
+                  LuaDLL.lua_pushnumber(L, readuint);
                   return 1;
 
           }
@@ -604,7 +617,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.UInt64 readulong= target.ReadULong();
-                  ToLuaCS.push(L,readulong); 
+                  LuaDLL.lua_pushnumber(L, readulong);
                   return 1;
 
           }
@@ -616,7 +629,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Int16 readshort= target.ReadShort();
-                  ToLuaCS.push(L,readshort); 
+                  LuaDLL.lua_pushnumber(L, readshort);
                   return 1;
 
           }
@@ -628,7 +641,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Int32 readint= target.ReadInt();
-                  ToLuaCS.push(L,readint); 
+                  LuaDLL.lua_pushnumber(L, readint);
                   return 1;
 
           }
@@ -640,7 +653,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.Single readfloat= target.ReadFloat();
-                  ToLuaCS.push(L,readfloat); 
+                  LuaDLL.lua_pushnumber(L, readfloat);
                   return 1;
 
           }
@@ -652,7 +665,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.String readstring= target.ReadString();
-                  ToLuaCS.push(L,readstring); 
+                  LuaDLL.lua_pushstring(L, readstring);
                   return 1;
 
           }
@@ -665,7 +678,7 @@ public static class LuaToMsg {
                   object original = ToLuaCS.getObject(L, 1);
                   Msg target= (Msg) original ;
                   System.String readutf= target.ReadUTF( length_);
-                  ToLuaCS.push(L,readutf); 
+                  LuaDLL.lua_pushstring(L, readutf);
                   return 1;
 
           }
@@ -680,7 +693,7 @@ public static class LuaToMsg {
                   System.Byte[] bytes_ = (System.Byte[])ToLuaCS.getObject(L,2);
 
                   Msg _msg= new Msg( bytes_);
-                  ToLuaCS.push(L,_msg); 
+                  ToLuaCS.push(L,_msg);
                   return 1;
 
               }
@@ -688,7 +701,7 @@ public static class LuaToMsg {
               {
 
                   Msg _msg= new Msg();
-                  ToLuaCS.push(L,_msg); 
+                  ToLuaCS.push(L,_msg);
                   return 1;
 
               }

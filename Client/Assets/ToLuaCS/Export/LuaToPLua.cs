@@ -60,6 +60,11 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_set_updateFn);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"DoUnity3dLua");
+          luafn_DoUnity3dLua= new LuaCSFunction(DoUnity3dLua);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_DoUnity3dLua);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"DoMain");
           luafn_DoMain= new LuaCSFunction(DoMain);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_DoMain);
@@ -73,16 +78,6 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstring(L,"RegisterFunc");
           luafn_RegisterFunc= new LuaCSFunction(RegisterFunc);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_RegisterFunc);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_enterLua");
-          luafn_get_enterLua= new LuaCSFunction(get_enterLua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_enterLua);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"set_enterLua");
-          luafn_set_enterLua= new LuaCSFunction(set_enterLua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_enterLua);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"get_onDestroyFn");
@@ -184,9 +179,9 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_package_path);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"get_isNlua");
-          luafn_get_isNlua= new LuaCSFunction(get_isNlua);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isNlua);
+          LuaDLL.lua_pushstring(L,"Loader");
+          luafn_Loader= new LuaCSFunction(Loader);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Loader);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"Require");
@@ -219,6 +214,16 @@ public static class LuaToPLua {
           LuaDLL.lua_pushstdcallcfunction(L, luafn__plua);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"get_enterLua");
+          luafn_get_enterLua= new LuaCSFunction(get_enterLua);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_enterLua);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"set_enterLua");
+          luafn_set_enterLua= new LuaCSFunction(set_enterLua);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_enterLua);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"get_isDebug");
           luafn_get_isDebug= new LuaCSFunction(get_isDebug);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isDebug);
@@ -245,11 +250,10 @@ public static class LuaToPLua {
   #region instances declaration       
           private static LuaCSFunction luafn_get_updateFn;
           private static LuaCSFunction luafn_set_updateFn;
+          private static LuaCSFunction luafn_DoUnity3dLua;
           private static LuaCSFunction luafn_DoMain;
           private static LuaCSFunction luafn_LoadBundle;
           private static LuaCSFunction luafn_RegisterFunc;
-          private static LuaCSFunction luafn_get_enterLua;
-          private static LuaCSFunction luafn_set_enterLua;
           private static LuaCSFunction luafn_get_onDestroyFn;
           private static LuaCSFunction luafn_set_onDestroyFn;
           private static LuaCSFunction luafn_get_lua;
@@ -263,13 +267,15 @@ public static class LuaToPLua {
  #endregion        
   #region statics declaration       
           private static LuaCSFunction luafn_get_package_path;
-          private static LuaCSFunction luafn_get_isNlua;
+          private static LuaCSFunction luafn_Loader;
           private static LuaCSFunction luafn_Require;
           private static LuaCSFunction luafn_Log;
           private static LuaCSFunction luafn_Delay;
           private static LuaCSFunction luafn_StopDelay;
           private static LuaCSFunction luafn_get_instance;
           private static LuaCSFunction luafn__plua;
+          private static LuaCSFunction luafn_get_enterLua;
+          private static LuaCSFunction luafn_set_enterLua;
           private static LuaCSFunction luafn_get_isDebug;
           private static LuaCSFunction luafn_set_isDebug;
           private static LuaCSFunction luafn_get_luacache;
@@ -281,10 +287,10 @@ public static class LuaToPLua {
           public static int get_updateFn(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   LuaInterface.LuaFunction updateFn= target.updateFn;
-                  ToLuaCS.push(L,updateFn); 
+                  ToLuaCS.push(L,updateFn);
                   return 1;
 
           }
@@ -292,11 +298,22 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_updateFn(LuaState L)
           {
-                  LuaInterface.LuaFunction value_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L,2);
+                  LuaInterface.LuaFunction value_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L, 2);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   target.updateFn= value_;
+                 return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int DoUnity3dLua(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  PLua target= (PLua) original ;
+                  target.DoUnity3dLua();
                  return 0;
 
           }
@@ -305,7 +322,7 @@ public static class LuaToPLua {
           public static int DoMain(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   target.DoMain();
                  return 0;
@@ -317,7 +334,7 @@ public static class LuaToPLua {
           {
                   System.Boolean domain_ =  LuaDLL.lua_toboolean(L,2);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   target.LoadBundle( domain_);
                  return 0;
@@ -328,7 +345,7 @@ public static class LuaToPLua {
           public static int RegisterFunc(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   target.RegisterFunc();
                  return 0;
@@ -336,30 +353,9 @@ public static class LuaToPLua {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_enterLua(LuaState L)
-          {
-                  object original = ToLuaCS.getObject(L, 1);
-                  PLua target= (PLua) original ;
-                  var val=  target.enterLua;
-                  ToLuaCS.push(L,val);
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int set_enterLua(LuaState L)
-          {
-                  object original = ToLuaCS.getObject(L, 1);
-                  PLua target= (PLua) original;
-                  target.enterLua= LuaDLL.lua_tostring(L,2);
-                  return 0;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_onDestroyFn(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   var val=  target.onDestroyFn;
                   ToLuaCS.push(L,val);
@@ -370,7 +366,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_onDestroyFn(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.onDestroyFn= (LuaInterface.LuaFunction)val;
@@ -381,7 +377,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_lua(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   var val=  target.lua;
                   ToLuaCS.push(L,val);
@@ -392,7 +388,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_lua(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.lua= (LuaInterface.LuaState)val;
@@ -403,7 +399,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_net(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   var val=  target.net;
                   ToLuaCS.push(L,val);
@@ -414,7 +410,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_net(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.net= (LNet)val;
@@ -425,7 +421,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_ChatNet(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   var val=  target.ChatNet;
                   ToLuaCS.push(L,val);
@@ -436,7 +432,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_ChatNet(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.ChatNet= (LNet)val;
@@ -447,7 +443,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_luaState(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original ;
                   var val=  target.luaState;
                   ToLuaCS.push(L,val);
@@ -458,7 +454,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_luaState(LuaState L)
           {
-                  object original = ToLuaCS.getObject(L, 1);
+                  var original = ToLuaCS.getObject(L, 1);
                   PLua target= (PLua) original;
                   var val= ToLuaCS.getObject(L, 2);
                   target.luaState= (System.IntPtr)val;
@@ -473,17 +469,19 @@ public static class LuaToPLua {
           {
 
                   System.String package_path= PLua.package_path;
-                  ToLuaCS.push(L,package_path); 
+                  LuaDLL.lua_pushstring(L, package_path);
                   return 1;
 
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_isNlua(LuaState L)
+          public static int Loader(LuaState L)
           {
+                  System.String name_ =  LuaDLL.lua_tostring(L,1); 
 
-                  //System.Boolean isNlua= PLua.isNlua;
-                  ToLuaCS.push(L,false); 
+
+                  System.Byte[] loader= PLua.Loader( name_);
+                  ToLuaCS.push(L,loader);
                   return 1;
 
           }
@@ -491,10 +489,10 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Require(LuaState L)
           {
-                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L,1);
+                  System.IntPtr L_ = (System.IntPtr)ToLuaCS.getObject(L, 1);
 
                   System.Int32 require= PLua.Require( L_);
-                  ToLuaCS.push(L,require); 
+                  LuaDLL.lua_pushnumber(L, require);
                   return 1;
 
           }
@@ -502,7 +500,7 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Log(LuaState L)
           {
-                  System.Object msg_ = (System.Object)ToLuaCS.getObject(L,1);
+                  System.Object msg_ = (System.Object)ToLuaCS.getObject(L, 1);
 
                   PLua.Log( msg_);
                  return 0;
@@ -512,9 +510,9 @@ public static class LuaToPLua {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Delay(LuaState L)
           {
-                  LuaInterface.LuaFunction luafun_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L,1);
+                  LuaInterface.LuaFunction luafun_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L, 1);
                   System.Single time_ = (System.Single)LuaDLL.lua_tonumber(L,2);
-                  System.Object args_ = (System.Object)ToLuaCS.getObject(L,3);
+                  System.Object args_ = (System.Object)ToLuaCS.getObject(L, 3);
 
                   PLua.Delay( luafun_, time_, args_);
                  return 0;
@@ -537,7 +535,7 @@ public static class LuaToPLua {
           {
 
                   PLua instance= PLua.instance;
-                  ToLuaCS.push(L,instance); 
+                  ToLuaCS.push(L,instance);
                   return 1;
 
           }
@@ -547,8 +545,25 @@ public static class LuaToPLua {
           {
 
                   PLua _plua= new PLua();
-                  ToLuaCS.push(L,_plua); 
+                  ToLuaCS.push(L,_plua);
                   return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_enterLua(LuaState L)
+          {
+                  var val=   PLua.enterLua;
+                  LuaDLL.lua_pushstring(L, val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_enterLua(LuaState L)
+          {
+                  PLua.enterLua= LuaDLL.lua_tostring(L,1);
+                  return 0;
 
           }
           
@@ -556,7 +571,7 @@ public static class LuaToPLua {
           public static int get_isDebug(LuaState L)
           {
                   var val=   PLua.isDebug;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushboolean(L,val);
                   return 1;
 
           }

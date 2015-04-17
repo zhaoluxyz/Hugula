@@ -33,7 +33,7 @@ local function loadByUrl(url,compFn,cache,endFn,head)
 	local req=Request(url)
 	if compFn then req.onCompleteFn=compFn end
 	if endFn then req.onEndFn=endFn end
-	if head~=nil then req.head=head end
+	if head~=nil then req.head=head end 
 	if cache==nil or cache==true then req.cache=true end
 	local key=req.key
 	local cacheData=Loader.resdic[key]
@@ -115,11 +115,11 @@ end
 --loadByUrl(url,compFn,cache,endFn,head)
 --loadByTable( {url,compFn,endFn,head},cache)
 function Loader:getResource(...)
-	local a,b,c,d=...
+	local a,b,c,d,e=...
 	--print("Loader:getResource type=" ..type(a))
 	--url,onComplete
 	if type(a)=="string" then 
-		loadByUrl(a,b,c,d)
+		loadByUrl(a,b,c,d,e)
 	elseif type(a)=="userdata" then
 		loadByReq(a,b)
 	elseif type(a) == "table" then

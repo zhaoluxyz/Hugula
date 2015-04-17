@@ -8,6 +8,7 @@ local getValue=getValue
 local Proxy=Proxy
 Proxy.tables = {}
 Proxy.errorTables = {}
+Proxy.sendDelay = {}
 
 function Proxy:binding(api,fun)
 	if self.tables[api.Code]==nil then self.tables[api.Code]={} end
@@ -33,17 +34,17 @@ function Proxy:unbinding(api,fun)
 end
 
 function Proxy:distribute(msgType,data)
-	-- if msgType == NetAPIList.gs_bad.Code then
-	-- 	local errorfun = Proxy.errorTables[data.errno..""]
-	-- 	if errorfun then --如果有错误处理函数就直接调用
-	-- 		errorfun(data)
-	-- 	else --否则弹出提示框
-	-- 		local tips = getValue("g_notify_"..data.errno)
-	-- 		showTips(tips.."\n err:"..data.errno)
-	-- 	end	
-	-- elseif msgType == NetAPIList.gs_good.Code then
-	-- 	self:callHandle(data.commad,data)
-	-- end
+	if msgType == NetAPIList.gs_bad.Code then
+		local errorfun = Proxy.errorTables[data.errno..""]
+		if errorfun then --如果有错误处理函数就直接调用
+			errorfun(data)
+		else --否则弹出提示框
+			local tips = getValue("g_notify_"..data.errno)
+			showTips(tips)
+		end	
+	elseif msgType == NetAPIList.gs_good.Code then
+		self:callHandle(data.commad,data)
+	end
 
 	self:callHandle(msgType,data)
 
@@ -74,11 +75,21 @@ end
  -- 	local fun = self.errorTables[code..""]
  -- 	if fun ~= nil then	fun(code) end
  -- end
-function Proxy:getMsg(api,content)
+
+--发送消息到服务端
+function Proxy:send(api,content)
 	local msg=Msg()
-	msg.Type = api.Code
-	NetProtocalPaser:formatMessage(msg,api.Code,content) 
-	return msg
+	-- print(msg)
+    --- 检查发送延迟
+    local delay = self.sendDelay[api.Code]
+    local time = os.clock()
+    if delay == nil or time - delay > 0.1 then
+       	msg:set_Type(api.Code)
+	    NetProtocalPaser:formatMessage(msg,api.Code,content) 
+	    Net:Send(msg)
+        --- 记录新的发送时间
+        self.sendDelay[api.Code] = time
+    end
 end
 
 --发送消息到服务端

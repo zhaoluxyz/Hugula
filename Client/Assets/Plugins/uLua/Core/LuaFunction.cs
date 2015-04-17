@@ -76,7 +76,7 @@ namespace LuaInterface
         /*
          * Pushes the function into the Lua stack
          */
-        internal void push(IntPtr luaState)
+        public void push(IntPtr luaState)
         {
             if (_Reference != 0)
                 LuaDLL.lua_getref(luaState, _Reference);

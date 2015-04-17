@@ -160,6 +160,26 @@ public static class LuaToUnityEngine_WWW {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_set_threadPriority);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"Equals");
+          luafn_Equals= new LuaCSFunction(Equals);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Equals);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetHashCode");
+          luafn_GetHashCode= new LuaCSFunction(GetHashCode);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetHashCode);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetType");
+          luafn_GetType= new LuaCSFunction(GetType);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetType);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"ToString");
+          luafn_ToString= new LuaCSFunction(ToString);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_ToString);
+          LuaDLL.lua_rawset(L, -3);
+
       #endregion
 
   #region  static method       
@@ -250,6 +270,10 @@ public static class LuaToUnityEngine_WWW {
           private static LuaCSFunction luafn_get_assetBundle;
           private static LuaCSFunction luafn_get_threadPriority;
           private static LuaCSFunction luafn_set_threadPriority;
+          private static LuaCSFunction luafn_Equals;
+          private static LuaCSFunction luafn_GetHashCode;
+          private static LuaCSFunction luafn_GetType;
+          private static LuaCSFunction luafn_ToString;
  #endregion        
   #region statics declaration       
           private static LuaCSFunction luafn_EscapeURL;
@@ -263,7 +287,7 @@ public static class LuaToUnityEngine_WWW {
           public static int Dispose(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   target.Dispose();
                  return 0;
@@ -275,10 +299,10 @@ public static class LuaToUnityEngine_WWW {
           {
                   System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
-                  System.String[] iHeaders_ = (System.String[])ToLuaCS.getObject(L,4);
+                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L, 3);
+                  System.String[] iHeaders_ = (System.String[])ToLuaCS.getObject(L, 4);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   target.InitWWW( url_, postData_, iHeaders_);
                  return 0;
@@ -289,10 +313,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_responseHeaders(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Collections.Generic.Dictionary<System.String,System.String> responseHeaders= target.responseHeaders;
-                  ToLuaCS.push(L,responseHeaders); 
+                  ToLuaCS.push(L,responseHeaders);
                   return 1;
 
           }
@@ -301,10 +325,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_text(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.String text= target.text;
-                  ToLuaCS.push(L,text); 
+                  LuaDLL.lua_pushstring(L, text);
                   return 1;
 
           }
@@ -313,10 +337,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_bytes(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Byte[] bytes= target.bytes;
-                  ToLuaCS.push(L,bytes); 
+                  ToLuaCS.push(L,bytes);
                   return 1;
 
           }
@@ -325,10 +349,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_size(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Int32 size= target.size;
-                  ToLuaCS.push(L,size); 
+                  LuaDLL.lua_pushnumber(L, size);
                   return 1;
 
           }
@@ -337,10 +361,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_error(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.String error= target.error;
-                  ToLuaCS.push(L,error); 
+                  LuaDLL.lua_pushstring(L, error);
                   return 1;
 
           }
@@ -349,10 +373,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_texture(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.Texture2D texture= target.texture;
-                  ToLuaCS.push(L,texture); 
+                  ToLuaCS.push(L,texture);
                   return 1;
 
           }
@@ -361,10 +385,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_textureNonReadable(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.Texture2D textureNonReadable= target.textureNonReadable;
-                  ToLuaCS.push(L,textureNonReadable); 
+                  ToLuaCS.push(L,textureNonReadable);
                   return 1;
 
           }
@@ -373,10 +397,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_audioClip(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.AudioClip audioClip= target.audioClip;
-                  ToLuaCS.push(L,audioClip); 
+                  ToLuaCS.push(L,audioClip);
                   return 1;
 
           }
@@ -384,39 +408,39 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetAudioClip(LuaState L)
           {
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER  && ToLuaCS.getObject(L, 4) is UnityEngine.AudioType)
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TBOOLEAN  && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TBOOLEAN  &&ToLuaCS.getObject(L, 4) is UnityEngine.AudioType)
               {
                   System.Boolean threeD_ =  LuaDLL.lua_toboolean(L,2);
                   System.Boolean stream_ =  LuaDLL.lua_toboolean(L,3);
-                  UnityEngine.AudioType audioType_ = (UnityEngine.AudioType)ToLuaCS.getObject(L,4);
+                  UnityEngine.AudioType audioType_ = (UnityEngine.AudioType)ToLuaCS.getObject(L, 4);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.AudioClip getaudioclip= target.GetAudioClip( threeD_, stream_, audioType_);
-                  ToLuaCS.push(L,getaudioclip); 
+                  ToLuaCS.push(L,getaudioclip);
                   return 1;
 
               }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER )
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TBOOLEAN  && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TBOOLEAN )
               {
                   System.Boolean threeD_ =  LuaDLL.lua_toboolean(L,2);
                   System.Boolean stream_ =  LuaDLL.lua_toboolean(L,3);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.AudioClip getaudioclip= target.GetAudioClip( threeD_, stream_);
-                  ToLuaCS.push(L,getaudioclip); 
+                  ToLuaCS.push(L,getaudioclip);
                   return 1;
 
               }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER )
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TBOOLEAN )
               {
                   System.Boolean threeD_ =  LuaDLL.lua_toboolean(L,2);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.AudioClip getaudioclip= target.GetAudioClip( threeD_);
-                  ToLuaCS.push(L,getaudioclip); 
+                  ToLuaCS.push(L,getaudioclip);
                   return 1;
 
               }
@@ -427,10 +451,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_movie(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
-                  //UnityEngine.MovieTexture movie= target.movie;
-                  //ToLuaCS.push(L,movie); 
+                  UnityEngine.MovieTexture movie= target.movie;
+                  ToLuaCS.push(L,movie);
                   return 1;
 
           }
@@ -438,9 +462,9 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int LoadImageIntoTexture(LuaState L)
           {
-                  UnityEngine.Texture2D tex_ = (UnityEngine.Texture2D)ToLuaCS.getObject(L,2);
+                  UnityEngine.Texture2D tex_ = (UnityEngine.Texture2D)ToLuaCS.getObject(L, 2);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   target.LoadImageIntoTexture( tex_);
                  return 0;
@@ -451,10 +475,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_isDone(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Boolean isDone= target.isDone;
-                  ToLuaCS.push(L,isDone); 
+                  LuaDLL.lua_pushboolean(L,isDone);
                   return 1;
 
           }
@@ -463,10 +487,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_progress(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Single progress= target.progress;
-                  ToLuaCS.push(L,progress); 
+                  LuaDLL.lua_pushnumber(L, progress);
                   return 1;
 
           }
@@ -475,10 +499,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_uploadProgress(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Single uploadProgress= target.uploadProgress;
-                  ToLuaCS.push(L,uploadProgress); 
+                  LuaDLL.lua_pushnumber(L, uploadProgress);
                   return 1;
 
           }
@@ -487,10 +511,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_bytesDownloaded(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.Int32 bytesDownloaded= target.bytesDownloaded;
-                  ToLuaCS.push(L,bytesDownloaded); 
+                  LuaDLL.lua_pushnumber(L, bytesDownloaded);
                   return 1;
 
           }
@@ -499,7 +523,7 @@ public static class LuaToUnityEngine_WWW {
           public static int LoadUnityWeb(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   target.LoadUnityWeb();
                  return 0;
@@ -510,10 +534,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_url(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   System.String url= target.url;
-                  ToLuaCS.push(L,url); 
+                  LuaDLL.lua_pushstring(L, url);
                   return 1;
 
           }
@@ -522,10 +546,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_assetBundle(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.AssetBundle assetBundle= target.assetBundle;
-                  ToLuaCS.push(L,assetBundle); 
+                  ToLuaCS.push(L,assetBundle);
                   return 1;
 
           }
@@ -534,10 +558,10 @@ public static class LuaToUnityEngine_WWW {
           public static int get_threadPriority(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   UnityEngine.ThreadPriority threadPriority= target.threadPriority;
-                  ToLuaCS.push(L,threadPriority); 
+                  ToLuaCS.push(L,threadPriority);
                   return 1;
 
           }
@@ -545,12 +569,61 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_threadPriority(LuaState L)
           {
-                  UnityEngine.ThreadPriority value_ = (UnityEngine.ThreadPriority)ToLuaCS.getObject(L,2);
+                  UnityEngine.ThreadPriority value_ = (UnityEngine.ThreadPriority)ToLuaCS.getObject(L, 2);
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   UnityEngine.WWW target= (UnityEngine.WWW) original ;
                   target.threadPriority= value_;
                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int Equals(LuaState L)
+          {
+                  System.Object obj_ = (System.Object)ToLuaCS.getObject(L, 2);
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.WWW target= (UnityEngine.WWW) original ;
+                  System.Boolean equals= target.Equals( obj_);
+                  LuaDLL.lua_pushboolean(L,equals);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetHashCode(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.WWW target= (UnityEngine.WWW) original ;
+                  System.Int32 gethashcode= target.GetHashCode();
+                  LuaDLL.lua_pushnumber(L, gethashcode);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetType(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.WWW target= (UnityEngine.WWW) original ;
+                  System.Type gettype= target.GetType();
+                  ToLuaCS.push(L,gettype);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int ToString(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.WWW target= (UnityEngine.WWW) original ;
+                  System.String tostring= target.ToString();
+                  LuaDLL.lua_pushstring(L, tostring);
+                  return 1;
 
           }
   #endregion       
@@ -559,14 +632,14 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int EscapeURL(LuaState L)
           {
-              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 2) is System.Text.Encoding)
+              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 2) is System.Text.Encoding)
               {
                   System.String s_ =  LuaDLL.lua_tostring(L,1); 
 
-                  System.Text.Encoding e_ = (System.Text.Encoding)ToLuaCS.getObject(L,2);
+                  System.Text.Encoding e_ = (System.Text.Encoding)ToLuaCS.getObject(L, 2);
 
                   System.String escapeurl= UnityEngine.WWW.EscapeURL( s_, e_);
-                  ToLuaCS.push(L,escapeurl); 
+                  LuaDLL.lua_pushstring(L, escapeurl);
                   return 1;
 
               }
@@ -576,7 +649,7 @@ public static class LuaToUnityEngine_WWW {
 
 
                   System.String escapeurl= UnityEngine.WWW.EscapeURL( s_);
-                  ToLuaCS.push(L,escapeurl); 
+                  LuaDLL.lua_pushstring(L, escapeurl);
                   return 1;
 
               }
@@ -586,14 +659,14 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int UnEscapeURL(LuaState L)
           {
-              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 2) is System.Text.Encoding)
+              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 2) is System.Text.Encoding)
               {
                   System.String s_ =  LuaDLL.lua_tostring(L,1); 
 
-                  System.Text.Encoding e_ = (System.Text.Encoding)ToLuaCS.getObject(L,2);
+                  System.Text.Encoding e_ = (System.Text.Encoding)ToLuaCS.getObject(L, 2);
 
                   System.String unescapeurl= UnityEngine.WWW.UnEscapeURL( s_, e_);
-                  ToLuaCS.push(L,unescapeurl); 
+                  LuaDLL.lua_pushstring(L, unescapeurl);
                   return 1;
 
               }
@@ -603,7 +676,7 @@ public static class LuaToUnityEngine_WWW {
 
 
                   System.String unescapeurl= UnityEngine.WWW.UnEscapeURL( s_);
-                  ToLuaCS.push(L,unescapeurl); 
+                  LuaDLL.lua_pushstring(L, unescapeurl);
                   return 1;
 
               }
@@ -613,6 +686,18 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int LoadFromCacheOrDownload(LuaState L)
           {
+              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 2) is UnityEngine.Hash128 && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER )
+              {
+                  System.String url_ =  LuaDLL.lua_tostring(L,1); 
+
+                  UnityEngine.Hash128 hash_ = (UnityEngine.Hash128)ToLuaCS.getObject(L, 2);
+                  System.UInt32 crc_ = (System.UInt32)LuaDLL.lua_tonumber(L,3);
+
+                  UnityEngine.WWW loadfromcacheordownload= UnityEngine.WWW.LoadFromCacheOrDownload( url_, hash_, crc_);
+                  ToLuaCS.push(L,loadfromcacheordownload);
+                  return 1;
+
+              }
               if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER )
               {
                   System.String url_ =  LuaDLL.lua_tostring(L,1); 
@@ -621,7 +706,7 @@ public static class LuaToUnityEngine_WWW {
                   System.UInt32 crc_ = (System.UInt32)LuaDLL.lua_tonumber(L,3);
 
                   UnityEngine.WWW loadfromcacheordownload= UnityEngine.WWW.LoadFromCacheOrDownload( url_, version_, crc_);
-                  ToLuaCS.push(L,loadfromcacheordownload); 
+                  ToLuaCS.push(L,loadfromcacheordownload);
                   return 1;
 
               }
@@ -632,7 +717,18 @@ public static class LuaToUnityEngine_WWW {
                   System.Int32 version_ = (System.Int32)LuaDLL.lua_tonumber(L,2);
 
                   UnityEngine.WWW loadfromcacheordownload= UnityEngine.WWW.LoadFromCacheOrDownload( url_, version_);
-                  ToLuaCS.push(L,loadfromcacheordownload); 
+                  ToLuaCS.push(L,loadfromcacheordownload);
+                  return 1;
+
+              }
+              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 2) is UnityEngine.Hash128)
+              {
+                  System.String url_ =  LuaDLL.lua_tostring(L,1); 
+
+                  UnityEngine.Hash128 hash_ = (UnityEngine.Hash128)ToLuaCS.getObject(L, 2);
+
+                  UnityEngine.WWW loadfromcacheordownload= UnityEngine.WWW.LoadFromCacheOrDownload( url_, hash_);
+                  ToLuaCS.push(L,loadfromcacheordownload);
                   return 1;
 
               }
@@ -642,49 +738,49 @@ public static class LuaToUnityEngine_WWW {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int _www(LuaState L)
           {
-              //if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[] && ToLuaCS.getObject(L, 4) is System.Collections.Hashtable)
+              //if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 3) is System.Byte[] &&ToLuaCS.getObject(L, 4) is System.Collections.Hashtable)
               //{
               //    System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-              //    System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
-              //    System.Collections.Hashtable headers_ = (System.Collections.Hashtable)ToLuaCS.getObject(L,4);
+              //    System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L, 3);
+              //    System.Collections.Hashtable headers_ = (System.Collections.Hashtable)ToLuaCS.getObject(L, 4);
 
               //    UnityEngine.WWW _www= new UnityEngine.WWW( url_, postData_, headers_);
-              //    ToLuaCS.push(L,_www); 
+              //    ToLuaCS.push(L,_www);
               //    return 1;
 
               //}
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[] && ToLuaCS.getObject(L, 4) is System.Collections.Generic.Dictionary<System.String,System.String>)
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 3) is System.Byte[] &&ToLuaCS.getObject(L, 4) is System.Collections.Generic.Dictionary<System.String,System.String>)
               {
                   System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
-                  System.Collections.Generic.Dictionary<System.String,System.String> headers_ = (System.Collections.Generic.Dictionary<System.String,System.String>)ToLuaCS.getObject(L,4);
+                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L, 3);
+                  System.Collections.Generic.Dictionary<System.String,System.String> headers_ = (System.Collections.Generic.Dictionary<System.String,System.String>)ToLuaCS.getObject(L, 4);
 
                   UnityEngine.WWW _www= new UnityEngine.WWW( url_, postData_, headers_);
-                  ToLuaCS.push(L,_www); 
+                  ToLuaCS.push(L,_www);
                   return 1;
 
               }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is System.Byte[])
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 3) is System.Byte[])
               {
                   System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L,3);
+                  System.Byte[] postData_ = (System.Byte[])ToLuaCS.getObject(L, 3);
 
                   UnityEngine.WWW _www= new UnityEngine.WWW( url_, postData_);
-                  ToLuaCS.push(L,_www); 
+                  ToLuaCS.push(L,_www);
                   return 1;
 
               }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  && ToLuaCS.getObject(L, 3) is UnityEngine.WWWForm)
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING  &&ToLuaCS.getObject(L, 3) is UnityEngine.WWWForm)
               {
                   System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  UnityEngine.WWWForm form_ = (UnityEngine.WWWForm)ToLuaCS.getObject(L,3);
+                  UnityEngine.WWWForm form_ = (UnityEngine.WWWForm)ToLuaCS.getObject(L, 3);
 
                   UnityEngine.WWW _www= new UnityEngine.WWW( url_, form_);
-                  ToLuaCS.push(L,_www); 
+                  ToLuaCS.push(L,_www);
                   return 1;
 
               }
@@ -694,7 +790,7 @@ public static class LuaToUnityEngine_WWW {
 
 
                   UnityEngine.WWW _www= new UnityEngine.WWW( url_);
-                  ToLuaCS.push(L,_www); 
+                  ToLuaCS.push(L,_www);
                   return 1;
 
               }

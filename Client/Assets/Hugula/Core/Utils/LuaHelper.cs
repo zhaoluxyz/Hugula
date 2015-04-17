@@ -137,6 +137,15 @@ public class  LuaHelper {
             assb = Assembly.GetAssembly(typeof(UnityEngine.GameObject));
             t = assb.GetType(classname);
         }
+
+#if UNITY_5 
+        if(t==null)
+        {
+            assb = Assembly.GetAssembly(typeof(UnityEngine.UI.Text));
+            t = assb.GetType(classname);
+            Debug.Log(t);
+        }
+#endif
         return t;
     }
 

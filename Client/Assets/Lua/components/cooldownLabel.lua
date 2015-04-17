@@ -44,9 +44,25 @@ function CooldownLabel:call()
 	if time>=self.along_time then
   		self.enable = false
   		if self.onCooldownFn then self:onCooldownFn() end
-  	else
+  	elseif(self.enable==true) then
   		delay(self.call,1,self)
   	end
+end
+
+--暂停
+function CooldownLabel:pause()
+    self.pause_time = os.time() --记录暂停时间
+    self.enable = false
+end
+
+--继续
+function CooldownLabel:continue()
+    self.enable = true
+    local dt = os.time() -  self.pause_time
+    self.beginTime=self.beginTime+dt
+    self.along_time = self.along_time+dt
+    self:call()
+--    delay(self.call,1,self)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -61,7 +77,8 @@ function CooldownLabel:begin(total,type,len)
 	self.beginTime = os.time()
 	self.along_time = self.beginTime+total
 	self.enable = true
-	delay(self.call,1,self)
+	self:call()
+--    delay(self.call,1,self)
 end
 
 return CooldownLabel

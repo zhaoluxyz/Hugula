@@ -9,13 +9,48 @@ namespace LuaInterface
 	using System.Threading;
     using System.Text;
 	using UnityEngine;
+
+    public delegate byte[] ReadLuaFile(string name);
 	
 	public class LuaStatic
 	{
+        public static ReadLuaFile Load = null;
+        //private static int trace = 0;
+
+        static LuaStatic()
+        {
+            Load = DefaultLoader;
+        }
+
+        //public static void InitTraceback(IntPtr L)
+        //{
+        //    int oldTop = LuaDLL.lua_gettop(L);
+        //    LuaDLL.lua_getglobal(L, "debug");
+        //    LuaDLL.lua_getfield(L, -1, "traceback");
+        //    trace = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+        //    LuaDLL.lua_settop(L, oldTop);
+        //}
+
+        static byte[] DefaultLoader(string name)
+        {
+            byte[] str = null;
+            string path = Application.dataPath + "/Lua/" + name;
+
+            using (FileStream file = new FileStream(path, FileMode.Open))
+            {
+                str = new byte[(int)file.Length];
+                file.Read(str, 0, str.Length);
+                file.Close();
+            }
+
+            return str;
+        }
+
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int panic(IntPtr L)
 		{
 			string reason = String.Format("unprotected error in call to Lua API ({0})", LuaDLL.lua_tostring(L, -1));
+            LuaDLL.lua_pop(L, 1);
 			throw new LuaException(reason);
 		}
 		
@@ -65,41 +100,49 @@ namespace LuaInterface
 			string fileName = String.Empty;
 			fileName = LuaDLL.lua_tostring(L, 1);
 			fileName = fileName.Replace('.', '/');
-			fileName += ".lua";
+            //fileName += ".lua";
 			
-			// Load with Unity3D resources
-			TextAsset file = (TextAsset)Resources.Load(fileName);
-			if( file == null )
+			// Load with Unity3D resources			
+            byte[] text = Load(fileName);
+
+			if( text == null )
 			{
 				return 0;
 			}
-
-            LuaDLL.luaL_loadbuffer(L, file.bytes, file.bytes.Length, fileName);
+			
+			LuaDLL.luaL_loadbuffer(L, text, text.Length, fileName);
 			
 			return 1;
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int dofile(IntPtr L)
-		{
+		{            
 			// Get script to load
 			string fileName = String.Empty;
 			fileName = LuaDLL.lua_tostring(L, 1);
 			fileName.Replace('.', '/');
-			fileName += ".lua";
+            //fileName += ".lua";
 			
 			int n = LuaDLL.lua_gettop(L);
 			
-			// Load with Unity3D resources
-			TextAsset file = (TextAsset)Resources.Load(fileName);
-			if( file == null )
+			//Load with Unity3D resources			
+            byte[] text = Load(fileName);
+
+			if( text == null )
 			{
 				return LuaDLL.lua_gettop(L) - n;
 			}
 
-            if (LuaDLL.luaL_loadbuffer(L, file.bytes, file.bytes.Length, fileName) == 0)
+//			fileName = Application.dataPath + "/Lua/" + fileName;
+//			fileName = Application.dataPath + "/Tmp/PW/" + fileName;
+
+//			if(LuaDLL.luaL_dofile(L,fileName)==0)
+            if (LuaDLL.luaL_loadbuffer (L, text, text.Length, fileName) == 0) 
 			{
-				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+				LuaDLL.lua_pcall (L, 0, LuaDLL.LUA_MULTRET,-2);
+			} else {
+				Debug.Log("do file "+fileName+" fail");
 			}
 			
 			return LuaDLL.lua_gettop(L) - n;

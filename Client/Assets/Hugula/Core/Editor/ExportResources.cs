@@ -22,9 +22,11 @@ public class ExportResources{
         public static string luacPath = Application.dataPath + "/../tools/luaTools/win/luac.exe";
     #endif
 #else
-#if UNITY_EDITOR_OSX
-	    public static string luacPath=Application.dataPath+"/../tools/luaTools/luajit";
-#else
+	#if UNITY_EDITOR_OSX && UNITY_IPHONE
+	public static string luacPath=Application.dataPath+"/../tools/luaTools/lua5.1.4c";
+	#elif UNITY_EDITOR_OSX 
+	public static string luacPath=Application.dataPath+"/../tools/luaTools/luajit";
+	#else
     public static string luacPath = Application.dataPath + "/../tools/luaTools/win/luajit.exe";
     #endif
 #endif
@@ -62,7 +64,7 @@ public class ExportResources{
             crypName = filePath.Replace(path,"").Replace(".lua","."+Common.LUA_LC_SUFFIX).Replace("\\","/");
 			outfilePath=Application.dataPath+OutLuaPath+crypName;
             checkLuaChildDirectory(outfilePath);
-#if Nlua 
+#if Nlua || UNITY_IPHONE 
              arg="-o "+outfilePath+" "+filePath;
 #else
             arg = "-b " + filePath + " " + outfilePath; //for jit

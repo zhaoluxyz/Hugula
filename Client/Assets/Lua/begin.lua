@@ -28,7 +28,7 @@ local Proxy=Proxy
 local NetMsgHelper = NetMsgHelper
 local NetAPIList = NetAPIList
 
-StateManager:setCurrentState(StateManager.hall)
+StateManager:setCurrentState(StateManager.welcome)
 
 require("netGame")
 

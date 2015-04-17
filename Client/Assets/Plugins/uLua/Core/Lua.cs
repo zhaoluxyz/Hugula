@@ -156,9 +156,9 @@ namespace LuaInterface
         public LuaFunction LoadString(string chunk, string name, LuaTable env)
         {
             int oldTop = LuaDLL.lua_gettop(L);
+            byte[] bt = Encoding.Default.GetBytes(chunk);
 
-            //if (LuaDLL.luaL_loadbuffer(L, chunk, Encoding.UTF8.GetByteCount(chunk), name) != 0)
-            if (LuaDLL.luaL_loadstring(L, chunk) != 0)
+            if (LuaDLL.luaL_loadbuffer(L, bt, bt.Length, name) != 0)
                 ThrowExceptionFromError(oldTop);
 
             if (env != null)
@@ -184,17 +184,29 @@ namespace LuaInterface
         /// <param name="fileName"></param>
         /// <returns></returns>
         public LuaFunction LoadFile(string fileName)
-        {
+        {            
             int oldTop = LuaDLL.lua_gettop(L);
 
-            // Load with Unity3D resources
-            TextAsset file = (TextAsset)Resources.Load(fileName);
-            if( file == null )
-            {
-                ThrowExceptionFromError(oldTop);
+            // Load with Unity3D resources            
+            //string text = LuaHelper.Load(fileName);
+
+            byte[] bt = null;
+            string path = Application.dataPath + "/Lua/" + fileName ;
+
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+            {                            
+                BinaryReader br = new BinaryReader(fs);
+                bt = br.ReadBytes((int)fs.Length);                               
+                fs.Close();
             }
 
-            if (LuaDLL.luaL_loadbuffer(L, file.bytes, file.bytes.Length, fileName) != 0)
+
+            //if( text == null )
+            //{
+            //    ThrowExceptionFromError(oldTop);
+            //}
+
+            if (LuaDLL.luaL_loadbuffer(L, bt, bt.Length, fileName) != 0)
             {
                 ThrowExceptionFromError(oldTop);
             }
@@ -224,7 +236,9 @@ namespace LuaInterface
         public object[] DoString(string chunk, string chunkName, LuaTable env)
         {
             int oldTop = LuaDLL.lua_gettop(L);
-            if (LuaDLL.luaL_loadstring(L, chunk) == 0)
+            byte[] bt = Encoding.Default.GetBytes(chunk);
+
+            if (LuaDLL.luaL_loadbuffer(L, bt, bt.Length, chunkName) == 0)
             {
                 if (env != null)
                 {

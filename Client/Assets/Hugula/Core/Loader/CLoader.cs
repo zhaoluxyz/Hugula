@@ -53,7 +53,7 @@ public class CLoader : MonoBehaviour {
 		castTime=ds.TotalMilliseconds;
 		if(www.error!=null)
 		{
-			Debug.Log("error : url "+www.url+" \n error:"+www.error);
+			Debug.LogWarning("error : url "+www.url+" \n error:"+www.error);
 			DispatchErrorEvent();
 		}else
 		{

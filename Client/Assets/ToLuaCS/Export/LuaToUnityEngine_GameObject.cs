@@ -50,11 +50,6 @@ public static class LuaToUnityEngine_GameObject {
       #endregion
 
       #region  注册实例luameta
-          LuaDLL.lua_pushstring(L,"SampleAnimation");
-          luafn_SampleAnimation= new LuaCSFunction(SampleAnimation);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_SampleAnimation);
-          LuaDLL.lua_rawset(L, -3);
-
           LuaDLL.lua_pushstring(L,"GetComponent");
           luafn_GetComponent= new LuaCSFunction(GetComponent);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponent);
@@ -70,21 +65,6 @@ public static class LuaToUnityEngine_GameObject {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentInParent);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"GetComponentsInParent");
-          luafn_GetComponentsInParent= new LuaCSFunction(GetComponentsInParent);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentsInParent);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_isStatic");
-          luafn_get_isStatic= new LuaCSFunction(get_isStatic);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isStatic);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"set_isStatic");
-          luafn_set_isStatic= new LuaCSFunction(set_isStatic);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_isStatic);
-          LuaDLL.lua_rawset(L, -3);
-
           LuaDLL.lua_pushstring(L,"GetComponents");
           luafn_GetComponents= new LuaCSFunction(GetComponents);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponents);
@@ -95,89 +75,14 @@ public static class LuaToUnityEngine_GameObject {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentsInChildren);
           LuaDLL.lua_rawset(L, -3);
 
+          LuaDLL.lua_pushstring(L,"GetComponentsInParent");
+          luafn_GetComponentsInParent= new LuaCSFunction(GetComponentsInParent);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentsInParent);
+          LuaDLL.lua_rawset(L, -3);
+
           LuaDLL.lua_pushstring(L,"get_transform");
           luafn_get_transform= new LuaCSFunction(get_transform);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_transform);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_rigidbody");
-          luafn_get_rigidbody= new LuaCSFunction(get_rigidbody);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_rigidbody);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_rigidbody2D");
-          luafn_get_rigidbody2D= new LuaCSFunction(get_rigidbody2D);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_rigidbody2D);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_camera");
-          luafn_get_camera= new LuaCSFunction(get_camera);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_camera);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_light");
-          luafn_get_light= new LuaCSFunction(get_light);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_light);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_animation");
-          luafn_get_animation= new LuaCSFunction(get_animation);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_animation);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_constantForce");
-          luafn_get_constantForce= new LuaCSFunction(get_constantForce);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_constantForce);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_renderer");
-          luafn_get_renderer= new LuaCSFunction(get_renderer);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_renderer);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_audio");
-          luafn_get_audio= new LuaCSFunction(get_audio);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_audio);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_guiText");
-          luafn_get_guiText= new LuaCSFunction(get_guiText);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_guiText);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_networkView");
-          luafn_get_networkView= new LuaCSFunction(get_networkView);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_networkView);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_guiTexture");
-          luafn_get_guiTexture= new LuaCSFunction(get_guiTexture);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_guiTexture);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_collider");
-          luafn_get_collider= new LuaCSFunction(get_collider);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_collider);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_collider2D");
-          luafn_get_collider2D= new LuaCSFunction(get_collider2D);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_collider2D);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_hingeJoint");
-          luafn_get_hingeJoint= new LuaCSFunction(get_hingeJoint);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_hingeJoint);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_particleEmitter");
-          luafn_get_particleEmitter= new LuaCSFunction(get_particleEmitter);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_particleEmitter);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"get_particleSystem");
-          luafn_get_particleSystem= new LuaCSFunction(get_particleSystem);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_particleSystem);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"get_layer");
@@ -203,6 +108,16 @@ public static class LuaToUnityEngine_GameObject {
           LuaDLL.lua_pushstring(L,"get_activeInHierarchy");
           luafn_get_activeInHierarchy= new LuaCSFunction(get_activeInHierarchy);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_activeInHierarchy);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"get_isStatic");
+          luafn_get_isStatic= new LuaCSFunction(get_isStatic);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_isStatic);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"set_isStatic");
+          luafn_set_isStatic= new LuaCSFunction(set_isStatic);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_isStatic);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"get_tag");
@@ -245,21 +160,6 @@ public static class LuaToUnityEngine_GameObject {
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_gameObject);
           LuaDLL.lua_rawset(L, -3);
 
-          LuaDLL.lua_pushstring(L,"Equals");
-          luafn_Equals= new LuaCSFunction(Equals);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Equals);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"GetHashCode");
-          luafn_GetHashCode= new LuaCSFunction(GetHashCode);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetHashCode);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L,"GetInstanceID");
-          luafn_GetInstanceID= new LuaCSFunction(GetInstanceID);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetInstanceID);
-          LuaDLL.lua_rawset(L, -3);
-
           LuaDLL.lua_pushstring(L,"get_name");
           luafn_get_name= new LuaCSFunction(get_name);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_get_name);
@@ -283,6 +183,21 @@ public static class LuaToUnityEngine_GameObject {
           LuaDLL.lua_pushstring(L,"ToString");
           luafn_ToString= new LuaCSFunction(ToString);
           LuaDLL.lua_pushstdcallcfunction(L, luafn_ToString);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"Equals");
+          luafn_Equals= new LuaCSFunction(Equals);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_Equals);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetHashCode");
+          luafn_GetHashCode= new LuaCSFunction(GetHashCode);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetHashCode);
+          LuaDLL.lua_rawset(L, -3);
+
+          LuaDLL.lua_pushstring(L,"GetInstanceID");
+          luafn_GetInstanceID= new LuaCSFunction(GetInstanceID);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetInstanceID);
           LuaDLL.lua_rawset(L, -3);
 
           LuaDLL.lua_pushstring(L,"GetType");
@@ -368,37 +283,20 @@ public static class LuaToUnityEngine_GameObject {
          }
 }
   #region instances declaration       
-          private static LuaCSFunction luafn_SampleAnimation;
           private static LuaCSFunction luafn_GetComponent;
           private static LuaCSFunction luafn_GetComponentInChildren;
           private static LuaCSFunction luafn_GetComponentInParent;
-          private static LuaCSFunction luafn_GetComponentsInParent;
-          private static LuaCSFunction luafn_get_isStatic;
-          private static LuaCSFunction luafn_set_isStatic;
           private static LuaCSFunction luafn_GetComponents;
           private static LuaCSFunction luafn_GetComponentsInChildren;
+          private static LuaCSFunction luafn_GetComponentsInParent;
           private static LuaCSFunction luafn_get_transform;
-          private static LuaCSFunction luafn_get_rigidbody;
-          private static LuaCSFunction luafn_get_rigidbody2D;
-          private static LuaCSFunction luafn_get_camera;
-          private static LuaCSFunction luafn_get_light;
-          private static LuaCSFunction luafn_get_animation;
-          private static LuaCSFunction luafn_get_constantForce;
-          private static LuaCSFunction luafn_get_renderer;
-          private static LuaCSFunction luafn_get_audio;
-          private static LuaCSFunction luafn_get_guiText;
-          private static LuaCSFunction luafn_get_networkView;
-          private static LuaCSFunction luafn_get_guiTexture;
-          private static LuaCSFunction luafn_get_collider;
-          private static LuaCSFunction luafn_get_collider2D;
-          private static LuaCSFunction luafn_get_hingeJoint;
-          private static LuaCSFunction luafn_get_particleEmitter;
-          private static LuaCSFunction luafn_get_particleSystem;
           private static LuaCSFunction luafn_get_layer;
           private static LuaCSFunction luafn_set_layer;
           private static LuaCSFunction luafn_SetActive;
           private static LuaCSFunction luafn_get_activeSelf;
           private static LuaCSFunction luafn_get_activeInHierarchy;
+          private static LuaCSFunction luafn_get_isStatic;
+          private static LuaCSFunction luafn_set_isStatic;
           private static LuaCSFunction luafn_get_tag;
           private static LuaCSFunction luafn_set_tag;
           private static LuaCSFunction luafn_CompareTag;
@@ -407,14 +305,14 @@ public static class LuaToUnityEngine_GameObject {
           private static LuaCSFunction luafn_BroadcastMessage;
           private static LuaCSFunction luafn_AddComponent;
           private static LuaCSFunction luafn_get_gameObject;
-          private static LuaCSFunction luafn_Equals;
-          private static LuaCSFunction luafn_GetHashCode;
-          private static LuaCSFunction luafn_GetInstanceID;
           private static LuaCSFunction luafn_get_name;
           private static LuaCSFunction luafn_set_name;
           private static LuaCSFunction luafn_get_hideFlags;
           private static LuaCSFunction luafn_set_hideFlags;
           private static LuaCSFunction luafn_ToString;
+          private static LuaCSFunction luafn_Equals;
+          private static LuaCSFunction luafn_GetHashCode;
+          private static LuaCSFunction luafn_GetInstanceID;
           private static LuaCSFunction luafn_GetType;
  #endregion        
   #region statics declaration       
@@ -426,19 +324,6 @@ public static class LuaToUnityEngine_GameObject {
           private static LuaCSFunction luafn__gameobject;
  #endregion        
   #region  instances method       
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int SampleAnimation(LuaState L)
-          {
-                  UnityEngine.AnimationClip animation_ = (UnityEngine.AnimationClip)ToLuaCS.getObject(L,2);
-                  System.Single time_ = (System.Single)LuaDLL.lua_tonumber(L,3);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  target.SampleAnimation( animation_, time_);
-                 return 0;
-
-          }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponent(LuaState L)
@@ -504,59 +389,6 @@ public static class LuaToUnityEngine_GameObject {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int GetComponentsInParent(LuaState L)
-          {
-              if( ToLuaCS.getObject(L, 2) is System.Type && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER )
-              {
-                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,2);
-                  System.Boolean includeInactive_ =  LuaDLL.lua_toboolean(L,3);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Component[] getcomponentsinparent= target.GetComponentsInParent( type_, includeInactive_);
-                  ToLuaCS.push(L,getcomponentsinparent); 
-                  return 1;
-
-              }
-              if( ToLuaCS.getObject(L, 2) is System.Type)
-              {
-                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,2);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Component[] getcomponentsinparent= target.GetComponentsInParent( type_);
-                  ToLuaCS.push(L,getcomponentsinparent); 
-                  return 1;
-
-              }
-          return 0;
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_isStatic(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  System.Boolean isStatic= target.isStatic;
-                  ToLuaCS.push(L,isStatic); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int set_isStatic(LuaState L)
-          {
-                  System.Boolean value_ =  LuaDLL.lua_toboolean(L,2);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  target.isStatic= value_;
-                 return 0;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponents(LuaState L)
           {
               if( ToLuaCS.getObject(L, 2) is System.Type && ToLuaCS.getObject(L, 3) is System.Collections.Generic.List<UnityEngine.Component>)
@@ -614,6 +446,35 @@ public static class LuaToUnityEngine_GameObject {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetComponentsInParent(LuaState L)
+          {
+              if( ToLuaCS.getObject(L, 2) is System.Type && LuaDLL.lua_type(L,3)==LuaTypes.LUA_TNUMBER )
+              {
+                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,2);
+                  System.Boolean includeInactive_ =  LuaDLL.lua_toboolean(L,3);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  UnityEngine.Component[] getcomponentsinparent= target.GetComponentsInParent( type_, includeInactive_);
+                  ToLuaCS.push(L,getcomponentsinparent); 
+                  return 1;
+
+              }
+              if( ToLuaCS.getObject(L, 2) is System.Type)
+              {
+                  System.Type type_ = (System.Type)ToLuaCS.getObject(L,2);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  UnityEngine.Component[] getcomponentsinparent= target.GetComponentsInParent( type_);
+                  ToLuaCS.push(L,getcomponentsinparent); 
+                  return 1;
+
+              }
+          return 0;
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_transform(LuaState L)
           {
 
@@ -621,198 +482,6 @@ public static class LuaToUnityEngine_GameObject {
                   UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
                   UnityEngine.Transform transform= target.transform;
                   ToLuaCS.push(L,transform); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_rigidbody(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Rigidbody rigidbody= target.rigidbody;
-                  ToLuaCS.push(L,rigidbody); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_rigidbody2D(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Rigidbody2D rigidbody2D= target.rigidbody2D;
-                  ToLuaCS.push(L,rigidbody2D); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_camera(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Camera camera= target.camera;
-                  ToLuaCS.push(L,camera); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_light(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Light light= target.light;
-                  ToLuaCS.push(L,light); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_animation(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Animation animation= target.animation;
-                  ToLuaCS.push(L,animation); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_constantForce(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.ConstantForce constantForce= target.constantForce;
-                  ToLuaCS.push(L,constantForce); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_renderer(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Renderer renderer= target.renderer;
-                  ToLuaCS.push(L,renderer); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_audio(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.AudioSource audio= target.audio;
-                  ToLuaCS.push(L,audio); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_guiText(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.GUIText guiText= target.guiText;
-                  ToLuaCS.push(L,guiText); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_networkView(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.NetworkView networkView= target.networkView;
-                  ToLuaCS.push(L,networkView); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_guiTexture(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.GUITexture guiTexture= target.guiTexture;
-                  ToLuaCS.push(L,guiTexture); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_collider(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Collider collider= target.collider;
-                  ToLuaCS.push(L,collider); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_collider2D(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Collider2D collider2D= target.collider2D;
-                  ToLuaCS.push(L,collider2D); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_hingeJoint(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.HingeJoint hingeJoint= target.hingeJoint;
-                  ToLuaCS.push(L,hingeJoint); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_particleEmitter(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.ParticleEmitter particleEmitter= target.particleEmitter;
-                  ToLuaCS.push(L,particleEmitter); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_particleSystem(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.ParticleSystem particleSystem= target.particleSystem;
-                  ToLuaCS.push(L,particleSystem); 
                   return 1;
 
           }
@@ -874,6 +543,30 @@ public static class LuaToUnityEngine_GameObject {
                   System.Boolean activeInHierarchy= target.activeInHierarchy;
                   ToLuaCS.push(L,activeInHierarchy); 
                   return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_isStatic(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  System.Boolean isStatic= target.isStatic;
+                  ToLuaCS.push(L,isStatic); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_isStatic(LuaState L)
+          {
+                  System.Boolean value_ =  LuaDLL.lua_toboolean(L,2);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  target.isStatic= value_;
+                 return 0;
 
           }
           
@@ -1081,6 +774,18 @@ public static class LuaToUnityEngine_GameObject {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int AddComponent(LuaState L)
           {
+              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING )
+              {
+                  System.String className_ =  LuaDLL.lua_tostring(L,2);
+
+                  System.Type type = LuaHelper.GetType(className_);
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  UnityEngine.Component addcomponent = target.AddComponent(type);
+                  ToLuaCS.push(L,addcomponent); 
+                  return 1;
+
+              }
               if( ToLuaCS.getObject(L, 2) is System.Type)
               {
                   System.Type componentType_ = (System.Type)ToLuaCS.getObject(L,2);
@@ -1088,18 +793,6 @@ public static class LuaToUnityEngine_GameObject {
                   object original = ToLuaCS.getObject(L, 1);
                   UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
                   UnityEngine.Component addcomponent= target.AddComponent( componentType_);
-                  ToLuaCS.push(L,addcomponent); 
-                  return 1;
-
-              }
-              if( LuaDLL.lua_type(L,2)==LuaTypes.LUA_TSTRING )
-              {
-                  System.String className_ =  LuaDLL.lua_tostring(L,2); 
-
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  UnityEngine.Component addcomponent= target.AddComponent( className_);
                   ToLuaCS.push(L,addcomponent); 
                   return 1;
 
@@ -1115,43 +808,6 @@ public static class LuaToUnityEngine_GameObject {
                   UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
                   UnityEngine.GameObject gameObject= target.gameObject;
                   ToLuaCS.push(L,gameObject); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int Equals(LuaState L)
-          {
-                  System.Object o_ = (System.Object)ToLuaCS.getObject(L,2);
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  System.Boolean equals= target.Equals( o_);
-                  ToLuaCS.push(L,equals); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int GetHashCode(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  System.Int32 gethashcode= target.GetHashCode();
-                  ToLuaCS.push(L,gethashcode); 
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int GetInstanceID(LuaState L)
-          {
-
-                  object original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
-                  System.Int32 getinstanceid= target.GetInstanceID();
-                  ToLuaCS.push(L,getinstanceid); 
                   return 1;
 
           }
@@ -1213,6 +869,43 @@ public static class LuaToUnityEngine_GameObject {
                   UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
                   System.String tostring= target.ToString();
                   ToLuaCS.push(L,tostring); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int Equals(LuaState L)
+          {
+                  System.Object o_ = (System.Object)ToLuaCS.getObject(L,2);
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  System.Boolean equals= target.Equals( o_);
+                  ToLuaCS.push(L,equals); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetHashCode(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  System.Int32 gethashcode= target.GetHashCode();
+                  ToLuaCS.push(L,gethashcode); 
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetInstanceID(LuaState L)
+          {
+
+                  object original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject target= (UnityEngine.GameObject) original ;
+                  System.Int32 getinstanceid= target.GetInstanceID();
+                  ToLuaCS.push(L,getinstanceid); 
                   return 1;
 
           }

@@ -84,7 +84,8 @@ function AssetLoader:loadAssets(assets)
 			table.insert(reqs,req)
 		end
 	end
-	Loader:getResource(reqs)
+
+    if #reqs>0 then	Loader:getResource(reqs) end
 end
 
 function AssetLoader:clear()
@@ -98,7 +99,7 @@ function AssetLoader:clear()
 	self.url=nil
 	self.name=nil
 	self.luaObj.assetsLoaded = false
-    -- unloadUnusedAssets()
+--    unloadUnusedAssets()
 end
 
 function AssetLoader:load(asts)

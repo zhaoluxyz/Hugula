@@ -41,13 +41,15 @@ public class Timer  {
         LuaFnArg remItem=null;
         foreach (LuaFnArg arg in times)
         {
-            if (arg.LuaFn == fn)
+            if (arg.LuaFn.Equals(fn))
             {
                 remItem=arg;
             }
         }
 
-        if (remItem != null)
+//        if (remItem != null) {
+//			removes.Add(remItem);
+//				}
             times.Remove(remItem);
     }
 
@@ -59,22 +61,33 @@ public class Timer  {
         List<LuaFnArg>.Enumerator enmu=  times.GetEnumerator();
 
         //int i = 0;
-        removes.Clear();
-        while (enmu.MoveNext())
-        {
-            LuaFnArg item = enmu.Current;
-            if (Time.unscaledTime >= item.time)
-            {
-                item.LuaFn.Call(item.arg);
-                removes.Add(item);
-            }
-            //i++;
-        }
+//        removes.Clear();
+//        while (enmu.MoveNext())
+//        {
+//            LuaFnArg item = enmu.Current;
+//            if (Time.unscaledTime >= item.time)
+//            {
+//                item.LuaFn.Call(item.arg);
+//                removes.Add(item);
+//            }
+//            //i++;
+//        }
 
-        foreach (LuaFnArg item in removes)
-        {
-            times.Remove(item);
-        }
+		for (int i=0; i<times.Count; i++) {
+			LuaFnArg item=times[i];
+			if (Time.unscaledTime >= item.time)
+			{
+				item.LuaFn.Call(item.arg);
+				removes.Add(item);
+			}
+		}
+
+		if (removes.Count > 0) {
+						foreach (LuaFnArg item in removes) {
+								times.Remove (item);
+						}
+			removes.Clear();
+		}
 
     }
 

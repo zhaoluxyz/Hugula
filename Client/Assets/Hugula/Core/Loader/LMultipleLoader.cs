@@ -17,9 +17,14 @@ public class LMultipleLoader : MultipleLoader {
 
     public void LoadLuaTable(LuaTable reqs)
     {
-        foreach (CRequest reqi in reqs.Values)
+        System.Collections.IEnumerator luatb = reqs.Values.GetEnumerator();
+        //for(int i=0;i<luatb.Count;i++)
+        //{
+        //    AddReqToQueue(luatb[i]);
+        //}
+        while (luatb.MoveNext())
         {
-            AddReqToQueue(reqi);
+            AddReqToQueue((CRequest)luatb.Current);
         }
         BeginQueue();
     }
@@ -31,8 +36,9 @@ public class LMultipleLoader : MultipleLoader {
         IList<CRequest> reqsAdd = new List<CRequest>();
         LuaTable resdic = _cache;// req.cache as LuaTable;
         object cache = null;
-        foreach (CRequest item in reqs)
+        for(int i=0;i<reqs.Count;i++)
         {
+            CRequest item = reqs[i];
             key = item.key;
             cache = resdic[key];
             if (cache != null)//.ContainsKey(key))

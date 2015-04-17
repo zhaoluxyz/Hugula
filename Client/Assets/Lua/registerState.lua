@@ -9,3 +9,4 @@ local StateBase = StateBase
 StateManager:setStateTransform(LuaItemManager:getItemObject("transform"))
 
 StateManager.hall = StateBase({LuaItemManager:getItemObject("hall")})
+StateManager.welcome = StateBase({LuaItemManager:getItemObject("welcome")})

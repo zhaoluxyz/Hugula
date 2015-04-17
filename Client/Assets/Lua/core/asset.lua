@@ -22,25 +22,20 @@ Asset = class(function(self,url,names)
 end)
 
 function Asset:clear()
--- if self.type == SINGLE then
-	print("clear"..self.root.name)
-	if self.root then LuaHelper.Destroy(self.root) end
-	self.root = nil
-	GAMEOBJECT_ATLAS[self.key]=nil
-	self.items={}
-end
-
---显示一些状态
-function Asset:showState(states)
-	local items = self.items
-	for k,v in pairs(items) do
-		v:SetActive(false)
-		for k1,v1 in ipairs(states) do
-			if v1==k then
-				v:SetActive(true)
-			end
-		end
-	end
+	-- if self.type == SINGLE then
+		print("clear"..self.root.name)
+		if self.root then LuaHelper.Destroy(self.root) end
+		self.root = nil
+		GAMEOBJECT_ATLAS[self.key]=nil
+		self.items={}
+		-- self.names=nil
+		--self.names=nil
+	-- elseif self.items then
+	-- 	for k,v in pairs(self.items) do
+	-- 		LuaHelper.Destory(v)
+	-- 	end
+	-- 	self.items=nil
+	-- end
 end
 
 function Asset:show(...)

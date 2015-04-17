@@ -4,11 +4,17 @@
 --  author pu
 ------------------------------------------------
 luanet.load_assembly(assemblyname)
+luanet.load_assembly("UnityEngine.UI")
 
 delay = toluacs.PLua.Delay
 stopDelay = toluacs.PLua.StopDelay
 
 if unpack==nil then unpack=table.unpack end
+
+--print =function(...)
+
+--end
+
 
 function tojson(tbl,indent)
   assert(tal==nil)
@@ -18,20 +24,21 @@ function tojson(tbl,indent)
 	local havetable=false
 	local str="{"
 	local sp=""
-
-	 for k, v in pairs(tbl) do
-	    if type(v) == "table" then
-	    	havetable=true
-	    	if(indenct==0) then
-	    		str=str..sp.."\r\n	"..tostring(k)..":"..tojson(v,indent+1)
-	    	else
-	    		str=str..sp.."\r\n"..tab..tostring(k)..":"..tojson(v,indent+1)
-	   		end
-	    else
-	    	str=str..sp..tostring(k)..":"..tostring(v)
-	    end
-		sp=";"
-	 end
+    if tbl then
+	     for k, v in pairs(tbl) do
+	        if type(v) == "table" then
+	    	    havetable=true
+	    	    if(indenct==0) then
+	    		    str=str..sp.."\r\n	"..tostring(k)..":"..tojson(v,indent+1)
+	    	    else
+	    		    str=str..sp.."\r\n"..tab..tostring(k)..":"..tojson(v,indent+1)
+	   		    end
+	        else
+	    	    str=str..sp..tostring(k)..":"..tostring(v)
+	        end
+		    sp=";"
+	     end
+     end
 
 	if(havetable) then	   	str=str.."\r\n"..tab.."}"	else	   	str=str.."}"	end
 
@@ -123,4 +130,14 @@ function make_array (tp,tbl)
     return arr
 end
 
+--value type
+require("core.Math")
+require("core.Vector3")
+require("core.Vector2")
+require("core.Quaternion")
+require("core.Vector4")
+require("core.Raycast")
+require("core.Color")
+require("core.Touch")
+require("core.Ray")
 

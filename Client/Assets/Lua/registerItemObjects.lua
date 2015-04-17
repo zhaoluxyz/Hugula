@@ -8,7 +8,8 @@ local StateManager = StateManager
 --global
 LuaItemManager:registerItemObject("transform","state/stateTransform",true)
 LuaItemManager:registerItemObject("alertTips","game/alertTips",true)
-LuaItemManager:registerItemObject("hall","game/hall",true)
--- LuaItemManager:registerItemObject("guide","game/guide",true)
+
 
 --itemobject
+LuaItemManager:registerItemObject("hall","game/hall",false)
+LuaItemManager:registerItemObject("welcome","game/welcome",false)

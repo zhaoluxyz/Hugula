@@ -143,7 +143,7 @@ local function loadFrist()
 		 print(r.url.." loaded ")
 		--print(www)
         local fristView = LuaHelper.Instantiate(www.assetBundle.mainAsset)
-        progressBarTxt = LuaHelper.GetComponentInChildren(fristView,"UILabel")
+        progressBarTxt = LuaHelper.GetComponentInChildren(fristView,"UnityEngine.UI.Text")
         progressBarTxt.text="check resource  ..."
         www.assetBundle:Unload(false)
         www:Dispose()

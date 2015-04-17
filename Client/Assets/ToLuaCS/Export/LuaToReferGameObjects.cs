@@ -122,6 +122,54 @@ public static class LuaToReferGameObjects {
 
       #endregion
 
+  #region  static method       
+          //static    
+          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
+          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);
+          if (LuaDLL.lua_isnil(L, -1))
+          {
+             LuaDLL.lua_newtable(L);//table
+             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table
+             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
+             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);
+          }
+    
+          string[] names = typeof(ReferGameObjects).FullName.Split(new char[] { '.' });
+          foreach (string name in names)
+          {
+              LuaDLL.lua_getfield(L, -1, name);
+              if (LuaDLL.lua_isnil(L, -1))
+              {
+                  LuaDLL.lua_pop(L, 1);
+                  LuaDLL.lua_pushstring(L, name);
+                  LuaDLL.lua_newtable(L);
+                  LuaDLL.lua_rawset(L, -3);
+                  LuaDLL.lua_getfield(L, -1, name);
+              }   
+    
+              LuaDLL.lua_remove(L, -2);
+          }
+          LuaDLL.lua_pushstring(L, "name");
+          LuaDLL.lua_pushstring(L, typeof(ReferGameObjects).FullName);
+          LuaDLL.lua_rawset(L, -3);
+          
+          LuaDLL.lua_pushstring(L, "__index");
+          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);
+          LuaDLL.lua_rawset(L, -3);
+          
+          LuaDLL.lua_pushstring(L, "__newindex");
+          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);
+          LuaDLL.lua_rawset(L, -3);
+          
+          LuaDLL.lua_pushvalue(L, -1);
+          LuaDLL.lua_setmetatable(L, -2);
+            
+          LuaDLL.lua_pushstring(L,"__call");
+          luafn__refergameobjects= new LuaCSFunction(_refergameobjects);
+          LuaDLL.lua_pushstdcallcfunction(L, luafn__refergameobjects);
+          LuaDLL.lua_rawset(L, -3);
+
+#endregion       
          }
 }
   #region instances declaration       
@@ -141,6 +189,7 @@ public static class LuaToReferGameObjects {
           private static LuaCSFunction luafn_set_userString;
  #endregion        
   #region statics declaration       
+          private static LuaCSFunction luafn__refergameobjects;
  #endregion        
   #region  instances method       
           
@@ -183,7 +232,7 @@ public static class LuaToReferGameObjects {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original;
                   var val= ToLuaCS.getObject(L, 2);
-                  target.monos= (System.Collections.Generic.List<UnityEngine.MonoBehaviour>)val;
+                  target.monos = (System.Collections.Generic.List<UnityEngine.Behaviour>)val;
                   return 0;
 
           }
@@ -216,7 +265,7 @@ public static class LuaToReferGameObjects {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original ;
                   var val=  target.userBool;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushboolean(L,val);
                   return 1;
 
           }
@@ -237,7 +286,7 @@ public static class LuaToReferGameObjects {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original ;
                   var val=  target.userInt;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushnumber(L, val);
                   return 1;
 
           }
@@ -247,8 +296,7 @@ public static class LuaToReferGameObjects {
           {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original;
-                  var val= ToLuaCS.getObject(L, 2);
-                  target.userInt= (System.Int32)val;
+                  target.userInt= (System.Int32)LuaDLL.lua_tonumber(L,2);
                   return 0;
 
           }
@@ -259,7 +307,7 @@ public static class LuaToReferGameObjects {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original ;
                   var val=  target.userFloat;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushnumber(L, val);
                   return 1;
 
           }
@@ -269,8 +317,7 @@ public static class LuaToReferGameObjects {
           {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original;
-                  var val= ToLuaCS.getObject(L, 2);
-                  target.userFloat= (System.Single)val;
+                  target.userFloat= (System.Single)LuaDLL.lua_tonumber(L,2);
                   return 0;
 
           }
@@ -281,7 +328,7 @@ public static class LuaToReferGameObjects {
                   object original = ToLuaCS.getObject(L, 1);
                   ReferGameObjects target= (ReferGameObjects) original ;
                   var val=  target.userString;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushstring(L, val);
                   return 1;
 
           }
@@ -297,6 +344,16 @@ public static class LuaToReferGameObjects {
           }
   #endregion       
   #region  static method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int _refergameobjects(LuaState L)
+          {
+
+                  ReferGameObjects _refergameobjects= new ReferGameObjects();
+                  ToLuaCS.push(L,_refergameobjects);
+                  return 1;
+
+          }
   #endregion       
 }
 
