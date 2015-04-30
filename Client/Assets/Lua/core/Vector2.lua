@@ -55,8 +55,8 @@ function Vector2:SqrMagnitude()
 	return self.x * self.x + self.y * self.y
 end
 
-function Vector2.Normalize(v2)
-	local v2 = vector2.New()
+function Vector2:Normalize()
+	local v2 = vector2.New(self.x, self.y)
 	return v2:SetNormalize()
 end
 
