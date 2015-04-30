@@ -98,9 +98,9 @@ public class PLua : MonoBehaviour
         if (lua != null) lua.Close();
         lua = null;
         _instance = null;
-        net.Dispose();
+        if(net!=null)net.Dispose();
         net = null;
-        ChatNet.Dispose();
+		if(ChatNet!=null)ChatNet.Dispose();
         ChatNet = null;
         luacache.Clear();
     }
@@ -173,7 +173,7 @@ public class PLua : MonoBehaviour
             foreach (var ass in all)
             {
                 keyName = ass.name.Replace('.', '/');
-                Debug.Log(keyName + " complete");
+                //Debug.Log(keyName + " complete");
                 luacache[keyName] = ass as TextAsset;
             }
 #endif
@@ -310,8 +310,8 @@ public class PLua : MonoBehaviour
                 if ( re== 0)
                 {
 
-//					re = LuaDLL.lua_call(L,0,LuaDLL.LUA_MULTRET);
-					re = LuaDLL.lua_pcall(L, 0, -1, -2);
+                    re = LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+                    //re = LuaDLL.lua_pcall(L, 0, -1, -2);
 					if(re==0)
                     {
                         int i = LuaDLL.lua_gettop(L);
