@@ -79,19 +79,12 @@ end
 --发送消息到服务端
 function Proxy:send(api,content)
 	local msg=Msg()
-	-- print(msg)
-    --- 检查发送延迟
-    local delay = self.sendDelay[api.Code]
-    local time = os.clock()
-    if delay == nil or time - delay > 0.1 then
-       	msg:set_Type(api.Code)
-	    NetProtocalPaser:formatMessage(msg,api.Code,content) 
-	    Net:Send(msg)
-        --- 记录新的发送时间
-        self.sendDelay[api.Code] = time
-    end
-end
 
+       	msg:set_Type(api.Code)
+	NetProtocalPaser:formatMessage(msg,api.Code,content) 
+	Net:Send(msg)
+	    
+end
 --发送消息到服务端
 function Proxy:send(api,content)
 	local msg=Msg()

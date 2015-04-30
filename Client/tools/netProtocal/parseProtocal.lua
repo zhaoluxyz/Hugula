@@ -12,6 +12,7 @@ io.write(preCode)
 function genParseFunction(startLine)
     local structName    = string.match(startLine, "(%S+)=")
     local nextLine      = getNextValidLine()
+    
     print("parseProtocal structName" , structName)
 
     io.write("function NetProtocalPaser:parse",structName, "(msg, key, parentTable) \n")

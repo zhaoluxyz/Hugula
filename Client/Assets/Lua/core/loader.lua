@@ -6,7 +6,7 @@
 Loader={}
 local Resources = toluacs.UnityEngine.Resources
 local luanet = luanet
-local LMultipleLoader= luanet.import_type("LMultipleLoader") --toLuaCS.LMultipleLoader--
+local LMultipleLoader=  luanet.import_type("LHighway") --toLuaCS.LMultipleLoader-- local LHighway = luanet.LHighway.instance LMultipleLoader
 LMultipleLoader=LMultipleLoader.instance
 local Request=luanet.LRequest
 local AssetBundle = luanet.UnityEngine.AssetBundle
@@ -99,7 +99,7 @@ function Loader:clearSharedAB()
     local share = Loader.shareCache
     for k,v in pairs(share) do
         disposeWWW(v)
-        print("clearSharedAB "..k)
+        -- print("clearSharedAB "..k)
     end
     Loader.shareCache = {}
 end
@@ -134,9 +134,9 @@ function disposeWWW( www )
 	www = nil
 end
 
-local function onCache( req)
-	local key=req.key
-	local www=req.data
+local function onCache( key,www)
+	-- local key=req.key
+	-- local www=req.data
 	Loader.resdic[key]=www
 end
 
@@ -172,5 +172,5 @@ function Loader:setOnProgressFn(progFn)
 end
 
 -- print(Loader.multipleLoader.onCacheFn)
-Loader.multipleLoader.onCacheFn=onCache
+-- Loader.multipleLoader.onCacheFn=onCache
 Loader.multipleLoader.onSharedCompleteFn=onSharedComplete

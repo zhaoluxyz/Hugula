@@ -270,6 +270,14 @@ public string udKey
    * 加载失败的时候记录
    */
   public int times=0;
+
+
+	public CRequest childrenReq;
+
+	/// <summary>
+	/// dependencies count;
+	/// </summary>
+	public int dependenciesCount;
  }
 
 public delegate  void CompleteHandle(CRequest req);

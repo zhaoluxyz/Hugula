@@ -9,7 +9,7 @@ using LuaInterface;
 using Lua = LuaInterface.LuaState;
 
 /// <summary>
-/// Attaching this script to an object will let you trigger remote functions using NGUI events.
+/// Attaching this script to an object will let you trigger remote functions using UGUI events.
 /// </summary>
 
 public class UIEventLuaTrigger : MonoBehaviour

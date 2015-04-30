@@ -22,7 +22,7 @@ function getNextValidLine()
     local nextLine = io.read()
     while(nextLine ) do
         local trimedLine = trimLine(nextLine)
-        if(trimedLine and not isUselessLine(trimedLine)) then
+        if(trimedLine and not isUselessLine(trimedLine)) and trimedLine~="\r" then
             return trimedLine
         else
             nextLine = io.read()

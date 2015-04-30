@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using System.Collections;
 
 public class ClientTest : MonoBehaviour {
@@ -15,7 +17,16 @@ public class ClientTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	 
+        //UnityEngine.UI.Button btn;
+        UnityEngine.EventSystems.EventSystem es;
+        //ExecuteEvents.pointerClickHandler(
+        ExecuteEvents.Execute<IPointerClickHandler>(this.gameObject, null, (x,y)=>x.OnPointerClick(null));
+
+        //es.firstSelectedGameObject
+        //es.currentSelectedGameObject;
+        //es.
+        //btn.onClick.AddListener(aaa);
+        //UnityEngine.Events.UnityAction
 	}
 	
 	// Update is called once per frame

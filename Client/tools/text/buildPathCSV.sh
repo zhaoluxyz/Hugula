@@ -6,9 +6,9 @@ pwd
 #PlatformType=`../../tools/utils.sh inputPlatformType $2`
 #AppDir=`../../tools/utils.sh getAppDir $PlatformType $AppType`
 #STRINGTOOLS="../../tools/stringconv.py"
-STRINGTOOLS="../site-packages/stringXlsConvertCSV.py" #"site-packages/stringconv.py
+STRINGTOOLS="../site-packages/stringDirXlsConvertCSV.py" #"site-packages/stringconv.py
 TEXTOUTDIR="../../Assets/Config/"
-STRINGSOURCE="Config.xls"
+STRINGSOURCE="Configs"
 
 python $STRINGTOOLS $STRINGSOURCE $TEXTOUTDIR
 echo 导出文本资源成功
