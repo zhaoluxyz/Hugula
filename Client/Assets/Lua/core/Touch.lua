@@ -7,6 +7,7 @@ Touch =
 	deltaTime 		= 0,
 	tapCount 		= 0,
 	phase 			= nil,		
+    type = "UnityEngine.Touch"
 }
 
 local mt = {}

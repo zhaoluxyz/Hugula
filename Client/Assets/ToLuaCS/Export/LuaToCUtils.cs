@@ -10,181 +10,44 @@ public static class LuaToCUtils {
 
   public static void CreateMetaTableToLua(LuaState L) {
 
-       LuaDLL.luaL_getmetatable(L, typeof(CUtils).AssemblyQualifiedName);
-      if (LuaDLL.lua_isnil(L, -1))
-      {
-          LuaDLL.lua_settop(L, -2);
-          LuaDLL.luaL_newmetatable(L, typeof(CUtils).AssemblyQualifiedName);
-          LuaDLL.lua_pushlightuserdata(L, LuaDLL.luanet_gettag());
-          LuaDLL.lua_pushnumber(L, 1);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__gc");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.gcFunction);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__tostring");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.toStringFunction);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-      #region 判断父类
-          System.Type superT = typeof(CUtils).BaseType;
-          if (superT != null)
-          {
-              LuaDLL.luaL_getmetatable(L, superT.AssemblyQualifiedName);
-              if (!LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_setmetatable(L, -2);
-              }
-              else
-              {
-                  LuaDLL.lua_remove(L, -1);
-              }
-          }
-      #endregion
-
-      #region  注册实例luameta
-      #endregion
-
+       System.Type t= typeof(CUtils);
+       if(!ToLuaCS.CreateMetatable(L,t)){
+          return;
+      }
   #region  static method       
-          //static    
-          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);
-          if (LuaDLL.lua_isnil(L, -1))
-          {
-             LuaDLL.lua_newtable(L);//table
-             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table
-             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);
-          }
-    
-          string[] names = typeof(CUtils).FullName.Split(new char[] { '.' });
-          foreach (string name in names)
-          {
-              LuaDLL.lua_getfield(L, -1, name);
-              if (LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_pop(L, 1);
-                  LuaDLL.lua_pushstring(L, name);
-                  LuaDLL.lua_newtable(L);
-                  LuaDLL.lua_rawset(L, -3);
-                  LuaDLL.lua_getfield(L, -1, name);
-              }   
-    
-              LuaDLL.lua_remove(L, -2);
-          }
-          LuaDLL.lua_pushstring(L, "name");
-          LuaDLL.lua_pushstring(L, typeof(CUtils).FullName);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushvalue(L, -1);
-          LuaDLL.lua_setmetatable(L, -2);
-            
-          LuaDLL.lua_pushstring(L,"GetURLFileSuffix");
-          luafn_GetURLFileSuffix= new LuaCSFunction(GetURLFileSuffix);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetURLFileSuffix);
-          LuaDLL.lua_rawset(L, -3);
+          ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "GetURLFileSuffix", GetURLFileSuffix);
 
-          LuaDLL.lua_pushstring(L,"GetURLFileName");
-          luafn_GetURLFileName= new LuaCSFunction(GetURLFileName);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetURLFileName);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetURLFileName", GetURLFileName);
 
-          LuaDLL.lua_pushstring(L,"GetKeyURLFileName");
-          luafn_GetKeyURLFileName= new LuaCSFunction(GetKeyURLFileName);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetKeyURLFileName);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetKeyURLFileName", GetKeyURLFileName);
 
-          LuaDLL.lua_pushstring(L,"GetURLFullFileName");
-          luafn_GetURLFullFileName= new LuaCSFunction(GetURLFullFileName);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetURLFullFileName);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetURLFullFileName", GetURLFullFileName);
 
-          LuaDLL.lua_pushstring(L,"GetFileFullPath");
-          luafn_GetFileFullPath= new LuaCSFunction(GetFileFullPath);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetFileFullPath);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetFileFullPath", GetFileFullPath);
 
-          LuaDLL.lua_pushstring(L,"GetAssetFullPath");
-          luafn_GetAssetFullPath= new LuaCSFunction(GetAssetFullPath);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetAssetFullPath);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetAssetFullPath", GetAssetFullPath);
 
-          LuaDLL.lua_pushstring(L,"GetFileFullPathNoProtocol");
-          luafn_GetFileFullPathNoProtocol= new LuaCSFunction(GetFileFullPathNoProtocol);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetFileFullPathNoProtocol);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetFileFullPathNoProtocol", GetFileFullPathNoProtocol);
 
-          LuaDLL.lua_pushstring(L,"GetDirectoryFullPathNoProtocol");
-          luafn_GetDirectoryFullPathNoProtocol= new LuaCSFunction(GetDirectoryFullPathNoProtocol);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetDirectoryFullPathNoProtocol);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetDirectoryFullPathNoProtocol", GetDirectoryFullPathNoProtocol);
 
-          LuaDLL.lua_pushstring(L,"get_dataPath");
-          luafn_get_dataPath= new LuaCSFunction(get_dataPath);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_dataPath);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_dataPath", get_dataPath);
 
-          LuaDLL.lua_pushstring(L,"GetAssetPath");
-          luafn_GetAssetPath= new LuaCSFunction(GetAssetPath);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetAssetPath);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetAssetPath", GetAssetPath);
 
-          LuaDLL.lua_pushstring(L,"Collect");
-          luafn_Collect= new LuaCSFunction(Collect);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Collect);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Collect", Collect);
 
-          LuaDLL.lua_pushstring(L,"ADD");
-          luafn_ADD= new LuaCSFunction(ADD);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_ADD);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Execute", Execute);
 
-          LuaDLL.lua_pushstring(L,"get_currPersistentExist");
-          luafn_get_currPersistentExist= new LuaCSFunction(get_currPersistentExist);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_currPersistentExist);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "__call", _cutils);
 
-          LuaDLL.lua_pushstring(L,"set_currPersistentExist");
-          luafn_set_currPersistentExist= new LuaCSFunction(set_currPersistentExist);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_currPersistentExist);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_currPersistentExist", get_currPersistentExist);
+
+           ToLuaCS.AddMember(L, "set_currPersistentExist", set_currPersistentExist);
 
 #endregion       
-         }
 }
-  #region instances declaration       
- #endregion        
-  #region statics declaration       
-          private static LuaCSFunction luafn_GetURLFileSuffix;
-          private static LuaCSFunction luafn_GetURLFileName;
-          private static LuaCSFunction luafn_GetKeyURLFileName;
-          private static LuaCSFunction luafn_GetURLFullFileName;
-          private static LuaCSFunction luafn_GetFileFullPath;
-          private static LuaCSFunction luafn_GetAssetFullPath;
-          private static LuaCSFunction luafn_GetFileFullPathNoProtocol;
-          private static LuaCSFunction luafn_GetDirectoryFullPathNoProtocol;
-          private static LuaCSFunction luafn_get_dataPath;
-          private static LuaCSFunction luafn_GetAssetPath;
-          private static LuaCSFunction luafn_Collect;
-          private static LuaCSFunction luafn_ADD;
-          private static LuaCSFunction luafn_get_currPersistentExist;
-          private static LuaCSFunction luafn_set_currPersistentExist;
- #endregion        
   #region  instances method       
   #endregion       
   #region  static method       
@@ -196,7 +59,7 @@ public static class LuaToCUtils {
 
 
                   System.String geturlfilesuffix= CUtils.GetURLFileSuffix( url_);
-                  ToLuaCS.push(L,geturlfilesuffix); 
+                  LuaDLL.lua_pushstring(L, geturlfilesuffix);
                   return 1;
 
           }
@@ -208,7 +71,7 @@ public static class LuaToCUtils {
 
 
                   System.String geturlfilename= CUtils.GetURLFileName( url_);
-                  ToLuaCS.push(L,geturlfilename); 
+                  LuaDLL.lua_pushstring(L, geturlfilename);
                   return 1;
 
           }
@@ -220,7 +83,7 @@ public static class LuaToCUtils {
 
 
                   System.String getkeyurlfilename= CUtils.GetKeyURLFileName( url_);
-                  ToLuaCS.push(L,getkeyurlfilename); 
+                  LuaDLL.lua_pushstring(L, getkeyurlfilename);
                   return 1;
 
           }
@@ -232,7 +95,7 @@ public static class LuaToCUtils {
 
 
                   System.String geturlfullfilename= CUtils.GetURLFullFileName( url_);
-                  ToLuaCS.push(L,geturlfullfilename); 
+                  LuaDLL.lua_pushstring(L, geturlfullfilename);
                   return 1;
 
           }
@@ -244,7 +107,7 @@ public static class LuaToCUtils {
 
 
                   System.String getfilefullpath= CUtils.GetFileFullPath( absolutePath_);
-                  ToLuaCS.push(L,getfilefullpath); 
+                  LuaDLL.lua_pushstring(L, getfilefullpath);
                   return 1;
 
           }
@@ -256,7 +119,7 @@ public static class LuaToCUtils {
 
 
                   System.String getassetfullpath= CUtils.GetAssetFullPath( assetPath_);
-                  ToLuaCS.push(L,getassetfullpath); 
+                  LuaDLL.lua_pushstring(L, getassetfullpath);
                   return 1;
 
           }
@@ -268,7 +131,7 @@ public static class LuaToCUtils {
 
 
                   System.String getfilefullpathnoprotocol= CUtils.GetFileFullPathNoProtocol( absolutePath_);
-                  ToLuaCS.push(L,getfilefullpathnoprotocol); 
+                  LuaDLL.lua_pushstring(L, getfilefullpathnoprotocol);
                   return 1;
 
           }
@@ -280,7 +143,7 @@ public static class LuaToCUtils {
 
 
                   System.String getdirectoryfullpathnoprotocol= CUtils.GetDirectoryFullPathNoProtocol( absolutePath_);
-                  ToLuaCS.push(L,getdirectoryfullpathnoprotocol); 
+                  LuaDLL.lua_pushstring(L, getdirectoryfullpathnoprotocol);
                   return 1;
 
           }
@@ -290,7 +153,7 @@ public static class LuaToCUtils {
           {
 
                   System.String dataPath= CUtils.dataPath;
-                  ToLuaCS.push(L,dataPath); 
+                  LuaDLL.lua_pushstring(L, dataPath);
                   return 1;
 
           }
@@ -302,7 +165,7 @@ public static class LuaToCUtils {
 
 
                   System.String getassetpath= CUtils.GetAssetPath( name_);
-                  ToLuaCS.push(L,getassetpath); 
+                  LuaDLL.lua_pushstring(L, getassetpath);
                   return 1;
 
           }
@@ -312,18 +175,39 @@ public static class LuaToCUtils {
           {
 
                   CUtils.Collect();
-                 return 0;
+                  return 0;
 
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int ADD(LuaState L)
+          public static int Execute(LuaState L)
           {
-                  System.Int32 a_ = (System.Int32)LuaDLL.lua_tonumber(L,1);
-                  System.Int32 b_ = (System.Int32)LuaDLL.lua_tonumber(L,2);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,1)){
+               if( ToLuaCS.getObject(L, 1) is BetterList<System.Action>){
+                  BetterList<System.Action> list_ = (BetterList<System.Action>)ToLuaCS.getObject(L, 1);
 
-                  System.Int32 add= CUtils.ADD( a_, b_);
-                  ToLuaCS.push(L,add); 
+                  CUtils.Execute( list_);
+                  return 0;
+
+               }
+               if( ToLuaCS.getObject(L, 1) is System.Collections.Generic.IList<System.Action>){
+                  System.Collections.Generic.IList<System.Action> list_ = (System.Collections.Generic.IList<System.Action>)ToLuaCS.getObject(L, 1);
+
+                  CUtils.Execute( list_);
+                  return 0;
+
+               }
+                 }
+               return 0;
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int _cutils(LuaState L)
+          {
+
+                  CUtils _cutils= new CUtils();
+                  ToLuaCS.push(L,_cutils);
                   return 1;
 
           }
@@ -332,7 +216,7 @@ public static class LuaToCUtils {
           public static int get_currPersistentExist(LuaState L)
           {
                   var val=   CUtils.currPersistentExist;
-                  ToLuaCS.push(L,val);
+                  LuaDLL.lua_pushboolean(L,val);
                   return 1;
 
           }

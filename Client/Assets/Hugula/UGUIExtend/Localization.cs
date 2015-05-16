@@ -121,7 +121,7 @@ public static class Localization
 
 	static bool LoadDictionary (string value)
 	{
-        LMultipleLoader loader = LMultipleLoader.instance;
+        LHighway loader = LHighway.instance;
         string fileName = Common.LANGUAGE_FLODER + "/" + value.ToLower() + "." + Common.LANGUAGE_SUFFIX;
         //fileName = CUtils.GetAssetFullPath(fileName);
         //string exsi = CUtils.GetFileFullPathNoProtocol(fileName);

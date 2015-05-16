@@ -21,17 +21,25 @@ local abs	= math.abs
 local rad2Deg = math.rad2Deg
 local halfDegToRad = 0.5 * math.deg2Rad
 
-Quaternion = 
-{
-	x = 0,
-	y = 0,
-	z = 0,
-	w = 0,	
+--Quaternion = class(function(self,x,y,z,w) 
+--	self.x = x  or 0
+--	self.y = y or 0
+--    self.z = z or 0
+--    self.w = z or 0
+--    self.type="UnityEngine.Quaternion"
+--end)
 
-	class = "Quaternion",
-}
+ Quaternion = 
+ {
+ 	x = 0,
+ 	y = 0,
+ 	z = 0,
+ 	w = 0,	
 
-setmetatable(Quaternion, Quaternion)
+ 	type = "UnityEngine.Quaternion",
+ }
+
+ setmetatable(Quaternion, Quaternion)
 
 Quaternion.__index = function(t, name)		
 	local var = rawget(Quaternion, name)
@@ -57,12 +65,15 @@ Quaternion.__newindex = function(t, name, k)
 	end	
 end
 
-function Quaternion.New(x, y, z, w)
-	local quat = {}	
-	setmetatable(quat, Quaternion)
-	quat:Set(x,y,z,w)
-	return quat
-end
+ function Quaternion.New(x, y, z, w)
+ 	local quat = {}	
+ 	setmetatable(quat, Quaternion)
+ 	quat:Set(x,y,z,w)
+ 	return quat
+ end
+--function Quaternion.New(x,y,z,w)
+--	return Quaternion(x,y,z,w)
+--end
 
 function Quaternion:Set(x,y,z,w)
 	self.x = x or 0
@@ -105,23 +116,24 @@ function Quaternion.Equals(a, b)
 	return a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
 end
 
-function Quaternion.Euler(x, y, z)		
+function Quaternion.Euler(x, y, z)	
 	local quat = Quaternion.New()	
 	quat:SetEuler(x,y,z)
 	return quat
 end
 
-function Quaternion:SetEuler(x, y, z)		
+function Quaternion:SetEuler(x,y,z)		
+
 	if y == nil and z == nil then
 		x = x.x
 		y = x.y
 		z = z.z	
 	end
-		
+
 	x = x * halfDegToRad
     y = y * halfDegToRad
     z = z * halfDegToRad
-	
+
 	local sinX = sin(x)
     local cosX = cos(x)
     local sinY = sin(y)
@@ -133,7 +145,6 @@ function Quaternion:SetEuler(x, y, z)
     self.x = cosY * sinX * cosZ + sinY * cosX * sinZ
     self.y = sinY * cosX * cosZ - cosY * sinX * sinZ
     self.z = cosY * cosX * sinZ - sinY * sinX * cosZ
-	
 	return self
 end
 

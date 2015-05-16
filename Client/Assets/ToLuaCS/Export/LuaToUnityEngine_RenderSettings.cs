@@ -10,236 +10,223 @@ public static class LuaToUnityEngine_RenderSettings {
 
   public static void CreateMetaTableToLua(LuaState L) {
 
-       LuaDLL.luaL_getmetatable(L, typeof(UnityEngine.RenderSettings).AssemblyQualifiedName);
-      if (LuaDLL.lua_isnil(L, -1))
-      {
-          LuaDLL.lua_settop(L, -2);
-          LuaDLL.luaL_newmetatable(L, typeof(UnityEngine.RenderSettings).AssemblyQualifiedName);
-          LuaDLL.lua_pushlightuserdata(L, LuaDLL.luanet_gettag());
-          LuaDLL.lua_pushnumber(L, 1);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__gc");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.gcFunction);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__tostring");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.toStringFunction);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-      #region 判断父类
-          System.Type superT = typeof(UnityEngine.RenderSettings).BaseType;
-          if (superT != null)
-          {
-              LuaDLL.luaL_getmetatable(L, superT.AssemblyQualifiedName);
-              if (!LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_setmetatable(L, -2);
-              }
-              else
-              {
-                  LuaDLL.lua_remove(L, -1);
-              }
-          }
-      #endregion
-
+       System.Type t= typeof(UnityEngine.RenderSettings);
+       if(!ToLuaCS.CreateMetatable(L,t)){
+          return;
+      }
       #region  注册实例luameta
+           ToLuaCS.AddMember(L, "get_name", get_name);
+           ToLuaCS.AddMember(L, "set_name", set_name);
+           ToLuaCS.AddMember(L, "get_hideFlags", get_hideFlags);
+           ToLuaCS.AddMember(L, "set_hideFlags", set_hideFlags);
+           ToLuaCS.AddMember(L, "ToString", ToString);
+           ToLuaCS.AddMember(L, "Equals", Equals);
+           ToLuaCS.AddMember(L, "GetHashCode", GetHashCode);
+           ToLuaCS.AddMember(L, "GetInstanceID", GetInstanceID);
+           ToLuaCS.AddMember(L, "GetType", GetType);
       #endregion
 
   #region  static method       
-          //static    
-          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);
-          if (LuaDLL.lua_isnil(L, -1))
-          {
-             LuaDLL.lua_newtable(L);//table
-             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table
-             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);
-          }
-    
-          string[] names = typeof(UnityEngine.RenderSettings).FullName.Split(new char[] { '.' });
-          foreach (string name in names)
-          {
-              LuaDLL.lua_getfield(L, -1, name);
-              if (LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_pop(L, 1);
-                  LuaDLL.lua_pushstring(L, name);
-                  LuaDLL.lua_newtable(L);
-                  LuaDLL.lua_rawset(L, -3);
-                  LuaDLL.lua_getfield(L, -1, name);
-              }   
-    
-              LuaDLL.lua_remove(L, -2);
-          }
-          LuaDLL.lua_pushstring(L, "name");
-          LuaDLL.lua_pushstring(L, typeof(UnityEngine.RenderSettings).FullName);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushvalue(L, -1);
-          LuaDLL.lua_setmetatable(L, -2);
-            
-          LuaDLL.lua_pushstring(L,"get_fog");
-          luafn_get_fog= new LuaCSFunction(get_fog);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fog);
-          LuaDLL.lua_rawset(L, -3);
+          ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "get_fog", get_fog);
 
-          LuaDLL.lua_pushstring(L,"set_fog");
-          luafn_set_fog= new LuaCSFunction(set_fog);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fog);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fog", set_fog);
 
-          LuaDLL.lua_pushstring(L,"get_fogMode");
-          luafn_get_fogMode= new LuaCSFunction(get_fogMode);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fogMode);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_fogMode", get_fogMode);
 
-          LuaDLL.lua_pushstring(L,"set_fogMode");
-          luafn_set_fogMode= new LuaCSFunction(set_fogMode);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fogMode);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fogMode", set_fogMode);
 
-          LuaDLL.lua_pushstring(L,"get_fogColor");
-          luafn_get_fogColor= new LuaCSFunction(get_fogColor);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fogColor);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_fogColor", get_fogColor);
 
-          LuaDLL.lua_pushstring(L,"set_fogColor");
-          luafn_set_fogColor= new LuaCSFunction(set_fogColor);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fogColor);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fogColor", set_fogColor);
 
-          LuaDLL.lua_pushstring(L,"get_fogDensity");
-          luafn_get_fogDensity= new LuaCSFunction(get_fogDensity);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fogDensity);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_fogDensity", get_fogDensity);
 
-          LuaDLL.lua_pushstring(L,"set_fogDensity");
-          luafn_set_fogDensity= new LuaCSFunction(set_fogDensity);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fogDensity);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fogDensity", set_fogDensity);
 
-          LuaDLL.lua_pushstring(L,"get_fogStartDistance");
-          luafn_get_fogStartDistance= new LuaCSFunction(get_fogStartDistance);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fogStartDistance);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_fogStartDistance", get_fogStartDistance);
 
-          LuaDLL.lua_pushstring(L,"set_fogStartDistance");
-          luafn_set_fogStartDistance= new LuaCSFunction(set_fogStartDistance);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fogStartDistance);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fogStartDistance", set_fogStartDistance);
 
-          LuaDLL.lua_pushstring(L,"get_fogEndDistance");
-          luafn_get_fogEndDistance= new LuaCSFunction(get_fogEndDistance);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_fogEndDistance);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_fogEndDistance", get_fogEndDistance);
 
-          LuaDLL.lua_pushstring(L,"set_fogEndDistance");
-          luafn_set_fogEndDistance= new LuaCSFunction(set_fogEndDistance);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_fogEndDistance);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_fogEndDistance", set_fogEndDistance);
 
-          LuaDLL.lua_pushstring(L,"get_ambientLight");
-          luafn_get_ambientLight= new LuaCSFunction(get_ambientLight);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_ambientLight);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientMode", get_ambientMode);
 
-          LuaDLL.lua_pushstring(L,"set_ambientLight");
-          luafn_set_ambientLight= new LuaCSFunction(set_ambientLight);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_ambientLight);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_ambientMode", set_ambientMode);
 
-          LuaDLL.lua_pushstring(L,"get_haloStrength");
-          luafn_get_haloStrength= new LuaCSFunction(get_haloStrength);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_haloStrength);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientSkyColor", get_ambientSkyColor);
 
-          LuaDLL.lua_pushstring(L,"set_haloStrength");
-          luafn_set_haloStrength= new LuaCSFunction(set_haloStrength);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_haloStrength);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_ambientSkyColor", set_ambientSkyColor);
 
-          LuaDLL.lua_pushstring(L,"get_flareStrength");
-          luafn_get_flareStrength= new LuaCSFunction(get_flareStrength);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_flareStrength);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientEquatorColor", get_ambientEquatorColor);
 
-          LuaDLL.lua_pushstring(L,"set_flareStrength");
-          luafn_set_flareStrength= new LuaCSFunction(set_flareStrength);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_flareStrength);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_ambientEquatorColor", set_ambientEquatorColor);
 
-          LuaDLL.lua_pushstring(L,"get_flareFadeSpeed");
-          luafn_get_flareFadeSpeed= new LuaCSFunction(get_flareFadeSpeed);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_flareFadeSpeed);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientGroundColor", get_ambientGroundColor);
 
-          LuaDLL.lua_pushstring(L,"set_flareFadeSpeed");
-          luafn_set_flareFadeSpeed= new LuaCSFunction(set_flareFadeSpeed);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_flareFadeSpeed);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_ambientGroundColor", set_ambientGroundColor);
 
-          LuaDLL.lua_pushstring(L,"get_skybox");
-          luafn_get_skybox= new LuaCSFunction(get_skybox);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_skybox);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientLight", get_ambientLight);
 
-          LuaDLL.lua_pushstring(L,"set_skybox");
-          luafn_set_skybox= new LuaCSFunction(set_skybox);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_skybox);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_ambientLight", set_ambientLight);
 
-          LuaDLL.lua_pushstring(L,"__call");
-          luafn__rendersettings= new LuaCSFunction(_rendersettings);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn__rendersettings);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_ambientSkyboxAmount", get_ambientSkyboxAmount);
+
+           ToLuaCS.AddMember(L, "set_ambientSkyboxAmount", set_ambientSkyboxAmount);
+
+           ToLuaCS.AddMember(L, "get_reflectionBounces", get_reflectionBounces);
+
+           ToLuaCS.AddMember(L, "set_reflectionBounces", set_reflectionBounces);
+
+           ToLuaCS.AddMember(L, "get_ambientProbe", get_ambientProbe);
+
+           ToLuaCS.AddMember(L, "set_ambientProbe", set_ambientProbe);
+
+           ToLuaCS.AddMember(L, "get_haloStrength", get_haloStrength);
+
+           ToLuaCS.AddMember(L, "set_haloStrength", set_haloStrength);
+
+           ToLuaCS.AddMember(L, "get_flareStrength", get_flareStrength);
+
+           ToLuaCS.AddMember(L, "set_flareStrength", set_flareStrength);
+
+           ToLuaCS.AddMember(L, "get_flareFadeSpeed", get_flareFadeSpeed);
+
+           ToLuaCS.AddMember(L, "set_flareFadeSpeed", set_flareFadeSpeed);
+
+           ToLuaCS.AddMember(L, "get_skybox", get_skybox);
+
+           ToLuaCS.AddMember(L, "set_skybox", set_skybox);
+
+           ToLuaCS.AddMember(L, "get_defaultReflectionMode", get_defaultReflectionMode);
+
+           ToLuaCS.AddMember(L, "set_defaultReflectionMode", set_defaultReflectionMode);
+
+           ToLuaCS.AddMember(L, "get_defaultReflectionResolution", get_defaultReflectionResolution);
+
+           ToLuaCS.AddMember(L, "set_defaultReflectionResolution", set_defaultReflectionResolution);
+
+           ToLuaCS.AddMember(L, "get_customReflection", get_customReflection);
+
+           ToLuaCS.AddMember(L, "set_customReflection", set_customReflection);
+
+           ToLuaCS.AddMember(L, "__call", _rendersettings);
 
 #endregion       
-         }
 }
-  #region instances declaration       
- #endregion        
-  #region statics declaration       
-          private static LuaCSFunction luafn_get_fog;
-          private static LuaCSFunction luafn_set_fog;
-          private static LuaCSFunction luafn_get_fogMode;
-          private static LuaCSFunction luafn_set_fogMode;
-          private static LuaCSFunction luafn_get_fogColor;
-          private static LuaCSFunction luafn_set_fogColor;
-          private static LuaCSFunction luafn_get_fogDensity;
-          private static LuaCSFunction luafn_set_fogDensity;
-          private static LuaCSFunction luafn_get_fogStartDistance;
-          private static LuaCSFunction luafn_set_fogStartDistance;
-          private static LuaCSFunction luafn_get_fogEndDistance;
-          private static LuaCSFunction luafn_set_fogEndDistance;
-          private static LuaCSFunction luafn_get_ambientLight;
-          private static LuaCSFunction luafn_set_ambientLight;
-          private static LuaCSFunction luafn_get_haloStrength;
-          private static LuaCSFunction luafn_set_haloStrength;
-          private static LuaCSFunction luafn_get_flareStrength;
-          private static LuaCSFunction luafn_set_flareStrength;
-          private static LuaCSFunction luafn_get_flareFadeSpeed;
-          private static LuaCSFunction luafn_set_flareFadeSpeed;
-          private static LuaCSFunction luafn_get_skybox;
-          private static LuaCSFunction luafn_set_skybox;
-          private static LuaCSFunction luafn__rendersettings;
- #endregion        
   #region  instances method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_name(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.String name= target.name;
+                  LuaDLL.lua_pushstring(L, name);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_name(LuaState L)
+          {
+                  System.String value_ =  LuaDLL.lua_tostring(L,2); 
+
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  target.name= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_hideFlags(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  UnityEngine.HideFlags hideFlags= target.hideFlags;
+                  ToLuaCS.push(L,hideFlags);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_hideFlags(LuaState L)
+          {
+                  UnityEngine.HideFlags value_ = (UnityEngine.HideFlags)ToLuaCS.getObject(L, 2);
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  target.hideFlags= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int ToString(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.String tostring= target.ToString();
+                  LuaDLL.lua_pushstring(L, tostring);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int Equals(LuaState L)
+          {
+                  System.Object o_ = (System.Object)ToLuaCS.getObject(L, 2);
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.Boolean equals= target.Equals( o_);
+                  LuaDLL.lua_pushboolean(L,equals);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetHashCode(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.Int32 gethashcode= target.GetHashCode();
+                  LuaDLL.lua_pushnumber(L, gethashcode);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetInstanceID(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.Int32 getinstanceid= target.GetInstanceID();
+                  LuaDLL.lua_pushnumber(L, getinstanceid);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetType(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.RenderSettings target= (UnityEngine.RenderSettings) original ;
+                  System.Type gettype= target.GetType();
+                  ToLuaCS.push(L,gettype);
+                  return 1;
+
+          }
   #endregion       
   #region  static method       
           
@@ -248,7 +235,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Boolean fog= UnityEngine.RenderSettings.fog;
-                  ToLuaCS.push(L,fog); 
+                  LuaDLL.lua_pushboolean(L,fog);
                   return 1;
 
           }
@@ -259,7 +246,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Boolean value_ =  LuaDLL.lua_toboolean(L,1);
 
                   UnityEngine.RenderSettings.fog= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -268,7 +255,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   UnityEngine.FogMode fogMode= UnityEngine.RenderSettings.fogMode;
-                  ToLuaCS.push(L,fogMode); 
+                  ToLuaCS.push(L,fogMode);
                   return 1;
 
           }
@@ -276,10 +263,10 @@ public static class LuaToUnityEngine_RenderSettings {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_fogMode(LuaState L)
           {
-                  UnityEngine.FogMode value_ = (UnityEngine.FogMode)ToLuaCS.getObject(L,1);
+                  UnityEngine.FogMode value_ = (UnityEngine.FogMode)ToLuaCS.getObject(L, 1);
 
                   UnityEngine.RenderSettings.fogMode= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -288,7 +275,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   UnityEngine.Color fogColor= UnityEngine.RenderSettings.fogColor;
-                  ToLuaCS.push(L,fogColor); 
+                  ToLuaCS.push(L,fogColor);
                   return 1;
 
           }
@@ -296,10 +283,10 @@ public static class LuaToUnityEngine_RenderSettings {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_fogColor(LuaState L)
           {
-                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getObject(L,1);
+                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getColor(L, 1);
 
                   UnityEngine.RenderSettings.fogColor= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -308,7 +295,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single fogDensity= UnityEngine.RenderSettings.fogDensity;
-                  ToLuaCS.push(L,fogDensity); 
+                  LuaDLL.lua_pushnumber(L, fogDensity);
                   return 1;
 
           }
@@ -319,7 +306,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.fogDensity= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -328,7 +315,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single fogStartDistance= UnityEngine.RenderSettings.fogStartDistance;
-                  ToLuaCS.push(L,fogStartDistance); 
+                  LuaDLL.lua_pushnumber(L, fogStartDistance);
                   return 1;
 
           }
@@ -339,7 +326,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.fogStartDistance= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -348,7 +335,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single fogEndDistance= UnityEngine.RenderSettings.fogEndDistance;
-                  ToLuaCS.push(L,fogEndDistance); 
+                  LuaDLL.lua_pushnumber(L, fogEndDistance);
                   return 1;
 
           }
@@ -359,7 +346,87 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.fogEndDistance= value_;
-                 return 0;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientMode(LuaState L)
+          {
+
+                  UnityEngine.Rendering.AmbientMode ambientMode= UnityEngine.RenderSettings.ambientMode;
+                  ToLuaCS.push(L,ambientMode);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientMode(LuaState L)
+          {
+                  UnityEngine.Rendering.AmbientMode value_ = (UnityEngine.Rendering.AmbientMode)ToLuaCS.getObject(L, 1);
+
+                  UnityEngine.RenderSettings.ambientMode= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientSkyColor(LuaState L)
+          {
+
+                  UnityEngine.Color ambientSkyColor= UnityEngine.RenderSettings.ambientSkyColor;
+                  ToLuaCS.push(L,ambientSkyColor);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientSkyColor(LuaState L)
+          {
+                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getColor(L, 1);
+
+                  UnityEngine.RenderSettings.ambientSkyColor= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientEquatorColor(LuaState L)
+          {
+
+                  UnityEngine.Color ambientEquatorColor= UnityEngine.RenderSettings.ambientEquatorColor;
+                  ToLuaCS.push(L,ambientEquatorColor);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientEquatorColor(LuaState L)
+          {
+                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getColor(L, 1);
+
+                  UnityEngine.RenderSettings.ambientEquatorColor= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientGroundColor(LuaState L)
+          {
+
+                  UnityEngine.Color ambientGroundColor= UnityEngine.RenderSettings.ambientGroundColor;
+                  ToLuaCS.push(L,ambientGroundColor);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientGroundColor(LuaState L)
+          {
+                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getColor(L, 1);
+
+                  UnityEngine.RenderSettings.ambientGroundColor= value_;
+                  return 0;
 
           }
           
@@ -368,7 +435,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   UnityEngine.Color ambientLight= UnityEngine.RenderSettings.ambientLight;
-                  ToLuaCS.push(L,ambientLight); 
+                  ToLuaCS.push(L,ambientLight);
                   return 1;
 
           }
@@ -376,10 +443,70 @@ public static class LuaToUnityEngine_RenderSettings {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_ambientLight(LuaState L)
           {
-                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getObject(L,1);
+                  UnityEngine.Color value_ = (UnityEngine.Color)ToLuaCS.getColor(L, 1);
 
                   UnityEngine.RenderSettings.ambientLight= value_;
-                 return 0;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientSkyboxAmount(LuaState L)
+          {
+
+                  System.Single ambientSkyboxAmount= UnityEngine.RenderSettings.ambientSkyboxAmount;
+                  LuaDLL.lua_pushnumber(L, ambientSkyboxAmount);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientSkyboxAmount(LuaState L)
+          {
+                  System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
+
+                  UnityEngine.RenderSettings.ambientSkyboxAmount= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_reflectionBounces(LuaState L)
+          {
+
+                  System.Int32 reflectionBounces= UnityEngine.RenderSettings.reflectionBounces;
+                  LuaDLL.lua_pushnumber(L, reflectionBounces);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_reflectionBounces(LuaState L)
+          {
+                  System.Int32 value_ = (System.Int32)LuaDLL.lua_tonumber(L,1);
+
+                  UnityEngine.RenderSettings.reflectionBounces= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_ambientProbe(LuaState L)
+          {
+
+                  UnityEngine.Rendering.SphericalHarmonicsL2 ambientProbe= UnityEngine.RenderSettings.ambientProbe;
+                  ToLuaCS.push(L,ambientProbe);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_ambientProbe(LuaState L)
+          {
+                  UnityEngine.Rendering.SphericalHarmonicsL2 value_ = (UnityEngine.Rendering.SphericalHarmonicsL2)ToLuaCS.getObject(L, 1);
+
+                  UnityEngine.RenderSettings.ambientProbe= value_;
+                  return 0;
 
           }
           
@@ -388,7 +515,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single haloStrength= UnityEngine.RenderSettings.haloStrength;
-                  ToLuaCS.push(L,haloStrength); 
+                  LuaDLL.lua_pushnumber(L, haloStrength);
                   return 1;
 
           }
@@ -399,7 +526,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.haloStrength= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -408,7 +535,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single flareStrength= UnityEngine.RenderSettings.flareStrength;
-                  ToLuaCS.push(L,flareStrength); 
+                  LuaDLL.lua_pushnumber(L, flareStrength);
                   return 1;
 
           }
@@ -419,7 +546,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.flareStrength= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -428,7 +555,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   System.Single flareFadeSpeed= UnityEngine.RenderSettings.flareFadeSpeed;
-                  ToLuaCS.push(L,flareFadeSpeed); 
+                  LuaDLL.lua_pushnumber(L, flareFadeSpeed);
                   return 1;
 
           }
@@ -439,7 +566,7 @@ public static class LuaToUnityEngine_RenderSettings {
                   System.Single value_ = (System.Single)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.RenderSettings.flareFadeSpeed= value_;
-                 return 0;
+                  return 0;
 
           }
           
@@ -448,7 +575,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   UnityEngine.Material skybox= UnityEngine.RenderSettings.skybox;
-                  ToLuaCS.push(L,skybox); 
+                  ToLuaCS.push(L,skybox);
                   return 1;
 
           }
@@ -456,10 +583,70 @@ public static class LuaToUnityEngine_RenderSettings {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int set_skybox(LuaState L)
           {
-                  UnityEngine.Material value_ = (UnityEngine.Material)ToLuaCS.getObject(L,1);
+                  UnityEngine.Material value_ = (UnityEngine.Material)ToLuaCS.getObject(L, 1);
 
                   UnityEngine.RenderSettings.skybox= value_;
-                 return 0;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_defaultReflectionMode(LuaState L)
+          {
+
+                  UnityEngine.Rendering.DefaultReflectionMode defaultReflectionMode= UnityEngine.RenderSettings.defaultReflectionMode;
+                  ToLuaCS.push(L,defaultReflectionMode);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_defaultReflectionMode(LuaState L)
+          {
+                  UnityEngine.Rendering.DefaultReflectionMode value_ = (UnityEngine.Rendering.DefaultReflectionMode)ToLuaCS.getObject(L, 1);
+
+                  UnityEngine.RenderSettings.defaultReflectionMode= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_defaultReflectionResolution(LuaState L)
+          {
+
+                  System.Int32 defaultReflectionResolution= UnityEngine.RenderSettings.defaultReflectionResolution;
+                  LuaDLL.lua_pushnumber(L, defaultReflectionResolution);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_defaultReflectionResolution(LuaState L)
+          {
+                  System.Int32 value_ = (System.Int32)LuaDLL.lua_tonumber(L,1);
+
+                  UnityEngine.RenderSettings.defaultReflectionResolution= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_customReflection(LuaState L)
+          {
+
+                  UnityEngine.Cubemap customReflection= UnityEngine.RenderSettings.customReflection;
+                  ToLuaCS.push(L,customReflection);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_customReflection(LuaState L)
+          {
+                  UnityEngine.Cubemap value_ = (UnityEngine.Cubemap)ToLuaCS.getObject(L, 1);
+
+                  UnityEngine.RenderSettings.customReflection= value_;
+                  return 0;
 
           }
           
@@ -468,7 +655,7 @@ public static class LuaToUnityEngine_RenderSettings {
           {
 
                   UnityEngine.RenderSettings _rendersettings= new UnityEngine.RenderSettings();
-                  ToLuaCS.push(L,_rendersettings); 
+                  ToLuaCS.push(L,_rendersettings);
                   return 1;
 
           }

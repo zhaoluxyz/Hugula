@@ -1,5 +1,6 @@
 Ray = 
 {
+    type = "UnityEngine.Ray"
 }
 
 local mt = {}

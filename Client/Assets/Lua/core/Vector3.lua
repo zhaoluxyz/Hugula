@@ -32,7 +32,7 @@ Vector3=class(function(self,x,y,z)
 	self.x = x  or 0
 	self.y = y or 0
     self.z = z or 0
-    self.class="Vector3"
+    self.type="UnityEngine.Vector3"
 end)
 local fields = {}
 
@@ -489,14 +489,14 @@ Vector3.__eq = function(a,b)
 	return delta < 1e-10
 end
 
-fields.up 		= function() return Vector3(0,1,0) end
-fields.down 	= function() return Vector3(0,-1,0) end
-fields.right	= function() return Vector3(1,0,0) end
-fields.left		= function() return Vector3(-1,0,0) end
-fields.forward 	= function() return Vector3(0,0,1) end
-fields.back		= function() return Vector3(0,0,-1) end
-fields.zero		= function() return Vector3(0,0,0) end
-fields.one		= function() return Vector3(1,1,1) end
-fields.magnitude 	= Vector3.Magnitude
-fields.normalized 	= Vector3.Normalize
-fields.sqrMagnitude = Vector3.SqrMagnitude
+Vector3.up 		= function() return Vector3(0,1,0) end
+Vector3.down 	= function() return Vector3(0,-1,0) end
+Vector3.right	= function() return Vector3(1,0,0) end
+Vector3.left		= function() return Vector3(-1,0,0) end
+Vector3.forward 	= function() return Vector3(0,0,1) end
+Vector3.back		= function() return Vector3(0,0,-1) end
+Vector3.zero		= function() return Vector3(0,0,0) end
+Vector3.one		= function() return Vector3(1,1,1) end
+Vector3.magnitude 	= Vector3.Magnitude
+Vector3.normalized 	= Vector3.Normalize
+Vector3.sqrMagnitude = Vector3.SqrMagnitude

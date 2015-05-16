@@ -31,11 +31,11 @@ public class Begin : MonoBehaviour {
         }
     }
 
-    private LMultipleLoader multipleLoader;
+    private LHighway multipleLoader;
 
     void Awake()
     {
-        multipleLoader = LMultipleLoader.instance;
+        multipleLoader = LHighway.instance;
         _instance = this;
     }
 

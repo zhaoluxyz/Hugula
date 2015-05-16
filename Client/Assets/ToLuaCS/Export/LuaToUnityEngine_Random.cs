@@ -10,158 +10,91 @@ public static class LuaToUnityEngine_Random {
 
   public static void CreateMetaTableToLua(LuaState L) {
 
-       LuaDLL.luaL_getmetatable(L, typeof(UnityEngine.Random).AssemblyQualifiedName);
-      if (LuaDLL.lua_isnil(L, -1))
-      {
-          LuaDLL.lua_settop(L, -2);
-          LuaDLL.luaL_newmetatable(L, typeof(UnityEngine.Random).AssemblyQualifiedName);
-          LuaDLL.lua_pushlightuserdata(L, LuaDLL.luanet_gettag());
-          LuaDLL.lua_pushnumber(L, 1);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__gc");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.gcFunction);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__tostring");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.toStringFunction);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-      #region 判断父类
-          System.Type superT = typeof(UnityEngine.Random).BaseType;
-          if (superT != null)
-          {
-              LuaDLL.luaL_getmetatable(L, superT.AssemblyQualifiedName);
-              if (!LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_setmetatable(L, -2);
-              }
-              else
-              {
-                  LuaDLL.lua_remove(L, -1);
-              }
-          }
-      #endregion
-
+       System.Type t= typeof(UnityEngine.Random);
+       if(!ToLuaCS.CreateMetatable(L,t)){
+          return;
+      }
       #region  注册实例luameta
+           ToLuaCS.AddMember(L, "Equals", Equals);
+           ToLuaCS.AddMember(L, "GetHashCode", GetHashCode);
+           ToLuaCS.AddMember(L, "GetType", GetType);
+           ToLuaCS.AddMember(L, "ToString", ToString);
       #endregion
 
   #region  static method       
-          //static    
-          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);
-          if (LuaDLL.lua_isnil(L, -1))
-          {
-             LuaDLL.lua_newtable(L);//table
-             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table
-             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);
-          }
-    
-          string[] names = typeof(UnityEngine.Random).FullName.Split(new char[] { '.' });
-          foreach (string name in names)
-          {
-              LuaDLL.lua_getfield(L, -1, name);
-              if (LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_pop(L, 1);
-                  LuaDLL.lua_pushstring(L, name);
-                  LuaDLL.lua_newtable(L);
-                  LuaDLL.lua_rawset(L, -3);
-                  LuaDLL.lua_getfield(L, -1, name);
-              }   
-    
-              LuaDLL.lua_remove(L, -2);
-          }
-          LuaDLL.lua_pushstring(L, "name");
-          LuaDLL.lua_pushstring(L, typeof(UnityEngine.Random).FullName);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushvalue(L, -1);
-          LuaDLL.lua_setmetatable(L, -2);
-            
-          LuaDLL.lua_pushstring(L,"get_seed");
-          luafn_get_seed= new LuaCSFunction(get_seed);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_seed);
-          LuaDLL.lua_rawset(L, -3);
+          ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "get_seed", get_seed);
 
-          LuaDLL.lua_pushstring(L,"set_seed");
-          luafn_set_seed= new LuaCSFunction(set_seed);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_set_seed);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "set_seed", set_seed);
 
-          LuaDLL.lua_pushstring(L,"Range");
-          luafn_Range= new LuaCSFunction(Range);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Range);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Range", Range);
 
-          LuaDLL.lua_pushstring(L,"get_value");
-          luafn_get_value= new LuaCSFunction(get_value);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_value);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_value", get_value);
 
-          LuaDLL.lua_pushstring(L,"get_insideUnitSphere");
-          luafn_get_insideUnitSphere= new LuaCSFunction(get_insideUnitSphere);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_insideUnitSphere);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_insideUnitSphere", get_insideUnitSphere);
 
-          LuaDLL.lua_pushstring(L,"get_insideUnitCircle");
-          luafn_get_insideUnitCircle= new LuaCSFunction(get_insideUnitCircle);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_insideUnitCircle);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_insideUnitCircle", get_insideUnitCircle);
 
-          LuaDLL.lua_pushstring(L,"get_onUnitSphere");
-          luafn_get_onUnitSphere= new LuaCSFunction(get_onUnitSphere);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_onUnitSphere);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_onUnitSphere", get_onUnitSphere);
 
-          LuaDLL.lua_pushstring(L,"get_rotation");
-          luafn_get_rotation= new LuaCSFunction(get_rotation);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_rotation);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_rotation", get_rotation);
 
-          LuaDLL.lua_pushstring(L,"get_rotationUniform");
-          luafn_get_rotationUniform= new LuaCSFunction(get_rotationUniform);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_get_rotationUniform);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "get_rotationUniform", get_rotationUniform);
 
-          LuaDLL.lua_pushstring(L,"__call");
-          luafn__random= new LuaCSFunction(_random);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn__random);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "__call", _random);
 
 #endregion       
-         }
 }
-  #region instances declaration       
- #endregion        
-  #region statics declaration       
-          private static LuaCSFunction luafn_get_seed;
-          private static LuaCSFunction luafn_set_seed;
-          private static LuaCSFunction luafn_Range;
-          private static LuaCSFunction luafn_get_value;
-          private static LuaCSFunction luafn_get_insideUnitSphere;
-          private static LuaCSFunction luafn_get_insideUnitCircle;
-          private static LuaCSFunction luafn_get_onUnitSphere;
-          private static LuaCSFunction luafn_get_rotation;
-          private static LuaCSFunction luafn_get_rotationUniform;
-          private static LuaCSFunction luafn__random;
- #endregion        
   #region  instances method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int Equals(LuaState L)
+          {
+                  System.Object obj_ = (System.Object)ToLuaCS.getObject(L, 2);
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.Random target= (UnityEngine.Random) original ;
+                  System.Boolean equals= target.Equals( obj_);
+                  LuaDLL.lua_pushboolean(L,equals);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetHashCode(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.Random target= (UnityEngine.Random) original ;
+                  System.Int32 gethashcode= target.GetHashCode();
+                  LuaDLL.lua_pushnumber(L, gethashcode);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetType(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.Random target= (UnityEngine.Random) original ;
+                  System.Type gettype= target.GetType();
+                  ToLuaCS.push(L,gettype);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int ToString(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  UnityEngine.Random target= (UnityEngine.Random) original ;
+                  System.String tostring= target.ToString();
+                  LuaDLL.lua_pushstring(L, tostring);
+                  return 1;
+
+          }
   #endregion       
   #region  static method       
           
@@ -170,7 +103,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   System.Int32 seed= UnityEngine.Random.seed;
-                  ToLuaCS.push(L,seed); 
+                  LuaDLL.lua_pushnumber(L, seed);
                   return 1;
 
           }
@@ -181,34 +114,35 @@ public static class LuaToUnityEngine_Random {
                   System.Int32 value_ = (System.Int32)LuaDLL.lua_tonumber(L,1);
 
                   UnityEngine.Random.seed= value_;
-                 return 0;
+                  return 0;
 
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Range(LuaState L)
           {
-              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER )
-              {
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,2)){
+               if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER ){
                   System.Int32 min_ = (System.Int32)LuaDLL.lua_tonumber(L,1);
                   System.Int32 max_ = (System.Int32)LuaDLL.lua_tonumber(L,2);
 
                   System.Int32 range= UnityEngine.Random.Range( min_, max_);
-                  ToLuaCS.push(L,range); 
+                  LuaDLL.lua_pushnumber(L, range);
                   return 1;
 
-              }
-              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER )
-              {
+               }
+               if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TNUMBER  && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER ){
                   System.Single min_ = (System.Single)LuaDLL.lua_tonumber(L,1);
                   System.Single max_ = (System.Single)LuaDLL.lua_tonumber(L,2);
 
                   System.Single range= UnityEngine.Random.Range( min_, max_);
-                  ToLuaCS.push(L,range); 
+                  LuaDLL.lua_pushnumber(L, range);
                   return 1;
 
-              }
-          return 0;
+               }
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -216,7 +150,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   System.Single value= UnityEngine.Random.value;
-                  ToLuaCS.push(L,value); 
+                  LuaDLL.lua_pushnumber(L, value);
                   return 1;
 
           }
@@ -226,7 +160,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Vector3 insideUnitSphere= UnityEngine.Random.insideUnitSphere;
-                  ToLuaCS.push(L,insideUnitSphere); 
+                  ToLuaCS.push(L,insideUnitSphere);
                   return 1;
 
           }
@@ -236,7 +170,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Vector2 insideUnitCircle= UnityEngine.Random.insideUnitCircle;
-                  ToLuaCS.push(L,insideUnitCircle); 
+                  ToLuaCS.push(L,insideUnitCircle);
                   return 1;
 
           }
@@ -246,7 +180,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Vector3 onUnitSphere= UnityEngine.Random.onUnitSphere;
-                  ToLuaCS.push(L,onUnitSphere); 
+                  ToLuaCS.push(L,onUnitSphere);
                   return 1;
 
           }
@@ -256,7 +190,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Quaternion rotation= UnityEngine.Random.rotation;
-                  ToLuaCS.push(L,rotation); 
+                  ToLuaCS.push(L,rotation);
                   return 1;
 
           }
@@ -266,7 +200,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Quaternion rotationUniform= UnityEngine.Random.rotationUniform;
-                  ToLuaCS.push(L,rotationUniform); 
+                  ToLuaCS.push(L,rotationUniform);
                   return 1;
 
           }
@@ -276,7 +210,7 @@ public static class LuaToUnityEngine_Random {
           {
 
                   UnityEngine.Random _random= new UnityEngine.Random();
-                  ToLuaCS.push(L,_random); 
+                  ToLuaCS.push(L,_random);
                   return 1;
 
           }

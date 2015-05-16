@@ -19,7 +19,7 @@
 Vector2=class(function(self,x,y) 
 	self.x=x
 	self.y = y
-    self.class="Vector2"
+    self.type="UnityEngine.Vector2"
 end)
 local fields = {}
 

@@ -20,36 +20,63 @@ public class ToLuaCSEditor
 {
 
     private const string OutLuaPath = "ToLuaCS/Export/";
-    private const string OutLuaPath1 = "Script/ToLuaCS/";
-    [MenuItem("Assets/", false, 2)]
-    static void Breaker() { }
+    //private const string OutLuaPath1 = "Script/ToLuaCS/";
 
-    [MenuItem("Assets/ToLuaCS/Generate LuaToCS(xxx)", false, 4)]
-    [MenuItem("ToLuaCS/Generate LuaToCS(xxx)", false, 4)]
+
+    [MenuItem("Assets/ToLuaCS/Generate FullClass LuaToCS(xxx)", false, 2)]
     static void ExportLuaToCSP()
     {
         UnityEngine.Object[] objs = Selection.objects;
 
         foreach (var o in objs)
         {
-            ExportFullCalssMtLua(o.name, OutLuaPath);
+            if (o is MonoScript || o is UnityEngine.TextAsset)
+            {
+                ExportFullCalssMtLua(o.name, OutLuaPath);
+            }
+            else if (isDirectory(o))
+            {
+                string path = AssetDatabase.GetAssetPath(o);
+                List<string> dic = getAllChildFiles(path);
+                string classname = string.Empty;
+                foreach (string k in dic)
+                {
+                    classname = CUtils.GetURLFileName(k);
+                    ExportFullCalssMtLua(classname, OutLuaPath);
+                }
+            }
+            //Debug.Log(o.name + " " + o.GetType().FullName + " isDirectory :" + isDirectory(o));
         }
     }
 
-    [MenuItem("Assets/ToLuaCS/Generate DeclaredOnly LuaToCS(xxx)", false, 3)]
-    [MenuItem("ToLuaCS/Generate DeclaredOnly LuaToCS(xxx) ", false, 3)]
+    [MenuItem("Assets/ToLuaCS/Generate DeclaredOnly LuaToCS(xxx)", false, 1)]
     static void ExportLuaToCSP1()
     {
         UnityEngine.Object[] objs = Selection.objects;
 
         foreach (var o in objs)
         {
-            ExportDeclaredOnlyClassMtLua(o.name, OutLuaPath);
+            if (o is MonoScript || o is UnityEngine.TextAsset)
+            {
+                ExportDeclaredOnlyClassMtLua(o.name, OutLuaPath);
+            }
+            else if (isDirectory(o))
+            {
+                string path = AssetDatabase.GetAssetPath(o);
+                List<string> dic = getAllChildFiles(path);
+                string classname = string.Empty;
+                foreach (string k in dic)
+                {
+                    classname = CUtils.GetURLFileName(k);
+                    ExportDeclaredOnlyClassMtLua(classname, OutLuaPath);
+                }
+            }
+            //ExportDeclaredOnlyClassMtLua(o.name, OutLuaPath);
         }
     }
 
-    [MenuItem("Assets/ToLuaCS/Generate ToLuaCSStart", false, 5)]
-    [MenuItem("ToLuaCS/Generate ToLuaCSStart ", false, 5)]
+    [MenuItem("Assets/ToLuaCS/LuaToCS Start Class", false, 5)]
+    [MenuItem("ToLuaCS/Generate Start Class ", false, 3)]
     static void ExprotLuatoStartClass()
     {
         StringBuilder sbTmp = new StringBuilder();
@@ -114,33 +141,81 @@ public class ToLuaCSEditor
         Debug.Log(sbTmp.ToString());
     }
 
+    [MenuItem("Assets/ToLuaCS/LuaToCS Clear Start Class", false, 5)]
+    [MenuItem("ToLuaCS/Clear Start Class ", false, 3)]
+    static void ClearStartClass()
+    {
+        StringBuilder sbTmp = new StringBuilder();
+        sbTmp.AppendLine("using System.Collections;");
+        sbTmp.AppendLine("using UnityEngine;");
+        sbTmp.AppendLine("using Lua = LuaInterface.LuaState;");
+        sbTmp.AppendLine("using LuaDLL = LuaInterface.LuaDLL;");
+        sbTmp.AppendLine("using LuaState = System.IntPtr;");
+        sbTmp.AppendLine("");
+        sbTmp.AppendLine("public static class ToLuaCSStart  { ");
+        sbTmp.AppendLine("  ");
+        sbTmp.AppendLine("  public static void Start(LuaState L){");
+        sbTmp.AppendLine("  ");
+
+        sbTmp.AppendLine("  }");
+        sbTmp.AppendLine("}");
+
+        string classTname = "ToLuaCSStart";
+        string path = Application.dataPath + "/ToLuaCS/" + classTname.Replace(".", "_") + ".cs";
+        checkLuaToCSExportPath();
+        using (StreamWriter sr = new StreamWriter(path, false))
+        {
+            sr.WriteLine(sbTmp.ToString());
+        }
+        Debug.Log(sbTmp.ToString());
+    }
+
+    [MenuItem("Assets/", false, 1)]
+    static void Breaker() { }
     #region v0.3.0 bata
 
     private static void ExportFullCalssMtLua(string name, string OutLuaPath)
     {
         StringBuilder st = new StringBuilder();
         System.Type t = GetTypeByName(name);
-        List<List<string>> methods = FilterMethod(t, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
-        Build_Class(st, t);
-        Build_CreateMetaTableToLua(st, t, methods[0], methods[1]);
-        Build_DeclareLuaFn(st, t, methods[0], methods[1]);
-        Build_Methods(st, t, methods[0], methods[1]);
-        Build_ClassEnd(st);
-        Build_ClassFile(st, t, OutLuaPath);
-        //Debug.Log(st.ToString()); 
+        if (t != null)
+        {
+            List<List<string>> methods = FilterMethod(t, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
+            Build_Class(st, t);
+            Build_CreateMetaTableToLua(st, t, methods[0], methods[1]);
+            //Build_DeclareLuaFn(st, t, methods[0], methods[1]);
+            Build_Methods(st, t, methods[0], methods[1]);
+            Build_ClassEnd(st);
+            Build_ClassFile(st, t, OutLuaPath);
+            //Debug.Log(st.ToString()); 
+        }
+        else
+        {
+            Debug.Log(" ExportFullCalssMtLua null :" + name);
+        }
     }
 
     private static void ExportDeclaredOnlyClassMtLua(string name, string OutLuaPath)
     {
         StringBuilder st = new StringBuilder();
         System.Type t = GetTypeByName(name);
-        List<List<string>> methods = FilterMethod(t, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        Build_Class(st, t);
-        Build_CreateMetaTableToLua(st, t, methods[0], methods[1]);
-        Build_DeclareLuaFn(st, t, methods[0], methods[1]);
-        Build_Methods(st, t, methods[0], methods[1]);
-        Build_ClassEnd(st);
-        Build_ClassFile(st, t, OutLuaPath);
+        if (t != null)
+        {
+            List<List<string>> methods = FilterMethod(t, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            Build_Class(st, t);
+            Build_CreateMetaTableToLua(st, t, methods[0], methods[1]);
+            //Build_DeclareLuaFn(st, t, methods[0], methods[1]);
+            Build_Methods(st, t, methods[0], methods[1]);
+            Build_ClassEnd(st);
+            Build_ClassFile(st, t, OutLuaPath);
+            //Debug.Log(st.ToString());
+
+        }
+        else
+        {
+            Debug.Log(" GetTypeByName null :" + name);
+        }
+
     }
     /// <summary>
     /// 过滤要生成的字段
@@ -163,10 +238,12 @@ public class ToLuaCSEditor
         //bool breakOne = false;
         foreach (MemberInfo fInfo in fields)
         {
+            //Debug.Log(fInfo.GetType().Name+ "   " + fInfo.DeclaringType.Name );
+            //fInfo.DeclaringType == typeof(Delegate)
             if (!fInfo.Name.Contains("op_") && !fInfo.Name.StartsWith("add_") && !fInfo.Name.StartsWith("remove_") && !IsObsoleteAttribute(fInfo)) //去掉操作函数 扔掉 unity3d 废弃的函数
             {
 
-                if (!addedMemberInfo.ContainsKey(fInfo.Name) && (fInfo.MemberType == MemberTypes.Method || fInfo.MemberType == MemberTypes.Constructor))
+                if (!addedMemberInfo.ContainsKey(fInfo.Name) && (fInfo.MemberType == MemberTypes.Method || (fInfo.MemberType == MemberTypes.Constructor && !t.IsAbstract)))
                 {
                     bool isPr = (fInfo.Name.StartsWith("set_") || fInfo.Name.StartsWith("get_"));
                     string realName = "";
@@ -245,133 +322,43 @@ public class ToLuaCSEditor
         string classTname = t.FullName;
         sbTmp.AppendLine("  public static void CreateMetaTableToLua(LuaState L) {");
         sbTmp.AppendLine("");
-        sbTmp.AppendLine("       LuaDLL.luaL_getmetatable(L, typeof(" + classTname + ").AssemblyQualifiedName);");
+        sbTmp.AppendLine("       System.Type t= typeof(" + classTname + ");");
+        sbTmp.AppendLine("       if(!ToLuaCS.CreateMetatable(L,t)){");
+        sbTmp.AppendLine("          return;");
+        sbTmp.AppendLine("      }");
 
-        sbTmp.AppendLine("      if (LuaDLL.lua_isnil(L, -1))");
-        sbTmp.AppendLine("      {");
-        sbTmp.AppendLine("          LuaDLL.lua_settop(L, -2);");
-        sbTmp.AppendLine("          LuaDLL.luaL_newmetatable(L, typeof(" + classTname + ").AssemblyQualifiedName);");
-        sbTmp.AppendLine("          LuaDLL.lua_pushlightuserdata(L, LuaDLL.luanet_gettag());");
-        sbTmp.AppendLine("          LuaDLL.lua_pushnumber(L, 1);");
-        sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__gc\");");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.gcFunction);");
-        sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__tostring\");");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.toStringFunction);");
-        sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("");
-
-        //sbTmp.AppendLine("          LuaDLL.lua_pushstring(L,\"__index\");");
-        //sbTmp.AppendLine("          LuaDLL.lua_pushvalue(L, -1);");
-        //sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__index\");");
-        sbTmp.AppendLine("          LuaDLL.lua_dostring(L, ToLuaCS.InstanceIndex);");
-        sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("");
-        sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__newindex\");");
-        sbTmp.AppendLine("          LuaDLL.lua_dostring(L, ToLuaCS.InstanceNewIndex);");
-        sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-        sbTmp.AppendLine("");
-        if (t.BaseType != null)
+        if (instances.Count > 0)
         {
-            sbTmp.AppendLine("      #region 判断父类");
-            sbTmp.AppendLine("          System.Type superT = typeof(" + classTname + ").BaseType;");
-            sbTmp.AppendLine("          if (superT != null)");
-            sbTmp.AppendLine("          {");
-            sbTmp.AppendLine("              LuaDLL.luaL_getmetatable(L, superT.AssemblyQualifiedName);");
-            sbTmp.AppendLine("              if (!LuaDLL.lua_isnil(L, -1))");
-            sbTmp.AppendLine("              {");
-            sbTmp.AppendLine("                  LuaDLL.lua_setmetatable(L, -2);");
-            sbTmp.AppendLine("              }");
-            sbTmp.AppendLine("              else");
-            sbTmp.AppendLine("              {");
-            sbTmp.AppendLine("                  LuaDLL.lua_remove(L, -1);");
-            sbTmp.AppendLine("              }");
-            sbTmp.AppendLine("          }");
+            sbTmp.AppendLine("      #region  注册实例luameta");
+            foreach (string mname in instances)
+            {
+                sbTmp.AppendLine("           ToLuaCS.AddMember(L, \"" + mname + "\", " + mname + ");");
+            }
             sbTmp.AppendLine("      #endregion");
             sbTmp.AppendLine("");
         }
-        sbTmp.AppendLine("      #region  注册实例luameta");
-        foreach (string mname in instances)
-        {
-            sbTmp.AppendLine("          LuaDLL.lua_pushstring(L,\"" + mname + "\");");
-            sbTmp.AppendLine("          luafn_" + mname + "= new LuaCSFunction(" + mname + ");");
-            sbTmp.AppendLine("          LuaDLL.lua_pushstdcallcfunction(L, luafn_" + mname + ");");
-            sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-            sbTmp.AppendLine("");
-        }
-        sbTmp.AppendLine("      #endregion");
-        sbTmp.AppendLine("");
 
         if (statics.Count > 0)
         {
             sbTmp.AppendLine("  #region  static method       ");
-
-            sbTmp.AppendLine("          //static    ");
-            sbTmp.AppendLine("          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));");
-            sbTmp.AppendLine("          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);");
-            sbTmp.AppendLine("          if (LuaDLL.lua_isnil(L, -1))");
-            sbTmp.AppendLine("          {");
-            sbTmp.AppendLine("             LuaDLL.lua_newtable(L);//table");
-            sbTmp.AppendLine("             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table");
-            sbTmp.AppendLine("             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));");
-            sbTmp.AppendLine("             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);");
-            sbTmp.AppendLine("          }");
-            sbTmp.AppendLine("    ");
-            sbTmp.AppendLine("          string[] names = typeof(" + classTname + ").FullName.Split(new char[] { '.' });");
-            sbTmp.AppendLine("          foreach (string name in names)");
-            sbTmp.AppendLine("          {");
-            sbTmp.AppendLine("              LuaDLL.lua_getfield(L, -1, name);");
-            sbTmp.AppendLine("              if (LuaDLL.lua_isnil(L, -1))");
-            sbTmp.AppendLine("              {");
-            sbTmp.AppendLine("                  LuaDLL.lua_pop(L, 1);");
-            sbTmp.AppendLine("                  LuaDLL.lua_pushstring(L, name);");
-            sbTmp.AppendLine("                  LuaDLL.lua_newtable(L);");
-            sbTmp.AppendLine("                  LuaDLL.lua_rawset(L, -3);");
-            sbTmp.AppendLine("                  LuaDLL.lua_getfield(L, -1, name);");
-            sbTmp.AppendLine("              }   ");
-            sbTmp.AppendLine("    ");
-            sbTmp.AppendLine("              LuaDLL.lua_remove(L, -2);");
-            sbTmp.AppendLine("          }");
-
-            sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"name\");");
-            sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, typeof(" + classTname + ").FullName);");
-            sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-            sbTmp.AppendLine("          ");
-            sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__index\");");
-            sbTmp.AppendLine("          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);");
-            sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-            sbTmp.AppendLine("          ");
-            sbTmp.AppendLine("          LuaDLL.lua_pushstring(L, \"__newindex\");");
-            sbTmp.AppendLine("          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);");
-            sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
-            sbTmp.AppendLine("          ");
-            sbTmp.AppendLine("          LuaDLL.lua_pushvalue(L, -1);");
-            sbTmp.AppendLine("          LuaDLL.lua_setmetatable(L, -2);");
-            sbTmp.AppendLine("            ");
+            sbTmp.AppendLine("          ToLuaCS.CreateToLuaCSTable(L, t);");
 
             foreach (string mname in statics)
             {
                 string mname1 = GetSafeMethodName(t, mname);
                 if (mname.ToLower().Equals(".ctor"))
                 {
-                    sbTmp.AppendLine("          LuaDLL.lua_pushstring(L,\"__call\");");//构造函数
+                    sbTmp.AppendLine("           ToLuaCS.AddMember(L, \"__call\", " + mname1 + ");");
                 }
                 else
                 {
-                    sbTmp.AppendLine("          LuaDLL.lua_pushstring(L,\"" + mname1 + "\");");
+                    sbTmp.AppendLine("           ToLuaCS.AddMember(L, \"" + mname1 + "\", " + mname1 + ");");
                 }
-
-                sbTmp.AppendLine("          luafn_" + mname1 + "= new LuaCSFunction(" + mname1 + ");");
-                sbTmp.AppendLine("          LuaDLL.lua_pushstdcallcfunction(L, luafn_" + mname1 + ");");
-                sbTmp.AppendLine("          LuaDLL.lua_rawset(L, -3);");
                 sbTmp.AppendLine("");
             }
 
             sbTmp.AppendLine("#endregion       ");
         }
-        sbTmp.AppendLine("         }");
         sbTmp.AppendLine("}");
 
     }
@@ -399,14 +386,14 @@ public class ToLuaCSEditor
         sbTmp.AppendLine("  #region  instances method       ");
         foreach (string method in instances)
         {
-            BuildMethodByNameNew(sbTmp, t, method, false);
+            BuildMethod(sbTmp, t, method, false);
         }
         #endregion
         sbTmp.AppendLine("  #endregion       ");
         sbTmp.AppendLine("  #region  static method       ");
         foreach (string method in statics)
         {
-            BuildMethodByNameNew(sbTmp, t, method, true);
+            BuildMethod(sbTmp, t, method, true);
         }
         sbTmp.AppendLine("  #endregion       ");
     }
@@ -426,6 +413,144 @@ public class ToLuaCSEditor
         Debug.Log(sbTmp.ToString());
     }
 
+    private static void BuildMethod(StringBuilder sbTmp, System.Type t, string name, bool isStatic)
+    {
+        bool isGet = name.StartsWith("get_");
+        bool isSet = name.StartsWith("set_");
+        string realName =string.Empty;
+
+        if (isGet || isSet)
+        {
+            realName = name.Substring(4, name.Length - 4);
+        }
+        else
+        {
+            realName = name;
+        }
+
+        MemberInfo[] infos = t.GetMember(name);
+        if (infos.Length == 0) infos = t.GetMember(realName);
+        name = GetSafeMethodName(t, name);
+
+        //方法头
+        sbTmp.AppendLine("          ");
+        sbTmp.AppendLine("          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
+        sbTmp.AppendLine("          public static int " + name + "(LuaState L)");
+        sbTmp.AppendLine("          {");
+        if (infos.Length > 1)
+        {
+            sbTmp.AppendLine("                  int argLength = LuaDLL.lua_gettop(L);");
+        }
+        System.Array.Sort(infos, CompareParByLength);
+
+        Dictionary<int, List<MemberInfo>> groups = new Dictionary<int, List<MemberInfo>>();
+
+        //group
+        foreach (var inf in infos)
+        {
+
+            if (inf is MethodInfo || inf is ConstructorInfo)
+            {
+                MethodBase mInfo = ((MethodBase)inf);
+                int leng = mInfo.GetParameters().Length;
+                if (!groups.ContainsKey(leng))
+                {
+                    groups[leng] = new List<MemberInfo>();
+                }
+                groups[leng].Add(inf);
+            }
+            else
+            {
+                if (!groups.ContainsKey(-1))
+                {
+                    groups[-1] = new List<MemberInfo>();
+                }
+                groups[-1].Add(inf);
+            }
+        }
+
+        int i = 0;//begin index
+        int realyMethodCount = 0;
+        List<MemberInfo> mems = null;
+        bool iselse = false;
+        foreach (KeyValuePair<int, List<MemberInfo>> kv in groups)
+        {
+            if (kv.Key == -1)
+            {
+                mems = kv.Value;
+
+                foreach (var inf in mems)
+                {
+                    if (isStatic)
+                        i = 1;
+                    else
+                        i = 2;
+                    FieldInfo fInfo = ((FieldInfo)inf);
+
+                    sbTmp.AppendLine(GetFieldStr(t, fInfo, i, fInfo.IsStatic, isGet));
+                }
+            }
+            else
+            {
+                mems = kv.Value;
+                if (isStatic)
+                    i = 1;
+                else
+                    i = 2;
+
+                int addi = 0;
+                
+                if (infos.Length > 1)
+                {
+                    if (infos[0] is ConstructorInfo)
+                    {
+                        addi = 1;
+                    }
+                    if(iselse)
+                        sbTmp.AppendLine("               else if(ToLuaCS.CheckArgLength(argLength," + (kv.Key + i - 1 + addi) + ")){");
+                    else
+                        sbTmp.AppendLine("               if(ToLuaCS.CheckArgLength(argLength," + (kv.Key + i - 1 + addi) + ")){");
+                }
+
+                foreach (var inf in mems)
+                {
+                    MethodBase mInfo = ((MethodBase)inf);
+                    if (mInfo.ContainsGenericParameters)
+                    {
+                        realyMethodCount++;
+                        continue;
+                    }
+                    ParameterInfo[] pars = mInfo.GetParameters();
+
+                    if (mems.Count > 1)
+                    {
+                        sbTmp.AppendLine("               " + GetIFStr(pars, i + addi) + "{");
+                    }
+                    sbTmp.AppendLine(GetParStr(pars, i + addi));
+                    sbTmp.AppendLine(GetCallMethod(t, mInfo, pars, i, mInfo.IsStatic));
+                    if (mems.Count > 1)
+                    {
+                        sbTmp.AppendLine("               }");
+                    }
+                }
+
+                if (infos.Length > 1)
+                {
+                    sbTmp.AppendLine("                 }");
+                }
+
+                iselse = true;
+            }
+        }
+
+        if (infos.Length > 1 || realyMethodCount>0)
+            sbTmp.AppendLine("               return 0;");
+
+        sbTmp.AppendLine("          }");
+      
+    }
+
+    [System.Obsolete("use BuildMethod")]
     private static void BuildMethodByNameNew(StringBuilder sbTmp, System.Type t, string name, bool isStatic)
     {
         string realName = name.Replace("get_", "").Replace("set_", "");
@@ -440,6 +565,9 @@ public class ToLuaCSEditor
         sbTmp.AppendLine("          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
         sbTmp.AppendLine("          public static int " + name + "(LuaState L)");
         sbTmp.AppendLine("          {");
+        sbTmp.AppendLine("               int argLength = LuaDLL.lua_gettop(L);");
+
+
         System.Array.Sort(infos, CompareParByLength);
         string allIf = "";
         int i = 1;
@@ -550,9 +678,18 @@ public class ToLuaCSEditor
                 {
                     allIf += split + " LuaDLL.lua_type(L," + i + ")==LuaTypes.LUA_TFUNCTION ";//LuaTypes.LUA_TFUNCTION
                 }
+                else if (pt == typeof(LuaTable))
+                {
+                    allIf += split + " LuaDLL.lua_type(L," + i + ")== LuaTypes.LUA_TTABLE";
+                }
+                else if (pt == typeof(LuaFunction))
+                {
+                    allIf += split + " LuaDLL.lua_type(L," + i + ")== LuaTypes.LUA_TFUNCTION";
+                }
                 else
                 {
-                    allIf += split + getObject(pt, i )+" is " + GetSafeTypeString(pt) + "";
+                    //allIf += split + getObject(pt, i) + " is " + GetSafeTypeString(pt) + "";
+                    allIf += split + IsTypeObject(pt, i);
                     //allIf += split + " ToLuaCS.getObject(L, " + i + ") is " + GetSafeTypeString(pt) + "";
                 }
 
@@ -597,7 +734,7 @@ public class ToLuaCSEditor
             }
             else
             {
-                re.AppendLine("                  " + GetSafeTypeString(pinfo.ParameterType) + " " + GetSafeParName(pinfo.Name) + " = (" + GetSafeTypeString(pinfo.ParameterType) + ")"+getObject(pinfo.ParameterType,i)+";");
+                re.AppendLine("                  " + GetSafeTypeString(pinfo.ParameterType) + " " + GetSafeParName(pinfo.Name) + " = (" + GetSafeTypeString(pinfo.ParameterType) + ")" + getObject(pinfo.ParameterType, i) + ";");
                 //re.AppendLine("                  " + GetSafeTypeString(pinfo.ParameterType) + " " + GetSafeParName(pinfo.Name) + " = (" + GetSafeTypeString(pinfo.ParameterType) + ")ToLuaCS.getObject(L," + i + ");");
             }
             i++;
@@ -612,11 +749,22 @@ public class ToLuaCSEditor
         string parstr = "";
         string sp = "";
         string target = "";
+        int returncout = 0;
+        //out 参数
+        List<ParameterInfo> outpars = new List<ParameterInfo>();
+
         foreach (ParameterInfo pinfo in pars)
         {
             if (pinfo.ParameterType.ToString().Contains("&"))
             {
-                parstr += sp + " ref " + GetSafeParName(pinfo.Name);
+                System.Type s = GetTypeByName(GetSafeTypeString(pinfo.ParameterType));
+                //Debug.Log(pinfo.Name + " ParameterType = " +s.FullName + "  IsRetval=" + pinfo.IsRetval + " IsOut= " + pinfo.IsOut + " IsValueType = " + s.IsValueType);
+                if (s.IsValueType)
+                    parstr += sp + " ref " + GetSafeParName(pinfo.Name);
+                else
+                    parstr += sp + " out " + GetSafeParName(pinfo.Name);
+                outpars.Add(pinfo);
+                returncout++;
             }
             else
             {
@@ -642,7 +790,7 @@ public class ToLuaCSEditor
             if (!isStatic)
             {
                 //sbTmp.AppendLine("                  object original = ToLuaCS.getObject(L, 1);");
-                sbTmp.AppendLine("                   var original = " + getObject(t,1) + ";");
+                sbTmp.AppendLine("                   var original = " + getObject(t, 1) + ";");
                 //getObject
                 sbTmp.AppendLine("                  " + classTname + " target= (" + classTname + ") original ;");
                 target = "target";
@@ -672,7 +820,7 @@ public class ToLuaCSEditor
                 {
                     sbTmp.AppendLine("                  " + target + "." + mInfo.Name + "(" + parstr + ");");
                 }
-                sbTmp.AppendLine("                 return 0;");
+                //sbTmp.AppendLine("                 return 0;");
             }
             else
             {
@@ -683,14 +831,16 @@ public class ToLuaCSEditor
                         sbTmp.AppendLine("                  " + returnType + " " + proName + "= " + target + "[" + parstr + "];");
                         //sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
                         sbTmp.AppendLine(LuaDLLPush(returnT, proName));
-                        sbTmp.AppendLine("                  return 1;");
+                        //sbTmp.AppendLine("                  return 1;");
+                        returncout++;
                     }
                     else
                     {
                         sbTmp.AppendLine("                  " + returnType + " " + proName + "= " + target + "." + proName + ";");
                         //sbTmp.AppendLine("                  ToLuaCS.push(L," + proName + "); ");
                         sbTmp.AppendLine(LuaDLLPush(returnT, proName));
-                        sbTmp.AppendLine("                  return 1;");
+                        //sbTmp.AppendLine("                  return 1;");
+                        returncout++;
                     }
                 }
                 else
@@ -698,7 +848,9 @@ public class ToLuaCSEditor
                     sbTmp.AppendLine("                  " + returnType + " " + mInfo.Name.ToLower() + "= " + target + "." + mInfo.Name + "(" + parstr + ");");
                     //sbTmp.AppendLine("                  ToLuaCS.push(L," + mInfo.Name.ToLower() + "); ");
                     sbTmp.AppendLine(LuaDLLPush(returnT, mInfo.Name.ToLower()));
-                    sbTmp.AppendLine("                  return 1;");
+                    returncout++;
+
+                    //sbTmp.AppendLine("                  return 1;");
                 }
             }
         }
@@ -711,11 +863,16 @@ public class ToLuaCSEditor
             sbTmp.AppendLine("                  " + returnType + " " + mname1 + "= new " + classTname + "(" + parstr + ");");
             //sbTmp.AppendLine("                  ToLuaCS.push(L," + mname1 + "); ");
             sbTmp.AppendLine(LuaDLLPush(t, mname1));
-            sbTmp.AppendLine("                  return 1;");
+            returncout++;
+            //sbTmp.AppendLine("                  return 1;");
         }
 
-
-
+        foreach (ParameterInfo pinfo2 in outpars)
+        {
+            sbTmp.AppendLine(LuaDLLPush(pinfo2.ParameterType, GetSafeParName(pinfo2.Name)));
+        }
+        //if(returncout
+        sbTmp.AppendLine("                  return " + returncout.ToString() + ";");
         return sbTmp.ToString();
     }
     private static string GetFieldStr(System.Type t, FieldInfo fInfo, int i, bool isStatic, bool isGet)
@@ -725,8 +882,7 @@ public class ToLuaCSEditor
 
         string proName = fInfo.Name;
         System.Type ft = fInfo.FieldType;
-        //Debug.Log("GetFieldStr = " + proName + " target= " + isStatic); 
-        //proName = mInfo.Name.Replace("set_", "").Replace("get_", "");
+
         if (isStatic)
         {
             if (isGet)
@@ -755,7 +911,7 @@ public class ToLuaCSEditor
                 else
                 {
                     //re.AppendLine("                   var val= ToLuaCS.getObject(L, 1);");
-                    re.AppendLine("                   var val= "+getObject(ft, 1)+";");
+                    re.AppendLine("                   var val= " + getObject(ft, 1) + ";");
                     re.AppendLine("                  " + classTname + "." + proName + "= (" + GetSafeTypeString(ft) + ")val;");
                 }
                 re.AppendLine("                  return 0;");
@@ -767,7 +923,7 @@ public class ToLuaCSEditor
             if (isGet)
             {
                 //re.AppendLine("                  object original = ToLuaCS.getObject(L, 1);");
-                re.AppendLine("                  var original = "+getObject(t, 1)+";");
+                re.AppendLine("                  var original = " + getObject(t, 1) + ";");
                 re.AppendLine("                  " + classTname + " target= (" + classTname + ") original ;");
                 re.AppendLine("                  var val=  target." + proName + ";");
                 //re.AppendLine("                  ToLuaCS.push(L,val);");
@@ -777,7 +933,7 @@ public class ToLuaCSEditor
             else
             {
                 //re.AppendLine("                  object original = ToLuaCS.getObject(L, 1);");
-                re.AppendLine("                  var original = "+getObject(ft, 1)+";");
+                re.AppendLine("                  var original = " + getObject(t, 1) + ";");
                 re.AppendLine("                  " + classTname + " target= (" + classTname + ") original;");
                 if (ft == typeof(string))
                 {
@@ -796,7 +952,7 @@ public class ToLuaCSEditor
                 else
                 {
                     //re.AppendLine("                  var val= ToLuaCS.getObject(L, 2);");
-                    re.AppendLine("                  var val= "+getObject(ft, 2)+";");
+                    re.AppendLine("                  var val= " + getObject(ft, 2) + ";");
                     re.AppendLine("                  target." + proName + "= (" + GetSafeTypeString(ft) + ")val;");
                 }
                 re.AppendLine("                  return 0;");
@@ -810,7 +966,44 @@ public class ToLuaCSEditor
     #endregion
 
     #region helper
-    static List<string>  valueTypes=new List<string>(ToLuaCS.ValueTypes);
+
+    static List<string> getAllChildFiles(string path, List<string> files = null)
+    {
+        if (files == null) files = new List<string>();
+        addFiles(path, files);
+        string[] dires = Directory.GetDirectories(path);
+        foreach (string dirp in dires)
+        {
+            if (!dirp.Contains("Editor"))
+                getAllChildFiles(dirp, files);
+        }
+        return files;
+    }
+
+    static void addFiles(string direPath, List<string> files)
+    {
+        string[] fileMys = Directory.GetFiles(direPath);
+        foreach (string f in fileMys)
+        {
+            if (f.EndsWith("txt") || f.EndsWith("cs"))
+            {
+                files.Add(f);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 是否文件夹
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static bool isDirectory(UnityEngine.Object obj)
+    {
+        string path = AssetDatabase.GetAssetPath(obj);
+        return Directory.Exists(path);
+    }
+
+    static List<string> valueTypes = new List<string>(ToLuaCS.ValueTypes);
 
     /// <summary>
     /// 替换ToLuaCS.getObject
@@ -818,7 +1011,7 @@ public class ToLuaCSEditor
     /// <param name="p"></param>
     /// <param name="i"></param>
     /// <returns></returns>
-    public static string getObject(System.Type p,int i)
+    public static string getObject(System.Type p, int i)
     {
         string name = p.FullName;
         //Debug.Log(name + " " + valueTypes.Count);
@@ -830,6 +1023,22 @@ public class ToLuaCSEditor
         else
         {
             return "ToLuaCS.getObject(L, " + i + ")";
+        }
+
+    }
+
+    public static string IsTypeObject(System.Type p, int i)
+    {
+        string name = p.FullName;
+        if (p.IsValueType && valueTypes.Contains(name))  //如果是已经实现的值类型
+        {
+            string cname = p.Name;
+            return " LuaDLL.lua_type(L," + i + ")== LuaTypes.LUA_TTABLE &&  ToLuaCS.CheckTableType(L, "+i+", typeof("+p.FullName+"))";
+            //return "ToLuaCS.get" + cname + "(L, " + i + ")";
+        }
+        else
+        {
+            return " ToLuaCS.getObject(L, " + i + ") is " + GetSafeTypeString(p) + "";
         }
 
     }
@@ -928,11 +1137,14 @@ public class ToLuaCSEditor
         }
     }
 
-    private static string GetSafeTypeString(System.Type t)
+    public static string GetSafeTypeString(System.Type t)
     {
         if (t == null) return "object";
         if (t.ToString() == "T" || t.ToString() == "T[]") return "object";
         string tname = t.FullName;
+        //Debug.Log(tname);
+        //Debug.Log(t.Name);
+
         tname = tname.Replace("&", "").Replace("+", ".");
 
         Match math = Regex.Match(tname, pattern);
@@ -974,29 +1186,14 @@ public class ToLuaCSEditor
     public static System.Type GetTypeByName(string classname)
     {
         System.Type t = null;
-        Assembly assb = Assembly.GetExecutingAssembly();
-        t = assb.GetType(classname);
-        if (t == null)
+        Assembly[] ass = AppDomain.CurrentDomain.GetAssemblies();
+        foreach (var assem in ass)
         {
-            assb = Assembly.GetAssembly(typeof(PLua));
-            t = assb.GetType(classname);
+            t = assem.GetType(classname);
+            if (t != null)
+                return t;
         }
-        if (t == null)
-        {
-            assb = Assembly.GetAssembly(typeof(UnityEngine.GameObject));
-            t = assb.GetType(classname);
-        }
-        if (t == null)
-        {
-            assb = Assembly.GetAssembly(typeof(LuaBase));
-            t = assb.GetType(classname);
-        }
-        if (t == null)
-        {
-            assb = Assembly.GetAssembly(typeof(object));
-            t = assb.GetType(classname);
-        }
-        return t;
+        return null;
     }
     #endregion
 }

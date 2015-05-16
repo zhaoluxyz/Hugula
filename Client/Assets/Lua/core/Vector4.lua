@@ -26,7 +26,7 @@ Vector4=class(function(self,x,y,z,w)
 	self.y= y or 0
     self.z= z or 0
     self.w= w or 0
-    self.class="Vector4"
+    self.type="UnityEngine.Vector4"
 end)
 
 --setmetatable(Vector4, Vector4)

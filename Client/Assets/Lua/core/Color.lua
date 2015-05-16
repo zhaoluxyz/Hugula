@@ -1,46 +1,52 @@
---Color = 
---{
---	r = 0,
---	g = 0,
---	b = 0,
---	a = 0,		
+Color = 
+{
+	r = 0,
+	g = 0,
+	b = 0,
+	a = 0,		
 
---	class = "Color",
---}
+	class = "UnityEngine.Color",
+}
 
---setmetatable(Color, Color)
+setmetatable(Color, Color)
 
-Color = class(function(self,r,g,b,a) 
-	self.r= r or 0
-	self.g= g or 0
-    self.b= b or 0
-    self.a= a or 1
-    self.class="Color"
-end)
+--Color = class(function(self,r,g,b,a) 
+--	self.r= r or 0
+--	self.g= g or 0
+--    self.b= b or 0
+--    self.a= a or 1
+--    self.type="UnityEngine.Color"
+--end)
 
 local fields = {}
 
---Color.__index = function(t,k)
---	local var = rawget(Color, k)
+Color.__index = function(t,k)
+	local var = rawget(Color, k)
 
---	if var == nil then					
---		t = fields
---		var = rawget(t, k)
+	if var == nil then					
+		t = fields
+		var = rawget(t, k)
 
---		if var ~= nil then
---			return var()	
---		end
---	end
+		if var ~= nil then
+			return var()	
+		end
+	end
 
---	return var
---end
+	return var
+end
 
---Color.__call = function(t,r, g, b, a)
---	return Color.New(r, g, b, a)
---end
+Color.__call = function(t,r, g, b, a)
+	local v = {}
+	setmetatable(v, Color)
+	v:Set(r, g, b, a)
+	return v
+end
 
 function Color.New(r, g, b, a)
-	return Color(r, g, b, a)
+	local v = {}
+	setmetatable(v, Color)
+	v:Set(r, g, b, a)
+	return v
 end
 
 function Color:Set(r, g, b, a)

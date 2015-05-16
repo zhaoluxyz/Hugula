@@ -106,7 +106,7 @@ public class CHighway  {
 			return true;
 		} else {
 			#if UNITY_EDITOR
-			Debug.Log ("-----------no free transport <<:" + req.key + ">>  shared=" + req.isShared + ",currentLoading=" + this.currentLoading + "  max=" + this.maxLoading);
+            //Debug.Log ("-----------no free transport <<:" + req.key + ">>  shared=" + req.isShared + ",currentLoading=" + this.currentLoading + "  max=" + this.maxLoading);
 			#endif
 		}
 		return false;
@@ -192,11 +192,13 @@ public class CHighway  {
 		CRequest childReq = req.childrenReq;
 		if (childReq != null) {
 			childReq.dependenciesCount--;
-//			Debug.Log ("OnDependencyComp  <<" + childReq.key + ">>  depens:" + req.key + "  count:" + childReq.dependenciesCount.ToString ());
 			if (childReq.dependenciesCount <= 0) {
-			Callbacklist(childReq);
+                if (childReq.cache) SetCache(childReq.key, childReq.data); 
+                //Debug.Log("_______loadComplete <<" + childReq.key + ">>  depens:" + req.key + "  count:" + childReq.dependenciesCount.ToString());
+			    Callbacklist(childReq);
 			}
 		}
+        //Debug.Log("OnDependencyComp  <<" + req.key + ">>  is complete ");
 
 		BeginQueue();
 
@@ -205,12 +207,12 @@ public class CHighway  {
 	
 	protected virtual void LoadComplete(CTransport loader,CRequest creq,IList<CRequest> depens)
 	{
-#if UNITY_EDITOR
-//		if(creq.isShared)
-//			Debug.Log("_______loadComplete  <<"+creq.key+">> is dependencyItem  ");
-//		else
-//			Debug.Log("______loadComplete  <<"+creq.key+">>  depens:"+ (depens!=null).ToString());
-#endif
+//#if UNITY_EDITOR
+        //if (creq.isShared)
+        //    Debug.Log("_______loadComplete  <<" + creq.key + ">> is Shared  ");
+        //else
+        //    Debug.Log("______loadComplete  <<" + creq.key + ">>  depens:" + (depens != null).ToString());
+//#endif
 		RemoveRequest (creq);
 
 		if (creq.isShared) {
@@ -218,6 +220,8 @@ public class CHighway  {
 			SetCache(creq.key,creq.data); // set cache
 			if(OnSharedComplete!=null)
 				OnSharedComplete(creq);
+
+            //Debug.Log("_______loadComplete  <<" + creq.key + ">> is Shared  ");
 //			var asset = w.assetBundle.mainAsset;
 //			creq.DispatchComplete();
 //			creq.childrenReq = null;
@@ -230,8 +234,8 @@ public class CHighway  {
 			CRequest req1=null;
 			creq.dependenciesCount = depens.Count;
 			string key=string.Empty;
-			if (creq.cache)SetCache(creq.key,creq.data); 
-//			Debug.Log(creq.key+" begin load depens :"+depens.Count.ToString());
+            //if (creq.cache)SetCache(creq.key,creq.data);
+            //Debug.Log("______begin load<" + creq.key + "> and  depens :" + depens.Count.ToString());
 			for(int i=0;i<depens.Count;i++)
 			{
 				req1=depens[i];
@@ -252,8 +256,8 @@ public class CHighway  {
 
 		} else {
 			currentLoaded++;
-//			Debug.Log("get requestCallBackList:"+creq.key+"  "+creq.udKey);
-			object data = creq.data;
+            //Debug.Log("______loadComplete:<" + creq.key + "> ");
+            object data = creq.data;
 
 			if (creq.cache)SetCache(creq.key,data); 
 

@@ -10,239 +10,70 @@ public static class LuaToLuaHelper {
 
   public static void CreateMetaTableToLua(LuaState L) {
 
-       LuaDLL.luaL_getmetatable(L, typeof(LuaHelper).AssemblyQualifiedName);
-      if (LuaDLL.lua_isnil(L, -1))
-      {
-          LuaDLL.lua_settop(L, -2);
-          LuaDLL.luaL_newmetatable(L, typeof(LuaHelper).AssemblyQualifiedName);
-          LuaDLL.lua_pushlightuserdata(L, LuaDLL.luanet_gettag());
-          LuaDLL.lua_pushnumber(L, 1);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__gc");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.gcFunction);
-          LuaDLL.lua_rawset(L, -3);
-          LuaDLL.lua_pushstring(L, "__tostring");
-          LuaDLL.lua_pushstdcallcfunction(L, ToLuaCS.metaFunctions.toStringFunction);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.InstanceNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-
-      #region 判断父类
-          System.Type superT = typeof(LuaHelper).BaseType;
-          if (superT != null)
-          {
-              LuaDLL.luaL_getmetatable(L, superT.AssemblyQualifiedName);
-              if (!LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_setmetatable(L, -2);
-              }
-              else
-              {
-                  LuaDLL.lua_remove(L, -1);
-              }
-          }
-      #endregion
-
+       System.Type t= typeof(LuaHelper);
+       if(!ToLuaCS.CreateMetatable(L,t)){
+          return;
+      }
       #region  注册实例luameta
-          LuaDLL.lua_pushstring(L,"GCCollect");
-          luafn_GCCollect= new LuaCSFunction(GCCollect);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GCCollect);
-          LuaDLL.lua_rawset(L, -3);
-
+           ToLuaCS.AddMember(L, "GCCollect", GCCollect);
       #endregion
 
   #region  static method       
-          //static    
-          LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-          LuaDLL.lua_getglobal(L,ToLuaCS.GlobalTableName);
-          if (LuaDLL.lua_isnil(L, -1))
-          {
-             LuaDLL.lua_newtable(L);//table
-             LuaDLL.lua_setglobal(L, ToLuaCS.GlobalTableName);//pop table
-             LuaDLL.lua_pop(L, LuaDLL.lua_gettop(L));
-             LuaDLL.lua_getglobal(L, ToLuaCS.GlobalTableName);
-          }
-    
-          string[] names = typeof(LuaHelper).FullName.Split(new char[] { '.' });
-          foreach (string name in names)
-          {
-              LuaDLL.lua_getfield(L, -1, name);
-              if (LuaDLL.lua_isnil(L, -1))
-              {
-                  LuaDLL.lua_pop(L, 1);
-                  LuaDLL.lua_pushstring(L, name);
-                  LuaDLL.lua_newtable(L);
-                  LuaDLL.lua_rawset(L, -3);
-                  LuaDLL.lua_getfield(L, -1, name);
-              }   
-    
-              LuaDLL.lua_remove(L, -2);
-          }
-          LuaDLL.lua_pushstring(L, "name");
-          LuaDLL.lua_pushstring(L, typeof(LuaHelper).FullName);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__index");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushstring(L, "__newindex");
-          LuaDLL.lua_dostring(L, ToLuaCS.StaticNewIndex);
-          LuaDLL.lua_rawset(L, -3);
-          
-          LuaDLL.lua_pushvalue(L, -1);
-          LuaDLL.lua_setmetatable(L, -2);
-            
-          LuaDLL.lua_pushstring(L,"Destroy");
-          luafn_Destroy= new LuaCSFunction(Destroy);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Destroy);
-          LuaDLL.lua_rawset(L, -3);
+          ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "Destroy", Destroy);
 
-          LuaDLL.lua_pushstring(L,"DestroyImmediate");
-          luafn_DestroyImmediate= new LuaCSFunction(DestroyImmediate);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_DestroyImmediate);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "DestroyImmediate", DestroyImmediate);
 
-          LuaDLL.lua_pushstring(L,"Instantiate");
-          luafn_Instantiate= new LuaCSFunction(Instantiate);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Instantiate);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Instantiate", Instantiate);
 
-          LuaDLL.lua_pushstring(L,"InstantiateLocal");
-          luafn_InstantiateLocal= new LuaCSFunction(InstantiateLocal);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_InstantiateLocal);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "InstantiateLocal", InstantiateLocal);
 
-          LuaDLL.lua_pushstring(L,"InstantiateGlobal");
-          luafn_InstantiateGlobal= new LuaCSFunction(InstantiateGlobal);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_InstantiateGlobal);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "InstantiateGlobal", InstantiateGlobal);
 
-          LuaDLL.lua_pushstring(L,"SetParent");
-          luafn_SetParent= new LuaCSFunction(SetParent);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_SetParent);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "SetParent", SetParent);
 
-          LuaDLL.lua_pushstring(L,"GetType");
-          luafn_GetType= new LuaCSFunction(GetType);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetType);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetType", GetType);
 
-          LuaDLL.lua_pushstring(L,"Find");
-          luafn_Find= new LuaCSFunction(Find);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Find);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Find", Find);
 
-          LuaDLL.lua_pushstring(L,"FindWithTag");
-          luafn_FindWithTag= new LuaCSFunction(FindWithTag);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_FindWithTag);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "FindWithTag", FindWithTag);
 
-          LuaDLL.lua_pushstring(L,"GetComponentInChildren");
-          luafn_GetComponentInChildren= new LuaCSFunction(GetComponentInChildren);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentInChildren);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetComponentInChildren", GetComponentInChildren);
 
-          LuaDLL.lua_pushstring(L,"GetComponent");
-          luafn_GetComponent= new LuaCSFunction(GetComponent);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponent);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetComponent", GetComponent);
 
-          LuaDLL.lua_pushstring(L,"GetComponents");
-          luafn_GetComponents= new LuaCSFunction(GetComponents);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponents);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetComponents", GetComponents);
 
-          LuaDLL.lua_pushstring(L,"GetComponentsInChildren");
-          luafn_GetComponentsInChildren= new LuaCSFunction(GetComponentsInChildren);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetComponentsInChildren);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetComponentsInChildren", GetComponentsInChildren);
 
-          LuaDLL.lua_pushstring(L,"GetAllChild");
-          luafn_GetAllChild= new LuaCSFunction(GetAllChild);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetAllChild);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetAllChild", GetAllChild);
 
-          LuaDLL.lua_pushstring(L,"ForeachChild");
-          luafn_ForeachChild= new LuaCSFunction(ForeachChild);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_ForeachChild);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "ForeachChild", ForeachChild);
 
-          LuaDLL.lua_pushstring(L,"Raycast");
-          luafn_Raycast= new LuaCSFunction(Raycast);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_Raycast);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "Raycast", Raycast);
 
-          LuaDLL.lua_pushstring(L,"RefreshShader");
-          luafn_RefreshShader= new LuaCSFunction(RefreshShader);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_RefreshShader);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "RefreshShader", RefreshShader);
 
-          LuaDLL.lua_pushstring(L,"GetAngle");
-          luafn_GetAngle= new LuaCSFunction(GetAngle);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetAngle);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetAngle", GetAngle);
 
-          LuaDLL.lua_pushstring(L,"GetUTF8String");
-          luafn_GetUTF8String= new LuaCSFunction(GetUTF8String);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetUTF8String);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetUTF8String", GetUTF8String);
 
-          LuaDLL.lua_pushstring(L,"GetBytes");
-          luafn_GetBytes= new LuaCSFunction(GetBytes);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn_GetBytes);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "GetBytes", GetBytes);
 
-          LuaDLL.lua_pushstring(L,"__call");
-          luafn__luahelper= new LuaCSFunction(_luahelper);
-          LuaDLL.lua_pushstdcallcfunction(L, luafn__luahelper);
-          LuaDLL.lua_rawset(L, -3);
+           ToLuaCS.AddMember(L, "__call", _luahelper);
 
 #endregion       
-         }
 }
-  #region instances declaration       
-          private static LuaCSFunction luafn_GCCollect;
- #endregion        
-  #region statics declaration       
-          private static LuaCSFunction luafn_Destroy;
-          private static LuaCSFunction luafn_DestroyImmediate;
-          private static LuaCSFunction luafn_Instantiate;
-          private static LuaCSFunction luafn_InstantiateLocal;
-          private static LuaCSFunction luafn_InstantiateGlobal;
-          private static LuaCSFunction luafn_SetParent;
-          private static LuaCSFunction luafn_GetType;
-          private static LuaCSFunction luafn_Find;
-          private static LuaCSFunction luafn_FindWithTag;
-          private static LuaCSFunction luafn_GetComponentInChildren;
-          private static LuaCSFunction luafn_GetComponent;
-          private static LuaCSFunction luafn_GetComponents;
-          private static LuaCSFunction luafn_GetComponentsInChildren;
-          private static LuaCSFunction luafn_GetAllChild;
-          private static LuaCSFunction luafn_ForeachChild;
-          private static LuaCSFunction luafn_Raycast;
-          private static LuaCSFunction luafn_RefreshShader;
-          private static LuaCSFunction luafn_GetAngle;
-          private static LuaCSFunction luafn_GetUTF8String;
-          private static LuaCSFunction luafn_GetBytes;
-          private static LuaCSFunction luafn__luahelper;
- #endregion        
   #region  instances method       
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GCCollect(LuaState L)
           {
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   LuaHelper target= (LuaHelper) original ;
                   target.GCCollect();
-                 return 0;
+                  return 0;
 
           }
   #endregion       
@@ -251,56 +82,54 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Destroy(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.Object && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER )
-              {
-                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L,1);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,2)){
+                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L, 1);
                   System.Single t_ = (System.Single)LuaDLL.lua_tonumber(L,2);
 
                   LuaHelper.Destroy( original_, t_);
-                 return 0;
+                  return 0;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.Object)
-              {
-                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L,1);
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,1)){
+                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L, 1);
 
                   LuaHelper.Destroy( original_);
-                 return 0;
+                  return 0;
 
-              }
-          return 0;
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int DestroyImmediate(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.Object && LuaDLL.lua_type(L,2)==LuaTypes.LUA_TNUMBER )
-              {
-                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L,1);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,2)){
+                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L, 1);
                   System.Boolean allowDestroyingAssets_ =  LuaDLL.lua_toboolean(L,2);
 
                   LuaHelper.DestroyImmediate( original_, allowDestroyingAssets_);
-                 return 0;
+                  return 0;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.Object)
-              {
-                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L,1);
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,1)){
+                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L, 1);
 
                   LuaHelper.DestroyImmediate( original_);
-                 return 0;
+                  return 0;
 
-              }
-          return 0;
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Instantiate(LuaState L)
           {
-                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L,1);
+                  UnityEngine.Object original_ = (UnityEngine.Object)ToLuaCS.getObject(L, 1);
 
                   UnityEngine.Object instantiate= LuaHelper.Instantiate( original_);
-                  ToLuaCS.push(L,instantiate); 
+                  ToLuaCS.push(L,instantiate);
                   return 1;
 
           }
@@ -308,57 +137,56 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int InstantiateLocal(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && ToLuaCS.getObject(L, 2) is UnityEngine.GameObject && ToLuaCS.getObject(L, 3) is UnityEngine.Vector3)
-              {
-                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,2);
-                  UnityEngine.Vector3 pos_ = (UnityEngine.Vector3)ToLuaCS.getObject(L,3);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,3)){
+                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 2);
+                  UnityEngine.Vector3 pos_ = (UnityEngine.Vector3)ToLuaCS.getVector3(L, 3);
 
                   UnityEngine.GameObject instantiatelocal= LuaHelper.InstantiateLocal( original_, parent_, pos_);
-                  ToLuaCS.push(L,instantiatelocal); 
+                  ToLuaCS.push(L,instantiatelocal);
                   return 1;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && ToLuaCS.getObject(L, 2) is UnityEngine.Vector3)
-              {
-                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  UnityEngine.Vector3 pos_ = (UnityEngine.Vector3)ToLuaCS.getObject(L,2);
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,2)){
+               if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && LuaDLL.lua_type(L,2)== LuaTypes.LUA_TTABLE &&  ToLuaCS.CheckTableType(L, 2, typeof(UnityEngine.Vector3))){
+                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  UnityEngine.Vector3 pos_ = (UnityEngine.Vector3)ToLuaCS.getVector3(L, 2);
 
                   UnityEngine.GameObject instantiatelocal= LuaHelper.InstantiateLocal( original_, pos_);
-                  ToLuaCS.push(L,instantiatelocal); 
+                  ToLuaCS.push(L,instantiatelocal);
                   return 1;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && ToLuaCS.getObject(L, 2) is UnityEngine.GameObject)
-              {
-                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,2);
+               }
+               if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && ToLuaCS.getObject(L, 2) is UnityEngine.GameObject){
+                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 2);
 
                   UnityEngine.GameObject instantiatelocal= LuaHelper.InstantiateLocal( original_, parent_);
-                  ToLuaCS.push(L,instantiatelocal); 
+                  ToLuaCS.push(L,instantiatelocal);
                   return 1;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject)
-              {
-                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+               }
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,1)){
+                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
 
                   UnityEngine.GameObject instantiatelocal= LuaHelper.InstantiateLocal( original_);
-                  ToLuaCS.push(L,instantiatelocal); 
+                  ToLuaCS.push(L,instantiatelocal);
                   return 1;
 
-              }
-          return 0;
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int InstantiateGlobal(LuaState L)
           {
-                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,2);
+                  UnityEngine.GameObject original_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 2);
 
                   UnityEngine.GameObject instantiateglobal= LuaHelper.InstantiateGlobal( original_, parent_);
-                  ToLuaCS.push(L,instantiateglobal); 
+                  ToLuaCS.push(L,instantiateglobal);
                   return 1;
 
           }
@@ -366,47 +194,47 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int SetParent(LuaState L)
           {
-                  UnityEngine.GameObject child_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,2);
+                  UnityEngine.GameObject child_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 2);
 
                   LuaHelper.SetParent( child_, parent_);
-                 return 0;
+                  return 0;
 
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetType(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is System.Object)
-              {
-                  System.Object obj_ = (System.Object)ToLuaCS.getObject(L,1);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,1)){
+               if( ToLuaCS.getObject(L, 1) is System.Object){
+                  System.Object obj_ = (System.Object)ToLuaCS.getObject(L, 1);
 
                   System.Type gettype= LuaHelper.GetType( obj_);
-                  ToLuaCS.push(L,gettype); 
+                  ToLuaCS.push(L,gettype);
                   return 1;
 
-              }
-              if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING )
-              {
+               }
+               if( LuaDLL.lua_type(L,1)==LuaTypes.LUA_TSTRING ){
                   System.String classname_ =  LuaDLL.lua_tostring(L,1); 
 
 
                   System.Type gettype= LuaHelper.GetType( classname_);
-                  ToLuaCS.push(L,gettype); 
+                  ToLuaCS.push(L,gettype);
                   return 1;
 
-              }
-              if(true)
-              {
+               }
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,0)){
 
-                  object original = ToLuaCS.getObject(L, 1);
+                   var original = ToLuaCS.getObject(L, 1);
                   LuaHelper target= (LuaHelper) original ;
                   System.Type gettype= target.GetType();
-                  ToLuaCS.push(L,gettype); 
+                  ToLuaCS.push(L,gettype);
                   return 1;
 
-              }
-          return 0;
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -416,7 +244,7 @@ public static class LuaToLuaHelper {
 
 
                   UnityEngine.GameObject find= LuaHelper.Find( name_);
-                  ToLuaCS.push(L,find); 
+                  ToLuaCS.push(L,find);
                   return 1;
 
           }
@@ -428,7 +256,7 @@ public static class LuaToLuaHelper {
 
 
                   UnityEngine.GameObject findwithtag= LuaHelper.FindWithTag( tag_);
-                  ToLuaCS.push(L,findwithtag); 
+                  ToLuaCS.push(L,findwithtag);
                   return 1;
 
           }
@@ -436,12 +264,12 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponentInChildren(LuaState L)
           {
-                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
                   System.String classname_ =  LuaDLL.lua_tostring(L,2); 
 
 
                   UnityEngine.Component getcomponentinchildren= LuaHelper.GetComponentInChildren( obj_, classname_);
-                  ToLuaCS.push(L,getcomponentinchildren); 
+                  ToLuaCS.push(L,getcomponentinchildren);
                   return 1;
 
           }
@@ -449,12 +277,12 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponent(LuaState L)
           {
-                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
                   System.String classname_ =  LuaDLL.lua_tostring(L,2); 
 
 
                   UnityEngine.Component getcomponent= LuaHelper.GetComponent( obj_, classname_);
-                  ToLuaCS.push(L,getcomponent); 
+                  ToLuaCS.push(L,getcomponent);
                   return 1;
 
           }
@@ -462,12 +290,12 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponents(LuaState L)
           {
-                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
                   System.String classname_ =  LuaDLL.lua_tostring(L,2); 
 
 
                   UnityEngine.Component[] getcomponents= LuaHelper.GetComponents( obj_, classname_);
-                  ToLuaCS.push(L,getcomponents); 
+                  ToLuaCS.push(L,getcomponents);
                   return 1;
 
           }
@@ -475,12 +303,12 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetComponentsInChildren(LuaState L)
           {
-                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
                   System.String classname_ =  LuaDLL.lua_tostring(L,2); 
 
 
                   UnityEngine.Component[] getcomponentsinchildren= LuaHelper.GetComponentsInChildren( obj_, classname_);
-                  ToLuaCS.push(L,getcomponentsinchildren); 
+                  ToLuaCS.push(L,getcomponentsinchildren);
                   return 1;
 
           }
@@ -488,10 +316,10 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetAllChild(LuaState L)
           {
-                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
+                  UnityEngine.GameObject obj_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
 
                   UnityEngine.Transform[] getallchild= LuaHelper.GetAllChild( obj_);
-                  ToLuaCS.push(L,getallchild); 
+                  ToLuaCS.push(L,getallchild);
                   return 1;
 
           }
@@ -499,34 +327,35 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int ForeachChild(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is ReferGameObjects && ToLuaCS.getObject(L, 2) is LuaInterface.LuaFunction)
-              {
-                  ReferGameObjects parent_ = (ReferGameObjects)ToLuaCS.getObject(L,1);
-                  LuaInterface.LuaFunction eachFn_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L,2);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,2)){
+               if( ToLuaCS.getObject(L, 1) is ReferGameObjects && LuaDLL.lua_type(L,2)== LuaTypes.LUA_TFUNCTION){
+                  ReferGameObjects parent_ = (ReferGameObjects)ToLuaCS.getObject(L, 1);
+                  LuaInterface.LuaFunction eachFn_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L, 2);
 
                   LuaHelper.ForeachChild( parent_, eachFn_);
-                 return 0;
+                  return 0;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && ToLuaCS.getObject(L, 2) is LuaInterface.LuaFunction)
-              {
-                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L,1);
-                  LuaInterface.LuaFunction eachFn_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L,2);
+               }
+               if( ToLuaCS.getObject(L, 1) is UnityEngine.GameObject && LuaDLL.lua_type(L,2)== LuaTypes.LUA_TFUNCTION){
+                  UnityEngine.GameObject parent_ = (UnityEngine.GameObject)ToLuaCS.getObject(L, 1);
+                  LuaInterface.LuaFunction eachFn_ = (LuaInterface.LuaFunction)ToLuaCS.getObject(L, 2);
 
                   LuaHelper.ForeachChild( parent_, eachFn_);
-                 return 0;
+                  return 0;
 
-              }
-          return 0;
+               }
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int Raycast(LuaState L)
           {
-                  UnityEngine.Ray ray_ = (UnityEngine.Ray)ToLuaCS.getObject(L,1);
+                  UnityEngine.Ray ray_ = (UnityEngine.Ray)ToLuaCS.getRay(L, 1);
 
                   System.Object raycast= LuaHelper.Raycast( ray_);
-                  ToLuaCS.push(L,raycast); 
+                  ToLuaCS.push(L,raycast);
                   return 1;
 
           }
@@ -534,23 +363,24 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int RefreshShader(LuaState L)
           {
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.WWW)
-              {
-                  UnityEngine.WWW www_ = (UnityEngine.WWW)ToLuaCS.getObject(L,1);
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,1)){
+               if( ToLuaCS.getObject(L, 1) is UnityEngine.WWW){
+                  UnityEngine.WWW www_ = (UnityEngine.WWW)ToLuaCS.getObject(L, 1);
 
                   LuaHelper.RefreshShader( www_);
-                 return 0;
+                  return 0;
 
-              }
-              if( ToLuaCS.getObject(L, 1) is UnityEngine.AssetBundle)
-              {
-                  UnityEngine.AssetBundle assetBundle_ = (UnityEngine.AssetBundle)ToLuaCS.getObject(L,1);
+               }
+               if( ToLuaCS.getObject(L, 1) is UnityEngine.AssetBundle){
+                  UnityEngine.AssetBundle assetBundle_ = (UnityEngine.AssetBundle)ToLuaCS.getObject(L, 1);
 
                   LuaHelper.RefreshShader( assetBundle_);
-                 return 0;
+                  return 0;
 
-              }
-          return 0;
+               }
+                 }
+               return 0;
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -562,7 +392,7 @@ public static class LuaToLuaHelper {
                   System.Single p2y_ = (System.Single)LuaDLL.lua_tonumber(L,4);
 
                   System.Single getangle= LuaHelper.GetAngle( p1x_, p1y_, p2x_, p2y_);
-                  ToLuaCS.push(L,getangle); 
+                  LuaDLL.lua_pushnumber(L, getangle);
                   return 1;
 
           }
@@ -570,10 +400,10 @@ public static class LuaToLuaHelper {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetUTF8String(LuaState L)
           {
-                  System.Byte[] bytes_ = (System.Byte[])ToLuaCS.getObject(L,1);
+                  System.Byte[] bytes_ = (System.Byte[])ToLuaCS.getObject(L, 1);
 
                   System.String getutf8string= LuaHelper.GetUTF8String( bytes_);
-                  ToLuaCS.push(L,getutf8string); 
+                  LuaDLL.lua_pushstring(L, getutf8string);
                   return 1;
 
           }
@@ -585,7 +415,7 @@ public static class LuaToLuaHelper {
 
 
                   System.Byte[] getbytes= LuaHelper.GetBytes( utf8Str_);
-                  ToLuaCS.push(L,getbytes); 
+                  ToLuaCS.push(L,getbytes);
                   return 1;
 
           }
@@ -595,7 +425,7 @@ public static class LuaToLuaHelper {
           {
 
                   LuaHelper _luahelper= new LuaHelper();
-                  ToLuaCS.push(L,_luahelper); 
+                  ToLuaCS.push(L,_luahelper);
                   return 1;
 
           }

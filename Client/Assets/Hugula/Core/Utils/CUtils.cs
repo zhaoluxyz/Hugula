@@ -2,7 +2,7 @@
 // direct https://github.com/Hugulor/Hugula
 //
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class CUtils {
@@ -18,6 +18,7 @@ public class CUtils {
 	/// </param>
 	public static string GetURLFileSuffix(string url)
 	{
+		if (string.IsNullOrEmpty (url))	return string.Empty;
 		int last=url.LastIndexOf(".");
 		int end=url.IndexOf("?");
 		if(end==-1)
@@ -42,7 +43,7 @@ public class CUtils {
 	/// </param>
 	public static string GetURLFileName(string url)
 	{
-		//Debug.Log(url);
+		if (string.IsNullOrEmpty (url))	return string.Empty;
 		string re = "";
     	int len = url.Length - 1;
 		char[] arr=url.ToCharArray();
@@ -59,33 +60,14 @@ public class CUtils {
 	}
 
     /// <summary>
-    /// 获取文件名不要后缀
-    /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
-    public static string GetFileName(string url)
-    {
-        string re = "";
-        int len = url.Length - 1;
-        char[] arr = url.ToCharArray();
-        while (len >= 0 && arr[len] != '/' && arr[len] != '\\')
-            len = len - 1;
-
-        re = url.Substring(len + 1);
-        int last = re.LastIndexOf(".");
-        if (last == -1) last = re.Length;
-        string cut = re.Substring(0, last);
-        return cut;
-    }
-
-    /// <summary>
-    /// 获取文件名 并把.替换成_
+    /// 
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
     public static string GetKeyURLFileName(string url)
     {
         //Debug.Log(url);
+		if (string.IsNullOrEmpty (url))	return string.Empty;
         string re = "";
         int len = url.Length - 1;
         char[] arr = url.ToCharArray();
@@ -104,7 +86,7 @@ public class CUtils {
 	
 	public static string GetURLFullFileName(string url)
 	{
-		//Debug.Log(url);
+		if (string.IsNullOrEmpty (url))	return string.Empty;
 		string re = "";
     	int len = url.Length - 1;
 		char[] arr=url.ToCharArray();
@@ -221,9 +203,50 @@ public class CUtils {
 		System.GC.Collect();
 	}
 
-    public static int ADD(int a, int b)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="list"></param>
+    static public void Execute(IList<System.Action> list)
     {
-        return a + b;
+        if (list != null)
+        {
+            for (int i = 0; i < list.Count; )
+            {
+                System.Action del = list[i];
+
+                if (del != null)
+                {
+                    del();
+
+                    if (i >= list.Count) break;
+                    if (list[i] != del) continue;
+                }
+                ++i;
+            }
+        }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="list"></param>
+    static public void Execute(BetterList<System.Action> list)
+    {
+        if (list != null)
+        {
+            for (int i = 0; i < list.size; )
+            {
+                System.Action del = list[i];
+                if (del != null)
+                {
+                    del();
+
+                    if (i >= list.size) break;
+                    if (list[i] != del) continue;
+                }
+                ++i;
+            }
+        }
+    }
 }
