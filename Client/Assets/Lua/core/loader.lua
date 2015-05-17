@@ -6,13 +6,15 @@
 Loader={}
 local Resources = toluacs.UnityEngine.Resources
 local luanet = luanet
+local CTransport=toluacs.CTransport
 local LMultipleLoader=  luanet.import_type("LHighway") --toLuaCS.LMultipleLoader-- local LHighway = luanet.LHighway.instance LMultipleLoader
 LMultipleLoader=LMultipleLoader.instance
 local Request=luanet.LRequest
 local AssetBundle = luanet.UnityEngine.AssetBundle
 local WWW = luanet.UnityEngine.WWW
-local to1=luanet.LuaHelper
-local to2=luanet.CUtils
+--local to1=luanet.LuaHelper
+--local to2=luanet.CUtils
+local SetReqDataFromData=toluacs.CHighway.SetReqDataFromData
 
 local LuaHelper = toluacs.LuaHelper
 local delay = delay
@@ -29,15 +31,30 @@ local function dispatchComplete(req)
 	if req.onCompleteFn then req.onCompleteFn(req) end
 end
 
-local function loadByUrl(url,compFn,cache,endFn,head)
-	local req=Request(url)
+local function loadByUrl7(url,assetName,assetType,compFn,cache,endFn,head)
+	local req=Request(url,assetName,assetType)
+
 	if compFn then req.onCompleteFn=compFn end
 	if endFn then req.onEndFn=endFn end
 	if head~=nil then req.head=head end 
 	if cache==nil or cache==true then req.cache=true end
 	local key=req.key
 	local cacheData=Loader.resdic[key]
-	if cacheData~=nil then req.data=cacheData dispatchComplete(req)
+	if cacheData~=nil then SetReqDataFromData(req,cacheData) dispatchComplete(req)
+	else Loader.multipleLoader:LoadReq(req) 
+	end
+end
+
+local function loadByUrl5(url,compFn,cache,endFn,head)
+	local req=Request(url)
+--    req.assetName=req.key
+	if compFn then req.onCompleteFn=compFn end
+	if endFn then req.onEndFn=endFn end
+	if head~=nil then req.head=head end 
+	if cache==nil or cache==true then req.cache=true end
+	local key=req.key
+	local cacheData=Loader.resdic[key]
+	if cacheData~=nil then SetReqDataFromData(req,cacheData) dispatchComplete(req)
 	else Loader.multipleLoader:LoadReq(req) 
 	end
 end
@@ -46,7 +63,7 @@ local function loadByReq( req,cache )
 	if cache==nil or cache==true then req.cache=true end
 	local key=req.key
 	local cacheData=Loader.resdic[key]
-	if cacheData~=nil then req.data=cacheData dispatchComplete(req)
+	if cacheData~=nil then SetReqDataFromData(req,cacheData) dispatchComplete(req)
 	else Loader.multipleLoader:LoadReq(req)
 	end 
 end
@@ -58,7 +75,10 @@ local function loadByTable(tb,cache)
 	-- printTable(tb)
 	--for i=1,len do
 	for k,v in pairs(tb) do
-		--local v = tb[i]
+--		local v = tb[i]
+--        local arg=unpack(v)
+--        print(arg)
+--        Loader:getResource(arg)
 		local l1=#v
 		local req=Request(v[1])
 		key=req.key
@@ -67,7 +87,7 @@ local function loadByTable(tb,cache)
 		if l1>3 then req.head=v[4] end
 		if cache==nil or cache==true then req.cache=true end
 		local cacheData=Loader.resdic[key]
-		if cacheData~=nil then req.data=cacheData dispatchComplete(req)
+		if cacheData~=nil then SetReqDataFromData(req,cacheData) dispatchComplete(req)
 		else table.insert(arrList,req)--arrList:Add(req)
 		end
 	end
@@ -75,12 +95,8 @@ local function loadByTable(tb,cache)
 end
 
 function Loader:clearItem(key)
-	local www =	self.resdic[key]
-	if www then
-		if www.assetBundle~=null then www.assetBundle:Unload(false) end
-		www:Dispose()
-		www = nil
-	end
+	local assetBundle =	self.resdic[key]
+	if assetBundle then	assetBundle:Unload(false) end
 	self.resdic[key]=nil 
 end
 
@@ -98,7 +114,7 @@ end
 function Loader:clearSharedAB()
     local share = Loader.shareCache
     for k,v in pairs(share) do
-        disposeWWW(v)
+        v:Unload(false) 
         -- print("clearSharedAB "..k)
     end
     Loader.shareCache = {}
@@ -115,23 +131,19 @@ end
 --loadByUrl(url,compFn,cache,endFn,head)
 --loadByTable( {url,compFn,endFn,head},cache)
 function Loader:getResource(...)
-	local a,b,c,d,e=...
+	local a,b,c,d,e,f,g=...
 	--print("Loader:getResource type=" ..type(a))
 	--url,onComplete
-	if type(a)=="string" then 
-		loadByUrl(a,b,c,d,e)
+	if type(a)=="string" and type(b)=="string" then 
+		loadByUrl7(a,b,c,d,e,f,g)
+    elseif type(a)=="string" then
+		loadByUrl5(a,b,c,d,e)
 	elseif type(a)=="userdata" then
 		loadByReq(a,b)
 	elseif type(a) == "table" then
 		loadByTable(a,b)
 	end
 	--print("getResource  ed...."..tostring(a))
-end
-
-function disposeWWW( www )
-	www.assetBundle:Unload(false) 
-	www:Dispose()
-	www = nil
 end
 
 local function onCache( key,www)
@@ -141,26 +153,12 @@ local function onCache( key,www)
 end
 
 local function onSharedComplete(req)
-	local typeName = req:GetType().Name
-	if typeName == "CRequest" or typeName == "LRequest"  then
-		local key=req.key
-		local www=req.data
-		local name = www.assetBundle.mainAsset:GetType().Name
-        Loader.resdic[key]= www
-        Loader.shareCache[key] = www
-		if name == "GameObject" then
-			LuaHelper.RefreshShader(www)
---			local m = www.assetBundle.mainAsset--LuaHelper.Instantiate(www.assetBundle.mainAsset)
---			Loader.resdic[key]= www
-			Loader.shareCache[key] = www
-			--local dis = function()  disposeWWW(www)  print("dispose www"..key) end
-			--delay(dis,5,nil)
-		else
---			Loader.resdic[key] = www.assetBundle.mainAsset --www.assetBundle.mainAsset
-			--www.assetBundle:Unload(false) 
-			--disposeWWW(www)
-		end
-	end
+--	local typeName = req:GetType().Name
+    local key=req.key
+    local data=req.assetBundle
+     Loader.resdic[key]= data
+     Loader.shareCache[key] = data
+     data:LoadAllAssets()
 end
 
 function Loader:setOnAllCompelteFn(compFn)
@@ -169,6 +167,19 @@ end
 
 function Loader:setOnProgressFn(progFn)
 	self.multipleLoader.onProgressFn=progFn
+end
+
+function Loader:RefreshAssetBundleManifest()
+
+    local url = CUtils.GetAssetFullPath(CUtils.GetPlatformFolderForAssetBundles())
+    local  function onCompleteFn (req1)
+--        print(req1.key.." on comp ")
+        local data=req1.data
+        CTransport.m_AssetBundleManifest=data
+        req1.assetBundle:Unload(false)
+    end
+
+    self:getResource(url,"assetbundlemanifest","UnityEngine.AssetBundleManifest",onCompleteFn)
 end
 
 -- print(Loader.multipleLoader.onCacheFn)

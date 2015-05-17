@@ -12,7 +12,7 @@ local resourceURL ="http://192.168.18.152:8345/api" --http://121.199.51.39:8080/
 
 local progressBarTxt;
 local update_id="";
-local FRIST_VIEW = "Frist.u3d";
+local FRIST_VIEW = "frist.u3d";
 local VIDEO_NAME = "Loading.mp4";
 local VERSION_FILE_NAME = "Ver.t";
 local luanet = luanet
@@ -39,7 +39,7 @@ local function languageInit()
 end 
 
 local function enterGame()
-    -- languageInit()
+     languageInit()
 
 	require("begin")
 --	if fristView then LuaHelper.Destroy(fristView) end
@@ -69,7 +69,7 @@ local function onAllUpdateResComp(loader)
     loader:setOnAllCompelteFn(nil)
 	loader:setOnProgressFn(nil)
 	seveVersion()
-	enterGame()
+--	enterGame()
 end
 
 local function seveVersion()
@@ -79,7 +79,7 @@ end
 local function  onUpdateResComp(req)
     local www=req:get_data();
 	if(www) then
-		local txt=www.text;
+		local txt=www[0]
         local res = json:decode(txt)
 		if res["error"] then
 			enterGame()
@@ -107,27 +107,28 @@ local function checkRes()
 		enterGame()
 	else
 		enterGame()
-		-- local url=string.format(resourceURL,tostring(ResVersion),Application.platform,"0.2.0");
-		-- local req=Request(url)
-		-- req.onCompleteFn=onUpdateResComp
-
-		-- local function onErr( req )
-		-- 	print("checkRes on erro")
-		-- 	enterGame()
-		-- end
-		-- print("begin checkRes "..url)
-		-- req.onEndFn=onErr
-	 --    Loader:getResource(req,false)
+		 local url=string.format(resourceURL,tostring(ResVersion),Application.platform,"0.2.0");
+		 local req=Request(url)
+		 req.onCompleteFn=onUpdateResComp
+         req.assetType="System.String"
+		 local function onErr( req )
+		 	print("checkRes on erro")
+		 	enterGame()
+		 end
+		 print("begin checkRes "..url)
+		 req.onEndFn=onErr
+	     Loader:getResource(req,false)
 	end
 end
 
 local function checkVerion()
-	local function onURLComp(req )	ResVersion=req:get_data().text checkRes() end
+	local function onURLComp(req )	ResVersion=req.data[0] checkRes() end
 	local function onURLErComp(req )   checkRes() end
 	
 	local verPath=CUtils.GetFileFullPath(VERSION_FILE_NAME);
-	-- print("checkVerion . verPath"..verPath)
+	 print("checkVerion . verPath"..verPath)
 	local req=Request(verPath)
+    req.assetType ="System.String"
 	req:set_onCompleteFn(onURLComp)
 	req:set_onEndFn(onURLErComp)
   	--print("request create "..tostring(req))
@@ -138,15 +139,15 @@ end
 
 local function loadFrist()
 
+    Loader:RefreshAssetBundleManifest()
 	local function onLoadComp(r)
 		local www=r.data
 		 print(r.url.." loaded ")
 		--print(www)
-        local fristView = LuaHelper.Instantiate(www.assetBundle.mainAsset)
+        local fristView = LuaHelper.Instantiate(r.data)
         progressBarTxt = LuaHelper.GetComponentInChildren(fristView,"UnityEngine.UI.Text")
         progressBarTxt.text="check resource  ..."
-        www.assetBundle:Unload(false)
-        www:Dispose()
+        r.assetBundle:Unload(false)
         fristView.name = "Frist"
         checkVerion()
     end

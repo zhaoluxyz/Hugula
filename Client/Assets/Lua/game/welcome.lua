@@ -34,6 +34,10 @@ welcome.assets=
 function welcome:onAssetsLoad(items)
 	-- local ReferScript = LuaHelper.GetComponent(self.assets[1].root,"ReferGameObjects") 
 	-- local ReferScript1 = LuaHelper.GetComponent(self.assets[2].items["yourItemName"],"ReferGameObjects")
+	local fristView = LuaHelper.Find("Frist")
+	if fristView then LuaHelper.Destroy(fristView) end
+--	fristView = nil 
+Loader:clearSharedAB()
 end
 
 

@@ -84,7 +84,7 @@ public class ExportAssetBundles
 
     #region protected
 
-    /// <summary>
+    /// <summary>·
     /// 导出NGUI资源
     /// </summary>
     /// <param name="path"></param>
@@ -474,7 +474,7 @@ public class ExportAssetBundles
 
 #if UNITY_5
 
-    [MenuItem("Assets/AssetBundle Build BySelect", false, 2)]
+    //[MenuItem("Assets/AssetBundle Build BySelect", false, 2)]
     public static void BuildAssetBundle()
     {
        List<AssetBundleBuild> abs = new List<AssetBundleBuild>();
@@ -500,7 +500,7 @@ public class ExportAssetBundles
         BuildPipeline.BuildAssetBundles(getOutPutPath(target), abs.ToArray());
     }
 
-    [MenuItem("Assets/UGUI AssetBundle UI Build", false, 2)]
+    //[MenuItem("Assets/UGUI AssetBundle UI Build", false, 2)]
     public static void BuildUGui()
     {
         checkstreamingAssetsPath();
@@ -511,30 +511,40 @@ public class ExportAssetBundles
         Object[] selection = Selection.objects;
 
         //BuildPipeline.BuildAssetBundles(getOutPutPath(target));
-
+        AssetImporter import = null;
         foreach (Object s in selection)
         {
+            import = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(s));
+            Debug.Log(import.assetBundleName);
+            import.assetBundleName = s.name;
+            //import.SaveAndReimport();
+            Debug.Log(import.name);
             if (s is GameObject)
             {
+                var gobj = s as GameObject;
+
+
+                //AssetImporter.assetBundleName = gobj.name;
+
                 Path = AssetDatabase.GetAssetPath(s);
                 Object[] denpendencies = EditorUtility.CollectDependencies(new Object[] { s });
 
-                foreach (var obj in denpendencies)
-                {
-                    //SpriteAtlasTexture
+                //foreach (var obj in denpendencies)
+                //{
+                //    //SpriteAtlasTexture
 
-                    if (obj is Texture2D)
-                    {
-                        var text2d = obj as Texture2D;
-                        Debug.Log(string.Format("w ={0} ,h ={1}",text2d.width,text2d.height));
-                        Debug.Log(obj.name + " type = " + obj.GetType().Name);
-                    }else if(obj is Sprite)
-                    {
-                        var text2d = (obj as Sprite).texture;
-                        Debug.Log(string.Format("w ={0} ,h ={1}",text2d.width,text2d.height));
-                        Debug.Log(obj.name + " type = " + obj.GetType().Name);
-                    }
-                }
+                //    if (obj is Texture2D)
+                //    {
+                //        var text2d = obj as Texture2D;
+                //        Debug.Log(string.Format("w ={0} ,h ={1}",text2d.width,text2d.height));
+                //        Debug.Log(obj.name + " type = " + obj.GetType().Name);
+                //    }else if(obj is Sprite)
+                //    {
+                //        var text2d = (obj as Sprite).texture;
+                //        Debug.Log(string.Format("w ={0} ,h ={1}",text2d.width,text2d.height));
+                //        Debug.Log(obj.name + " type = " + obj.GetType().Name);
+                //    }
+                //}
                 //ExportSingleAssetGameObjectDependenciesCorssReference(Path, optionsDefault, btarget);
                 //System.Threading.Thread.Sleep(100);
             }

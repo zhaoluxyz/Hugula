@@ -32,11 +32,16 @@ public static class LuaToCRequest {
            ToLuaCS.AddMember(L, "set_key", set_key);
            ToLuaCS.AddMember(L, "get_udKey", get_udKey);
            ToLuaCS.AddMember(L, "set_udKey", set_udKey);
-           ToLuaCS.AddMember(L, "get_relative", get_relative);
-           ToLuaCS.AddMember(L, "set_relative", set_relative);
-           ToLuaCS.AddMember(L, "get_domain", get_domain);
            ToLuaCS.AddMember(L, "get_cache", get_cache);
            ToLuaCS.AddMember(L, "set_cache", set_cache);
+           ToLuaCS.AddMember(L, "get_assetName", get_assetName);
+           ToLuaCS.AddMember(L, "set_assetName", set_assetName);
+           ToLuaCS.AddMember(L, "get_assetType", get_assetType);
+           ToLuaCS.AddMember(L, "set_assetType", set_assetType);
+           ToLuaCS.AddMember(L, "get_assetBundle", get_assetBundle);
+           ToLuaCS.AddMember(L, "set_assetBundle", set_assetBundle);
+           ToLuaCS.AddMember(L, "get_www", get_www);
+           ToLuaCS.AddMember(L, "set_www", set_www);
            ToLuaCS.AddMember(L, "get_userData", get_userData);
            ToLuaCS.AddMember(L, "set_userData", set_userData);
            ToLuaCS.AddMember(L, "get_priority", get_priority);
@@ -263,43 +268,6 @@ public static class LuaToCRequest {
           }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_relative(LuaState L)
-          {
-
-                   var original = ToLuaCS.getObject(L, 1);
-                  CRequest target= (CRequest) original ;
-                  System.String relative= target.relative;
-                  LuaDLL.lua_pushstring(L, relative);
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int set_relative(LuaState L)
-          {
-                  System.String value_ =  LuaDLL.lua_tostring(L,2); 
-
-
-                   var original = ToLuaCS.getObject(L, 1);
-                  CRequest target= (CRequest) original ;
-                  target.relative= value_;
-                  return 0;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-          public static int get_domain(LuaState L)
-          {
-
-                   var original = ToLuaCS.getObject(L, 1);
-                  CRequest target= (CRequest) original ;
-                  System.String domain= target.domain;
-                  LuaDLL.lua_pushstring(L, domain);
-                  return 1;
-
-          }
-          
-          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int get_cache(LuaState L)
           {
 
@@ -319,6 +287,92 @@ public static class LuaToCRequest {
                    var original = ToLuaCS.getObject(L, 1);
                   CRequest target= (CRequest) original ;
                   target.cache= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_assetName(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  var val=  target.assetName;
+                  LuaDLL.lua_pushstring(L, val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_assetName(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original;
+                  target.assetName= LuaDLL.lua_tostring(L,2);
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_assetType(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  var val=  target.assetType;
+                  LuaDLL.lua_pushstring(L, val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_assetType(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original;
+                  target.assetType= LuaDLL.lua_tostring(L,2);
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_assetBundle(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  var val=  target.assetBundle;
+                  ToLuaCS.push(L,val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_assetBundle(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original;
+                  var val= ToLuaCS.getObject(L, 2);
+                  target.assetBundle= (UnityEngine.AssetBundle)val;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_www(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  var val=  target.www;
+                  ToLuaCS.push(L,val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_www(LuaState L)
+          {
+                  var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original;
+                  var val= ToLuaCS.getObject(L, 2);
+                  target.www= (UnityEngine.WWW)val;
                   return 0;
 
           }
@@ -435,18 +489,30 @@ public static class LuaToCRequest {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int _crequest(LuaState L)
           {
-                  System.String url_ =  LuaDLL.lua_tostring(L,1); 
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,4)){
+                  System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Int32 priority_ = (System.Int32)LuaDLL.lua_tonumber(L,2);
-                  System.String key_ =  LuaDLL.lua_tostring(L,3); 
+                  System.String assetName_ =  LuaDLL.lua_tostring(L,3); 
 
-                  System.String type_ =  LuaDLL.lua_tostring(L,4); 
+                  System.String assetType_ =  LuaDLL.lua_tostring(L,4); 
 
 
-                  CRequest _crequest= new CRequest( url_, priority_, key_, type_);
+                  CRequest _crequest= new CRequest( url_, assetName_, assetType_);
                   ToLuaCS.push(L,_crequest);
                   return 1;
 
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,2)){
+                  System.String url_ =  LuaDLL.lua_tostring(L,2); 
+
+
+                  CRequest _crequest= new CRequest( url_);
+                  ToLuaCS.push(L,_crequest);
+                  return 1;
+
+                 }
+               return 0;
           }
   #endregion       
 }

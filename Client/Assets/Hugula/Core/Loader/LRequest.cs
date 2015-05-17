@@ -7,7 +7,14 @@ using LuaInterface;
 
 public class LRequest : CRequest {
 
-    public  LRequest(string url, int priority = 0, string key = "", string type = "") :base(url,priority,key,type)
+    public  LRequest(string url) :base(url)
+    {
+        this.OnComplete += OnCompHandler;
+        this.OnEnd += OnEndHandler;
+    }
+
+    public LRequest(string url, string assetName, string assetType)
+        : base(url, assetName, assetType)
     {
         this.OnComplete += OnCompHandler;
         this.OnEnd += OnEndHandler;

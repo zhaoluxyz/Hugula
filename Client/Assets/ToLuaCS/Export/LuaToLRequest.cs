@@ -78,18 +78,30 @@ public static class LuaToLRequest {
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int _lrequest(LuaState L)
           {
-                  System.String url_ =  LuaDLL.lua_tostring(L,1); 
+                  int argLength = LuaDLL.lua_gettop(L);
+               if(ToLuaCS.CheckArgLength(argLength,4)){
+                  System.String url_ =  LuaDLL.lua_tostring(L,2); 
 
-                  System.Int32 priority_ = (System.Int32)LuaDLL.lua_tonumber(L,2);
-                  System.String key_ =  LuaDLL.lua_tostring(L,3); 
+                  System.String assetName_ =  LuaDLL.lua_tostring(L,3); 
 
-                  System.String type_ =  LuaDLL.lua_tostring(L,4); 
+                  System.String assetType_ =  LuaDLL.lua_tostring(L,4); 
 
 
-                  LRequest _lrequest= new LRequest( url_, priority_, key_, type_);
+                  LRequest _lrequest= new LRequest( url_, assetName_, assetType_);
                   ToLuaCS.push(L,_lrequest);
                   return 1;
 
+                 }
+               else if(ToLuaCS.CheckArgLength(argLength,2)){
+                  System.String url_ =  LuaDLL.lua_tostring(L,2); 
+
+
+                  LRequest _lrequest= new LRequest( url_);
+                  ToLuaCS.push(L,_lrequest);
+                  return 1;
+
+                 }
+               return 0;
           }
   #endregion       
 }

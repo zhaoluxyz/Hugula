@@ -32,6 +32,10 @@ public static class LuaToCTransport {
           ToLuaCS.CreateToLuaCSTable(L, t);
            ToLuaCS.AddMember(L, "__call", _ctransport);
 
+           ToLuaCS.AddMember(L, "get_m_AssetBundleManifest", get_m_AssetBundleManifest);
+
+           ToLuaCS.AddMember(L, "set_m_AssetBundleManifest", set_m_AssetBundleManifest);
+
 #endregion       
 }
   #region  instances method       
@@ -168,6 +172,24 @@ public static class LuaToCTransport {
                   CTransport _ctransport= new CTransport();
                   ToLuaCS.push(L,_ctransport);
                   return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_m_AssetBundleManifest(LuaState L)
+          {
+                  var val=   CTransport.m_AssetBundleManifest;
+                  ToLuaCS.push(L,val);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_m_AssetBundleManifest(LuaState L)
+          {
+                   var val= ToLuaCS.getObject(L, 1);
+                  CTransport.m_AssetBundleManifest= (UnityEngine.AssetBundleManifest)val;
+                  return 0;
 
           }
   #endregion       

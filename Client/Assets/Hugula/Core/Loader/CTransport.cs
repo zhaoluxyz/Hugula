@@ -14,6 +14,7 @@ public class CTransport : MonoBehaviour {
 	#region private member
 	private WWW www;
 	private CRequest _req;
+    //private string assetType;
 	#endregion
 
 	#region public member
@@ -37,9 +38,12 @@ public class CTransport : MonoBehaviour {
 	/// </summary>
 	public string key;
 
-	#endregion
-		
+    /// <summary>
+    /// 依赖关系
+    /// </summary>
+    public static  AssetBundleManifest m_AssetBundleManifest = null;
 
+	#endregion
 
 	#region evnet
 	public System.Action<CTransport,float> OnProcess;
@@ -106,24 +110,27 @@ public class CTransport : MonoBehaviour {
 		{
 			if(OnProcess!=null)
 				OnProcess(this,1);
-//			Debug.Log("complete : url "+req.url+" \n key:"+req.key);
+            //Debug.Log("will complete : url " + req.url + " \n key:" + req.key);
 			try
 			{
-				req.data = www;
-				IList<CRequest> depens=null;
-				if (req.suffix.Equals(Common.ASSETBUNDLE_SUFFIX)
-				    && www.assetBundle != null
-				    && www.assetBundle.Contains(Common.DEPENDENCIES_OBJECT_NAME)
-				    )
-				{
-#if UNITY_5
-                    CDependenciesScript script = www.assetBundle.LoadAsset<CDependenciesScript>(Common.DEPENDENCIES_OBJECT_NAME);
-                    depens = GetDependencies(script);
-# else
-                    CDependenciesScript script = (CDependenciesScript)www.assetBundle.Load(Common.DEPENDENCIES_OBJECT_NAME, typeof(CDependenciesScript));
-                    depens = GetDependencies(script);
-#endif
-				}
+
+                req.www = www;
+                req.assetBundle = www.assetBundle;
+                IList<CRequest> depens = null;
+                if(m_AssetBundleManifest!=null)
+                {
+                    if (string.IsNullOrEmpty(req.assetName)) req.assetName = req.key;
+
+                    string[] deps = m_AssetBundleManifest.GetAllDependencies(req.assetBundleName);
+                    //foreach (var n in deps)
+                    //{
+                    //    Debug.Log(n);
+                    //}
+                    depens = GetDependencies(deps);
+                }else if (m_AssetBundleManifest == null)
+                {
+                    Debug.LogWarning("Please initialize AssetBundleManifest");
+                }
 				isFree =true;
 				this.DispatchCompleteEvent(this.req,depens);
 			}
@@ -139,22 +146,20 @@ public class CTransport : MonoBehaviour {
 	/// </summary>
 	/// <returns>The dependencies.</returns>
 	/// <param name="script">Script.</param>
-    private IList<CRequest> GetDependencies(CDependenciesScript script)
+    private IList<CRequest> GetDependencies(string[] paths)
 	{
-		
-		string paths=script.paths;
 
-		if(string.IsNullOrEmpty(paths)) return null;
-
-		string[] strs=paths.Split(',');		
+        if (paths==null && paths.Length==0) return null;
+        
 		IList<CRequest> reqs=new List<CRequest>();
 		CRequest item;
 		int priority=this.req.priority+10;
 
-		foreach(string p in strs)
+        foreach (string p in paths)
 		{
-			item=new CRequest(CUtils.GetFileFullPath(p),priority);
+            item = new CRequest(CUtils.GetAssetFullPath(RemapVariantName(p)));
 			item.isShared=true;
+            item.priority = priority;
 			reqs.Add(item);
 		}
 
@@ -183,4 +188,44 @@ public class CTransport : MonoBehaviour {
 
 //	public delegate void OnErrorHandle(CTransport transport,CRequest req);
 
+    static string[] m_Variants = { };
+    // Variants which is used to define the active variants.
+    public static string[] Variants
+    {
+        get { return m_Variants; }
+        set { m_Variants = value; }
+    }
+    // Remaps the asset bundle name to the best fitting asset bundle variant.
+    public static string RemapVariantName(string assetBundleName)
+    {
+        string[] bundlesWithVariant = m_AssetBundleManifest.GetAllDependencies(assetBundleName); //.GetAllAssetBundlesWithVariant();
+
+        // If the asset bundle doesn't have variant, simply return.
+        if (System.Array.IndexOf(bundlesWithVariant, assetBundleName) < 0)
+            return assetBundleName;
+
+        string[] split = assetBundleName.Split('.');
+
+        int bestFit = int.MaxValue;
+        int bestFitIndex = -1;
+        // Loop all the assetBundles with variant to find the best fit variant assetBundle.
+        for (int i = 0; i < bundlesWithVariant.Length; i++)
+        {
+            string[] curSplit = bundlesWithVariant[i].Split('.');
+            if (curSplit[0] != split[0])
+                continue;
+
+            int found = System.Array.IndexOf(m_Variants, curSplit[1]);
+            if (found != -1 && found < bestFit)
+            {
+                bestFit = found;
+                bestFitIndex = i;
+            }
+        }
+
+        if (bestFitIndex != -1)
+            return bundlesWithVariant[bestFitIndex];
+        else
+            return assetBundleName;
+    }
 }

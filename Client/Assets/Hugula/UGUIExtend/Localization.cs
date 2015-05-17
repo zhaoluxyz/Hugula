@@ -136,20 +136,20 @@ public static class Localization
             url = CUtils.GetAssetFullPath(fileName);
         }
 
-        CRequest req = new CRequest(url);
+        CRequest req = new CRequest(url, "", "TextAsset");
         req.OnComplete += delegate(CRequest req1)
         {
-            WWW www =((WWW)req1.data);
-            TextAsset main = www.assetBundle.mainAsset as TextAsset;
+            //WWW www =((WWW)req1.data);
+            TextAsset main = req1.data as TextAsset; //www.assetBundle.mainAsset as TextAsset;
             byte[] txt = main.bytes;
 #if UNITY_EDITOR
             Debug.Log(mLanguage + " is loaded "+txt.Length);
 #endif
             if (txt != null) Load(txt);
             SelectLanguage(mLanguage);
-            www.assetBundle.Unload(true);
-            www.Dispose();
-            www = null;
+            req1.assetBundle.Unload(true);
+            //www.Dispose();
+            //www = null;
             localizationHasBeenSet = true;
         };
 

@@ -129,24 +129,19 @@ public class  LuaHelper {
     /// <returns></returns>
     public static System.Type GetType(string classname)
     {
+        if (string.IsNullOrEmpty(classname)) return null;
+
         System.Type t = null;
-        Assembly assb = Assembly.GetExecutingAssembly(); 
-        t=assb.GetType(classname); ;
-        if (t == null)
+        Assembly[] assbs = System.AppDomain.CurrentDomain.GetAssemblies();
+        Assembly assb = null;
+        for (int i = 0; i < assbs.Length; i++)
         {
-            assb = Assembly.GetAssembly(typeof(UnityEngine.GameObject));
+            assb = assbs[i];
             t = assb.GetType(classname);
+            if (t != null) return t;
         }
 
-#if UNITY_5 
-        if(t==null)
-        {
-            assb = Assembly.GetAssembly(typeof(UnityEngine.UI.Text));
-            t = assb.GetType(classname);
-            Debug.Log(t);
-        }
-#endif
-        return t;
+        return null;
     }
 
     /// <summary>

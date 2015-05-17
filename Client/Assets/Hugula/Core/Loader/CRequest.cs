@@ -20,21 +20,25 @@ using System.Collections.Generic;
    * key:文件名</br>
    * <b>priority:int</b> 优先等级  值越大优先级越高
    */
-  public CRequest(string url,int priority=0,string key="",string type="")
+  public CRequest(string url)
   {
-   this.url=url;
-   this.priority=priority;
-   this.key=key;
-   this.suffix=type;
+    this.url=url;
+    //this.assetName = this.key;
   }
 
+  public CRequest(string url,string assetName,string assetType)
+  {
+      this.url = url;
+      this.assetName = assetName;
+      this.assetType = assetType;
+  }
 
   public void Dispose()
   {
    this.url=null;
    this.priority=0;
    this.key=null;
-   this.suffix=null;
+   this.suffix = null;
    _data=null;
    _head=null;
   }
@@ -44,19 +48,17 @@ using System.Collections.Generic;
   private object _head;
   
   private string _key,_udKey;
-  
-  private string  _relative;
-  
-  private string _domain="";
+     
   
   /**
    * 加载请求
    */
   private string _url;
+
+  private string _suffix = string.Empty;
+
+  private string _assetBundleName = string.Empty;
   
-  private string _suffix;
-  
- // private IDictionary<string,object> _cache;
   private bool _cache = false;
   /**
    * 文件后缀类型</br>
@@ -65,17 +67,43 @@ using System.Collections.Generic;
    */
   public string suffix
   {
-		get{
-		   if(_suffix=="") 
-		    	_suffix=CUtils.GetURLFileSuffix(_url);
-		   return _suffix;
-		}
-		set
-		{
-			_suffix = value;
-		}
+      get
+      {
+          if (string.IsNullOrEmpty(_suffix))
+              _suffix = CUtils.GetURLFileSuffix(_url);
+          return _suffix;
+      }
+      set
+      {
+          _suffix = value;
+      }
   }
 
+     /// <summary>
+     /// assetbundleName 根据url计算出来
+     /// </summary>
+  public string assetBundleName
+  {
+      get{
+          if (string.IsNullOrEmpty(_assetBundleName))
+              _assetBundleName = CUtils.GetURLFullFileName(_url);
+          return _assetBundleName;
+      }
+      set
+      {
+          _assetBundleName = value;
+      }
+  }
+
+     /// <summary>
+  /// 要加载的asset 名称
+     /// </summary>
+  public string assetName = string.Empty;
+
+     /// <summary>
+  /// asset Type name
+     /// </summary>
+  public string assetType  = string.Empty;
 
   /**
    * 加载的头信息
@@ -99,6 +127,14 @@ using System.Collections.Generic;
 			_data = value;
 		}
   }
+     /// <summary>
+  /// assetBundle
+     /// </summary>
+  public AssetBundle assetBundle;
+     /// <summary>
+     /// www对象
+     /// </summary>
+  public WWW www;
 	/// <summary>
 	/// The user data.
 	/// </summary>
@@ -149,26 +185,6 @@ using System.Collections.Generic;
 		set
 		{
 				 _url = value;
-			/**
-			   if(_url.indexOf(":")>0)//如果有协议 http:// app:/  app-storage:/
-			   {
-			    var di=_url.indexOf("/");
-			    if(_url.toLocaleLowerCase().indexOf("http")==0)
-			    {
-			     di=_url.indexOf("/",di+1);
-			     di=_url.indexOf("/",di+1);
-			    }
-			    var http=_url.substring(0,di+1);
-			    var context=_url.substring(di+1,_url.length);
-			    context=context.split("?")[0];
-			    relative=context;
-			    _domain=http;
-			   }else
-			   {
-			    this.relative=_url.split("?")[0];
-			    
-			   }
-			   */
 		}
   }
 
@@ -212,33 +228,6 @@ public string udKey
 		}
 }
 
-
-  
-  /**
-   * 相对根目录路径
-   */
-  public string relative
-  {
-		get
-		{
-   			return _relative;
-		}
-		set
-		{
-			_relative = value;
-		}
-  }
-
-  
-  /**
-   * 当前请求的域名 在设置url属性的时候自动设置
-   */
-  public string domain
-  {
-		get{
-   			return _domain;
-		}
-  }
   
   /**
    * 缓存对应的字典类型

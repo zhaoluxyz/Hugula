@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>E439935D-B2A2-46AE-856D-2AA408428F33</ProjectGuid>
+    <!--$guid1$-->
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Lua\" />
+    <Folder Include="Lua\components\" />
+    <Folder Include="Lua\const\" />
+    <Folder Include="Lua\core\" />
+    <Folder Include="Lua\game\" />
+    <Folder Include="Lua\game\brain\" />
+    <Folder Include="Lua\game\common\" />
+    <Folder Include="Lua\game\model\" />
+    <Folder Include="Lua\game\server\" />
+    <Folder Include="Lua\lib\" />
+    <Folder Include="Lua\net\" />
+    <Folder Include="Lua\state\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lua\begin.lua" />
+    <Compile Include="Lua\components\assetLoader.lua" />
+    <Compile Include="Lua\components\cooldownLabel.lua" />
+    <Compile Include="Lua\const\importClass.lua" />
+    <Compile Include="Lua\const\requires.lua" />
+    <Compile Include="Lua\core\asset.lua" />
+    <Compile Include="Lua\core\Color.lua" />
+    <Compile Include="Lua\core\loader.lua" />
+    <Compile Include="Lua\core\luaObject.lua" />
+    <Compile Include="Lua\core\Math.lua" />
+    <Compile Include="Lua\core\Quaternion.lua" />
+    <Compile Include="Lua\core\Ray.lua" />
+    <Compile Include="Lua\core\Raycast.lua" />
+    <Compile Include="Lua\core\Touch.lua" />
+    <Compile Include="Lua\core\unity3d.lua" />
+    <Compile Include="Lua\core\Vector2.lua" />
+    <Compile Include="Lua\core\Vector3.lua" />
+    <Compile Include="Lua\core\Vector4.lua" />
+    <Compile Include="Lua\game\alertTips.lua" />
+    <Compile Include="Lua\game\brain\Doc.lua" />
+    <Compile Include="Lua\game\common\loadCSV.lua" />
+    <Compile Include="Lua\game\hall.lua" />
+    <Compile Include="Lua\game\moban.lua" />
+    <Compile Include="Lua\game\model\model.lua" />
+    <Compile Include="Lua\game\server\serverMsgHelperr.lua" />
+    <Compile Include="Lua\game\welcome.lua" />
+    <Compile Include="Lua\lib\json.lua" />
+    <Compile Include="Lua\lib\timer.lua" />
+    <Compile Include="Lua\main.lua" />
+    <Compile Include="Lua\netGame.lua" />
+    <Compile Include="Lua\net\alertDataList.lua" />
+    <Compile Include="Lua\net\netAPIList.lua" />
+    <Compile Include="Lua\net\netMsgHelper.lua" />
+    <Compile Include="Lua\net\netProtocalPaser.lua" />
+    <Compile Include="Lua\net\proxy.lua" />
+    <Compile Include="Lua\registerItemObjects.lua" />
+    <Compile Include="Lua\registerState.lua" />
+    <Compile Include="Lua\state\itemObject.lua" />
+    <Compile Include="Lua\state\stateBase.lua" />
+    <Compile Include="Lua\state\stateManager.lua" />
+    <Compile Include="Lua\state\stateTransform.lua" />
+    <Compile Include="Lua\testLan.lua" />
+    <Compile Include="Lua\testMain.lua" />
+    <Compile Include="Lua\testTween.lua" />
+    <Compile Include="Lua\uiInput.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lua\begin.lua.meta" />
+    <Content Include="Lua\components.meta" />
+    <Content Include="Lua\components\assetLoader.lua.meta" />
+    <Content Include="Lua\components\cooldownLabel.lua.meta" />
+    <Content Include="Lua\const.meta" />
+    <Content Include="Lua\const\importClass.lua.meta" />
+    <Content Include="Lua\const\requires.lua.meta" />
+    <Content Include="Lua\core.meta" />
+    <Content Include="Lua\core\asset.lua.meta" />
+    <Content Include="Lua\core\Color.lua.meta" />
+    <Content Include="Lua\core\loader.lua.meta" />
+    <Content Include="Lua\core\luaObject.lua.meta" />
+    <Content Include="Lua\core\Math.lua.meta" />
+    <Content Include="Lua\core\Quaternion.lua.meta" />
+    <Content Include="Lua\core\Ray.lua.meta" />
+    <Content Include="Lua\core\Raycast.lua.meta" />
+    <Content Include="Lua\core\Touch.lua.meta" />
+    <Content Include="Lua\core\unity3d.lua.meta" />
+    <Content Include="Lua\core\Vector2.lua.meta" />
+    <Content Include="Lua\core\Vector3.lua.meta" />
+    <Content Include="Lua\core\Vector4.lua.meta" />
+    <Content Include="Lua\game.meta" />
+    <Content Include="Lua\game\alertTips.lua.meta" />
+    <Content Include="Lua\game\brain.meta" />
+    <Content Include="Lua\game\brain\Doc.lua.meta" />
+    <Content Include="Lua\game\common.meta" />
+    <Content Include="Lua\game\common\loadCSV.lua.meta" />
+    <Content Include="Lua\game\hall.lua.meta" />
+    <Content Include="Lua\game\moban.lua.meta" />
+    <Content Include="Lua\game\model.meta" />
+    <Content Include="Lua\game\model\model.lua.meta" />
+    <Content Include="Lua\game\server.meta" />
+    <Content Include="Lua\game\server\serverMsgHelperr.lua.meta" />
+    <Content Include="Lua\game\welcome.lua.meta" />
+    <Content Include="Lua\lib.meta" />
+    <Content Include="Lua\lib\json.lua.meta" />
+    <Content Include="Lua\lib\timer.lua.meta" />
+    <Content Include="Lua\main.lua.meta" />
+    <Content Include="Lua\net.meta" />
+    <Content Include="Lua\netGame.lua.meta" />
+    <Content Include="Lua\net\alertDataList.lua.meta" />
+    <Content Include="Lua\net\netAPIList.lua.meta" />
+    <Content Include="Lua\net\netMsgHelper.lua.meta" />
+    <Content Include="Lua\net\netProtocalPaser.lua.meta" />
+    <Content Include="Lua\net\proxy.lua.meta" />
+    <Content Include="Lua\registerItemObjects.lua.meta" />
+    <Content Include="Lua\registerState.lua.meta" />
+    <Content Include="Lua\state.meta" />
+    <Content Include="Lua\state\itemObject.lua.meta" />
+    <Content Include="Lua\state\stateBase.lua.meta" />
+    <Content Include="Lua\state\stateManager.lua.meta" />
+    <Content Include="Lua\state\stateTransform.lua.meta" />
+    <Content Include="Lua\testLan.lua.meta" />
+    <Content Include="Lua\testMain.lua.meta" />
+    <Content Include="Lua\testTween.lua.meta" />
+    <Content Include="Lua\uiInput.lua.meta" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>

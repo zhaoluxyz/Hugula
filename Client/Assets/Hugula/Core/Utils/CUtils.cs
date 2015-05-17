@@ -179,21 +179,44 @@ public class CUtils {
 	public static string GetAssetPath(string name)
 	{
 		string Platform="";
-		#if UNITY_IPHONE
-			Platform="iPhone";
-		#elif UNITY_ANDROID
-			Platform="Android";
-		#elif UNITY_WP8
+#if UNITY_IOS
+			Platform="iOS";
+#elif UNITY_ANDROID
+            Platform ="Android";
+#elif UNITY_WEBPLAYER
+            Platform ="WebPlayer";
+#elif UNITY_WP8
 			Platform="WP8Player";
-        #elif UNITY_METRO
+#elif UNITY_METRO
             Platform = "MetroPlayer";
-        #elif UNITY_OSX || UNITY_STANDALONE_OSX
-             Platform = "StandaloneOSXIntel";
-        #else
-            Platform ="StandaloneWindows";
-        #endif
-            string path = System.String.Format("{0}/{1}", Platform, name);
+#elif UNITY_OSX || UNITY_STANDALONE_OSX
+            Platform = "OSX";
+#else
+            Platform ="Windows";
+#endif
+            string path = Path.Combine(Platform, name);  //System.String.Format("{0}/{1}", Platform, name);
         return path;
+	}
+
+
+    public static  string GetPlatformFolderForAssetBundles()
+	{
+#if UNITY_IOS
+			return "iOS";
+#elif UNITY_ANDROID
+        return "Android";
+#elif UNITY_WEBPLAYER
+            return "WebPlayer";
+#elif UNITY_WP8
+			return "WP8Player";
+#elif UNITY_METRO
+            return "MetroPlayer";
+#elif UNITY_OSX || UNITY_STANDALONE_OSX
+            return "OSX";
+#else
+            return "Windows";
+#endif
+
 	}
 	
 	public static bool currPersistentExist=false;

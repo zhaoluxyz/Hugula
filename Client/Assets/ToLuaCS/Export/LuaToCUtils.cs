@@ -36,6 +36,8 @@ public static class LuaToCUtils {
 
            ToLuaCS.AddMember(L, "GetAssetPath", GetAssetPath);
 
+           ToLuaCS.AddMember(L, "GetPlatformFolderForAssetBundles", GetPlatformFolderForAssetBundles);
+
            ToLuaCS.AddMember(L, "Collect", Collect);
 
            ToLuaCS.AddMember(L, "Execute", Execute);
@@ -166,6 +168,16 @@ public static class LuaToCUtils {
 
                   System.String getassetpath= CUtils.GetAssetPath( name_);
                   LuaDLL.lua_pushstring(L, getassetpath);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int GetPlatformFolderForAssetBundles(LuaState L)
+          {
+
+                  System.String getplatformfolderforassetbundles= CUtils.GetPlatformFolderForAssetBundles();
+                  LuaDLL.lua_pushstring(L, getplatformfolderforassetbundles);
                   return 1;
 
           }

@@ -28,6 +28,8 @@ public static class LuaToCHighway {
 
   #region  static method       
           ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "SetReqDataFromData", SetReqDataFromData);
+
            ToLuaCS.AddMember(L, "GetInstance", GetInstance);
 
            ToLuaCS.AddMember(L, "__call", _chighway);
@@ -159,6 +161,17 @@ public static class LuaToCHighway {
           }
   #endregion       
   #region  static method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int SetReqDataFromData(LuaState L)
+          {
+                  CRequest req_ = (CRequest)ToLuaCS.getObject(L, 1);
+                  System.Object data_ = (System.Object)ToLuaCS.getObject(L, 2);
+
+                  CHighway.SetReqDataFromData( req_, data_);
+                  return 0;
+
+          }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int GetInstance(LuaState L)

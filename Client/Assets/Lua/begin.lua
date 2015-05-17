@@ -11,7 +11,7 @@ require("net.proxy")
 require("const.requires")
 require("registerItemObjects")
 require("registerState")
-require("uiInput")
+--require("uiInput")
 
 local os=os
 local UPDATECOMPONENTS=UPDATECOMPONENTS
@@ -32,10 +32,10 @@ StateManager:setCurrentState(StateManager.welcome)
 
 require("netGame")
 
-local function disposeFirst( ... )
-	local fristView = LuaHelper.Find("Frist")
-	if fristView then LuaHelper.Destroy(fristView) end
---	fristView = nil 
-end
+--local function disposeFirst( ... )
+--	local fristView = LuaHelper.Find("Frist")
+--	if fristView then LuaHelper.Destroy(fristView) end
+----	fristView = nil 
+--end
 
-delay(disposeFirst,1,nil)
+--delay(disposeFirst,1,nil)

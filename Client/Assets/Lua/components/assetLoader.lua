@@ -10,6 +10,7 @@ local CUtils=CUtils
 local Asset = Asset
 local StateManager = StateManager
 local GAMEOBJECT_ATLAS = GAMEOBJECT_ATLAS
+--local SetReqDataFromData=toluacs.CHighway.SetReqDataFromData
 
 local AssetLoader=class(function(self,luaObj)
 	self.items={}
@@ -53,8 +54,8 @@ function AssetLoader:loadAssets(assets)
 		if (GAMEOBJECT_ATLAS[key]~=nil) then
 			baseAsset=GAMEOBJECT_ATLAS[key]
 		else
-			local main=req.data.assetBundle.mainAsset
-			LuaHelper.RefreshShader(req.data.assetBundle)
+			local main=req.data --.assetBundle.mainAsset
+			LuaHelper.RefreshShader(req.assetBundle)
 			local root=LuaHelper.Instantiate(main)
 			root.name=main.name
 			baseAsset.root=root
@@ -66,7 +67,7 @@ function AssetLoader:loadAssets(assets)
 			GAMEOBJECT_ATLAS[key]=baseAsset
 		end
 		baseAsset:copyTo(ass)
-		Loader:clear(req.key)
+		Loader:clearItem(req.key)
 		self:onAssetLoaded(key,ass)
 	end
 
