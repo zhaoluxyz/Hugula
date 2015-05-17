@@ -18,6 +18,8 @@ public static class LuaToCRequest {
            ToLuaCS.AddMember(L, "Dispose", Dispose);
            ToLuaCS.AddMember(L, "get_suffix", get_suffix);
            ToLuaCS.AddMember(L, "set_suffix", set_suffix);
+           ToLuaCS.AddMember(L, "get_assetBundleName", get_assetBundleName);
+           ToLuaCS.AddMember(L, "set_assetBundleName", set_assetBundleName);
            ToLuaCS.AddMember(L, "get_head", get_head);
            ToLuaCS.AddMember(L, "set_head", set_head);
            ToLuaCS.AddMember(L, "get_data", get_data);
@@ -94,6 +96,31 @@ public static class LuaToCRequest {
                    var original = ToLuaCS.getObject(L, 1);
                   CRequest target= (CRequest) original ;
                   target.suffix= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_assetBundleName(LuaState L)
+          {
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  System.String assetBundleName= target.assetBundleName;
+                  LuaDLL.lua_pushstring(L, assetBundleName);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_assetBundleName(LuaState L)
+          {
+                  System.String value_ =  LuaDLL.lua_tostring(L,2); 
+
+
+                   var original = ToLuaCS.getObject(L, 1);
+                  CRequest target= (CRequest) original ;
+                  target.assetBundleName= value_;
                   return 0;
 
           }

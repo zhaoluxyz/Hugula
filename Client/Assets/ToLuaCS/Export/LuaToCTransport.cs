@@ -30,6 +30,12 @@ public static class LuaToCTransport {
 
   #region  static method       
           ToLuaCS.CreateToLuaCSTable(L, t);
+           ToLuaCS.AddMember(L, "get_Variants", get_Variants);
+
+           ToLuaCS.AddMember(L, "set_Variants", set_Variants);
+
+           ToLuaCS.AddMember(L, "RemapVariantName", RemapVariantName);
+
            ToLuaCS.AddMember(L, "__call", _ctransport);
 
            ToLuaCS.AddMember(L, "get_m_AssetBundleManifest", get_m_AssetBundleManifest);
@@ -164,6 +170,38 @@ public static class LuaToCTransport {
           }
   #endregion       
   #region  static method       
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int get_Variants(LuaState L)
+          {
+
+                  System.String[] Variants= CTransport.Variants;
+                  ToLuaCS.push(L,Variants);
+                  return 1;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int set_Variants(LuaState L)
+          {
+                  System.String[] value_ = (System.String[])ToLuaCS.getObject(L, 1);
+
+                  CTransport.Variants= value_;
+                  return 0;
+
+          }
+          
+          [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+          public static int RemapVariantName(LuaState L)
+          {
+                  System.String assetBundleName_ =  LuaDLL.lua_tostring(L,1); 
+
+
+                  System.String remapvariantname= CTransport.RemapVariantName( assetBundleName_);
+                  LuaDLL.lua_pushstring(L, remapvariantname);
+                  return 1;
+
+          }
           
           [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
           public static int _ctransport(LuaState L)

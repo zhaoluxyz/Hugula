@@ -44,7 +44,16 @@ end
 --点击事件
 function welcome:onClick(obj,arg)
 	local cmd =obj.name
-	
+	print(arg)
+    print("you are click"..cmd)
+end
+
+
+--点击事件
+function welcome:onDrag(obj,arg)
+	local cmd =obj.name
+	print(arg)
+    print("you are onDrag"..cmd)
 end
 
 --显示时候调用

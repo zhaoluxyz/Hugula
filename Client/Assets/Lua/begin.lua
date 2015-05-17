@@ -11,7 +11,7 @@ require("net.proxy")
 require("const.requires")
 require("registerItemObjects")
 require("registerState")
---require("uiInput")
+require("uiInput")
 
 local os=os
 local UPDATECOMPONENTS=UPDATECOMPONENTS

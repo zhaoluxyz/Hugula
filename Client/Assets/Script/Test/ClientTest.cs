@@ -22,6 +22,7 @@ public class ClientTest : MonoBehaviour {
         //ExecuteEvents.pointerClickHandler(
         ExecuteEvents.Execute<IPointerClickHandler>(this.gameObject, null, (x,y)=>x.OnPointerClick(null));
 
+        //UnityEngine.UI.
         //es.firstSelectedGameObject
         //es.currentSelectedGameObject;
         //es.

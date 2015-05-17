@@ -18,26 +18,30 @@ public class UGUIEventSystem : MonoBehaviour
 
     #region mono
 
-    void Update()
-    {
-        if (eventSystem.currentSelectedGameObject != null)
-        {
-            Debug.Log(eventSystem.currentSelectedGameObject.name);
-        }
+    //void Update()
+    //{
+    //    //touchInputModule.
+    //    //Button btn;
+    //    //eventSystem.currentInputModule
 
-        //if (eventSystem.currentInputModule != null)
-        //{
-        //    Debug.Log("currentInputModule" + eventSystem.currentInputModule);
-        //}
+    //    //if (eventSystem.currentSelectedGameObject != null)
+    //    //{
+    //    //    Debug.Log(eventSystem.currentSelectedGameObject.name);
+    //    //}
 
-        if (eventSystem.IsPointerOverGameObject())
-        {
-            Debug.Log("IsPointerOverGameObject" + eventSystem.IsPointerOverGameObject());
-        }
-        //standaloneInputModule.
-                //standaloneInputModule.on
+    //    //if (eventSystem.currentInputModule != null)
+    //    //{
+    //    //    Debug.Log("currentInputModule" + eventSystem.currentInputModule);
+    //    //}
 
-    }
+    //    //if (eventSystem.IsPointerOverGameObject())
+    //    //{
+    //    //    Debug.Log("IsPointerOverGameObject" + eventSystem.IsPointerOverGameObject());
+    //    //}
+    //    //standaloneInputModule.
+    //            //standaloneInputModule.on
+
+    //}
 
     #endregion
 
