@@ -775,7 +775,7 @@ local function newindex(obj,name,value,meta1)
             LuaDLL.lua_remove(L, -2);
         }
         LuaDLL.lua_pushstring(L, "name");
-        LuaDLL.lua_pushstring(L, typeof(LNet).FullName);
+        LuaDLL.lua_pushstring(L, t.FullName);
         LuaDLL.lua_rawset(L, -3);
 
         LuaDLL.lua_pushstring(L, "__index");

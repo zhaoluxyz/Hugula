@@ -11,45 +11,39 @@ local sqrt	= math.sqrt
 local min	= math.min
 local max 	= math.max
 
---Vector4 = 
---{
---	x = 0,
---	y = 0,		
---	z = 0,
---	w = 0,
+Vector4 = 
+{
+	x = 0,
+	y = 0,		
+	z = 0,
+	w = 0,
+	
+	type="UnityEngine.Vector4",
+}
 
---	class = "Vector4",
---}
-
-Vector4=class(function(self,x,y,z,w) 
-	self.x= x or 0
-	self.y= y or 0
-    self.z= z or 0
-    self.w= w or 0
-    self.type="UnityEngine.Vector4"
-end)
-
---setmetatable(Vector4, Vector4)
+setmetatable(Vector4, Vector4)
 
 local fields = {}
 
---Vector4.__index = function(t,k)
---	local var = rawget(Vector4, k)
-
---	if var == nil then					
---		t = fields
---		var = rawget(t, k)
-
---		if var ~= nil then
---			return var()	
---		end
---	end
-
---	return var
---end
+Vector4.__index = function(t,k)
+	local var = rawget(Vector4, k)
+	
+	if var == nil then							
+		var = rawget(fields, k)
+		
+		if var ~= nil then
+			return var(t)	
+		end
+	end
+	
+	return var
+end
 
 function Vector4.New(x, y, z, w)
-	return Vector4(x,y,z,w)
+	local v = {x = 0, y = 0, z = 0, w = 0}
+	setmetatable(v, Vector4)
+	v:Set(x,y,z,w)
+	return v
 end
 
 function Vector4:Set(x,y,z,w)

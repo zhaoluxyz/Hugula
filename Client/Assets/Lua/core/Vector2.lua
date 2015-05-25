@@ -6,40 +6,37 @@
 --      as listed at <url: http://www.opensource.org/licenses/bsd-license.php >.
 --------------------------------------------------------------------------------
 
---Vector2 = 
---{
---	x = 0,
---	y = 0,		
+Vector2 = 
+{
+	x = 0,
+	y = 0,		
+	
+	type="UnityEngine.Vector2",
+}
 
---	class = "Vector2",
---}
+setmetatable(Vector2, Vector2)
 
---setmetatable(Vector2, Vector2)
-
-Vector2=class(function(self,x,y) 
-	self.x=x
-	self.y = y
-    self.type="UnityEngine.Vector2"
-end)
 local fields = {}
 
---Vector2.__index = function(t,k)
---	local var = rawget(Vector2, k)
-
---	if var == nil then					
---		t = fields
---		var = rawget(t, k)
-
---		if var ~= nil then
---			return var()	
---		end
---	end
-
---	return var
---end
+Vector2.__index = function(t,k)
+	local var = rawget(Vector2, k)
+	
+	if var == nil then							
+		var = rawget(fields, k)
+		
+		if var ~= nil then
+			return var(t)
+		end
+	end
+	
+	return var
+end
 
 function Vector2.New(x, y)
-	return Vector2(x,y)
+	local v = {x = 0, y = 0}
+	setmetatable(v, Vector2)
+	v:Set(x,y)
+	return v
 end
 
 function Vector2:Set(x,y)
@@ -55,9 +52,13 @@ function Vector2:SqrMagnitude()
 	return self.x * self.x + self.y * self.y
 end
 
+function Vector2:Clone()
+	return Vector2.New(self.x, self.y)
+end
+
 function Vector2:Normalize()
-	local v2 = vector2.New(self.x, self.y)
-	return v2:SetNormalize()
+	local v = self:Clone()
+	return v:SetNormalize()	
 end
 
 function Vector2:SetNormalize()

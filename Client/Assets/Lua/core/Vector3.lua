@@ -19,71 +19,59 @@ local sign	= math.sign
 local rad2Deg = math.rad2Deg
 local deg2Rad = math.deg2Rad
 
---Vector3 = 
---{
---	x = 0,
---	y = 0,
---	z = 0,
+Vector3 = 
+{	
+	x = 0,
+	y = 0,
+	z = 0,
+		
+	type = "UnityEngine.Vector3",
+}
 
---	class = "Vector3",
---}
-
-Vector3=class(function(self,x,y,z) 
-	self.x = x  or 0
-	self.y = y or 0
-    self.z = z or 0
-    self.type="UnityEngine.Vector3"
-end)
 local fields = {}
 
---setmetatable(Vector3, Vector3)
+setmetatable(Vector3, Vector3)
 
---Vector3.__index = function(t,k)
---	local var = rawget(Vector3, k)
-
---	if var == nil then							
---		var = rawget(fields, k)
-
---		if var ~= nil then
---			return var(t)				
---		end		
---	end
-
---	return var
---end
-
---Vector3.__call = function(t,x,y,z)
---	return Vector3.New(x,y,z)
---end
-
---function Vector3.New(x, y, z)
---	local v = {}
---	setmetatable(v, Vector3)
---	v:Set(x,y,z)
---	return v
---end
-function Vector3.New(x,y,z)
-    return Vector3(x,y,z)
-end
-
-function Vector3:Set(tableOrX,y,z)
-	if tableOrX == nil or type(tableOrX) == "number" then
-		self.x = tableOrX or 0
-		self.y = y or 0
-		self.z = z or 0
-	else
-		self.x = tableOrX.x
-		self.y = tableOrX.y
-		self.z = tableOrX.z
+Vector3.__index = function(t,k)
+	local var = rawget(Vector3, k)
+	
+	if var == nil then							
+		var = rawget(fields, k)
+		
+		if var ~= nil then
+			return var(t)				
+		end		
 	end
+	
+	return var
 end
 
-function Vector3:Get()
-	return self.x, self.y, self.z
+Vector3.__call = function(t,x,y,z)
+	return Vector3.New(x,y,z)
+end
+
+function Vector3.New(x, y, z)
+	local v = {x = 0, y = 0, z = 0}	
+	v.x = x or 0
+	v.y = y or 0
+	v.z = z or 0
+	setmetatable(v, Vector3)	
+	--v:Set(x, y, z)
+	return v
+end
+	
+function Vector3:Set(x,y,z)	
+	self.x = x or 0
+	self.y = y or 0
+	self.z = z or 0
+end
+
+function Vector3:Get()	
+	return self.x, self.y, self.z	
 end
 
 function Vector3:Clone()
-	return Vector3(self.x, self.y, self.z)
+	return Vector3.New(self.x, self.y, self.z)
 end
 
 function Vector3.Distance(va, vb)
@@ -96,7 +84,7 @@ end
 
 function Vector3.Lerp(from, to, t)	
 	t = clamp(t, 0, 1)
-	return Vector3(from.x + ((to.x - from.x) * t), from.y + ((to.y - from.y) * t), from.z + ((to.z - from.z) * t))
+	return Vector3.New(from.x + ((to.x - from.x) * t), from.y + ((to.y - from.y) * t), from.z + ((to.z - from.z) * t))
 end
 
 function Vector3:Magnitude()
@@ -104,11 +92,11 @@ function Vector3:Magnitude()
 end
 
 function Vector3.Max(lhs, rhs)
-	return Vector3(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z))
+	return Vector3.New(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z))
 end
 
 function Vector3.Min(lhs, rhs)
-	return Vector3(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z))
+	return Vector3.New(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z))
 end
 
 function Vector3:Normalize()
@@ -458,12 +446,12 @@ Vector3.__tostring = function(self)
 end
 
 Vector3.__div = function(va, d)
-	return Vector3(va.x / d, va.y / d, va.z / d)
+	return Vector3.New(va.x / d, va.y / d, va.z / d)
 end
 
 Vector3.__mul = function(va, d)
 	if type(d) == "number" then
-		return Vector3(va.x * d, va.y * d, va.z * d)
+		return Vector3.New(va.x * d, va.y * d, va.z * d)
 	else
 		local vec = va:Clone()
 		vec:MulQuat(d)
@@ -472,15 +460,15 @@ Vector3.__mul = function(va, d)
 end
 
 Vector3.__add = function(va, vb)
-	return Vector3(va.x + vb.x, va.y + vb.y, va.z + vb.z)
+	return Vector3.New(va.x + vb.x, va.y + vb.y, va.z + vb.z)
 end
 
 Vector3.__sub = function(va, vb)
-	return Vector3(va.x - vb.x, va.y - vb.y, va.z - vb.z)
+	return Vector3.New(va.x - vb.x, va.y - vb.y, va.z - vb.z)
 end
 
 Vector3.__unm = function(va)
-	return Vector3(-va.x, -va.y, -va.z)
+	return Vector3.New(-va.x, -va.y, -va.z)
 end
 
 Vector3.__eq = function(a,b)
@@ -489,14 +477,14 @@ Vector3.__eq = function(a,b)
 	return delta < 1e-10
 end
 
-Vector3.up 		= function() return Vector3(0,1,0) end
-Vector3.down 	= function() return Vector3(0,-1,0) end
-Vector3.right	= function() return Vector3(1,0,0) end
-Vector3.left		= function() return Vector3(-1,0,0) end
-Vector3.forward 	= function() return Vector3(0,0,1) end
-Vector3.back		= function() return Vector3(0,0,-1) end
-Vector3.zero		= function() return Vector3(0,0,0) end
-Vector3.one		= function() return Vector3(1,1,1) end
-Vector3.magnitude 	= Vector3.Magnitude
-Vector3.normalized 	= Vector3.Normalize
-Vector3.sqrMagnitude = Vector3.SqrMagnitude
+fields.up 		= function() return Vector3.New(0,1,0) end
+fields.down 	= function() return Vector3.New(0,-1,0) end
+fields.right	= function() return Vector3.New(1,0,0) end
+fields.left		= function() return Vector3.New(-1,0,0) end
+fields.forward 	= function() return Vector3.New(0,0,1) end
+fields.back		= function() return Vector3.New(0,0,-1) end
+fields.zero		= function() return Vector3.New(0,0,0) end
+fields.one		= function() return Vector3.New(1,1,1) end
+fields.magnitude 	= Vector3.Magnitude
+fields.normalized 	= Vector3.Normalize
+fields.sqrMagnitude = Vector3.SqrMagnitude

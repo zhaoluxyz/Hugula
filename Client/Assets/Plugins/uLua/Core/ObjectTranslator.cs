@@ -914,11 +914,45 @@ namespace LuaInterface
 			else if(o is LuaFunction)
 			{
 				((LuaFunction)o).push(luaState);
-			}
-			else
-			{
-				pushObject(luaState,o,"luaNet_metatable");
-			}
+            }
+            #region valeType
+            else if (o is UnityEngine.Vector3)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.Vector3)o);
+            }
+            else if (o is UnityEngine.Vector2)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.Vector2)o);
+            }
+            else if (o is UnityEngine.Vector4)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.Vector4)o);
+            }
+            else if (o is UnityEngine.Quaternion)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.Quaternion)o);
+            }
+            else if (o is UnityEngine.Color)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.Color)o);
+            }
+            else if (o is UnityEngine.RaycastHit)
+            {
+               ToLuaCS.push(luaState,(UnityEngine.RaycastHit)o);
+            }
+            else if (o is UnityEngine.Touch)
+            {
+                ToLuaCS.push(luaState, (UnityEngine.Touch)o);
+            }
+            else if (o is UnityEngine.Ray)
+            {
+                ToLuaCS.push(luaState, (UnityEngine.Ray)o);
+            }
+            #endregion
+            else
+            {
+                pushObject(luaState, o, "luaNet_metatable");
+            }
 		}
 		/*
          * Checks if the method matches the arguments in the Lua stack, getting

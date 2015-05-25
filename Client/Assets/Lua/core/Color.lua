@@ -10,42 +10,29 @@ Color =
 
 setmetatable(Color, Color)
 
---Color = class(function(self,r,g,b,a) 
---	self.r= r or 0
---	self.g= g or 0
---    self.b= b or 0
---    self.a= a or 1
---    self.type="UnityEngine.Color"
---end)
-
 local fields = {}
 
 Color.__index = function(t,k)
 	local var = rawget(Color, k)
-
-	if var == nil then					
-		t = fields
-		var = rawget(t, k)
-
+		
+	if var == nil then							
+		var = rawget(fields, k)
+		
 		if var ~= nil then
-			return var()	
+			return var(t)	
 		end
 	end
-
+	
 	return var
 end
 
-Color.__call = function(t,r, g, b, a)
-	local v = {}
-	setmetatable(v, Color)
-	v:Set(r, g, b, a)
-	return v
-end
-
 function Color.New(r, g, b, a)
-	local v = {}
+	local v = {r = 0, g = 0, b = 0, a = 0}
+	v.r = r
+	v.g = g
+	v.b = b
+	v.a = a or 1
 	setmetatable(v, Color)
-	v:Set(r, g, b, a)
 	return v
 end
 
@@ -86,10 +73,10 @@ Color.__sub = function(a, b)
 	return Color.New(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a)
 end
 
-Color.__mul = function(a, d)
-	if type(d) == "number" then
+Color.__mul = function(a, b)
+	if type(b) == "number" then
 		return Color.New(a.r * b, a.g * b, a.b * b, a.a * b)
-	elseif d.class == Color.class then
+	elseif b.class == Color.class then
 		return Color.New(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a)
 	end
 end
