@@ -296,8 +296,8 @@ public static class LuaToUnityEngine_WWW {
           {
 
                    var original = ToLuaCS.getObject(L, 1);
-                  UnityEngine.WWW target= (UnityEngine.WWW) original ;
-                  target.LoadUnityWeb();
+                  //UnityEngine.WWW target= (UnityEngine.WWW) original ;
+                  //target.LoadUnityWeb();
                   return 0;
 
           }
