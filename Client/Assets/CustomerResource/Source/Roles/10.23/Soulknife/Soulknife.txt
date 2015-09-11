@@ -1,6 +1,0 @@
-Idle 0-60
-Show 70-90
-Attack 100-122
-Skill 130-165
-Death 180-198
-Run 210-230

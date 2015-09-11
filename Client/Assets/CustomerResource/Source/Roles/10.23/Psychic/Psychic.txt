@@ -1,5 +1,0 @@
-0-40 Idle
-50-90 show
-100-120 run
-130-150 death
-160-192 attack
