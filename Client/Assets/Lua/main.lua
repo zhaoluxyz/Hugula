@@ -34,8 +34,8 @@ local Loader = Loader
 
 local function languageInit()
 	local lan=PlayerPrefs.GetString("Language","")
-	if lan=="" then lan=Application.systemLanguage:ToString() end
-	Localization.language=Chinese --"Chinese"
+	-- if lan=="" then lan=Application.systemLanguage:ToString() end
+	Localization.language="Chinese" --"Chinese"
 	print(Application.systemLanguage.."current language is "..Localization.language)
 end 
 
