@@ -1,0 +1,6 @@
+0-40 Idle
+60-120 Show
+140-167 Attack
+180-200 Run
+215-240 Death
+248-287 Skill

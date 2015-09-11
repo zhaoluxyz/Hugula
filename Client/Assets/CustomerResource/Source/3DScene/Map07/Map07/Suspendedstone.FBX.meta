@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: f311ad0042ebe5740897194e90cbc14c
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: SuspendedstonE02
+    100004: SuspendedstoneA01
+    100006: SuspendedstoneA02
+    100008: SuspendedstoneB01
+    100010: SuspendedstoneB02
+    100012: SuspendedstoneC01
+    100014: SuspendedstoneC02
+    100016: SuspendedstoneD01
+    100018: SuspendedstoneD02
+    100020: SuspendedstoneE01
+    100022: SuspendedstoneF01
+    100024: SuspendedstoneF02
+    100026: SuspendedstoneG01
+    100028: SuspendedstoneG02
+    400000: //RootNode
+    400002: SuspendedstonE02
+    400004: SuspendedstoneA01
+    400006: SuspendedstoneA02
+    400008: SuspendedstoneB01
+    400010: SuspendedstoneB02
+    400012: SuspendedstoneC01
+    400014: SuspendedstoneC02
+    400016: SuspendedstoneD01
+    400018: SuspendedstoneD02
+    400020: SuspendedstoneE01
+    400022: SuspendedstoneF01
+    400024: SuspendedstoneF02
+    400026: SuspendedstoneG01
+    400028: SuspendedstoneG02
+    2300000: SuspendedstonE02
+    2300002: SuspendedstoneA01
+    2300004: SuspendedstoneA02
+    2300006: SuspendedstoneB01
+    2300008: SuspendedstoneB02
+    2300010: SuspendedstoneC01
+    2300012: SuspendedstoneC02
+    2300014: SuspendedstoneD01
+    2300016: SuspendedstoneD02
+    2300018: SuspendedstoneE01
+    2300020: SuspendedstoneF01
+    2300022: SuspendedstoneF02
+    2300024: SuspendedstoneG01
+    2300026: SuspendedstoneG02
+    3300000: SuspendedstonE02
+    3300002: SuspendedstoneA01
+    3300004: SuspendedstoneA02
+    3300006: SuspendedstoneB01
+    3300008: SuspendedstoneB02
+    3300010: SuspendedstoneC01
+    3300012: SuspendedstoneC02
+    3300014: SuspendedstoneD01
+    3300016: SuspendedstoneD02
+    3300018: SuspendedstoneE01
+    3300020: SuspendedstoneF01
+    3300022: SuspendedstoneF02
+    3300024: SuspendedstoneG01
+    3300026: SuspendedstoneG02
+    4300000: SuspendedstoneA01
+    4300002: SuspendedstoneA02
+    4300004: SuspendedstoneB02
+    4300006: SuspendedstoneC02
+    4300008: SuspendedstoneD02
+    4300010: SuspendedstonE02
+    4300012: SuspendedstoneF02
+    4300014: SuspendedstoneG02
+    4300016: SuspendedstoneB01
+    4300018: SuspendedstoneC01
+    4300020: SuspendedstoneD01
+    4300022: SuspendedstoneE01
+    4300024: SuspendedstoneF01
+    4300026: SuspendedstoneG01
+    7400000: Idle
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 160
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: SuspendedstonE02
+        weight: 1
+      - path: SuspendedstoneA01
+        weight: 1
+      - path: SuspendedstoneA02
+        weight: 1
+      - path: SuspendedstoneB01
+        weight: 1
+      - path: SuspendedstoneB02
+        weight: 1
+      - path: SuspendedstoneC01
+        weight: 1
+      - path: SuspendedstoneC02
+        weight: 1
+      - path: SuspendedstoneD01
+        weight: 1
+      - path: SuspendedstoneD02
+        weight: 1
+      - path: SuspendedstoneE01
+        weight: 1
+      - path: SuspendedstoneF01
+        weight: 1
+      - path: SuspendedstoneF02
+        weight: 1
+      - path: SuspendedstoneG01
+        weight: 1
+      - path: SuspendedstoneG02
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  userData: 

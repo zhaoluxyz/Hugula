@@ -1,0 +1,672 @@
+fileFormatVersion: 2
+guid: cfd58e54de90f774e93241e0fe9e97f1
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Blueheronfire3
+    100004: Blueheronfire_An1:joint10
+    100006: Blueheronfire_An1:joint11
+    100008: Blueheronfire_An1:joint12
+    100010: Blueheronfire_An1:joint13
+    100012: Blueheronfire_An1:joint14
+    100014: Blueheronfire_An1:joint15
+    100016: Blueheronfire_An1:joint16
+    100018: Blueheronfire_An1:joint17
+    100020: Blueheronfire_An1:joint18
+    100022: Blueheronfire_An1:joint19
+    100024: Blueheronfire_An1:joint2
+    100026: Blueheronfire_An1:joint20
+    100028: Blueheronfire_An1:joint21
+    100030: Blueheronfire_An1:joint22
+    100032: Blueheronfire_An1:joint23
+    100034: Blueheronfire_An1:joint24
+    100036: Blueheronfire_An1:joint25
+    100038: Blueheronfire_An1:joint26
+    100040: Blueheronfire_An1:joint27
+    100042: Blueheronfire_An1:joint28
+    100044: Blueheronfire_An1:joint29
+    100046: Blueheronfire_An1:joint3
+    100048: Blueheronfire_An1:joint30
+    100050: Blueheronfire_An1:joint31
+    100052: Blueheronfire_An1:joint32
+    100054: Blueheronfire_An1:joint4
+    100056: Blueheronfire_An1:joint5
+    100058: Blueheronfire_An1:joint6
+    100060: Blueheronfire_An1:joint7
+    100062: joint1
+    400000: //RootNode
+    400002: Blueheronfire3
+    400004: Blueheronfire_An1:joint10
+    400006: Blueheronfire_An1:joint11
+    400008: Blueheronfire_An1:joint12
+    400010: Blueheronfire_An1:joint13
+    400012: Blueheronfire_An1:joint14
+    400014: Blueheronfire_An1:joint15
+    400016: Blueheronfire_An1:joint16
+    400018: Blueheronfire_An1:joint17
+    400020: Blueheronfire_An1:joint18
+    400022: Blueheronfire_An1:joint19
+    400024: Blueheronfire_An1:joint2
+    400026: Blueheronfire_An1:joint20
+    400028: Blueheronfire_An1:joint21
+    400030: Blueheronfire_An1:joint22
+    400032: Blueheronfire_An1:joint23
+    400034: Blueheronfire_An1:joint24
+    400036: Blueheronfire_An1:joint25
+    400038: Blueheronfire_An1:joint26
+    400040: Blueheronfire_An1:joint27
+    400042: Blueheronfire_An1:joint28
+    400044: Blueheronfire_An1:joint29
+    400046: Blueheronfire_An1:joint3
+    400048: Blueheronfire_An1:joint30
+    400050: Blueheronfire_An1:joint31
+    400052: Blueheronfire_An1:joint32
+    400054: Blueheronfire_An1:joint4
+    400056: Blueheronfire_An1:joint5
+    400058: Blueheronfire_An1:joint6
+    400060: Blueheronfire_An1:joint7
+    400062: joint1
+    4300000: Blueheronfire3
+    7400000: Idle
+    7400002: Show
+    7400004: Attack
+    7400006: Skill
+    7400008: Death
+    7400010: Run
+    9500000: //RootNode
+    13700000: Blueheronfire3
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Show
+      takeName: Take 001
+      firstFrame: 90
+      lastFrame: 114
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Attack
+      takeName: Take 001
+      firstFrame: 40
+      lastFrame: 71
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Skill
+      takeName: Take 001
+      firstFrame: 200
+      lastFrame: 260
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Death
+      takeName: Take 001
+      firstFrame: 130
+      lastFrame: 146
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 160
+      lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blueheronfire3
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint4
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint2/Blueheronfire_An1:joint3/Blueheronfire_An1:joint31/Blueheronfire_An1:joint32
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint20/Blueheronfire_An1:joint23
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint5/Blueheronfire_An1:joint6/Blueheronfire_An1:joint7/Blueheronfire_An1:joint21/Blueheronfire_An1:joint22
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint13/Blueheronfire_An1:joint10/Blueheronfire_An1:joint11/Blueheronfire_An1:joint12
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint14/Blueheronfire_An1:joint15/Blueheronfire_An1:joint16
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint17/Blueheronfire_An1:joint18/Blueheronfire_An1:joint19
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint27/Blueheronfire_An1:joint28
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29
+        weight: 1
+      - path: joint1/Blueheronfire_An1:joint24/Blueheronfire_An1:joint25/Blueheronfire_An1:joint26/Blueheronfire_An1:joint29/Blueheronfire_An1:joint30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
