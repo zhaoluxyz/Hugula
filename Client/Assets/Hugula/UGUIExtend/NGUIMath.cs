@@ -11,7 +11,7 @@ using System.Text;
 /// <summary>
 /// Helper class containing generic functions used throughout the UI library.
 /// </summary>
-
+[SLua.CustomLuaClass]
 static public class NGUIMath
 {
 	/// <summary>

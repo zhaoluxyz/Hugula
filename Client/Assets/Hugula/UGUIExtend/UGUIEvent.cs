@@ -4,10 +4,10 @@
 using UnityEngine;
 using System.Collections;
 
-using LuaInterface;
-using Lua = LuaInterface.LuaState;
-using LuaState = System.IntPtr;
-
+using SLua;
+using Lua = SLua.LuaState;
+//using LuaState = System.IntPtr;
+[SLua.CustomLuaClass]
 public static class UGUIEvent  {
 
     #region public
@@ -16,7 +16,7 @@ public static class UGUIEvent  {
     {
         if (onCustomerFn != null)
         {
-            onCustomerFn.Call(sender, arg);
+            onCustomerFn.call(sender, arg);
         }
     }
 
@@ -24,7 +24,7 @@ public static class UGUIEvent  {
 	{
         if (onPressFn != null)
 		{
-            onPressFn.Call(sender, arg);
+            onPressFn.call(sender, arg);
 		}
 	}
 
@@ -32,7 +32,7 @@ public static class UGUIEvent  {
 	{
 		if(onClickFn!=null)
 		{
-            onClickFn.Call(sender, arg);
+            onClickFn.call(sender, arg);
 		}
 	}
 
@@ -40,14 +40,14 @@ public static class UGUIEvent  {
 	{
 		if(onDragFn!=null)
 		{
-            LuaState L=ToLuaCS.lua.L;
-            onDragFn.push(L);
-            ToLuaCS.push(L, sender);
-            ToLuaCS.push(L, arg);
-            if (LuaDLL.lua_call(L, 2, -1) != 0)
-            {
-            }
-            //onDragFn.Call(sender, arg);
+            //LuaState L=ToLuaCS.lua.L;
+            //onDragFn.push(L);
+            //ToLuaCS.push(L, sender);
+            //ToLuaCS.push(L, arg);
+            //if (LuaDLL.lua_call(L, 2, -1) != 0)
+            //{
+            //}
+            onDragFn.call(sender, arg);
 		}
 	}
 
@@ -55,7 +55,7 @@ public static class UGUIEvent  {
 	{
 		if(onDropFn!=null)
 		{
-            onDropFn.Call(sender, arg);
+            onDropFn.call(sender, arg);
 		}
 	}
 
@@ -63,7 +63,7 @@ public static class UGUIEvent  {
 	{
 		if(onSelectFn!=null)
 		{
-            onSelectFn.Call(sender, arg);
+            onSelectFn.call(sender, arg);
 		}
 	}
 
@@ -71,14 +71,14 @@ public static class UGUIEvent  {
     //{
     //    if (onDoubleFn != null)
     //    {
-    //        onDoubleFn.Call(sender, arg);
+    //        onDoubleFn.call(sender, arg);
     //    }
     //}
     public static void onCancelHandle(GameObject sender, object arg)
     {
         if (onCancelFn != null)
         {
-            onCancelFn.Call(sender, arg);
+            onCancelFn.call(sender, arg);
         }
     }
 

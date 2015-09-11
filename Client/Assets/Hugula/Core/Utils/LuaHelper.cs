@@ -5,12 +5,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
 
-using LuaInterface;
-using LuaState =LuaInterface.LuaState;
+using SLua;
+using LuaState = SLua.LuaState;
 
 /// <summary>
 /// lua helper类
 /// </summary>
+[SLua.CustomLuaClass]
 public class  LuaHelper {
 
     /// <summary>
@@ -249,7 +250,7 @@ public class  LuaHelper {
         for (int i = 0; i < count; i++)
         {
             child = pr.GetChild(i);
-            eachFn.Call(i, child.gameObject);
+            eachFn.call(i, child.gameObject);
         }
     }
 
@@ -266,7 +267,7 @@ public class  LuaHelper {
         for (int i = 0; i < count; i++)
         {
             child = lists[i];
-            eachFn.Call(i, child);
+            eachFn.call(i, child);
         }
     }
 

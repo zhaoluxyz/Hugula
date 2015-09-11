@@ -10,8 +10,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System;
-using LuaInterface;
-
+using SLua;
+[SLua.CustomLuaClass]
 public class TcpServer : MonoBehaviour
 {
 
@@ -97,7 +97,7 @@ public class TcpServer : MonoBehaviour
         {
             if (onClientConnectFn != null)
             {
-                onClientConnectFn.Call(ses);
+                onClientConnectFn.call(ses);
             }
         }
 
@@ -125,7 +125,7 @@ public class TcpServer : MonoBehaviour
                         {
                              byte[] send = new byte[msg.Length -2];
                              System.Array.Copy(msg, 2, send, 0, send.Length);
-                             onMessageArriveFn.Call(ses, new Msg(send));
+                             onMessageArriveFn.call(ses, new Msg(send));
                         }
                         catch (Exception ex)
                         {
@@ -197,7 +197,7 @@ public class TcpServer : MonoBehaviour
         {
             Session delses = (Session)sessions[SensionId];
             if (onClientCloseFn != null)
-                onClientCloseFn.Call(delses);
+                onClientCloseFn.call(delses);
 
             delses.Close();
             sessions.Remove(SensionId);

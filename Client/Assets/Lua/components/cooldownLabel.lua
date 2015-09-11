@@ -6,7 +6,7 @@
 local LuaHelper=LuaHelper
 local CUtils=CUtils
 local delay = delay
-local Timer = luanet.Timer
+-- local Timer = luanet.Timer
 local fun = fun
 local CooldownLabel=class(function(self,luaObj)
 	self.items={}

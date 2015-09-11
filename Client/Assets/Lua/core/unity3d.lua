@@ -3,11 +3,10 @@
 --   
 --  author pu
 ------------------------------------------------
-luanet.load_assembly(assemblyname)
-luanet.load_assembly("UnityEngine.UI")
-
-delay = toluacs.PLua.Delay
-stopDelay = toluacs.PLua.StopDelay
+-- luanet.load_assembly("UnityEngine.UI")
+import "UnityEngine"
+delay = PLua.Delay
+stopDelay = PLua.StopDelay
 
 if unpack==nil then unpack=table.unpack end
 
@@ -131,13 +130,13 @@ function make_array (tp,tbl)
 end
 
 --value type
-require("core.Math")
-require("core.Vector3")
-require("core.Vector2")
-require("core.Quaternion")
-require("core.Vector4")
-require("core.Raycast")
-require("core.Color")
-require("core.Touch")
-require("core.Ray")
+-- require("core.Math")
+-- require("core.Vector3")
+-- require("core.Vector2")
+-- require("core.Quaternion")
+-- require("core.Vector4")
+-- require("core.Raycast")
+-- require("core.Color")
+-- require("core.Touch")
+-- require("core.Ray")
 

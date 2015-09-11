@@ -11,11 +11,13 @@ using System;
 using System.Text;
 
 using LuaInterface;
-using Lua = LuaInterface.LuaState;
-using LuaState = System.IntPtr;
-using MonoPInvokeCallbackAttribute = LuaInterface.MonoPInvokeCallbackAttribute;
-using LuaCSFunction = LuaInterface.LuaCSFunction;
+using SLua;
+using Lua = SLua.LuaSvr;
+//using LuaState = System.IntPtr;
+//using MonoPInvokeCallbackAttribute = SLua.MonoPInvokeCallbackAttribute;
+//using LuaCSFunction = SLua.LuaCSFunction;
 
+[CustomLuaClass]
 public class PLua : MonoBehaviour
 {
 
@@ -26,7 +28,7 @@ public class PLua : MonoBehaviour
     public Lua lua;
     public LNet net;
     public LNet ChatNet;
-    public LuaState luaState;
+    //public LuaState luaState;
     //搜索路径
     public static string package_path { private set; get; }
     //lua资源缓存路径
@@ -39,13 +41,8 @@ public class PLua : MonoBehaviour
 
     //程序集名key
     private const string assemblyname = "assemblyname";
-    private LuaCSFunction requireFunction;
-    private LuaCSFunction delayFunction;
-
     private LuaFunction _updateFn;
 
-    //lua 代码包
-    //private static AssetBundle[] luaBundles;
     #endregion
 
     #region mono
@@ -64,11 +61,8 @@ public class PLua : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         luacache = new Dictionary<string, TextAsset>();
         lua = new Lua();
-        luaState = lua.L;
-        ToLuaCS.lua = lua;
         _instance = this;
         LoadScript();
-        ToLuaCSStart.Start(luaState);
     }
 
     void Start()
@@ -82,8 +76,7 @@ public class PLua : MonoBehaviour
     {
         if (net != null) net.Update();
         if (ChatNet != null) ChatNet.Update();
-        if (_updateFn != null) _updateFn.Call();
-        Timer.Update();
+        if (_updateFn != null) _updateFn.call();
     }
 
     void OnApplicationPause(bool pauseStatus)
@@ -93,9 +86,9 @@ public class PLua : MonoBehaviour
 
     void OnDestroy()
     {
-        if (onDestroyFn != null) onDestroyFn.Call();
+        if (onDestroyFn != null) onDestroyFn.call();
         updateFn = null;
-        if (lua != null) lua.Close();
+        if (lua != null) lua.luaState.Close();
         lua = null;
         _instance = null;
         if(net!=null)net.Dispose();
@@ -109,29 +102,9 @@ public class PLua : MonoBehaviour
 
     private void SetLuaPath()
     {
-        System.Text.StringBuilder luaBegin = new System.Text.StringBuilder();
-        string lua_data_path = UnityEngine.Application.dataPath + "/Lua/";
-        string lua_persistent_path = string.Format("{0}/{1}", UnityEngine.Application.persistentDataPath, CUtils.GetAssetPath(""));
-        string lua_streaming_Path = string.Format("{0}/{1}", UnityEngine.Application.streamingAssetsPath, CUtils.GetAssetPath(""));
-#if UNITY_EDITOR
-        if (isDebug)
-        {
-            package_path = lua_data_path + "?.lua";
-        }
-        else
-        {
-            package_path = lua_streaming_Path + "?." + Common.LUA_LC_SUFFIX;
-        }
-#elif  UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_METRO
-        package_path =  lua_persistent_path + "?." + Common.LUA_LC_SUFFIX + ";" + lua_streaming_Path + "?." + Common.LUA_LC_SUFFIX ;
-#else
-        package_path =  lua_persistent_path + "?." + Common.LUA_LC_SUFFIX + ";" + lua_streaming_Path + "?." + Common.LUA_LC_SUFFIX+ ";" + lua_streaming_Path + "?.lua";
-#endif
-
-        package_paths = package_path.Replace("?", "font").Replace(Common.LUA_LC_SUFFIX, Common.ASSETBUNDLE_SUFFIX).Split(split);
-        luaBegin.Append("package.path=\"" + package_path + " \" \n");
-        luaBegin.Append("return require(\"" + enterLua + "\") \n");
-        this.luaMain = luaBegin.ToString();
+        //luaBegin.Append("return require(\"" + enterLua + "\") \n");
+        //this.luaMain = luaBegin.ToString();
+        this.luaMain = "return require(\"" + enterLua + "\") \n";
         Debug.Log(luaMain);
     }
 
@@ -143,14 +116,14 @@ public class PLua : MonoBehaviour
 
         Assembly assb = Assembly.GetExecutingAssembly();
         string assemblyname = assb.GetName().Name;
-        lua["assemblyname"] = assemblyname;
+        lua.luaState["assemblyname"] = assemblyname;
     }
 
     /// <summary>
     /// 加载lua bundle
     /// </summary>
     /// <returns></returns>
-    private IEnumerator loadLuaBundle(bool domain)
+    private IEnumerator loadLuaBundle(bool domain,LuaFunction onLoadedFn)
     {
         string keyName = "";
         string luaP = CUtils.GetAssetFullPath("font.u3d");
@@ -159,32 +132,38 @@ public class PLua : MonoBehaviour
         yield return luaLoader;
         if (luaLoader.error == null)
         {
-            AssetBundle item = null;
-            item = luaLoader.assetBundle;
+			byte[] byts=CryptographHelper.Decrypt(luaLoader.bytes,DESHelper.instance.Key,DESHelper.instance.IV);
+			AssetBundle item = AssetBundle.CreateFromMemoryImmediate(byts);
+
+//            item = luaLoader.assetBundle;
 #if UNITY_5
                     TextAsset[] all = item.LoadAllAssets<TextAsset>();
                     foreach (var ass in all)
                     {
-                        keyName = ass.name;
+                        keyName = Regex.Replace(ass.name,@"\.","");
+                        //Debug.Log("cache : " + keyName);
                         luacache[keyName] = ass;
                     }
 #else
             UnityEngine.Object[] all = item.LoadAll(typeof(TextAsset));
             foreach (var ass in all)
             {
-                keyName = ass.name.Replace('.', '/');
-                //Debug.Log(keyName + " complete");
+                keyName = Regex.Replace(ass.name,@"\.","");
+                Debug.Log(keyName + " complete");
                 luacache[keyName] = ass as TextAsset;
             }
 #endif
-            //Debug.Log("loaded lua bundle complete" + luaP);
-            luaLoader.assetBundle.Unload(false);
+                    //Debug.Log("loaded lua bundle complete" + luaP);
+//            luaLoader.assetBundle.Unload(false);
+			item.Unload(false);
             luaLoader.Dispose();
         }
 
         DoUnity3dLua();
         if (domain)
             DoMain();
+
+        if (onLoadedFn != null) onLoadedFn.call();
     }
 
     #region public
@@ -192,8 +171,8 @@ public class PLua : MonoBehaviour
     public void DoUnity3dLua()
     {
         //Require(
-        lua.DoString(initLua);//执行unity3dlua
-        ToLuaCS.InitValueTypeChange();
+        lua.luaState.doString(initLua);//执行unity3dlua
+        //ToLuaCS.InitValueTypeChange();
     }
 
     /// <summary>
@@ -201,7 +180,7 @@ public class PLua : MonoBehaviour
     /// </summary>
     public void DoMain()
     {
-        lua.DoString(this.luaMain);
+        lua.luaState.doString(this.luaMain);
     }
 
     /// <summary>
@@ -209,19 +188,27 @@ public class PLua : MonoBehaviour
     /// </summary>
     public void LoadBundle(bool domain)
     {
-        StopCoroutine(loadLuaBundle(domain));
-        StartCoroutine(loadLuaBundle(domain));
+        StopCoroutine(loadLuaBundle(domain, null));
+        StartCoroutine(loadLuaBundle(domain, null));
     }
+
+    /// <summary>
+    /// 加载lua 打包文件
+    /// </summary>
+    public void LoadBundle(LuaFunction onLoadedFn)
+    {
+        //Debug.Log(" refresh LoadBundle ");
+        StopCoroutine(loadLuaBundle(false, onLoadedFn));
+        StartCoroutine(loadLuaBundle(false, onLoadedFn));
+    }
+
     #endregion
 
     #region toolMethod
 
     public void RegisterFunc()
     {
-        requireFunction = new LuaCSFunction(Require);
-        LuaDLL.lua_pushstdcallcfunction(luaState, requireFunction);
-        LuaDLL.lua_setfield(luaState, LuaIndexes.LUA_GLOBALSINDEX, "require");
-        LuaStatic.Load = Loader;
+        LuaState.loaderDelegate=Loader;
     }
 
     /// <summary>
@@ -232,14 +219,15 @@ public class PLua : MonoBehaviour
     public static byte[] Loader(string name)
     {
         byte[] str = null;
-//        name = name.Replace('.', '/');
+        name = name.Replace('.','/'); // Regex.Replace(name, @'.', @'/');
+        //Debug.Log(" loade : " + name);
 #if UNITY_EDITOR
 
         if (isDebug)
         {
             string path = Application.dataPath + "/Lua/" + name+".lua";
 //			string path = Application.dataPath + "/Tmp/PW/" + name+".bytes";
-			Debug.Log(" Loader: "+path);
+            //Debug.Log(" Loader: "+path);
             try
             {
 				str =  File.ReadAllBytes(path);
@@ -251,7 +239,7 @@ public class PLua : MonoBehaviour
         } 
         else
         {
-            //Debug.Log(name + " require");
+            name =  Regex.Replace(name, @"/", "");
             if (luacache.ContainsKey(name))
             {
                 TextAsset file = luacache[name];
@@ -260,6 +248,8 @@ public class PLua : MonoBehaviour
             }
         }
 #else
+		name = Regex.Replace(name,"/",""); 
+
         if(luacache.ContainsKey(name))
         {
         TextAsset file = luacache[name];
@@ -269,111 +259,6 @@ public class PLua : MonoBehaviour
         return str;
     }
 
-    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-    public static int Require(LuaState L)
-    {
-#if UNITY_EDITOR
-        if (isDebug)
-            return DebugRequireLua(L);
-        else
-            return RequireLua(L);
-#else
-         return RequireLua(L);
-#endif
-    }
-
-    private static char[] split = new char[] { ';' };
-    private static string[] package_paths;
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// debug
-    /// </summary>
-    /// <param name="L">L.</param>
-
-    private static int DebugRequireLua(LuaState L)
-    {
-        string modle = LuaDLL.lua_tostring(L, 1);
-        string path = modle.Replace(".", "/");
-
-        string paths = package_path.Replace("?", path);
-        string[] lua_paths = paths.Split(split);
-        LuaDLL.lua_pop(L, 1);
-        foreach (string iPath in lua_paths)
-        {
-            if (File.Exists(iPath))
-            {
-//				Debug.Log(iPath);
-                int oldTop = LuaDLL.lua_gettop(L);
-
-				int re=LuaDLL.luaL_loadfile(L, iPath);
-                if ( re== 0)
-                {
-
-                    re = LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
-                    //re = LuaDLL.lua_pcall(L, 0, -1, -2);
-					if(re==0)
-                    {
-                        int i = LuaDLL.lua_gettop(L);
-                        return i;
-                    }
-					else
-					{
-						Debug.Log(iPath+" lua_pcall err"+ re);
-					}
-                }else
-				{
-					Debug.Log(LuaDLL.lua_tostring(L,-1));  //.ua_tostring(L, -1))
-					Debug.Log(iPath+" luaL_loadfile err" + re);
-				}
-            }
-        }
-
-        return 0;
-    }
-
-#endif
-
-    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-    private static int RequireLua(LuaState L)
-    {
-        string fileName = String.Empty;
-
-        fileName = LuaDLL.lua_tostring(L, 1);
-        fileName = fileName.Replace(".", "/");
-        LuaDLL.lua_settop(L, 1);
-        LuaDLL.lua_getfield(L, LuaIndexes.LUA_REGISTRYINDEX, "_LOADED");
-        LuaDLL.lua_getfield(L, 2, fileName);
-        Debug.Log("require" + fileName + " : " + LuaDLL.lua_toboolean(L, -1).ToString());
-        if (LuaDLL.lua_toboolean(L, -1))
-            return 1;
-
-        LuaDLL.lua_pop(L, 1);
-        //loader file
-        if (luacache.ContainsKey(fileName))
-        {
-            TextAsset file = luacache[fileName];
-            if (LuaDLL.luaL_loadbuffer(L, file.bytes, file.bytes.Length, fileName) == 0)
-            {
-                LuaDLL.lua_call(L, 0, 1);// LuaDLL.LUA_MULTRET
-            }else
-			{
-				Debug.Log("luaL_loadfile err " +fileName);
-			}
-
-            if (!LuaDLL.lua_isnil(L, -1))  /* non-nil return? */
-                LuaDLL.lua_setfield(L, 2, fileName);  /* _LOADED[name] = returned value */
-        }
-
-        LuaDLL.lua_getfield(L, 2, fileName);
-        if (LuaDLL.lua_isnil(L, -1))
-        {   /* module did not set a value? */
-            LuaDLL.lua_pushboolean(L, true);  /* use true as result */
-            LuaDLL.lua_pushvalue(L, -1);  /* extra copy to be returned */
-            LuaDLL.lua_setfield(L, 2, fileName);  /* _LOADED[name] = true */
-        }
-        return 1;// LuaDLL.lua_gettop(L) - n;
-    }
 
     public static void Log(object msg)
     {
@@ -393,7 +278,7 @@ public class PLua : MonoBehaviour
     private static IEnumerator DelayDo(LuaFunction luafun, object arg, float time)
     {
         yield return new WaitForSeconds(time);
-        luafun.Call(arg);
+        luafun.call(arg);
     }
 
     #endregion

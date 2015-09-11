@@ -7,6 +7,7 @@ using System.Threading;
 /// <summary>
 /// C highway.
 /// </summary>
+[SLua.CustomLuaClass] 
 public class CHighway
 {
 
@@ -128,6 +129,14 @@ public class CHighway
     }
 
 
+    protected void RemoveCallbacklist(CRequest creq)
+    {
+        if (requestCallBackList.ContainsKey(creq.udKey))
+        {
+            requestCallBackList.Remove(creq.udKey);
+        }
+    }
+
     protected void Callbacklist(CRequest creq)
     {
         IList<CRequest> callbacklist = requestCallBackList[creq.udKey];
@@ -218,12 +227,12 @@ public class CHighway
 
     protected virtual void LoadComplete(CTransport loader, CRequest creq, IList<CRequest> depens)
     {
-        //#if UNITY_EDITOR
-        //        if (creq.isShared)
-        //            Debug.Log("_______loadComplete  <<" + creq.key + ">> is Shared  ");
-        //        else
-        //            Debug.Log("______loadComplete  <<" + creq.key + ">>  depens:" + (depens != null).ToString());
-        //#endif
+//#if UNITY_EDITOR
+//        if (creq.isShared)
+//            Debug.Log("_______loadComplete  <<" + creq.key + ">> is Shared  ");
+//        else
+//            Debug.Log("______loadComplete  <<" + creq.key + ">>  depens:" + (depens != null).ToString());
+//#endif
         RemoveRequest(creq);
 
         if (depens != null) //if have depens
@@ -307,6 +316,7 @@ public class CHighway
         Debug.LogWarning("load Error : times=" + req.times + " url=" + req.url + " key= " + req.key);
 #endif
         RemoveRequest(req);
+        RemoveCallbacklist(creq);
 
         if (req.times < 2)
         {
@@ -380,6 +390,7 @@ public class CHighway
             req.assetBundle = data as AssetBundle;
             if (!assetType.IsArray)
             {
+                //Debug.Log(req.key + "assetName: " + req.assetName);
                 req.data = req.assetBundle.LoadAsset(req.assetName, assetType);
             }
             else
@@ -497,7 +508,7 @@ public class CHighway
     }
 
 }
-
+[SLua.CustomLuaClass]
 public class HighwayEventArg
 {
     //public object loader;

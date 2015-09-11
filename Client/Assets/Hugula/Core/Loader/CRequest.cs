@@ -10,6 +10,7 @@ using System.Collections.Generic;
 /**
   * 加载资源的请求
   */
+[SLua.CustomLuaClass]
  public class CRequest // IDispose
  {
   /**
@@ -55,195 +56,209 @@ using System.Collections.Generic;
    */
   private string _url;
 
-  private string _suffix = string.Empty;
+    private string _suffix = string.Empty;
 
-  private string _assetBundleName = string.Empty;
-  
-  private bool _cache = false;
-  /**
-   * 文件后缀类型</br>
-   * 默认根据url后缀来生成</br>
-   * 如果设定以设定值为准.解码的时候是根据type来解码的.例如 解码后成相应的对象类型
-   */
-  public string suffix
-  {
-      get
-      {
-          if (string.IsNullOrEmpty(_suffix))
-              _suffix = CUtils.GetURLFileSuffix(_url);
-          return _suffix;
-      }
-      set
-      {
-          _suffix = value;
-      }
-  }
+    private string _assetBundleName = string.Empty;
 
-     /// <summary>
-     /// assetbundleName 根据url计算出来
-     /// </summary>
-  public string assetBundleName
-  {
-      get{
-          if (string.IsNullOrEmpty(_assetBundleName))
-              _assetBundleName = CUtils.GetURLFullFileName(_url);
-          return _assetBundleName;
-      }
-      set
-      {
-          _assetBundleName = value;
-      }
-  }
+    private string _assetName = string.Empty;
 
-     /// <summary>
-  /// 要加载的asset 名称
-     /// </summary>
-  public string assetName = string.Empty;
+    private bool _cache = false;
+    /**
+     * 文件后缀类型</br>
+     * 默认根据url后缀来生成</br>
+     * 如果设定以设定值为准.解码的时候是根据type来解码的.例如 解码后成相应的对象类型
+     */
+    public string suffix
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_suffix))
+                _suffix = CUtils.GetURLFileSuffix(_url);
+            return _suffix;
+        }
+        set
+        {
+            _suffix = value;
+        }
+    }
 
-     /// <summary>
-  /// asset Type name
-     /// </summary>
-  public string assetType  = string.Empty;
+    /// <summary>
+    /// assetbundleName 根据url计算出来
+    /// </summary>
+    public string assetBundleName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_assetBundleName))
+                _assetBundleName = CUtils.GetURLFullFileName(_url);
+            return _assetBundleName;
+        }
+        set
+        {
+            _assetBundleName = value;
+        }
+    }
 
-  /**
-   * 加载的头信息
-   */
-  public object head
-	{
-		get{return this._head;}
-		set{this._head=value;}
-	}
+    /// <summary>
+    /// 要加载的asset 名称
+    /// </summary>
+    public string assetName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_assetName)) _assetName = key;
+            return _assetName;
+        }
+        set { _assetName = value; }
+    }
 
+    /// <summary>
+    /// asset Type name
+    /// </summary>
+    public string assetType = string.Empty;
 
-  /**
-   * 加载的数据
-   */
-  public  object data
-  {
-		get{
-   			return _data;
-		}
-		set{
-			_data = value;
-		}
-  }
-     /// <summary>
-  /// assetBundle
-     /// </summary>
-  public AssetBundle assetBundle;
-     /// <summary>
-     /// www对象
-     /// </summary>
-  public WWW www;
-	/// <summary>
-	/// The user data.
-	/// </summary>
-	public object userData;
-	
-	public event CompleteHandle OnEnd;
-	
-	public event CompleteHandle OnComplete;
-	
-	public void DispatchComplete()
-	{
-		if(OnComplete!=null)
-			OnComplete(this);
-	}
-	
-	public void DispatchEnd()
-	{
-		if(OnEnd!=null)
-			OnEnd(this);		
-	}
-	
-	public bool isShared{get;set;}
-
-  /**
-   * 加载完成回调</br>
-   * <b>onComplete:Function(req:Request)</b> 
-   * 加载完成后的回调函数
-   * 参数为为当前请求</br>
-   */
- // public event onComplete;
-  
-  /**
-   * 重实n次加载失败后回调</br>
-   * <b>onError:Function(req:Request)</b> 
-   * 加载完成后的回调函数
-   * 参数为为当前请求</br>
-   */
-  //public var onEnd:Function;
-  
-  /**
-   * 请求地址 网址，相对路径，绝对路径
-   */
-  public  string url
-  {
-		get{
-   			return _url;
-		}
-		set
-		{
-				 _url = value;
-		}
-  }
+    /**
+     * 加载的头信息
+     */
+    public object head
+    {
+        get { return this._head; }
+        set { this._head = value; }
+    }
 
 
+    /**
+     * 加载的数据
+     */
+    public object data
+    {
+        get
+        {
+            return _data;
+        }
+        set
+        {
+            _data = value;
+        }
+    }
+    /// <summary>
+    /// assetBundle
+    /// </summary>
+    public AssetBundle assetBundle;
+    /// <summary>
+    /// www对象
+    /// </summary>
+    public WWW www;
+    /// <summary>
+    /// The user data.
+    /// </summary>
+    public object userData;
 
-  /**
-   *缓存用的关键字
-   * 如果没有设定 则为默认key生成规则
-   */
-  public string key
-  {
-		get
-		{
-		   if(string.IsNullOrEmpty(_key))
-               _key = CUtils.GetKeyURLFileName(url);		    	
-		   return _key;
-		}
-		set
-		{
-			_key = value;
-		}
-  }
-	
-/// <summary>
-/// Sets the U dkey.
-/// </summary>
-/// <value>
-/// The U dkey.
-/// </value>
-public string udKey
-{
-	get
-		{
-		   if(string.IsNullOrEmpty(_udKey))
-				_udKey=CryptographHelper.CrypfString(this.url);//_key=CUtils.getURLFullFileName(url);		    	
-		   return _udKey;
-		}
-		set
-		{
-			_udKey = value;
-		}
-}
+    public event CompleteHandle OnEnd;
 
-  
-  /**
-   * 缓存对应的字典类型
-   */
-  //public IDictionary<string,object> cache
-  public bool cache
-  {
-		get
-		{
-  			 return _cache;
-		}
-		set
-		{
-			_cache=value;
-		}
-  }
+    public event CompleteHandle OnComplete;
+
+    public void DispatchComplete()
+    {
+        if (OnComplete != null)
+            OnComplete(this);
+    }
+
+    public void DispatchEnd()
+    {
+        if (OnEnd != null)
+            OnEnd(this);
+    }
+
+    public bool isShared { get; set; }
+
+    /**
+     * 加载完成回调</br>
+     * <b>onComplete:Function(req:Request)</b> 
+     * 加载完成后的回调函数
+     * 参数为为当前请求</br>
+     */
+    // public event onComplete;
+
+    /**
+     * 重实n次加载失败后回调</br>
+     * <b>onError:Function(req:Request)</b> 
+     * 加载完成后的回调函数
+     * 参数为为当前请求</br>
+     */
+    //public var onEnd:Function;
+
+    /**
+     * 请求地址 网址，相对路径，绝对路径
+     */
+    public string url
+    {
+        get
+        {
+            return _url;
+        }
+        set
+        {
+            _url = value;
+        }
+    }
+
+
+
+    /**
+     *缓存用的关键字
+     * 如果没有设定 则为默认key生成规则
+     */
+    public string key
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_key))
+                _key = CUtils.GetKeyURLFileName(url);
+            return _key;
+        }
+        set
+        {
+            _key = value;
+        }
+    }
+
+    /// <summary>
+    /// Sets the U dkey.
+    /// </summary>
+    /// <value>
+    /// The U dkey.
+    /// </value>
+    public string udKey
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_udKey))
+                _udKey = CryptographHelper.CrypfString(this.url);//_key=CUtils.getURLFullFileName(url);		    	
+            return _udKey;
+        }
+        set
+        {
+            _udKey = value;
+        }
+    }
+
+
+    /**
+     * 缓存对应的字典类型
+     */
+    //public IDictionary<string,object> cache
+    public bool cache
+    {
+        get
+        {
+            return _cache;
+        }
+        set
+        {
+            _cache = value;
+        }
+    }
 
 
   //回调
@@ -269,4 +284,4 @@ public string udKey
 	public int dependenciesCount;
  }
 
-public delegate  void CompleteHandle(CRequest req);
+public delegate void CompleteHandle(CRequest req);

@@ -3,7 +3,7 @@
 //
 using UnityEngine;
 using System.Collections.Generic;
-using LuaInterface;
+using SLua;
 
 #region 条件节点
 /// <summary>
@@ -72,8 +72,10 @@ public class ConditionNode : BehaviourNode
         }
         else if (_fn != null)
         {
-            object[] res = _fn.Call(input, output);
-            if (res.Length > 0 && res[0].Equals(true))
+            object re = _fn.call(input, output);
+            object[] res = (object[])re;
+            //if(
+            if (res!=null && res.Length > 0 && res[0].Equals(true))
             {
                 this._status = BehaviourStatus.Success;
             }
@@ -147,8 +149,8 @@ public class ConditionWaitNode : ConditionNode
         }
         else if (_fn != null)
         {
-            object[] res = _fn.Call(input, output);
-            if (res.Length > 0 && res[0].Equals(true))
+            object[] res = (object[])_fn.call(input, output);
+            if (res!=null && res.Length > 0 && res[0].Equals(true))
             {
                 this._status = BehaviourStatus.Success;
             }
@@ -237,8 +239,8 @@ public class ConditionNotNode : ConditionNode
         }
         else if (_fn != null)
         {
-            object[] res = _fn.Call(input, output);
-            if (res.Length > 0 && res[0].Equals(true))
+            object[] res = (object[])_fn.call(input, output);
+            if (res!=null && res.Length > 0 && res[0].Equals(true))
             {
                 this._status = BehaviourStatus.Failed;
             }

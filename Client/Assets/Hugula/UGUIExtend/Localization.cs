@@ -27,7 +27,7 @@ using System.Collections;
 /// LABEL2,Music,Musique
 /// Info,"Localization Example","Par exemple la localisation"
 /// </summary>
-
+[SLua.CustomLuaClass]
 public static class Localization
 {
 	/// <summary>

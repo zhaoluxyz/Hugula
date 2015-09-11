@@ -7,7 +7,8 @@ require("core.unity3d")
 require("core.loader")
 json=require("lib/json")
 ResVersion = 0
-
+-- luanet = _G
+-- toluacs = _G
 local resourceURL ="http://192.168.18.152:8345/api" --http://121.199.51.39:8080/client_update?v_id=%s&platform=%s&code=%s";
 
 local progressBarTxt;
@@ -15,17 +16,17 @@ local update_id="";
 local FRIST_VIEW = "frist.u3d";
 local VIDEO_NAME = "Loading.mp4";
 local VERSION_FILE_NAME = "Ver.t";
-local luanet = luanet
-local RuntimePlatform= luanet.UnityEngine.RuntimePlatform
-local Application= luanet.UnityEngine.Application
-local GameObject= luanet.UnityEngine.GameObject
-local PlayerPrefs = luanet.UnityEngine.PlayerPrefs
-local Request=luanet.import_type("LRequest")
 
-local CUtils=toluacs.CUtils
-local LuaHelper=toluacs.LuaHelper
-local FilLoadereHelper=toluacs.FileHelper -- luanet.import_type("FileHelper")
-local Localization = toluacs.Localization
+local RuntimePlatform= UnityEngine.RuntimePlatform
+local Application= UnityEngine.Application
+local GameObject= UnityEngine.GameObject
+local PlayerPrefs = UnityEngine.PlayerPrefs
+local Request=LRequest --luanet.import_type("LRequest")
+
+local CUtils=CUtils
+local LuaHelper=LuaHelper
+local FilLoadereHelper=FileHelper -- luanet.import_type("FileHelper")
+local Localization = Localization
 local delay = delay
 local Loader = Loader
 
@@ -34,8 +35,8 @@ local Loader = Loader
 local function languageInit()
 	local lan=PlayerPrefs.GetString("Language","")
 	if lan=="" then lan=Application.systemLanguage:ToString() end
-	Localization.set_language(lan) --"Chinese"
-	print(Application.systemLanguage:ToString().."current language is "..Localization.language)
+	Localization.language=Chinese --"Chinese"
+	print(Application.systemLanguage.."current language is "..Localization.language)
 end 
 
 local function enterGame()
@@ -58,7 +59,7 @@ local function onProgress(loader,arg)
 end
 
 local function onUpdateItemComp(req)
-	local bytes=req:get_data().bytes
+	local bytes=req.data.bytes
 	if(bytes~=nil) then
 		FileHelper.UnZipFile(bytes,Application.persistentDataPath);
 	end
@@ -77,7 +78,7 @@ local function seveVersion()
 end
 
 local function  onUpdateResComp(req)
-    local www=req:get_data();
+    local www=req.data;
 	if(www) then
 		local txt=www[0]
         local res = json:decode(txt)
@@ -129,8 +130,8 @@ local function checkVerion()
 	 print("checkVerion . verPath"..verPath)
 	local req=Request(verPath)
     req.assetType ="System.String"
-	req:set_onCompleteFn(onURLComp)
-	req:set_onEndFn(onURLErComp)
+	req.onCompleteFn=onURLComp
+	req.onEndFn=onURLErComp
   	--print("request create "..tostring(req))
   	--print(Loader)
     Loader:getResource(req,false)

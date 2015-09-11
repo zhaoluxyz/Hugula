@@ -13,6 +13,7 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 [RequireComponent(typeof(MaskableGraphic))]
 //[AddComponentMenu("UI/Localize")] //[AddComponentMenu("UI/Image", 10)]
+[SLua.CustomLuaClass]
 public class UGUILocalize : MonoBehaviour
 {
 	/// <summary>

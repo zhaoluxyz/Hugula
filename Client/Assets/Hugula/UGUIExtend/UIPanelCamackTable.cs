@@ -5,11 +5,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using LuaInterface;
-using Lua = LuaInterface.LuaState;
+using SLua;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/UIPanel Camack Table ")]
+[SLua.CustomLuaClass]
 public class UIPanelCamackTable : MonoBehaviour
 {
     /**

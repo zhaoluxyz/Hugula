@@ -9,10 +9,10 @@ local Proxy=Proxy
 local NetMsgHelper = NetMsgHelper
 local NetAPIList = NetAPIList
 
-local SystemInfo = luanet.UnityEngine.SystemInfo
+local SystemInfo = UnityEngine.SystemInfo
 local ServerMsgHelperr = ServerMsgHelperr
-local NGUIText = luanet.NGUIText
-local MasterServer = toluacs.UnityEngine.MasterServer
+local NGUIText = NGUIText
+local MasterServer = UnityEngine.MasterServer
 hall.assets=
 {
   Asset("Hall.u3d",{"Main","Create"})

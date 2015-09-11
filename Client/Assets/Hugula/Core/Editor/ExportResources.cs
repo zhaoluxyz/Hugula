@@ -32,6 +32,56 @@ public class ExportResources{
 #endif
 	#endregion
 
+	#region 
+	[MenuItem("Pu Game AES/", false, 10)]
+	static void Breaker2() { }
+
+	[MenuItem("Pu Game AES/GenerateKey", false, 12)]
+	static void GenerateKey() 
+	{ 
+		using (System.Security.Cryptography.RijndaelManaged myRijndael = new System.Security.Cryptography.RijndaelManaged()) {
+			
+			myRijndael.GenerateKey ();
+			byte[] Key=myRijndael.Key;
+
+			KeyVData KeyScri=ScriptableObject.CreateInstance<KeyVData>();
+			KeyScri.KEY=Key;
+			AssetDatabase.CreateAsset(KeyScri,"Assets/Config/I81.asset");
+
+			Debug.Log("key Generate "+Key.Length);
+
+		}
+	}
+
+	[MenuItem("Pu Game AES/GenerateIV", false, 13)]
+	static void GenerateIV() 
+	{ 
+		using (System.Security.Cryptography.RijndaelManaged myRijndael = new System.Security.Cryptography.RijndaelManaged()) {
+			
+			myRijndael.GenerateIV ();
+			byte[]  IV=myRijndael.IV;
+
+			KeyVData KeyScri=ScriptableObject.CreateInstance<KeyVData>();
+			KeyScri.IV=IV;
+			AssetDatabase.CreateAsset(KeyScri,"Assets/Config/K81.asset");
+			Debug.Log("IV Generate "+IV.Length);
+		}
+	}
+
+	static byte[] GetKey()
+	{
+		KeyVData kv = (KeyVData)AssetDatabase.LoadAssetAtPath("Assets/Config/I81.asset",typeof(KeyVData));
+		return kv.KEY;
+	}
+
+	static byte[] GetIV()
+	{
+		KeyVData kv = (KeyVData)AssetDatabase.LoadAssetAtPath("Assets/Config/K81.asset",typeof(KeyVData));
+		return kv.IV;
+	}
+
+	#endregion
+
     #region export
     [MenuItem("Hugula/", false, 11)]
     static void Breaker() { }
@@ -57,6 +107,9 @@ public class ExportResources{
         Debug.Log("luajit path = "+luacPath);
 		string crypName="",fileName="",outfilePath="",arg="";
 		System.Text.StringBuilder sb=new System.Text.StringBuilder();
+	
+		DirectoryDelete(Application.dataPath + OutLuaPath);
+
 		 foreach (string filePath in childrens)
          {
 			fileName=CUtils.GetURLFileName(filePath);
@@ -64,19 +117,22 @@ public class ExportResources{
             crypName = filePath.Replace(path,"").Replace(".lua","."+Common.LUA_LC_SUFFIX).Replace("\\","/");
 			outfilePath=Application.dataPath+OutLuaPath+crypName;
             checkLuaChildDirectory(outfilePath);
-#if Nlua || UNITY_IPHONE 
-             arg="-o "+outfilePath+" "+filePath;
-#else
-            arg = "-b " + filePath + " " + outfilePath; //for jit
-#endif
-            Debug.Log(arg);
-            sb.Append(fileName);
-            sb.Append("=");
-            sb.Append(crypName);
-            sb.Append("\n");
 
+			sb.Append(fileName);
+			sb.Append("=");
+			sb.Append(crypName);
+			sb.Append("\n");
+
+#if Nlua || UNITY_IPHONE 
+			arg="-o "+outfilePath+" "+filePath;
+			File.Copy(filePath, outfilePath, true);
+#else
+			arg = "-b " + filePath + " " + outfilePath; //for jit
+            Debug.Log(arg);
+          
             System.Diagnostics.Process.Start(luacPath, arg);//arg -b hello1.lua hello1.out
-            //File.Copy(filePath, outfilePath, true);
+#endif
+
 		 }
             Debug.Log(sb.ToString());
 		 Debug.Log("lua:"+path+"files="+files.Count+" completed");
@@ -103,16 +159,24 @@ public class ExportResources{
              res.Add(txt);
          }
 
-         string cname = "/font.u3d";
-         string outPath = ExportAssetBundles.GetOutPath();
+         string cname = "/luaout.bytes";
+		 string outPath = luaOut; //ExportAssetBundles.GetOutPath();
          string tarName = outPath + cname;
          Object[] ress = res.ToArray();
          Debug.Log(ress.Length);
          ExportAssetBundles.BuildAB(null, ress, tarName, BuildAssetBundleOptions.CompleteAssets);
-         Debug.Log(tarName + " export");
+//         Debug.Log(tarName + " export");
+		AssetDatabase.Refresh();
 
-         //Directory.CreateDirectory(luaOut);
-         AssetDatabase.Refresh();
+		//Directory.CreateDirectory(luaOut);
+		string realOutPath=ExportAssetBundles.GetOutPath()+"/font.u3d";
+		byte[] by = File.ReadAllBytes (tarName);
+		Debug.Log (by);
+		byte[] Encrypt = CryptographHelper.Encrypt (by, GetKey (), GetIV());
+
+		File.WriteAllBytes (realOutPath,Encrypt);
+		Debug.Log(realOutPath + " export");
+
 	}
 
     [MenuItem("Hugula/export config [Assets\\Config]", false, 13)]
@@ -269,6 +333,12 @@ public class ExportResources{
 				files.Add(f);
 			}
 		}
+	}
+
+	public static void DirectoryDelete (string path)
+	{
+		DirectoryInfo di = new DirectoryInfo(path);
+		di.Delete(true);
 	}
 	#endregion
 }

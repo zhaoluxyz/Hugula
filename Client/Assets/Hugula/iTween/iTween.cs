@@ -38,8 +38,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-using LuaInterface;
-using Lua = LuaInterface.LuaState;
+using SLua;
+//using Lua = LuaInterface.LuaState;
 #endregion
 
 /// <summary>
@@ -47,6 +47,7 @@ using Lua = LuaInterface.LuaState;
 /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
 /// <para>Support: http://itween.pixelplacement.com</para>
 /// </summary>
+[SLua.CustomLuaClass]
 public class iTween : MonoBehaviour{
 		
 	#region Variables
@@ -6556,10 +6557,10 @@ public class iTween : MonoBehaviour{
     public static Hashtable HashLua(LuaTable args)
     {
         Hashtable hashTable = new Hashtable();
-        foreach (string key in args.Keys)
+        foreach (var tablePair in args)
         {
             //Debug.Log(key);
-            hashTable.Add(key, args[key]);
+            hashTable.Add(tablePair.key, tablePair.value);
         }
         return hashTable;
     }	
@@ -7093,7 +7094,7 @@ public class iTween : MonoBehaviour{
                 if(callMeth is LuaFunction)
                 {
                     LuaFunction call = callMeth as LuaFunction;
-                    call.Call(tweenArguments[callbackType + "params"]);
+                    call.call(tweenArguments[callbackType + "params"]);
                 }
 			}else{
 				Debug.LogError("iTween Error: Callback method references must be passed as a String!");

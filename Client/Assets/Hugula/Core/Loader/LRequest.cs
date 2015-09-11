@@ -3,8 +3,8 @@
 //
 using UnityEngine;
 using System.Collections;
-using LuaInterface;
-
+using SLua;
+[SLua.CustomLuaClass]
 public class LRequest : CRequest {
 
     public  LRequest(string url) :base(url)
@@ -23,13 +23,13 @@ public class LRequest : CRequest {
     private void OnCompHandler(CRequest req)
     {
         if (onCompleteFn != null)
-            onCompleteFn.Call(req);
+            onCompleteFn.call(req);
     }
 
     private void OnEndHandler(CRequest req)
     {
         if (onEndFn != null)
-            onEndFn.Call(req);
+            onEndFn.call(req);
     }
 
     public LuaFunction onCompleteFn;

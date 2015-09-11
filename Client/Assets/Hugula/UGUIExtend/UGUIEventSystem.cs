@@ -9,6 +9,7 @@ using System.Collections;
 /// <summary>
 /// UGUI event system
 /// </summary>
+[SLua.CustomLuaClass]
 public class UGUIEventSystem : MonoBehaviour
 {
     public EventSystem eventSystem;

@@ -5,7 +5,8 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 using System;
-using LuaInterface;
+using SLua;
+using System.Text;
 
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
@@ -13,6 +14,7 @@ using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 /// <summary>
 /// 
 /// </summary>
+[SLua.CustomLuaClass]
 public class FileHelper
 {
     #region zip
@@ -95,7 +97,7 @@ public class FileHelper
 
                 if (fileName != String.Empty)
                 {
-                    Debug.Log(outPath + "/" + theEntry.Name);
+                    //Debug.Log(outPath + "/" + theEntry.Name);
                     using (FileStream streamWriter = File.Create(outPath + "/" + theEntry.Name))
                     {
                         int size = 2048;
@@ -173,15 +175,52 @@ public class FileHelper
     public static void PersistentUTF8File(string context, string fileName)
     {
         string path = Application.persistentDataPath + "/" + fileName;
-       // byte[] id = System.Text.ASCIIEncoding.UTF8.GetBytes(context);
-        //using (FileStream streamWriter = File.Open(path,FileMode.OpenOrCreate,FileAccess.ReadWrite))
-        //{
-        //    streamWriter.Write(id, 0, id.Length);
-        //}
-        using (StreamWriter sr = new StreamWriter(path, false))
+        //UnityEngine.Debug.Log("PersistentUTF8File " + path);
+        if (!File.Exists(path))
         {
-            sr.WriteLine(context);
+            using (StreamWriter sr = File.CreateText(path))
+            {
+                sr.Write(context);
+            }
         }
+        else
+        {
+            using (StreamWriter sr = new StreamWriter(path, false, Encoding.UTF8))
+            {
+                sr.Write(context);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 读取文件
+    /// </summary>
+    /// <param name="fileAbsPath"></param>
+    /// <returns></returns>
+    public static string ReadUTF8File(string fileAbsPath)
+    {
+        string re = null;
+        string path = Application.persistentDataPath + "/" + fileAbsPath;
+        if (File.Exists(path))
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                re = sr.ReadToEnd();
+            }
+        }
+
+        return re;
+    }
+
+    /// <summary>
+    /// 删除
+    /// </summary>
+    /// <param name="fileAbsPath"></param>
+    public static void DeleteFile(string fileAbsPath)
+    {
+        string path = Application.persistentDataPath + "/" + fileAbsPath;
+
+        if (File.Exists(path)) File.Delete(path);
     }
 
     private static LuaFunction callBackFn;
@@ -205,7 +244,7 @@ public class FileHelper
             {
                 TextAsset a = (TextAsset)i;
                 if (callBackFn != null)
-                    callBackFn.Call(a.name, a.text);
+                    callBackFn.call(a.name, a.text);
             }
         }
     }     

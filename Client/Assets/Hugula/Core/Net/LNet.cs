@@ -7,10 +7,11 @@ using System.Net.Sockets;
 using System;
 using System.IO;
 using System.Threading;
-using LuaInterface;
+using SLua;
 /// <summary>
 /// Õ¯¬Á¡¨Ω”¿‡
 /// </summary>
+[SLua.CustomLuaClass]
 public class LNet :IDisposable  {
 
     TcpClient client;
@@ -56,7 +57,7 @@ public class LNet :IDisposable  {
 	{
         Connect(Host, Port);
         if (onReConnectFn != null)
-            onReConnectFn.Call(new object[] { this });
+            onReConnectFn.call(new object[] { this });
 	}
 	
 	public void Close()
@@ -100,7 +101,7 @@ public class LNet :IDisposable  {
             {
                 try
                 {
-                    onMessageReceiveFn.Call(new object[] { msg });
+                    onMessageReceiveFn.call(new object[] { msg });
                 }
                 catch (Exception e)
                 {
@@ -122,7 +123,7 @@ public class LNet :IDisposable  {
                     isbegin = false;
                     callConnectioneFun = false;
                     callTimeOutFun = true;
-                    onConnectionTimeoutFn.Call(new object[] { this });
+                    onConnectionTimeoutFn.call(new object[] { this });
                 }
             }
             else if (client.Connected == false && isConnectioned)
@@ -132,7 +133,7 @@ public class LNet :IDisposable  {
                 callTimeOutFun = false;
                 //if(receiveThread!=null)receiveThread.Abort();
                 if (onConnectionCloseFn != null)
-                    onConnectionCloseFn.Call(new object[] { this });
+                    onConnectionCloseFn.call(new object[] { this });
 
             }
 
@@ -140,7 +141,7 @@ public class LNet :IDisposable  {
             {
                 callConnectioneFun = false;
                 if (onConnectionFn != null)
-                    onConnectionFn.Call(new object[] { this });
+                    onConnectionFn.call(new object[] { this });
             }
 
 
@@ -149,7 +150,7 @@ public class LNet :IDisposable  {
                 float dt = Time.time - lastSeconds;
                 if (dt > pingDelay && onIntervalFn != null)
                 {
-                    onIntervalFn.Call(new object[] { this });
+                    onIntervalFn.call(new object[] { this });
                     lastSeconds = Time.time;
                 }
 
@@ -165,7 +166,7 @@ public class LNet :IDisposable  {
 	
 	public void OnApplicationPause(bool pauseStatus) {
         if (onAppPauseFn != null && isConnectCall)
-            onAppPauseFn.Call(new object[] { pauseStatus });
+            onAppPauseFn.call(new object[] { pauseStatus });
 	}
 	
 	
@@ -282,7 +283,7 @@ public class LNet :IDisposable  {
 	{
 		if(onAppErrorFn!=null)
 		{
-			onAppErrorFn.Call(new object[]{type,desc});
+			onAppErrorFn.call(new object[]{type,desc});
 		}else
 		{
 			var error=new Msg();

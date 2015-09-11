@@ -3,7 +3,7 @@
 --   NGUIEvent
 --  author pu
 ------------------------------------------------
-local UGUIEvent=toluacs.UGUIEvent --.instance
+local UGUIEvent=UGUIEvent --.instance
 local StateManager = StateManager
 --local InputEvent = {}
 local function onPress(sender,arg)

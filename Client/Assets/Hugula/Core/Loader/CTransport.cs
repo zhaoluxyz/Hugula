@@ -9,6 +9,7 @@ using System;
 /// <summary>
 /// C transport.
 /// </summary>
+[SLua.CustomLuaClass]
 public class CTransport : MonoBehaviour {
 
 	#region private member
@@ -117,10 +118,9 @@ public class CTransport : MonoBehaviour {
                 req.www = www;
                 req.assetBundle = www.assetBundle;
                 IList<CRequest> depens = null;
+                //if (string.IsNullOrEmpty(req.assetName)) req.assetName = req.key;
                 if(m_AssetBundleManifest!=null)
                 {
-                    if (string.IsNullOrEmpty(req.assetName)) req.assetName = req.key;
-
                     string[] deps = m_AssetBundleManifest.GetAllDependencies(req.assetBundleName);
                     //foreach (var n in deps)
                     //{
@@ -129,7 +129,7 @@ public class CTransport : MonoBehaviour {
                     depens = GetDependencies(deps);
                 }else if (m_AssetBundleManifest == null)
                 {
-                    Debug.LogWarning("Please initialize AssetBundleManifest");
+                    //Debug.LogWarning("Please initialize AssetBundleManifest");
                 }
 				isFree =true;
 				this.DispatchCompleteEvent(this.req,depens);

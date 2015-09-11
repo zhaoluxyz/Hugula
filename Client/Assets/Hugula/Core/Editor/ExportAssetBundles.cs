@@ -21,7 +21,7 @@ public class ExportAssetBundles
     public const BuildAssetBundleOptions optionsDefault = BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets; //
     private const BuildAssetBundleOptions optionsDependency = BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.CollectDependencies;// 
 #if UNITY_IPHONE
-	public const BuildTarget target=BuildTarget.iPhone;
+	public const BuildTarget target=BuildTarget.iOS;
 #elif UNITY_ANDROID
     public const BuildTarget target = BuildTarget.Android;
 #elif UNITY_WP8

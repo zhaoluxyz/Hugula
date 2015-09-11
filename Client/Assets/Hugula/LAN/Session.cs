@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System;
-
+[SLua.CustomLuaClass]
 public class Session  {
 
     private TcpClient client;

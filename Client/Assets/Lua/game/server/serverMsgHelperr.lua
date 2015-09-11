@@ -9,7 +9,7 @@ local StateManager = StateManager
 local delay = delay
 local LuaHelper=LuaHelper
 
-local TcpServer = luanet.TcpServer
+local TcpServer = TcpServer
 local Net=Net
 local Msg = Msg
 local Proxy=Proxy

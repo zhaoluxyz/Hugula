@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-
+[SLua.CustomLuaClass]
 public class CUtils {
 	
 	/// <summary>
@@ -190,9 +190,9 @@ public class CUtils {
 #elif UNITY_METRO
             Platform = "MetroPlayer";
 #elif UNITY_OSX || UNITY_STANDALONE_OSX
-            Platform = "OSX";
+		Platform = "StandaloneOSXIntel";
 #else
-            Platform ="Windows";
+        Platform = "StandaloneWindows";
 #endif
             string path = Path.Combine(Platform, name);  //System.String.Format("{0}/{1}", Platform, name);
         return path;
@@ -211,8 +211,10 @@ public class CUtils {
 			return "WP8Player";
 #elif UNITY_METRO
             return "MetroPlayer";
-#elif UNITY_OSX || UNITY_STANDALONE_OSX
-            return "OSX";
+#elif UNITY_OSX 
+		return "OSX";
+#elif UNITY_STANDALONE_OSX
+		return  "StandaloneOSXIntel";
 #else
             return "Windows";
 #endif

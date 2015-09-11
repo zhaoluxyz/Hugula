@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Net.Sockets;
-
+[SLua.CustomLuaClass]
 public class UdpMasterServer : MonoBehaviour
 {
 

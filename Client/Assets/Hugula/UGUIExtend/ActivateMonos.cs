@@ -3,7 +3,7 @@
 //
 using UnityEngine;
 using System.Collections.Generic;
-
+[SLua.CustomLuaClass]
 public class ActivateMonos : MonoBehaviour {
 
 	#region pulic member

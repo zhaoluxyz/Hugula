@@ -5,13 +5,13 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using LuaInterface;
-using Lua = LuaInterface.LuaState;
+using SLua;
+using Lua = SLua.LuaState;
 
 /// <summary>
 /// Attaching this script to an object will let you trigger remote functions using UGUI events.
 /// </summary>
-
+[SLua.CustomLuaClass]
 public class UIEventLuaTrigger : MonoBehaviour
 {
     /// <summary>
@@ -30,7 +30,7 @@ public class UIEventLuaTrigger : MonoBehaviour
     {
         if (luaFn != null)
         {
-            luaFn.Call(this.gameObject, trigger, target);
+            luaFn.call(this.gameObject, trigger, target);
         }
     }
 

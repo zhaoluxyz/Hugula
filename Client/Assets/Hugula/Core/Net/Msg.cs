@@ -5,7 +5,7 @@ using System.Collections;
 using System.IO;
 using System;
 using System.Text;
-
+[SLua.CustomLuaClass]
 public class Msg  {
 
 	public Msg()
